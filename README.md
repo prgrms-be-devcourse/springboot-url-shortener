@@ -9,7 +9,7 @@ SprintBoot URL Shortener 구현 미션 Repository 입니다.
 - [x] 단축된 URL에 대한 요청 수 정보저장 (optional)
 - [ ] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional) 
 
-### [Short URL API 사용 명세서]()
+### [Short URL API 사용 명세서](https://github.com/y005/springboot-url-shortener/blob/main/src/doc/index.pdf)
 
 ## Short URL Service
 ### 읽으면 좋은 레퍼런스
