@@ -9,7 +9,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-@RestController
 public class UrlRestController {
     @Autowired
     ShortUrlService urlService;
@@ -19,7 +18,7 @@ public class UrlRestController {
         return ApiResponse.fail(404, e.getMessage());
     }
 
-    @PostMapping(value ="api/v1/short-url", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value ="/api/v1/short-url", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<ShortUrlDto> create(@RequestBody CreateShortUrlDto createUrlDto) {
         ShortUrlDto result = urlService.create(createUrlDto);
         return ApiResponse.ok(result);

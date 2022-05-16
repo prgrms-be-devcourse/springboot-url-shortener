@@ -7,6 +7,8 @@ import com.example.springbootboardjpa.dto.CreateShortUrlDto;
 import com.example.springbootboardjpa.dto.ShortUrlDto;
 import com.example.springbootboardjpa.repository.ShortUrlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -31,5 +33,11 @@ public class ShortUrlService {
         ShortUrl entity = urlRepository.findByShortId(shortId).orElseThrow(()-> new RuntimeException("Short id not exist"));
         entity.setCount();
         return ShortUrlConverter.toUrlDto(entity);
+    }
+
+    @Transactional
+    public Page<ShortUrlDto> readAll(Pageable pageable) {
+        Page<ShortUrlDto> entities = urlRepository.findAll(pageable).map(ShortUrlConverter::toUrlDto);
+        return entities;
     }
 }
