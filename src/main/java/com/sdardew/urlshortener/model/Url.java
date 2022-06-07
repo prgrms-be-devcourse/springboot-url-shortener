@@ -8,11 +8,37 @@ import java.time.LocalDateTime;
 public class Url {
 
   @Id
-  String id;
+  private String shortUrl;
 
-  String redirectUrl;
+  private String redirectUrl;
 
-  LocalDateTime createdAt;
+  private LocalDateTime createdAt;
 
-  Long requestCount;
+  private Long requestCount;
+
+  public Url() {
+  }
+
+  public Url(String shortUrl, String redirectUrl, LocalDateTime createdAt, Long requestCount) {
+    this.shortUrl = shortUrl;
+    this.redirectUrl = redirectUrl;
+    this.createdAt = createdAt;
+    this.requestCount = requestCount;
+  }
+
+  public String getShortUrl() {
+    return shortUrl;
+  }
+
+  public String getRedirectUrl() {
+    return redirectUrl;
+  }
+
+  public LocalDateTime getCreatedAt() {
+    return createdAt;
+  }
+
+  public Long getRequestCount() {
+    return requestCount;
+  }
 }
