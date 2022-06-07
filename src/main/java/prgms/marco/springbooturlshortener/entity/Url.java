@@ -15,7 +15,7 @@ public class Url {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "short_url", unique = true, nullable = false)
+    @Column(name = "short_url", unique = true)
     private String shortUrl;
 
     @Column(name = "origin_url", unique = true, nullable = false)
@@ -27,12 +27,15 @@ public class Url {
     protected Url() {
     }
 
-    public static Url createUrl(String originUrl, String shortUrl) {
+    public static Url createUrl(String originUrl) {
         Url url = new Url();
         url.originUrl = originUrl;
-        url.shortUrl = shortUrl;
         url.reqCount = 0L;
         return url;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 
     public Long getId() {
