@@ -1,6 +1,8 @@
 package prgms.marco.springbooturlshortener.service;
 
+import static org.assertj.core.api.Assertions.*;
 import static prgms.marco.springbooturlshortener.exception.Message.DUPLICATE_ORIGIN_URL_EXP_MSG;
+import static prgms.marco.springbooturlshortener.exception.Message.INVALID_SHORT_URL_EXP_MSG;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import prgms.marco.springbooturlshortener.entity.Url;
 import prgms.marco.springbooturlshortener.exception.DuplicateOriginUrlException;
+import prgms.marco.springbooturlshortener.exception.InvalidShortUrlException;
 import prgms.marco.springbooturlshortener.repository.UrlRepository;
 import prgms.marco.springbooturlshortener.service.utils.UrlEncoder;
 
@@ -42,7 +45,7 @@ class UrlServiceTest {
 
         //then
         Url savedUrl = urlRepository.findByOriginUrl(originUrl).get();
-        Assertions.assertThat(shortUrl)
+        assertThat(shortUrl)
             .isEqualTo(urlEncoder.urlEncoder(String.valueOf(savedUrl.getId())));
     }
 
@@ -55,10 +58,35 @@ class UrlServiceTest {
 
         // when
         // then
-        Assertions.assertThatThrownBy(
-                () -> urlShortenService.createShortUrl(alreadyExistUrl)
-            ).isInstanceOf(DuplicateOriginUrlException.class)
+        assertThatThrownBy(
+            () -> urlShortenService.createShortUrl(alreadyExistUrl)
+        ).isInstanceOf(DuplicateOriginUrlException.class)
             .hasMessageContaining(DUPLICATE_ORIGIN_URL_EXP_MSG.getMessage());
     }
 
+    @Test
+    @DisplayName("ShortUrl로 OriginUrl 조회 - 성공")
+    void testFindOriginUrlByShortUrlSuccess() {
+        // given
+        String originUrl = "www.google.com";
+        String shortUrl = urlShortenService.createShortUrl(originUrl);
+
+        // when
+        String findUrl = urlShortenService.findOriginUrlByShortUrl(shortUrl);
+
+        // then
+        assertThat(originUrl).isEqualTo(findUrl);
+    }
+
+    @Test
+    @DisplayName("ShortUrl로 OriginUrl 조회 - 실패")
+    void testFindOriginUrlByShortUrlFail() {
+        // given
+        // when
+        // then
+        assertThatThrownBy(
+            () -> urlShortenService.findOriginUrlByShortUrl("http://localhost:8080/KDB17")
+        ).isInstanceOf(InvalidShortUrlException.class)
+            .hasMessageContaining(INVALID_SHORT_URL_EXP_MSG.getMessage());
+    }
 }

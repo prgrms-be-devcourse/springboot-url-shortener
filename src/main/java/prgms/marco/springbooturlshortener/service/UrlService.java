@@ -1,11 +1,13 @@
 package prgms.marco.springbooturlshortener.service;
 
 import static prgms.marco.springbooturlshortener.exception.Message.DUPLICATE_ORIGIN_URL_EXP_MSG;
+import static prgms.marco.springbooturlshortener.exception.Message.INVALID_SHORT_URL_EXP_MSG;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prgms.marco.springbooturlshortener.entity.Url;
 import prgms.marco.springbooturlshortener.exception.DuplicateOriginUrlException;
+import prgms.marco.springbooturlshortener.exception.InvalidShortUrlException;
 import prgms.marco.springbooturlshortener.repository.UrlRepository;
 import prgms.marco.springbooturlshortener.service.utils.UrlEncoder;
 
@@ -40,8 +42,10 @@ public class UrlService {
         return savedUrl.getShortUrl();
     }
 
-//    public Url findShortUrl(String shortUrl) {
-//        return urlRepository.findByShortUrl(shortUrl);
-//    }
+    public String findOriginUrlByShortUrl(String shortUrl) {
+        return urlRepository.findByShortUrl(shortUrl)
+            .map(Url::getOriginUrl)
+            .orElseThrow(() -> new InvalidShortUrlException(INVALID_SHORT_URL_EXP_MSG));
+    }
 
 }

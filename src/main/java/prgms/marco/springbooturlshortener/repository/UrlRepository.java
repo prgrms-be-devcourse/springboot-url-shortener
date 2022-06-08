@@ -5,5 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import prgms.marco.springbooturlshortener.entity.Url;
 
 public interface UrlRepository extends JpaRepository<Url, Long> {
+
     Optional<Url> findByOriginUrl(String originUrl);
+
+    Optional<Url> findByShortUrl(String shortUrl);
 }
