@@ -42,6 +42,7 @@ public class UrlService {
         return savedUrl.getShortUrl();
     }
 
+    @Transactional
     public String findOriginUrlByShortUrl(String shortUrl) {
         return urlRepository.findByShortUrl(shortUrl)
             .map(url -> {

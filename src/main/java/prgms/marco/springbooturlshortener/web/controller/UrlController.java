@@ -1,9 +1,13 @@
 package prgms.marco.springbooturlshortener.web.controller;
 
 import java.net.URI;
+import java.net.URL;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +26,14 @@ public class UrlController {
         this.urlService = urlService;
     }
 
-//    @GetMapping
-//    public ResponseEntity
+    @GetMapping("/{shortUrl}")
+    public ResponseEntity<Void> convertShortUrlToOrigin(@PathVariable String shortUrl) {
+        String originUrl = urlService.findOriginUrlByShortUrl(shortUrl);
 
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(URI.create(originUrl));
+        return new ResponseEntity<>(httpHeaders, HttpStatus.MOVED_PERMANENTLY);
+    }
 
     @PostMapping
     public ResponseEntity<CreateShortUrlRes> createShortUrl(

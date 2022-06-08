@@ -15,7 +15,7 @@ public class UrlEncoder {
             sb.append(BASE62_CHAR.charAt((int) (param % BASE62)));
             param /= BASE62;
         }
-        return URL_PREFIX + sb.toString();
+        return sb.toString();
     }
 
     private long decoding(String param) {
