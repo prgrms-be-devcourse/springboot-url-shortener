@@ -58,11 +58,11 @@ class UrlServiceTest {
         urlShortenService.createShortUrl(alreadyExistUrl);
 
         // when
+        String shortUrl = urlShortenService.createShortUrl(alreadyExistUrl);
+
         // then
-        assertThatThrownBy(
-            () -> urlShortenService.createShortUrl(alreadyExistUrl)
-        ).isInstanceOf(DuplicateOriginUrlException.class)
-            .hasMessageContaining(DUPLICATE_ORIGIN_URL_EXP_MSG.getMessage());
+        Url savedUrl = urlRepository.findByOriginUrl(alreadyExistUrl).get();
+        assertThat(shortUrl).isEqualTo(urlEncoder.urlEncoder(String.valueOf(savedUrl.getId())));
     }
 
     @Test

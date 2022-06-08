@@ -3,6 +3,7 @@ package prgms.marco.springbooturlshortener.service;
 import static prgms.marco.springbooturlshortener.exception.Message.DUPLICATE_ORIGIN_URL_EXP_MSG;
 import static prgms.marco.springbooturlshortener.exception.Message.INVALID_SHORT_URL_EXP_MSG;
 
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import prgms.marco.springbooturlshortener.entity.Url;
@@ -26,16 +27,12 @@ public class UrlService {
     @Transactional
     public String createShortUrl(String originUrl) {
 
-        // 해당 originUrl DB 존재 여부 검증.
-        urlRepository.findByOriginUrl(originUrl)
-            .ifPresent((url) -> {
-                throw new DuplicateOriginUrlException(DUPLICATE_ORIGIN_URL_EXP_MSG);
-            });
+        Optional<Url> url = urlRepository.findByOriginUrl(originUrl);
+        if(url.isPresent()) {
+            return url.get().getShortUrl();
+        }
 
-        // 인코딩하고
-        Url url = Url.createUrl(originUrl);
-        Url savedUrl = urlRepository.save(url);
-
+        Url savedUrl = urlRepository.save(Url.createUrl(originUrl));
         String shortUrl = urlEncoder.urlEncoder(String.valueOf(savedUrl.getId()));
         savedUrl.setShortUrl(shortUrl);
 
