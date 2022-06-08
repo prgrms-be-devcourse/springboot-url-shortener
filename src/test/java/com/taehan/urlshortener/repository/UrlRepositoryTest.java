@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,7 @@ class UrlRepositoryTest {
     void testFindAll() {
         Url url = new Url("url.com", "ss", 0, AlgorithmType.BASE62);
         Url url2 = new Url("url2.com", "ss2", 0, AlgorithmType.BASE62);
+
         urlRepository.save(url);
         urlRepository.save(url2);
 
@@ -47,4 +49,5 @@ class UrlRepositoryTest {
                 () -> assertThat(urlList).contains(url2)
         );
     }
+
 }
