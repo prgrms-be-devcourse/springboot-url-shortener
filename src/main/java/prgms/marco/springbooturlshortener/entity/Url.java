@@ -38,6 +38,10 @@ public class Url {
         this.shortUrl = shortUrl;
     }
 
+    public void addRequestCount() {
+        this.reqCount++;
+    }
+
     public Long getId() {
         return id;
     }

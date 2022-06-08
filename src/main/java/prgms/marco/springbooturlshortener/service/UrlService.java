@@ -44,8 +44,10 @@ public class UrlService {
 
     public String findOriginUrlByShortUrl(String shortUrl) {
         return urlRepository.findByShortUrl(shortUrl)
-            .map(Url::getOriginUrl)
+            .map(url -> {
+                url.addRequestCount();
+                return url.getOriginUrl();
+            })
             .orElseThrow(() -> new InvalidShortUrlException(INVALID_SHORT_URL_EXP_MSG));
     }
-
 }

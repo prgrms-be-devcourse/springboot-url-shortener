@@ -1,10 +1,10 @@
 package prgms.marco.springbooturlshortener.service;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static prgms.marco.springbooturlshortener.exception.Message.DUPLICATE_ORIGIN_URL_EXP_MSG;
 import static prgms.marco.springbooturlshortener.exception.Message.INVALID_SHORT_URL_EXP_MSG;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -75,7 +75,11 @@ class UrlServiceTest {
         String findUrl = urlShortenService.findOriginUrlByShortUrl(shortUrl);
 
         // then
-        assertThat(originUrl).isEqualTo(findUrl);
+        Url url = urlRepository.findByOriginUrl(originUrl).get();
+        assertAll(
+            () -> assertThat(originUrl).isEqualTo(findUrl),
+            () -> assertThat(url.getReqCount()).isEqualTo(1)
+        );
     }
 
     @Test
