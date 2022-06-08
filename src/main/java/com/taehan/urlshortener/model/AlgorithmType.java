@@ -1,20 +1,21 @@
 package com.taehan.urlshortener.model;
 
+import com.taehan.urlshortener.util.Converter;
+
 import java.util.function.Function;
 
 public enum AlgorithmType {
-    BASE62(url  -> {return "base62";}),
+    BASE62(Converter::base62),
     CUSTOM(url  -> {return url + " custom";});
 
-    private final Function<String, String> job;
+    private final Function<Long, String> job;
 
-    AlgorithmType(Function<String, String> job) {
+    AlgorithmType(Function<Long, String> job) {
         this.job = job;
     }
 
-    public String convert(String url) {
-        return this.job.apply(url);
+    public String convert(long value) {
+        return this.job.apply(value);
     }
-
 
 }

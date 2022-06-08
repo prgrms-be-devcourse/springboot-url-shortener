@@ -2,7 +2,13 @@ package com.taehan.urlshortener.model;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -33,10 +39,9 @@ public class Url {
     protected Url() {
     }
 
-    public Url(String url, String shortUrl, int count, AlgorithmType algorithm) {
+    public Url(String url, String shortUrl, AlgorithmType algorithm) {
         this.url = url;
         this.shortUrl = shortUrl;
-        this.count = count;
         this.algorithm = algorithm;
     }
 
@@ -62,5 +67,9 @@ public class Url {
 
     public AlgorithmType getAlgorithm() {
         return algorithm;
+    }
+
+    public void changeShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 }

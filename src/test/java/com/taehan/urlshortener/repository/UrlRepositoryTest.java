@@ -23,7 +23,7 @@ class UrlRepositoryTest {
     @Test
     @DisplayName("findById 테스트")
     void testFindById() {
-        Url url = new Url("url.com", "ss", 0, AlgorithmType.BASE62);
+        Url url = new Url("url.com", "ss",  AlgorithmType.BASE62);
         urlRepository.save(url);
 
         Optional<Url> findUrl = urlRepository.findById(url.getId());
@@ -36,8 +36,9 @@ class UrlRepositoryTest {
     @Test
     @DisplayName("findAll 테스트")
     void testFindAll() {
-        Url url = new Url("url.com", "ss", 0, AlgorithmType.BASE62);
-        Url url2 = new Url("url2.com", "ss2", 0, AlgorithmType.BASE62);
+        Url url = new Url("url.com", "ss",  AlgorithmType.BASE62);
+        Url url2 = new Url("url2.com", "ss2",  AlgorithmType.BASE62);
+
 
         urlRepository.save(url);
         urlRepository.save(url2);
@@ -48,6 +49,18 @@ class UrlRepositoryTest {
                 () -> assertThat(urlList).contains(url),
                 () -> assertThat(urlList).contains(url2)
         );
+    }
+
+
+    @Test
+    void TestFindByShortUrl() {
+        Url url = new Url("url.com", "ss",  AlgorithmType.BASE62);
+
+        urlRepository.save(url);
+
+        Optional<String> findOriginalUrl = urlRepository.findByShortUrl("ss");
+
+        assertThat(findOriginalUrl.get()).isEqualTo(url.getUrl());
     }
 
 }
