@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import static com.prgrms.urlshortener.domain.shortener.util.UrlValidator.validateRequestCount;
+import static com.prgrms.urlshortener.domain.shortener.util.UrlValidator.validateUrl;
+
 @Entity
 public class Url extends BaseEntity {
     @Id
@@ -24,7 +27,9 @@ public class Url extends BaseEntity {
     }
 
     public Url(String url, long requestCount) {
-        // validation
+        validateUrl(url);
+        validateRequestCount(requestCount);
+
         this.url = url;
         this.requestCount = requestCount;
     }

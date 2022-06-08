@@ -15,7 +15,13 @@ public class UrlValidator {
         }
 
         if(isNonValidUrlPattern(url)) {
-            throw new WrongFieldException("url", url, "blank is not allowed at url");
+            throw new WrongFieldException("url", url, "not a valid url");
+        }
+    }
+
+    public static void validateRequestCount(long requestCount) {
+        if(requestCount < 0) {
+            throw new WrongFieldException("requestCount", requestCount, "requestCount >= 0");
         }
     }
 
@@ -27,12 +33,6 @@ public class UrlValidator {
             return false;
         }else{
             return true;
-        }
-    }
-
-    public static void validateRequestCount(long requestCount) {
-        if(requestCount < 0) {
-            throw new WrongFieldException("requestCount", requestCount, "requestCount >= 0");
         }
     }
 }

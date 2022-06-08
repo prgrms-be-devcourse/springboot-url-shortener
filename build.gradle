@@ -8,6 +8,12 @@ group = 'com.prgrms'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '18'
 
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
 repositories {
 	mavenCentral()
 }
@@ -20,7 +26,10 @@ dependencies {
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
 
 	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
 	runtimeOnly 'com.h2database:h2'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
