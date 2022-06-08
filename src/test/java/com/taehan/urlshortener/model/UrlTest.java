@@ -10,7 +10,7 @@ class UrlTest {
     @Test
     @DisplayName("count 증가 테스트")
     void testAddCount() {
-        Url url = new Url("http://www.naver.com", "http://taehan/kkdsac2", 0, AlgorithmType.CUSTOM);
+        Url url = new Url("http://www.naver.com", "http://taehan/kkdsac2",  AlgorithmType.CUSTOM);
         url.addCount();
 
         assertThat(url.getCount()).isEqualTo(1);
