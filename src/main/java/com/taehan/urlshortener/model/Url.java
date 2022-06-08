@@ -3,6 +3,9 @@ package com.taehan.urlshortener.model;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Url {
@@ -12,12 +15,16 @@ public class Url {
     private Long id;
 
     @Column(nullable = false)
+    @Pattern(regexp="[(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)")
     private String url;
 
-    @Column(nullable = false)
-    private String encodedUrl;
+    @Column(nullable = false, length = 8)
+    @Size(min = 1, max = 8)
+    @Pattern(regexp = "^[a-zA-Z0-9]*$")
+    private String shortUrl;
 
     @ColumnDefault(value = "0")
+    @Min(0)
     private int count;
 
     @Enumerated(EnumType.STRING)
@@ -26,9 +33,9 @@ public class Url {
     protected Url() {
     }
 
-    public Url(String url, String encodedUrl, int count, AlgorithmType algorithm) {
+    public Url(String url, String shortUrl, int count, AlgorithmType algorithm) {
         this.url = url;
-        this.encodedUrl = encodedUrl;
+        this.shortUrl = shortUrl;
         this.count = count;
         this.algorithm = algorithm;
     }
@@ -45,8 +52,8 @@ public class Url {
         return url;
     }
 
-    public String getEncodedUrl() {
-        return encodedUrl;
+    public String getShortUrl() {
+        return shortUrl;
     }
 
     public int getCount() {
