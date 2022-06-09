@@ -1,6 +1,8 @@
 package com.taehan.urlshortener.dto;
 
 public class UrlResponseDto {
+    private static final String PREFIX = "localhost:8080/";
+
     String shortUrl;
 
     public UrlResponseDto(String shortUrl) {
@@ -8,6 +10,6 @@ public class UrlResponseDto {
     }
 
     public String getShortUrl() {
-        return shortUrl;
+        return PREFIX + shortUrl;
     }
 }

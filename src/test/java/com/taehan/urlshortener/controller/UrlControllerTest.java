@@ -48,7 +48,7 @@ class UrlControllerTest {
                 .content(objectMapper.writeValueAsString(urlRequestDto))
         )
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.shortUrl").value(url.getShortUrl()))
+                .andExpect(jsonPath("$.shortUrl").value("localhost:8080/" + url.getShortUrl()))
                 .andDo(print())
         ;
     }
