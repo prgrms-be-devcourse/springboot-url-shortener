@@ -1,9 +1,11 @@
 package com.prgrms.urlshortener.service;
 
+import com.prgrms.urlshortener.common.error.exception.NonExistedUrlException;
 import com.prgrms.urlshortener.domain.url.Url;
 import com.prgrms.urlshortener.domain.url.UrlRepository;
 import com.prgrms.urlshortener.common.error.exception.WrongFieldException;
 import com.prgrms.urlshortener.service.ShortenerService;
+import org.assertj.core.internal.bytebuddy.asm.Advice;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -81,6 +83,25 @@ class ShortenerServiceTest {
             shortenerService.createShortenUrl("abc.com");
 
             verify(urlRepository).save(any());
+        }
+    }
+
+    @DisplayName("original url 가져오기 테스트")
+    @Nested
+    class GetOriginalUrlTest {
+        @DisplayName("전달된 encodedId가 옳바르지 않은 경우 예외를 잘 발생하는지 테스트")
+        @ParameterizedTest(name = "[{index}] {0}")
+        @MethodSource("encodedIdParameter")
+        void testValidationFailCausedByUrl(String encodeId) {
+            assertThrows(WrongFieldException.class, () -> shortenerService.getOriginalUrl(encodeId));
+        }
+
+        private static Stream<Arguments> encodedIdParameter() {
+            return Stream.of(
+                    Arguments.of("adfa=-"),
+                    Arguments.of("_Ou7Jm"),
+                    Arguments.of("_-+")
+            );
         }
     }
 }
