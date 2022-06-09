@@ -3,6 +3,7 @@ package com.taehan.urlshortener.dto;
 import com.taehan.urlshortener.model.AlgorithmType;
 
 import javax.validation.constraints.Pattern;
+import java.util.Objects;
 
 public class UrlRequestDto {
 
@@ -22,5 +23,13 @@ public class UrlRequestDto {
 
     public AlgorithmType getAlgorithmType() {
         return algorithmType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UrlRequestDto that = (UrlRequestDto) o;
+        return url.equals(that.url);
     }
 }

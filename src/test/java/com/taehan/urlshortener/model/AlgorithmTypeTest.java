@@ -13,7 +13,6 @@ class AlgorithmTypeTest {
     void TestBase62Convert() {
         String convert = AlgorithmType.BASE62.convert(10324604314L);
 
-        System.out.println(convert);
         assertThat(convert.length()).isLessThan(8);
 
         convert = AlgorithmType.BASE62.convert(1);
@@ -21,9 +20,6 @@ class AlgorithmTypeTest {
 
         convert = AlgorithmType.BASE62.convert(3521614606207L);
         assertThat(convert).isEqualTo("9999999");
-
-
-
     }
 
 

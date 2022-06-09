@@ -17,7 +17,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
+// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.6.6'
 
 }
