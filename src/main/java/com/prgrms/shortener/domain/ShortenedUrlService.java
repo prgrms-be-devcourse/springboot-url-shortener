@@ -1,0 +1,28 @@
+package com.prgrms.shortener.domain;
+
+import java.util.Optional;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ShortenedUrlService {
+
+  private final ShortenedUrlRepository urlRepository;
+  private final ShortenedUrlFactory urlFactory;
+
+  public ShortenedUrlService(ShortenedUrlRepository urlRepository, ShortenedUrlFactory urlFactory) {
+    this.urlRepository = urlRepository;
+    this.urlFactory = urlFactory;
+  }
+
+  public String shorten(String originalUrl) {
+
+    Optional<ShortenedUrl> savedUrl = urlRepository.findByOriginalUrl(originalUrl);
+    if (savedUrl.isPresent()) {
+      return savedUrl.get().getKey();
+    }
+
+    ShortenedUrl createdUrl = urlFactory.createShortenedUrl(originalUrl);
+
+    return createdUrl.getKey();
+  }
+}
