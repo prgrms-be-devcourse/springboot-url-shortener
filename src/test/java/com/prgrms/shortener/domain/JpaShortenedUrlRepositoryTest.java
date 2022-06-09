@@ -22,8 +22,9 @@ class JpaShortenedUrlRepositoryTest {
 
     // Given
     String url = "http://naver.com";
+    String key = "aaaaaaaa";
     ShortenedUrl shortenedUrl = new ShortenedUrl();
-    shortenedUrl.assignKey("aaaaaaaa");
+    shortenedUrl.assignKey(key);
     shortenedUrl.assignOriginalUrl(url);
 
     // When
@@ -31,7 +32,9 @@ class JpaShortenedUrlRepositoryTest {
     Optional<ShortenedUrl> savedUrl = jpaShortenedUrlRepository.findByOriginalUrl(url);
 
     // Then
-    assertThat(savedUrl).isNotEmpty().get().extracting("originalUrl").isEqualTo(url);
+    assertThat(savedUrl).isNotEmpty();
+    assertThat(savedUrl.get().getOriginalUrl()).isEqualTo(url);
+    assertThat(savedUrl.get().getShortenedKey()).isEqualTo(key);
 
   }
 

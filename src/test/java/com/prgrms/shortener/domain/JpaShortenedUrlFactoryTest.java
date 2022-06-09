@@ -14,13 +14,10 @@ class JpaShortenedUrlFactoryTest {
   @Autowired
   private JpaShortenedUrlFactory urlFactory;
 
-  @Autowired
-  private JpaShortenedUrlRepository urlRepository;
-
   @Test
-  @DisplayName("JpaRepository에서 index로 사용할 entity id르 가져와야 한다.")
+  @DisplayName("originalUrl을 사용하여 ShortenedUrl 엔티티를 만들 수 있어야 한다.")
   @Transactional
-  void createShortenedUrl() {
+  void can_create_shortenedUrl_using_originalUrl() {
     // Given
     String originalUrl = "http://naver.com";
 
