@@ -1,7 +1,8 @@
 package com.kdt.shortener.utils;
 
-import java.util.Arrays;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Base62Utils {
 
     final int RADIX = 62;
