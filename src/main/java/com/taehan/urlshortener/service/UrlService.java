@@ -29,7 +29,10 @@ public class UrlService {
     }
 
     public String getOriginalUrl(String shortUrl) {
-        return repository.findByShortUrl(shortUrl).orElseThrow(() -> new IllegalArgumentException("잘못된 shortUrl"));
+        Url findUrl = repository.findByShortUrl(shortUrl)
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 shortUrl"));
+        findUrl.addCount();
+        return findUrl.getUrl();
     }
 
     public Url findById(Long id) {

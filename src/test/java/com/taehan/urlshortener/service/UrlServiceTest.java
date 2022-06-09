@@ -62,4 +62,18 @@ class UrlServiceTest {
         assertThat(originalUrl).isEqualTo(savedUrl.getUrl());
     }
 
+    @Test
+    @DisplayName("Short Url로 요청 시 Url의 count가 늘어남 테스트")
+    void testGetOriginalUrl_AddCount_카운트_증가() {
+        UrlRequestDto requestDto = new UrlRequestDto("naver.com", AlgorithmType.BASE62);
+        long urlId = urlService.save(requestDto);
+        Url savedUrl = repository.findById(urlId).get();
+        String shortUrl = savedUrl.getShortUrl();
+
+        urlService.getOriginalUrl(shortUrl);
+        urlService.getOriginalUrl(shortUrl);
+
+        assertThat(savedUrl.getCount()).isEqualTo(2);
+    }
+
 }

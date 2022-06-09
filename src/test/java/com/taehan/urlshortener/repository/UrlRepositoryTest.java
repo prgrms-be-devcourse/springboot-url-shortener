@@ -57,9 +57,10 @@ class UrlRepositoryTest {
 
         urlRepository.save(url);
 
-        Optional<String> findOriginalUrl = urlRepository.findByShortUrl("ss");
+        Optional<Url> findUrl = urlRepository.findByShortUrl("ss");
+        String originalUrl = findUrl.get().getUrl();
 
-        assertThat(findOriginalUrl.get()).isEqualTo(url.getUrl());
+        assertThat(originalUrl).isEqualTo(url.getUrl());
     }
 
 }
