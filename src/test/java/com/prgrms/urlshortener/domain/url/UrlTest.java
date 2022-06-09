@@ -1,6 +1,7 @@
-package com.prgrms.urlshortener.domain.shortener.domain;
+package com.prgrms.urlshortener.domain.url;
 
-import com.prgrms.urlshortener.global.error.exception.WrongFieldException;
+import com.prgrms.urlshortener.domain.url.Url;
+import com.prgrms.urlshortener.common.error.exception.WrongFieldException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

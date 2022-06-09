@@ -1,6 +1,6 @@
-package com.prgrms.urlshortener.domain.shortener.util;
+package com.prgrms.urlshortener.common.util;
 
-import com.prgrms.urlshortener.global.error.exception.WrongFieldException;
+import com.prgrms.urlshortener.common.error.exception.WrongFieldException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

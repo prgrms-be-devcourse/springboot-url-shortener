@@ -1,14 +1,15 @@
-package com.prgrms.urlshortener.domain.shortener.domain;
+package com.prgrms.urlshortener.domain.url;
 
-import com.prgrms.urlshortener.global.common.domain.BaseEntity;
+import com.prgrms.urlshortener.common.util.Base62;
+import com.prgrms.urlshortener.domain.BaseEntity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import static com.prgrms.urlshortener.domain.shortener.util.UrlValidator.validateRequestCount;
-import static com.prgrms.urlshortener.domain.shortener.util.UrlValidator.validateUrl;
+import static com.prgrms.urlshortener.common.util.UrlValidator.validateRequestCount;
+import static com.prgrms.urlshortener.common.util.UrlValidator.validateUrl;
 
 @Entity
 public class Url extends BaseEntity {
@@ -32,6 +33,10 @@ public class Url extends BaseEntity {
 
         this.url = url;
         this.requestCount = requestCount;
+    }
+
+    public String getEncodedId(){
+        return Base62.encoding(id);
     }
 
     public void increaseRequestNumber() {

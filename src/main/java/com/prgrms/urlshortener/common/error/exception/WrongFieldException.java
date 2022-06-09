@@ -1,4 +1,4 @@
-package com.prgrms.urlshortener.global.error.exception;
+package com.prgrms.urlshortener.common.error.exception;
 
 import lombok.Getter;
 
