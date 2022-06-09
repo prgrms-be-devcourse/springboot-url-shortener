@@ -1,7 +1,6 @@
 package prgms.marco.springbooturlshortener.web.controller;
 
 import java.net.URI;
-import java.net.URL;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
