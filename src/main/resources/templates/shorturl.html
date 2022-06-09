@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Url Shortener</title>
+    <meta
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div class="container">
+      <a id="home" th:href="@{/}">
+        <h1>Url Shortener</h1>
+      </a>
+      <form id="shorten_form" action="/" method="POST" th:action="@{/shorturl}">
+        <label for="shorten_url"></label>
+        <label>
+          <select id="type_select" name="type">
+            <option value="nanoIdGenerator">nanoid</option>
+            <option value="base62Generator">base62</option>
+          </select>
+        </label>
+        <input id="shorten_url" placeholder="Shorten your link" name="url">
+        <input id="shorten_btn" type="submit" value="Shorten">
+      </form>
+      <div id="url_info" th:if="${shortUrl}">
+        <div class="url_desc">
+          <span> Original Url : </span>
+          <span th:text="${shortUrl.originalUrl}"></span>
+        </div>
+        <div class="url_desc">
+          <span> Shorten Url : </span>
+          <a th:href="@{/{shortUrl}(shortUrl = ${shortUrl.shortUrl})}"
+             th:text="${hostName} + '/' + ${shortUrl.shortUrl}">
+          </a>
+        </div>
+        <div class="url_desc">
+          <span> View Count : </span>
+          <span th:text="${shortUrl.viewCount}"> </span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
