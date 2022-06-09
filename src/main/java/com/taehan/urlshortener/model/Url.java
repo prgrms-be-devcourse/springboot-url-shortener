@@ -24,7 +24,7 @@ public class Url {
     @Pattern(regexp="[(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)")
     private String url;
 
-    @Column(nullable = false, length = 8)
+    @Column(nullable = false, length = 8, unique = true)
     @Size(min = 1, max = 8)
     @Pattern(regexp = "^[a-zA-Z0-9]*$")
     private String shortUrl;
