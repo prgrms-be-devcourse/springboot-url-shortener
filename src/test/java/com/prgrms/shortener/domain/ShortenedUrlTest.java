@@ -23,7 +23,7 @@ class ShortenedUrlTest {
     // Then
     assertThat(shortenedUrl.getId()).isNull();
     assertThat(shortenedUrl.getOriginalUrl()).isEqualTo(url);
-    assertThat(shortenedUrl.getKey()).isEqualTo("abcdefgh");
+    assertThat(shortenedUrl.getShortenedKey()).isEqualTo("abcdefgh");
 
   }
 
