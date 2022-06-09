@@ -57,7 +57,7 @@ class UrlServiceTest {
         Url savedUrl = repository.findById(urlId).get();
         String shortUrl = savedUrl.getShortUrl();
 
-        String originalUrl = urlService.getOriginalUrl(shortUrl).get();
+        String originalUrl = urlService.getOriginalUrl(shortUrl);
 
         assertThat(originalUrl).isEqualTo(savedUrl.getUrl());
     }

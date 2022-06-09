@@ -1,13 +1,12 @@
 package com.taehan.urlshortener.service;
 
 import com.taehan.urlshortener.dto.UrlRequestDto;
-import com.taehan.urlshortener.model.AlgorithmType;
 import com.taehan.urlshortener.model.Url;
 import com.taehan.urlshortener.repository.UrlRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Transactional
 @Service
@@ -29,12 +28,12 @@ public class UrlService {
         return url.getId();
     }
 
-    public Optional<String> getOriginalUrl(String shortUrl) {
-        return repository.findByShortUrl(shortUrl);
+    public String getOriginalUrl(String shortUrl) {
+        return repository.findByShortUrl(shortUrl).orElseThrow(() -> new IllegalArgumentException("잘못된 shortUrl"));
     }
 
-    public Optional<Url> findById(Long id) {
-        return repository.findById(id);
+    public Url findById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("저장되지 않음. Err"));
     }
-
 }
