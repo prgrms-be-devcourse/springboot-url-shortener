@@ -1,12 +1,12 @@
 package prgms.marco.springbooturlshortener.entity;
 
-import java.net.URI;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "url")
@@ -25,6 +25,9 @@ public class Url {
     @Column(name = "req_count")
     private Long reqCount;
 
+    @Transient
+    private final UrlEncoder encoder = new UrlEncoder();
+
     protected Url() {
     }
 
@@ -35,8 +38,9 @@ public class Url {
         return url;
     }
 
-    public void setShortUrl(String shortUrl) {
-        this.shortUrl = shortUrl;
+
+    public void convertIdToShortUrl(Long id) {
+        this.shortUrl = encoder.encoding(id);
     }
 
     public void addRequestCount() {

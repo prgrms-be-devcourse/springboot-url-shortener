@@ -1,8 +1,8 @@
 package prgms.marco.springbooturlshortener.service;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static prgms.marco.springbooturlshortener.exception.Message.DUPLICATE_ORIGIN_URL_EXP_MSG;
 import static prgms.marco.springbooturlshortener.exception.Message.INVALID_SHORT_URL_EXP_MSG;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -10,12 +10,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.transaction.annotation.Transactional;
 import prgms.marco.springbooturlshortener.entity.Url;
-import prgms.marco.springbooturlshortener.exception.DuplicateOriginUrlException;
 import prgms.marco.springbooturlshortener.exception.InvalidShortUrlException;
 import prgms.marco.springbooturlshortener.repository.UrlRepository;
-import prgms.marco.springbooturlshortener.service.utils.UrlEncoder;
+
 
 @DataJpaTest
 class UrlServiceTest {
@@ -23,16 +21,11 @@ class UrlServiceTest {
     @Autowired
     private UrlRepository urlRepository;
 
-    private UrlEncoder urlEncoder = new UrlEncoder();
-
     private UrlService urlShortenService;
 
     @BeforeEach
     void setUp() {
-        urlShortenService = new UrlService(
-            urlRepository,
-            urlEncoder
-        );
+        urlShortenService = new UrlService(urlRepository);
     }
 
     @Test
@@ -42,27 +35,26 @@ class UrlServiceTest {
         String originUrl = "www.naver.com";
 
         //when
-        String shortUrl = urlShortenService.createShortUrl(originUrl);
+        urlShortenService.createShortUrl(originUrl);
 
         //then
         Url savedUrl = urlRepository.findByOriginUrl(originUrl).get();
-        assertThat(shortUrl)
-            .isEqualTo(urlEncoder.urlEncoder(String.valueOf(savedUrl.getId())));
+        assertThat(savedUrl).isNotNull();
     }
 
     @Test
-    @DisplayName("ShortUrl 생성 실패 - Url 중복")
+    @DisplayName("ShortUrl 생성할 필요 없음")
     void testCreateShortUrlFail() {
         // given
         String alreadyExistUrl = "www.google.com";
         urlShortenService.createShortUrl(alreadyExistUrl);
 
         // when
-        String shortUrl = urlShortenService.createShortUrl(alreadyExistUrl);
+        urlShortenService.createShortUrl(alreadyExistUrl);
 
         // then
         Url savedUrl = urlRepository.findByOriginUrl(alreadyExistUrl).get();
-        assertThat(shortUrl).isEqualTo(urlEncoder.urlEncoder(String.valueOf(savedUrl.getId())));
+        assertThat(savedUrl).isNotNull();
     }
 
     @Test
