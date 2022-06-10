@@ -6,10 +6,10 @@ public class UrlResponseDto {
     String shortUrl;
 
     public UrlResponseDto(String shortUrl) {
-        this.shortUrl = shortUrl;
+        this.shortUrl = PREFIX + shortUrl;
     }
 
     public String getShortUrl() {
-        return PREFIX + shortUrl;
+        return shortUrl;
     }
 }

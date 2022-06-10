@@ -1,13 +1,13 @@
 package com.taehan.urlshortener.dto;
 
 import com.taehan.urlshortener.model.AlgorithmType;
-
 import javax.validation.constraints.Pattern;
-import java.util.Objects;
+
+import static com.taehan.urlshortener.model.RegexPattern.ORIGINAL_URL;
+
 
 public class UrlRequestDto {
-
-    @Pattern(regexp="[(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)")
+    @Pattern(regexp=ORIGINAL_URL)
     private String url;
 
     private AlgorithmType algorithmType;
@@ -30,6 +30,6 @@ public class UrlRequestDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UrlRequestDto that = (UrlRequestDto) o;
-        return url.equals(that.url);
+        return url.equals(that.url) && algorithmType == that.algorithmType;
     }
 }

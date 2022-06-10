@@ -27,14 +27,14 @@ class UrlServiceTest {
     private UrlRepository repository;
 
     @Test
-    @DisplayName("Url 저장 테스트")
+    @DisplayName("Url 저장 성공")
     void testSave() {
         UrlRequestDto requestDto = new UrlRequestDto("naver.com", AlgorithmType.BASE62);
         long urlId = urlService.save(requestDto);
 
         Url savedUrl = repository.findById(urlId).get();
 
-        assertThat(savedUrl.getUrl()).isEqualTo(requestDto.getUrl());
+        assertThat(savedUrl.getOriginalUrl()).isEqualTo(requestDto.getUrl());
     }
 
     @Test
@@ -42,15 +42,11 @@ class UrlServiceTest {
     void testInvalidUrlSave() {
         UrlRequestDto requestDto = new UrlRequestDto("naver", AlgorithmType.BASE62);
 
-        assertThrows(ConstraintViolationException.class,
-                () -> {
-                    urlService.save(requestDto);
-                });
-
+        assertThrows(ConstraintViolationException.class, () -> urlService.save(requestDto));
     }
 
     @Test
-    @DisplayName("Short URL로 원본 URL 요청 테스트")
+    @DisplayName("Short URL로 원본 URL 요청 성공")
     void testGetOriginalUrl() {
         UrlRequestDto requestDto = new UrlRequestDto("naver.com", AlgorithmType.BASE62);
         long urlId = urlService.save(requestDto);
@@ -59,11 +55,11 @@ class UrlServiceTest {
 
         String originalUrl = urlService.getOriginalUrl(shortUrl);
 
-        assertThat(originalUrl).isEqualTo(savedUrl.getUrl());
+        assertThat(originalUrl).isEqualTo(savedUrl.getOriginalUrl());
     }
 
     @Test
-    @DisplayName("Short Url로 요청 시 Url의 count가 늘어남 테스트")
+    @DisplayName("Short Url로 요청 시 Url의 count 증가 성공")
     void testGetOriginalUrl_AddCount_카운트_증가() {
         UrlRequestDto requestDto = new UrlRequestDto("naver.com", AlgorithmType.BASE62);
         long urlId = urlService.save(requestDto);
@@ -75,5 +71,4 @@ class UrlServiceTest {
 
         assertThat(savedUrl.getCount()).isEqualTo(2);
     }
-
 }

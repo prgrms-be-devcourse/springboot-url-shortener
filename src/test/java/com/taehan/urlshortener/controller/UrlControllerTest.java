@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -36,7 +37,7 @@ class UrlControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("short Url 변환 성공 테스트")
+    @DisplayName("short Url 변환 성공")
     void testConvert() throws Exception {
         UrlRequestDto urlRequestDto = new UrlRequestDto("www.naver.com", AlgorithmType.BASE62);
         Url url = new Url("www.naver.com", "B", AlgorithmType.BASE62);
@@ -84,7 +85,7 @@ class UrlControllerTest {
     }
 
     @Test
-    @DisplayName("short Url 변환 성공 테스트")
+    @DisplayName("short Url 변환 성공")
     void testRedirectOriginalUrl() throws Exception {
         String shortUrl = "B";
 

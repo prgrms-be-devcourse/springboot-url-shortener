@@ -13,6 +13,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import static com.taehan.urlshortener.model.RegexPattern.ORIGINAL_URL;
+import static com.taehan.urlshortener.model.RegexPattern.SHORT_URL;
+
 @Entity
 public class Url {
 
@@ -21,12 +24,12 @@ public class Url {
     private Long id;
 
     @Column(nullable = false)
-    @Pattern(regexp="[(www\\.)?a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)")
-    private String url;
+    @Pattern(regexp=ORIGINAL_URL)
+    private String originalUrl;
 
     @Column(nullable = false, length = 8, unique = true)
     @Size(min = 1, max = 8)
-    @Pattern(regexp = "^[a-zA-Z0-9]*$")
+    @Pattern(regexp = SHORT_URL)
     private String shortUrl;
 
     @ColumnDefault(value = "0")
@@ -39,8 +42,8 @@ public class Url {
     protected Url() {
     }
 
-    public Url(String url, String shortUrl, AlgorithmType algorithm) {
-        this.url = url;
+    public Url(String originalUrl, String shortUrl, AlgorithmType algorithm) {
+        this.originalUrl = originalUrl;
         this.shortUrl = shortUrl;
         this.algorithm = algorithm;
     }
@@ -53,8 +56,8 @@ public class Url {
         return id;
     }
 
-    public String getUrl() {
-        return url;
+    public String getOriginalUrl() {
+        return originalUrl;
     }
 
     public String getShortUrl() {

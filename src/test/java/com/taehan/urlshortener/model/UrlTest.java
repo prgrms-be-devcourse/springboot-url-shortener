@@ -16,7 +16,6 @@ import javax.validation.ValidatorFactory;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class UrlTest {
 
@@ -30,22 +29,22 @@ class UrlTest {
     }
 
     @Test
-    @DisplayName("count 증가 테스트")
+    @DisplayName("count 증가 성공")
     void testAddCount() {
-        Url url = new Url("http://www.naver.com", "http://taehan/kkdsac2", AlgorithmType.CUSTOM);
+        Url url = new Url("http://www.naver.com", "http://taehan/kkdsac2", AlgorithmType.BASE62);
         url.addCount();
 
         assertThat(url.getCount()).isEqualTo(1);
     }
 
-    @DisplayName("url 유효성 검사 성공 테스트")
+    @DisplayName("url 유효성 검사 성공")
     @CsvSource({"www.naver.com, 1234",
             "naver.com, 12345678",
             "bit.ly, aa1ZZd"
     })
     @ParameterizedTest
-    public void testValidator_success(String url, String shortUrl) {
-        Url newUrl = new Url(url, shortUrl, AlgorithmType.CUSTOM);
+    void testValidator_success(String url, String shortUrl) {
+        Url newUrl = new Url(url, shortUrl, AlgorithmType.BASE62);
         Set<ConstraintViolation<Url>> validate = validator.validate(newUrl);
 
         assertThat(validate).isEmpty();
@@ -53,8 +52,8 @@ class UrlTest {
 
     @Test
     @DisplayName("url 필드는 프로토콜을 제외한 url 패턴만 등록될 수 있다.")
-    public void testValidator_url() {
-        Url url = new Url("http://www.naver.com", "1234", AlgorithmType.CUSTOM);
+    void testValidator_url() {
+        Url url = new Url("http://www.naver.com", "1234", AlgorithmType.BASE62);
         Set<ConstraintViolation<Url>> validate = validator.validate(url);
 
         validate.stream()
@@ -64,8 +63,8 @@ class UrlTest {
 
     @Test
     @DisplayName("shortUrl은 대, 소문자 숫자의 조합이여야 한다")
-    public void testValidator_shortUrl_regex() {
-        Url url = new Url("www.naver.com", "a11b!", AlgorithmType.CUSTOM);
+    void testValidator_shortUrl_regex() {
+        Url url = new Url("www.naver.com", "a11b!", AlgorithmType.BASE62);
         Set<ConstraintViolation<Url>> validate = validator.validate(url);
 
         validate.stream()
@@ -75,8 +74,8 @@ class UrlTest {
 
     @Test
     @DisplayName("shortUrl은 8글자를 넘을 수 없다")
-    public void testValidator_shortUrl_max_length() {
-        Url url = new Url("www.naver.com", "123456789", AlgorithmType.CUSTOM);
+    void testValidator_shortUrl_max_length() {
+        Url url = new Url("www.naver.com", "123456789", AlgorithmType.BASE62);
         Set<ConstraintViolation<Url>> validate = validator.validate(url);
 
         validate.stream()

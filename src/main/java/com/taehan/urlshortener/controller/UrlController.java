@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 
 import static org.springframework.http.ResponseEntity.status;
 
@@ -16,6 +17,7 @@ import static org.springframework.http.ResponseEntity.status;
 public class UrlController {
 
     private static final String URL_PROTOCOL_PREFIX = "http://";
+    private static final String SLASH = "/";
 
     private final UrlService urlService;
 
@@ -24,18 +26,19 @@ public class UrlController {
     }
 
     @PostMapping("/convert")
-    public ResponseEntity<UrlResponseDto> convertUrl(@RequestBody UrlRequestDto urlRequestDto) throws Exception {
-        // url 변경 필요
-        URI uri = new URI("/");
-
+    public ResponseEntity<UrlResponseDto> convertUrl(@RequestBody UrlRequestDto urlRequestDto)
+            throws URISyntaxException {
         Long saveId = urlService.save(urlRequestDto);
         Url findUrl = urlService.findById(saveId);
-        UrlResponseDto urlResponseDto = new UrlResponseDto(findUrl.getShortUrl());
+        String shortUrl = findUrl.getShortUrl();
+
+        UrlResponseDto urlResponseDto = new UrlResponseDto(shortUrl);
+        URI uri = new URI(SLASH + shortUrl);
         return ResponseEntity.created(uri).body(urlResponseDto);
     }
 
     @GetMapping("/{shortUrl}")
-    public ResponseEntity<Void> redirectOriginalUrl(@PathVariable String shortUrl) throws Exception {
+    public ResponseEntity<Void> redirectOriginalUrl(@PathVariable String shortUrl) throws URISyntaxException {
         String originalUrl = urlService.getOriginalUrl(shortUrl);
         URI uri = new URI(URL_PROTOCOL_PREFIX + originalUrl);
         return status(HttpStatus.FOUND).location(uri).build();
