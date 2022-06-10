@@ -14,7 +14,6 @@ function getShortUrl() {
         contentType: "application/json",
         data: JSON.stringify(data),
         success: function(response) {
-            alert('메시지 전송 성공');
             console.log(response);
             let shortUrl = response['shortUrl'];
             addHtml(inputUrl, shortUrl);

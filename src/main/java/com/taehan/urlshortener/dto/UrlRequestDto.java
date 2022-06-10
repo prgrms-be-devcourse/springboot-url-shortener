@@ -1,19 +1,20 @@
 package com.taehan.urlshortener.dto;
 
 import com.taehan.urlshortener.model.AlgorithmType;
+
 import javax.validation.constraints.Pattern;
 
-import static com.taehan.urlshortener.model.RegexPattern.ORIGINAL_URL;
+import static com.taehan.urlshortener.model.RegexPattern.REQUEST_URL;
 
 
 public class UrlRequestDto {
-    @Pattern(regexp=ORIGINAL_URL)
+    @Pattern(regexp=REQUEST_URL)
     private String url;
 
     private AlgorithmType algorithmType;
 
     public UrlRequestDto(String url, AlgorithmType algorithmType) {
-        this.url = url;
+        this.url = removeHttpScheme(url);
         this.algorithmType = algorithmType;
     }
 
@@ -23,6 +24,10 @@ public class UrlRequestDto {
 
     public AlgorithmType getAlgorithmType() {
         return algorithmType;
+    }
+
+    private String removeHttpScheme(String url) {
+        return url.replaceFirst("(http(s)?):\\/\\/", "");
     }
 
     @Override

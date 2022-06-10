@@ -22,7 +22,7 @@ public class Url {
     @Pattern(regexp=ORIGINAL_URL)
     private String originalUrl;
 
-    @Column(nullable = false, length = 8, unique = true, columnDefinition="CHAR(8)")
+    @Column(nullable = false, length = 8, unique = true, columnDefinition="VARCHAR(8)")
     @Size(min = 1, max = 8)
     @Pattern(regexp = SHORT_URL)
     private String shortUrl;
