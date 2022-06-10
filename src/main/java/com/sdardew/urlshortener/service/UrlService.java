@@ -7,6 +7,7 @@ import com.sdardew.urlshortener.repository.UrlRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -21,6 +22,14 @@ public class UrlService {
     this.urlRepository = urlRepository;
     this.shortUrlConverter = shortUrlConverter;
     this.urlUtils = urlUtils;
+  }
+
+  public String getOriginalUrl(String shortUrl) {
+    Optional<Url> found = urlRepository.findUrlByShortUrl(shortUrl);
+    if(found.isEmpty()) {
+      throw new IllegalArgumentException("존재하지 않는 short url입니다.");
+    }
+    return found.get().getOriginalUrl();
   }
 
   @Transactional
@@ -38,6 +47,8 @@ public class UrlService {
     Url url = new Url(requestDto.getUrl(), LocalDateTime.now(), 1L);
     urlRepository.save(url); // id를 생성
     url.setShortUrl(shortUrlConverter.encode(url.getId()));
+
     return new CreateUrlResponseDto(url.getShortUrl());
   }
+
 }
