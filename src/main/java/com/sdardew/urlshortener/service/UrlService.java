@@ -44,7 +44,7 @@ public class UrlService {
       return new CreateUrlResponseDto(urlByOriginalUrl.get().getShortUrl());
     }
 
-    Url url = new Url(requestDto.getUrl(), LocalDateTime.now(), 1L);
+    Url url = new Url(requestDto.getUrl(), LocalDateTime.now(), 0L);
     urlRepository.save(url); // id를 생성
     url.setShortUrl(shortUrlConverter.encode(url.getId()));
 
