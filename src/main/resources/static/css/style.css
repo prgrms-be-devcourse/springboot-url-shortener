@@ -1,0 +1,159 @@
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+a {
+  color: #0236b9;
+  text-decoration: none;
+}
+
+.container {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.url_desc {
+  margin-top: 20px;
+  font-size: 20pt;
+  text-align: left;
+}
+
+#url_info {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#shorten_url {
+  width: 50%;
+  height: 60px;
+  background: #fff;
+  border: 1px solid #39393a;
+  border-radius: 8px 8px 8px 8px;
+  margin-right: 20px;
+  margin-bottom: 0;
+  font-size: 24pt;
+  padding-left: 20px;
+  color: #36383b;
+}
+
+#shorten_btn {
+  margin-bottom: 0;
+  background: #1b3987;
+  border: 1px solid #201f1f;
+  border-radius: 8px 8px 8px 8px;
+  min-width: 25%;
+  font-size: 24pt;
+  height: 60px;
+  color: white;
+  outline: none;
+}
+
+#type_select {
+  font-size: 20pt;
+  height: 60px;
+  border: 1px solid #d3d4d7;
+  border-radius: 8px 8px 8px 8px;
+  background: #1b3987;
+  color: white;
+}
+
+#home {
+  color: black;
+  text-decoration: none;
+}
+
+#error {
+  position: relative;
+  height: 100vh;
+}
+
+#error .error {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.error {
+  max-width: 520px;
+  width: 100%;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.error .error-num {
+  position: relative;
+  height: 240px;
+}
+
+.error .error-num h1 {
+  font-family: 'Montserrat', sans-serif;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  font-size: 252px;
+  font-weight: 900;
+  color: #262626;
+  text-transform: uppercase;
+  letter-spacing: -40px;
+  margin: 0 0 0 -20px;
+}
+
+.error .error-num h1 > span {
+  text-shadow: -8px 0 0 #fff;
+}
+
+.error .error-num h3 {
+  font-family: 'Cabin', sans-serif;
+  position: relative;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #262626;
+  margin: 0;
+  letter-spacing: 3px;
+  padding-left: 6px;
+}
+
+.error h2 {
+  font-family: 'Cabin', sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+@media only screen and (max-width: 767px) {
+  .error .error-num {
+    height: 200px;
+  }
+
+  .error .error-num h1 {
+    font-size: 200px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .error .error-num {
+    height: 162px;
+  }
+
+  .error .error-num h1 {
+    font-size: 162px;
+    height: 150px;
+    line-height: 162px;
+  }
+
+  .error h2 {
+    font-size: 16px;
+  }
+}
