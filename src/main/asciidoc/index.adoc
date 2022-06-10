@@ -1,0 +1,23 @@
+= Getting Started With Spring REST Docs
+
+This is an example output for a service running at http://localhost:8080:
+
+=== createShortUrl API
+
+.request
+include::{snippets}/post-createShortUrl/http-request.adoc[]
+include::{snippets}/post-createShortUrl/request-fields.adoc[]
+
+.response
+include::{snippets}/post-createShortUrl/http-response.adoc[]
+include::{snippets}/post-createShortUrl/response-fields.adoc[]
+
+=== Redirect to OriginUrl API
+
+.request
+include::{snippets}/redirect-to-Origin/http-request.adoc[]
+
+.response
+include::{snippets}/redirect-to-Origin/http-response.adoc[]
+
+As you can see the format is very simple, and in fact you always get the same message.
