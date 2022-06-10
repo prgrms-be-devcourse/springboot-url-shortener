@@ -2,6 +2,7 @@ package com.prgrms.shortener.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.prgrms.shortener.domain.implementation.JpaShortenedUrlFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

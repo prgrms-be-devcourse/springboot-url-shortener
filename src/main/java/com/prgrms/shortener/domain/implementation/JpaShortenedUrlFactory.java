@@ -1,5 +1,8 @@
-package com.prgrms.shortener.domain;
+package com.prgrms.shortener.domain.implementation;
 
+import com.prgrms.shortener.domain.ShortenedUrl;
+import com.prgrms.shortener.domain.ShortenedUrlFactory;
+import com.prgrms.shortener.domain.encoding.EncodingStrategy;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

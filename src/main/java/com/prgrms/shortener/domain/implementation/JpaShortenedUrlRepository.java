@@ -1,5 +1,7 @@
-package com.prgrms.shortener.domain;
+package com.prgrms.shortener.domain.implementation;
 
+import com.prgrms.shortener.domain.ShortenedUrl;
+import com.prgrms.shortener.domain.ShortenedUrlRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

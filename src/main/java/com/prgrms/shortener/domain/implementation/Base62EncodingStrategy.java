@@ -1,5 +1,6 @@
-package com.prgrms.shortener.domain;
+package com.prgrms.shortener.domain.implementation;
 
+import com.prgrms.shortener.domain.encoding.EncodingStrategy;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,8 +12,6 @@ public class Base62EncodingStrategy implements EncodingStrategy {
   public String encode(Integer number) {
 
     StringBuilder buffer = new StringBuilder(7);
-
-    // 62^7 .... 62^0까지 나눈다.
 
     for (int i = 6; i >= 0; i--) {
       int share = number / (int) Math.pow(62, i);

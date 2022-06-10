@@ -1,4 +1,4 @@
-package com.prgrms.shortener.domain;
+package com.prgrms.shortener.domain.encoding;
 
 public interface EncodingStrategy {
 
