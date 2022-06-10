@@ -2,6 +2,8 @@ package com.sdardew.urlshortener.service;
 
 import org.springframework.stereotype.Component;
 
+import java.net.MalformedURLException;
+
 @Component
 public class ShortUrlConverter {
 
@@ -12,15 +14,18 @@ public class ShortUrlConverter {
   };
   private final int RADIX = 62;
 
-  public String encode(long param) {
+  public String encode(long id) {
+    if(218_340_105_584_896L < id) throw new IllegalArgumentException("너무 큰 수입니다.");
+
     StringBuffer sb = new StringBuffer();
-    while(param > 0) {
-      sb.append(BASE62[(int) (param % RADIX)]);
-      param /= RADIX;
+    while(id > 0) {
+      sb.append(BASE62[(int) (id % RADIX)]);
+      id /= RADIX;
     }
     return sb.toString();
   }
 
+  // https://www.geeksforgeeks.org/how-to-design-a-tiny-url-or-url-shortener/
   // 조곰 생각해보깅
 //  public long decode(String shortUrl) {
 //    long ret = 0L;
