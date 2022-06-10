@@ -18,12 +18,12 @@ class ShortenedUrlTest {
 
     // When
     shortenedUrl.assignOriginalUrl(url);
-    shortenedUrl.assignKey("abcdefgh");
+    shortenedUrl.assignKey("abcdefg");
 
     // Then
     assertThat(shortenedUrl.getId()).isNull();
     assertThat(shortenedUrl.getOriginalUrl()).isEqualTo(url);
-    assertThat(shortenedUrl.getShortenedKey()).isEqualTo("abcdefgh");
+    assertThat(shortenedUrl.getShortenedKey()).isEqualTo("abcdefg");
 
   }
 
@@ -32,12 +32,12 @@ class ShortenedUrlTest {
   void assignKeyValidationTest() {
 
     // Given
-    String wrongKey = "abcdefg";
+    String wrongKey = "abcdefgh";
     ShortenedUrl shortenedUrl = new ShortenedUrl();
 
-    assertThatThrownBy(() -> {
-      shortenedUrl.assignKey(wrongKey);
-    }).hasMessage("key는 8개의 문자로 구성되어야 합니다.");
+    assertThatThrownBy(() ->
+        shortenedUrl.assignKey(wrongKey)
+    ).hasMessage("key는 7개의 문자로 구성되어야 합니다.");
   }
 
 }

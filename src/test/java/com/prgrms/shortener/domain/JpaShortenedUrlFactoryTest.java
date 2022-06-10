@@ -27,7 +27,7 @@ class JpaShortenedUrlFactoryTest {
     // Then
     assertThat(createdUrl.getOriginalUrl()).isEqualTo(originalUrl);
     assertThat(createdUrl.getId()).isNotNull();
-    assertThat(createdUrl.getShortenedKey()).matches("[\\d\\w]{8}");
+    assertThat(createdUrl.getShortenedKey()).matches("[\\d\\w]{7}");
 
   }
 }

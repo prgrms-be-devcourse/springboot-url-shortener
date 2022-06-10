@@ -7,10 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class JpaShortenedUrlFactory implements ShortenedUrlFactory {
 
   private final JpaShortenedUrlRepository urlRepository;
-  private final UrlShorteningStrategy shorteningStrategy = number -> "aaabbbc" + number;
+  private final EncodingStrategy shorteningStrategy;
 
-  public JpaShortenedUrlFactory(JpaShortenedUrlRepository urlRepository) {
+  public JpaShortenedUrlFactory(JpaShortenedUrlRepository urlRepository, EncodingStrategy shorteningStrategy) {
     this.urlRepository = urlRepository;
+    this.shorteningStrategy = shorteningStrategy;
   }
 
   @Override
@@ -21,7 +22,7 @@ public class JpaShortenedUrlFactory implements ShortenedUrlFactory {
     urlEntity.assignOriginalUrl(originalUrl);
 
     urlEntity = urlRepository.saveAndFlush(urlEntity);
-    String hashedKey = shorteningStrategy.shorten(urlEntity.getId());
+    String hashedKey = shorteningStrategy.encode(urlEntity.getId());
     urlEntity.assignKey(hashedKey);
 
     return urlRepository.saveAndFlush(urlEntity);

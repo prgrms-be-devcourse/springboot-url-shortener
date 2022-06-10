@@ -15,7 +15,7 @@ public class ShortenedUrlService {
     this.urlFactory = urlFactory;
   }
 
-  @Transactional(readOnly = false)
+  @Transactional
   public String shorten(String originalUrl) {
 
     Optional<ShortenedUrl> savedUrl = urlRepository.findByOriginalUrl(originalUrl);

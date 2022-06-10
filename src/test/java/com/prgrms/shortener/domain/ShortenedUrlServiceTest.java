@@ -17,7 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class ShortenedUrlServiceTest {
 
   private static final String ORIGINAL_URL = "http://naver.com";
-  private static final String KEY = "success1";
+  private static final String KEY = "succEss";
   @InjectMocks
   private ShortenedUrlService shortenedUrlService;
   @Mock
@@ -32,7 +32,7 @@ class ShortenedUrlServiceTest {
 
     // Given
     ShortenedUrl storedUrl = new ShortenedUrl();
-    String storedKey = "yahoo123";
+    String storedKey = "yaHoo12";
     storedUrl.assignKey(storedKey);
     storedUrl.assignOriginalUrl(ORIGINAL_URL);
 
@@ -61,7 +61,7 @@ class ShortenedUrlServiceTest {
 
     // Then
     verify(urlFactory, times(1)).createShortenedUrl(ORIGINAL_URL);
-    assertThat(returnedKey).isEqualTo(KEY).matches("[\\w\\d]{8}");
+    assertThat(returnedKey).isEqualTo(KEY).matches("[\\w\\d]{7}");
   }
 
 }

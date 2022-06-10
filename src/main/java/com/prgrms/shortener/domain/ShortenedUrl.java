@@ -7,13 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public class ShortenedUrl {
 
   @Id
@@ -22,7 +21,7 @@ public class ShortenedUrl {
   private Long id;
   @Column(unique = true)
   private String originalUrl;
-  @Column(length = 8, unique = true)
+  @Column(length = 7, unique = true)
   private String shortenedKey;
 
   public ShortenedUrl(Long id) {
@@ -36,7 +35,7 @@ public class ShortenedUrl {
   // Controller에서 출력 데이터를 확실하게 정한다.
   // 서버의 domain을 알고 있는 영역은 presentation layer
   public void assignKey(String key) {
-    checkArgument(key.length() == 8, "key는 8개의 문자로 구성되어야 합니다.");
+    checkArgument(key.length() == 7, "key는 7개의 문자로 구성되어야 합니다.");
     this.shortenedKey = key;
   }
 

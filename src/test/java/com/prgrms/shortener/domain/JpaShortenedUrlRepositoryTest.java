@@ -22,7 +22,7 @@ class JpaShortenedUrlRepositoryTest {
 
     // Given
     String url = "http://naver.com";
-    String key = "aaaaaaaa";
+    String key = "aaaaaaa";
     ShortenedUrl shortenedUrl = new ShortenedUrl();
     shortenedUrl.assignKey(key);
     shortenedUrl.assignOriginalUrl(url);
