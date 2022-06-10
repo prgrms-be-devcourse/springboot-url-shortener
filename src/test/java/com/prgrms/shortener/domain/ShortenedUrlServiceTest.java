@@ -50,7 +50,7 @@ class ShortenedUrlServiceTest {
   void delegate_creation_to_factory() {
 
     // Given
-    ShortenedUrl createdUrl = new ShortenedUrl(1L);
+    ShortenedUrl createdUrl = new ShortenedUrl(1);
     createdUrl.assignKey(KEY);
     createdUrl.assignOriginalUrl(ORIGINAL_URL);
 
