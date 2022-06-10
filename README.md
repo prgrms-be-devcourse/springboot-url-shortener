@@ -2,16 +2,6 @@
 
 SprintBoot URL Shortener 구현 미션 Repository 입니다.
 
-## 요구사항
-
-각 요구사항을 모두 충족할 수 있도록 노력해봅시다.
-
-- [ ] URL 입력폼 제공 및 결과 출력
-- [ ] URL Shortening Key는 8 Character 이내로 생성
-- [ ] 단축된 URL 요청시 원래 URL로 리다이렉트
-- [ ] 단축된 URL에 대한 요청 수 정보저장 (optional)
-- [ ] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional)
-
 ## Short URL Service
 
 ### 읽으면 좋은 레퍼런스
@@ -46,3 +36,63 @@ SprintBoot URL Shortener 구현 미션 Repository 입니다.
 ### 예시 사이트
 
 [https://url.kr/](https://url.kr/)
+
+## URL - Shortener 강태산, 이한주
+
+### 요구사항
+
+각 요구사항을 모두 충족할 수 있도록 노력해봅시다.
+
+- [x] URL 입력폼 제공 및 결과 출력
+- [x] URL Shortening Key는 8 Character 이내로 생성
+- [x] 단축된 URL 요청시 원래 URL로 리다이렉트
+- [x] 단축된 URL에 대한 요청 수 정보저장 (optional)
+- [ ] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional)
+
+### 페어 프로그래밍 룰
+
+- 드라이버 변경정책
+    - commit 단위
+- commit 정책
+    - 기능 단위 Issue 등록
+    - Issus 단위 commit 수행
+    - Issue 단위 branch를 분기
+        - {type}/{description}
+        - ex) feat/url-short, feat/ui
+- 공유 방법
+    - Intellij Code with me
+    - Gather 화면 공유
+
+### 백엔드 개발 환경
+
+- Java 11
+    - Java 8 보다 더 나은 퍼포먼스를 위해
+        - [https://okky.kr/article/784365](https://okky.kr/article/784365)
+        - [https://steady-coding.tistory.com/598](https://steady-coding.tistory.com/598)
+- Gradle
+- Spring Data JPA
+- h2
+- Spring Boot Starter Validation
+    - [https://velog.io/@_koiil/SpringBoot-Spring-Validation을-이용한-유효성-검증](https://velog.io/@_koiil/SpringBoot-Spring-Validation%EC%9D%84-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%A6%9D)
+
+### 프론트 개발 환경
+- Html + JQuery
+
+### Domain Rule
+
+- Url은 프로토콜(http)을 제거한 후 저장한다.
+    - www는 포함할 수 있다.
+- Shortner URL은 index를 기준으로 생성.
+  - 동일한 URL로 여러개 생성가능
+
+    
+### Database Schema
+![image](https://user-images.githubusercontent.com/43159295/173018873-05ec9162-ee68-4901-8f7d-d4095388bd0b.png)
+
+### API
+![image](https://user-images.githubusercontent.com/43159295/173019052-8e022fed-2f24-4ae9-be5a-0cd13d9f4fbf.png)
+
+### 결과 확인
+![image](https://user-images.githubusercontent.com/43159295/173019245-28392a50-9c61-4c13-9a27-74d0c0e3fdf7.png)
+
+
