@@ -20,7 +20,7 @@
         <div class="mb-3">
             <label for="result-url" class="form-label"></label>
             <input type="url" class="form-control" id="result-url" placeholder="Result" readonly>
-            <button class="btn btn-success" type="button">Copy Short URL</button>
+            <button class="btn btn-success" type="button" onclick="copyToClipBoard()">Copy Short URL</button>
         </div>
     </div>
 </div>
@@ -31,6 +31,8 @@
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
         crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
 <link href="/style/style.css" rel="stylesheet">
 <script src="/script/script.js"></script>
 </html>
