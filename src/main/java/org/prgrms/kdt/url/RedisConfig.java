@@ -13,7 +13,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class RedisConfig {
 
-  @Value("generator.key")
+  @Value("${generator.key}")
   private String key;
 
   @Bean

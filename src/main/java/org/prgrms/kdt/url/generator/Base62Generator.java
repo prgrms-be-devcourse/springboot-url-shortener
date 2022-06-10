@@ -9,7 +9,7 @@ public class Base62Generator implements IdGenerator {
 
   private final ValueOperations<String, String> valueOps;
 
-  @Value("generator.key")
+  @Value("${generator.key}")
   private String key;
 
   public Base62Generator(ValueOperations<String, String> valueOps) {
