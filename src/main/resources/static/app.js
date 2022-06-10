@@ -3,7 +3,6 @@ let inputUrl = document.getElementById("originUrl").value;
 const urlInput = document.getElementById("originUrl");
 urlInput.addEventListener("keyup", () => {
   inputUrl = urlInput.value;
-  console.log(inputUrl);
 });
 
 const submitBtn = document.getElementById("getUrl");
@@ -23,7 +22,6 @@ submitBtn.addEventListener("click", async function changeOriginToShortenUrl(e) {
   e.preventDefault();
   const data = await res.json();
   if (res.ok) {
-    console.log(data.shortUrl);
     urlInput.value = data.shortUrl;
   } else {
     throw Error(data);
