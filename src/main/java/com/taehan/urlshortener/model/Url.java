@@ -2,13 +2,7 @@ package com.taehan.urlshortener.model;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -17,6 +11,7 @@ import static com.taehan.urlshortener.model.RegexPattern.ORIGINAL_URL;
 import static com.taehan.urlshortener.model.RegexPattern.SHORT_URL;
 
 @Entity
+@Table(indexes = @Index(name= "i_short_url", columnList = "shortUrl"))
 public class Url {
 
     @Id
@@ -27,7 +22,7 @@ public class Url {
     @Pattern(regexp=ORIGINAL_URL)
     private String originalUrl;
 
-    @Column(nullable = false, length = 8, unique = true)
+    @Column(nullable = false, length = 8, unique = true, columnDefinition="CHAR(8)")
     @Size(min = 1, max = 8)
     @Pattern(regexp = SHORT_URL)
     private String shortUrl;
