@@ -16,6 +16,7 @@ import shortUrl.shortUrl.exception.AlreadyExistException;
 import shortUrl.shortUrl.exception.NotExistException;
 import shortUrl.shortUrl.exception.WrongUrlException;
 
+import java.net.http.HttpResponse;
 import java.util.Optional;
 
 
@@ -53,6 +54,8 @@ public class UrlService {
 
         // TODO: 2022/06/12 존재하면 그 후 처리는?
         if (urlRepository.existsByShortUrl(shortUrl)) {
+            log.error("중복되는 shortUrl 발생!!! originalUrl => {}, algorithm => {}, shortUrl => {}",
+                    originalUrl, algorithm, shortUrl);
             throw new AlreadyExistException("이미 존재하는 short url 입니다.");
         }
         savedUrl.saveShortUrl(shortUrl);
@@ -81,7 +84,8 @@ public class UrlService {
 
     private boolean validateUrl(String originalUrl) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.exchange(originalUrl, HttpMethod.HEAD, null, String.class);
+        ResponseEntity<HttpResponse> responseEntity =
+                restTemplate.exchange(originalUrl, HttpMethod.HEAD, null, HttpResponse.class);
 
         HttpStatus statusCode = responseEntity.getStatusCode();
         return statusCode.is2xxSuccessful();

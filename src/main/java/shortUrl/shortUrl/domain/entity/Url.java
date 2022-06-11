@@ -42,6 +42,10 @@ public class Url {
     }
 
     public void saveShortUrl(String shortUrl) {
+        if (this.shortUrl != null) {
+            log.error("shortUrl 중복 저장 시도. originalUrl => {}, algorithm => {}", this.originalUrl, this.algorithm);
+            throw new RuntimeException("shortUrl이 이미 존재합니다.");
+        }
         this.shortUrl = shortUrl;
         log.info("shortUrl => {} 저장.", shortUrl);
     }
