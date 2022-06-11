@@ -24,11 +24,13 @@ public class UrlService {
     this.urlUtils = urlUtils;
   }
 
+  @Transactional
   public String getOriginalUrl(String shortUrl) {
-    Optional<Url> found = urlRepository.findUrlByShortUrl(shortUrl);
+    Optional<Url> found = urlRepository.findById(shortUrlConverter.decode(shortUrl));
     if(found.isEmpty()) {
       throw new IllegalArgumentException("존재하지 않는 short url입니다.");
     }
+    found.get().updateRequestCount();
     return found.get().getOriginalUrl();
   }
 

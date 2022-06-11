@@ -12,8 +12,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @DataJpaTest
 class UrlRepositoryTest {
 
@@ -24,17 +22,18 @@ class UrlRepositoryTest {
   EntityManager entityManager;
 
   static Url testUrl;
+
   @BeforeAll
   static void beforeAll() {
-    testUrl = new Url("abc", "google.com", LocalDateTime.now(), 1L);
+    testUrl = new Url(1000L, "google.com", LocalDateTime.now(), 1L);
   }
 
   @Test
   @DisplayName("short url로 원래의 url을 알 수 있다")
   void testExistUrlByShortUrl() {
-    Assertions.assertThat(urlRepository.existsUrlByShortUrl(testUrl.getShortUrl())).isFalse();
+    Assertions.assertThat(urlRepository.existsUrlById(testUrl.getId())).isFalse();
     urlRepository.save(testUrl);
     entityManager.flush();
-    Assertions.assertThat(urlRepository.existsUrlByShortUrl(testUrl.getShortUrl())).isTrue();
+    Assertions.assertThat(urlRepository.existsUrlById(testUrl.getId())).isTrue();
   }
 }

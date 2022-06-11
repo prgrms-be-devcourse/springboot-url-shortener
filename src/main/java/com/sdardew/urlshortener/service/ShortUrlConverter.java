@@ -2,8 +2,6 @@ package com.sdardew.urlshortener.service;
 
 import org.springframework.stereotype.Component;
 
-import java.net.MalformedURLException;
-
 @Component
 public class ShortUrlConverter {
 

@@ -13,8 +13,6 @@ public class Url {
 
   private String originalUrl;
 
-  private String shortUrl;
-
   private LocalDateTime createdAt;
 
   private Long requestCount;
@@ -28,10 +26,9 @@ public class Url {
     this.requestCount = requestCount;
   }
 
-  public Url(Long id, String originalUrl, String shortUrl, LocalDateTime createdAt, Long requestCount) {
+  public Url(Long id, String originalUrl, LocalDateTime createdAt, Long requestCount) {
     this.id = id;
     this.originalUrl = originalUrl;
-    this.shortUrl = shortUrl;
     this.createdAt = createdAt;
     this.requestCount = requestCount;
   }
@@ -44,19 +41,7 @@ public class Url {
     return originalUrl;
   }
 
-  public String getShortUrl() {
-    return shortUrl;
-  }
-
-  public LocalDateTime getCreatedAt() {
-    return createdAt;
-  }
-
-  public Long getRequestCount() {
-    return requestCount;
-  }
-
-  public void setShortUrl(String shortUrl) {
-    this.shortUrl = shortUrl;
+  public void updateRequestCount() {
+    requestCount++;
   }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UrlRepository extends JpaRepository<Url, String> {
+public interface UrlRepository extends JpaRepository<Url, Long> {
 
   boolean existsUrlById(Long id);
 
