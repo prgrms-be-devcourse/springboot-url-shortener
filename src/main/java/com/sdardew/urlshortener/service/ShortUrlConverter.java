@@ -19,7 +19,7 @@ public class ShortUrlConverter {
 
     StringBuffer sb = new StringBuffer();
     while(0 < id) {
-      sb.append(BASE62[(int) (id % RADIX)]);
+      sb.insert(0, BASE62[(int) (id % RADIX)]);
       id /= RADIX;
     }
     return sb.toString();
@@ -35,6 +35,7 @@ public class ShortUrlConverter {
       } else if ('0' <= c && c <= '9') {
         id = id * 62 + c - '0' + 52;
       }
+
     }
     return id;
   }

@@ -20,7 +20,10 @@ class ShortUrlConverterTest {
   @Test
   @DisplayName("shortUrl을 decode하여 id를 찾을 수 있다")
   public void testDecode() {
-    String shortUrl = shortUrlGenerator.encode(1L);
-    assertThat(shortUrlGenerator.decode(shortUrl)).isEqualTo(1L);
+    assertAll(
+      () -> assertThat(shortUrlGenerator.decode(shortUrlGenerator.encode(1L))).isEqualTo(1L),
+      () -> assertThat(shortUrlGenerator.decode(shortUrlGenerator.encode(1L))).isNotEqualTo(2L),
+      () -> assertThat(shortUrlGenerator.decode(shortUrlGenerator.encode(1024L))).isEqualTo(1024L)
+    );
   }
 }
