@@ -12,18 +12,23 @@ import static org.apache.commons.lang3.builder.ToStringStyle.SHORT_PREFIX_STYLE;
 
 @Entity
 @Getter
+@SequenceGenerator(
+    name = "SHORT_URL_SEQ_GEN",
+    sequenceName = "SHORT_URL_SEQ",
+    initialValue = 10000000
+)
 @NoArgsConstructor(access = PROTECTED)
 public class ShortUrl extends BaseTimeEntity {
 
     @Id
-    @GeneratedValue(strategy = SEQUENCE)
+    @GeneratedValue(strategy = SEQUENCE, generator = "SHORT_URL_SEQ_GEN")
     @Column(name = "short_url_id", unique = true, nullable = false, updatable = false)
     private Long id;
 
     @Column(name = "origin_url", nullable = false, updatable = false, length = 500)
     private String originUrl;
 
-    @Column(name = "short_url", nullable = false, length = 100)
+    @Column(name = "short_url", length = 100)
     private String shortUrl;
 
     @Column(name = "request_count", nullable = false)
@@ -33,6 +38,10 @@ public class ShortUrl extends BaseTimeEntity {
         this.originUrl = originUrl;
         this.shortUrl = shortUrl;
         this.requestCount = 0L;
+    }
+
+    public void assignShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 
     public void increaseRequestCount() {
