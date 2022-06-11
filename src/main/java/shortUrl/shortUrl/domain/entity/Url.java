@@ -27,6 +27,7 @@ public class Url {
 
     private Long hits;
 
+    @Enumerated(EnumType.STRING)
     private Algorithm algorithm;
 
     public Url(String originalUrl, Algorithm algorithm) {

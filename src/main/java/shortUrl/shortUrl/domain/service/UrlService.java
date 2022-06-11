@@ -43,7 +43,7 @@ public class UrlService {
         String shortUrl = algorithm.encoding(id);
 
         // TODO: 2022/06/12 존재하면 그 후 처리는?
-        if (!urlRepository.existsByShortUrl(shortUrl)) {
+        if (urlRepository.existsByShortUrl(shortUrl)) {
             throw new AlreadyExistException("이미 존재하는 short url 입니다.");
         }
         savedUrl.saveShortUrl(shortUrl);
