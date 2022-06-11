@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ShortURL</title>
+</head>
+<body>
+<div>
+    <h1>INPUT YOUR URL ! ! </h1>
+    <form th:action="@{/convert}" th:object="${urlForm}" method="post">
+        <select th:field="*{convertType}" >
+            <option th:value="S">shorten</option>
+            <option th:value="L">lengthen</option>
+        </select>
+        <input type="text" th:field="*{urlValue}">
+        <input type="submit" value="GO!"/>
+    </form>
+</div>
+<div th:if="${result != null}">
+    <h3>YOUR URL VALUE</h3>
+    <p th:text="${result}"></p>
+</div>
+</body>
+</html>
