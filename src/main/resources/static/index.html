@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ShortUrl</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="wrapper">
+    <h2 class="title">ShortUrlConverter</h2>
+    <form class="content">
+        <div class="input-group mb-3">
+            <select id="algorithmSelector">
+                <option name="BASE62">BASE62</option>
+                <option name="FAKE62">FAKE62</option>
+            </select>
+            <input type="text" class="form-control" placeholder="https://google.com" id="originUrlInput">
+            <button type="button" class="btn btn-primary" id="btn-create">변환</button>
+        </div>
+    </form>
+
+    <div class="content short-url-info none">
+        <div>
+            <div>
+                <span id="shortUrl"></span>
+            </div>
+
+            <div class="div-right">
+            <button type="button" class="btn btn-copy">복사</button>
+            <button type="button" class="btn" id="btn-redirect">바로가기</button>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <span>원본 주소:</span>
+            </div>
+
+            <div class="div-right">
+                <span id="originUrl"></span>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <span>요청 횟수:</span>
+            </div>
+
+            <div class="div-right">
+                <span id="requestCount"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="index.js"></script>
+<script src="copy.js"></script>
+</body>
+</html>
