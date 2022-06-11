@@ -1,1 +1,54 @@
+spring:
+  profiles:
+    group:
+      local:
+        - common
+        - local_db
+      test:
+        - common
+        - test_db
 
+---
+spring:
+  config:
+    activate:
+      on-profile: common
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    database: h2
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force-response: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local_db
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:shortener_db
+    username: sa
+    password:
+  sql:
+    init:
+      schema-locations: classpath:schema.sql
+      mode: always
+
+---
+spring:
+  config:
+    activate:
+      on-profile: test_db
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:test
+    username: sa
+    password:
