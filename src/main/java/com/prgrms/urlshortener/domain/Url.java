@@ -33,7 +33,12 @@ public class Url {
     }
 
     public Url(String originUrl) {
+        this(null, originUrl);
+    }
+
+    public Url(Long id, String originUrl) {
         validateUrl(originUrl);
+        this.id = id;
         this.originUrl = originUrl;
     }
 
