@@ -15,31 +15,27 @@ public class ShortUrlConverter {
   private final int RADIX = 62;
 
   public String encode(long id) {
-    if(218_340_105_584_896L < id) throw new IllegalArgumentException("너무 큰 수입니다.");
+    if(218_340_105_584_896L < id) throw new IllegalArgumentException("The short url is longer than 8.");
 
     StringBuffer sb = new StringBuffer();
-    while(id > 0) {
+    while(0 < id) {
       sb.append(BASE62[(int) (id % RADIX)]);
       id /= RADIX;
     }
     return sb.toString();
   }
 
-  // https://www.geeksforgeeks.org/how-to-design-a-tiny-url-or-url-shortener/
-  // 조곰 생각해보깅
-//  public long decode(String shortUrl) {
-//    long ret = 0L;
-//
-//
-//  }
-
-/*  public long decode(String param) {
-    long sum = 0;
-    long power = 1;
-    for (int i = 0; i < param.length(); i++) {
-      sum += BASE62[i] * power;
-      power *= RADIX;
+  public long decode(String shortUrl) {
+    long id = 0L;
+    for(char c: shortUrl.toCharArray()) {
+      if ('A' <= c && c <= 'Z') {
+        id = id * 62 + c - 'A';
+      } else if ('a' <= c && c <= 'z') {
+        id = id * 62 + c - 'a' + 26;
+      } else if ('0' <= c && c <= '9') {
+        id = id * 62 + c - '0' + 52;
+      }
     }
-    return sum;
-  }*/
+    return id;
+  }
 }
