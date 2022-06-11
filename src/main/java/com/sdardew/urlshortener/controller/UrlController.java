@@ -17,5 +17,4 @@ public class UrlController {
   public String getUrl(@PathVariable String shortUrl) {
     return "redirect:" + urlService.getOriginalUrl(shortUrl);
   }
-
 }

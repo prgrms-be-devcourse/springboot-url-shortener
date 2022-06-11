@@ -43,14 +43,13 @@ public class UrlService {
     Optional<Url> urlByOriginalUrl = urlRepository.findUrlByOriginalUrl(requestDto.getUrl());
 
     if(urlByOriginalUrl.isPresent()) {
-      return new CreateUrlResponseDto(urlByOriginalUrl.get().getShortUrl());
+      return new CreateUrlResponseDto(shortUrlConverter.encode(urlByOriginalUrl.get().getId()));
     }
 
     Url url = new Url(requestDto.getUrl(), LocalDateTime.now(), 0L);
     urlRepository.save(url); // id를 생성
-    url.setShortUrl(shortUrlConverter.encode(url.getId()));
 
-    return new CreateUrlResponseDto(url.getShortUrl());
+    return new CreateUrlResponseDto(shortUrlConverter.encode(url.getId()));
   }
 
 }
