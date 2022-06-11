@@ -39,4 +39,27 @@ class JpaShortenedUrlRepositoryTest {
 
   }
 
+  @Test
+  @DisplayName("db에 저장된 shortened url을 key 값으로 검색할 수 있어야 한다.")
+  void can_find_shortenedUrl_By_Key() {
+
+    // Given
+    String url = "http://naver.com";
+    String key = "aaaaaaa";
+    ShortenedUrl shortenedUrl = new ShortenedUrl();
+    shortenedUrl.assignKey(key);
+    shortenedUrl.assignOriginalUrl(url);
+    jpaShortenedUrlRepository.saveAndFlush(shortenedUrl);
+
+    // When
+
+    Optional<ShortenedUrl> savedUrl = jpaShortenedUrlRepository.findByShortenedKey(key);
+
+    // Then
+    assertThat(savedUrl).isNotEmpty();
+    assertThat(savedUrl.get().getOriginalUrl()).isEqualTo(url);
+    assertThat(savedUrl.get().getShortenedKey()).isEqualTo(key);
+
+  }
+
 }

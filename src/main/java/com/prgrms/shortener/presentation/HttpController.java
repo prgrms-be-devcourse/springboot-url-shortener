@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -20,7 +21,7 @@ public class HttpController {
 
   @PostMapping("/url")
   @ResponseBody
-  public ShortenedUrlResponse shortenUrl(ShortenedUrlPayload payload, HttpServletRequest httpServletRequest) {
+  public ShortenedUrlResponse shortenUrl(@RequestBody ShortenedUrlPayload payload, HttpServletRequest httpServletRequest) {
     String key = shortenedUrlService.shorten(payload.getUrl());
     String requestUrl = httpServletRequest.getRequestURL().toString();
     String urlWithoutPath = requestUrl.substring(0, requestUrl.length() - 3);
@@ -34,5 +35,10 @@ public class HttpController {
 
     return originalUrl.map(url -> "redirect:" + url).orElseThrow(ShortenedUrlNotFoundException::new);
 
+  }
+
+  @GetMapping("")
+  public String handleMainUrl() {
+    return "home";
   }
 }

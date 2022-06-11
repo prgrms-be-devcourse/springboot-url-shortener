@@ -7,6 +7,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.requestF
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -92,6 +93,7 @@ class HttpControllerTest {
 
     // Then
     results.andExpect(redirectedUrl(ORIGINAL_URL))
+        .andDo(print())
         .andDo(document("url-redirect-success", httpResponse()));
 
   }
@@ -108,6 +110,18 @@ class HttpControllerTest {
         view().name("failure"),
         status().isNotFound()
     ).andDo(document("url-redirect-failure"));
+
+  }
+
+  // TODO 1: HTML 컨텐츠를 전달하는 Controller도 restdocs를 작성해야 하는가?
+  @Test
+  @DisplayName("url에 path가 없을 경우 main html 페이지를 응답해야 한다.")
+  void return_main_view_when_path_is_empty() throws Exception {
+
+    mockMvc.perform(get("/")).andExpectAll(
+        status().is2xxSuccessful(),
+        view().name("home")
+    );
 
   }
 

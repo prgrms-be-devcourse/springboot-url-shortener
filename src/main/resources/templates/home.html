@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+      name="viewport"
+  />
+  <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+  <title>Url Shortener</title>
+  <style>
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #result {
+      margin-top: 20px;
+      border: 2px solid gray;
+      padding: 5px 10px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Url Shortener</h1>
+  <form class="form">
+    <input id="url" type="text"/>
+    <button>Shorten</button>
+  </form>
+  <div id="result">
+    URL을 입력해주세요
+  </div>
+</div>
+
+<script>
+  const form = document.querySelector(".form");
+  const urlInput = document.querySelector(".form input");
+  const result = document.querySelector("#result");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const originalUrl = urlInput.value;
+    const response = await fetch("/url", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        url: originalUrl,
+      }),
+    });
+    const data = await response.json();
+    result.innerText = data.url;
+    urlInput.value = "";
+  });
+</script>
+</body>
+</html>
