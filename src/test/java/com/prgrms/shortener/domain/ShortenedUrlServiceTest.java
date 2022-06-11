@@ -64,4 +64,16 @@ class ShortenedUrlServiceTest {
     assertThat(returnedKey).isEqualTo(KEY).matches("[\\w\\d]{7}");
   }
 
+  @Test
+  @DisplayName("shortenedKey 값을 통한 shortenedUrl 검색을 repository에 위임한다.")
+  void delegates_search_by_key_to_repository() {
+
+    // When
+    shortenedUrlService.findOriginalUrlByKey(KEY);
+
+    // Then
+    verify(repository, times(1)).findByShortenedKey(KEY);
+
+  }
+
 }

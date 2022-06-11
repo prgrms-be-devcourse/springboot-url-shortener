@@ -27,4 +27,8 @@ public class ShortenedUrlService {
 
     return createdUrl.getShortenedKey();
   }
+
+  public Optional<String> findOriginalUrlByKey(String key) {
+    return urlRepository.findByShortenedKey(key).map(ShortenedUrl::getOriginalUrl);
+  }
 }
