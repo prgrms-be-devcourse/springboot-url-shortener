@@ -1,4 +1,9 @@
 package prgrms.project.shorturl.dto;
 
-public record ShortUrlRequest(String shortUrl) {
+import javax.validation.constraints.Size;
+
+public record ShortUrlRequest(
+    @Size(max = 100)
+    String shortUrl
+) {
 }

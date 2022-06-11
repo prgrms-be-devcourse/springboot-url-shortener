@@ -27,7 +27,7 @@ public class ShortUrlRestController {
     }
 
     @PostMapping("/short-url")
-    public ResponseEntity<ShortUrlRedirectResponse> requestToShortUrl(@RequestBody ShortUrlRequest shortUrlRequest) {
+    public ResponseEntity<ShortUrlRedirectResponse> requestToShortUrl(@RequestBody @Validated ShortUrlRequest shortUrlRequest) {
         var originUrl = shortUrlService.increaseRequestCount(shortUrlRequest.shortUrl());
 
         return ResponseEntity.ok(originUrl);
