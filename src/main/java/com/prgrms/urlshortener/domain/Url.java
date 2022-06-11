@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Entity
 public class Url {
 
-    private static final String URL_REGEX = "^(https?:\\/\\/)?([\\da-z\\.-]+\\.[a-z\\.]{2,6}|[\\d\\.]+)([\\/:?=&#]{1}[\\da-z\\.-]+)*[\\/\\?]?$";
+    private static final String URL_REGEX = "^(https?:\\/\\/)?([^.][\\da-z\\.-]+\\.[a-z\\.]{2,6}|[\\d\\.]+)([\\/:?=&#]{1}[\\da-z\\.-]+)*[\\/\\?]?$";
     private static final Pattern URL_PATTERN = Pattern.compile(URL_REGEX);
 
     @Id

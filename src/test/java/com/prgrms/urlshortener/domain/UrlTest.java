@@ -31,8 +31,9 @@ class UrlTest {
         "htt://studyhardd.tistory.com/76",
         "httpa://studyhardd.tistory.com/76",
         "https://studyhardd.tistory.c/76",
-        "https://wwww.studyhardd.tistory.c/76",
-        "//studyhardd.tistory.com/76"
+        "https://....wwww.studyhardd.tistory.c/76",
+        "//studyhardd.tistory.com/76",
+        "https://stud%yhardd.tistory.com/76",
     })
     void generate_Url_with_wrong_URL(String url) {
         assertThatThrownBy(() -> new Url(url))
