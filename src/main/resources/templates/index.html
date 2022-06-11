@@ -7,11 +7,7 @@
 <body>
 <div>
     <h1>INPUT YOUR URL ! ! </h1>
-    <form th:action="@{/convert}" th:object="${urlForm}" method="post">
-        <select th:field="*{convertType}" >
-            <option th:value="S">shorten</option>
-            <option th:value="L">lengthen</option>
-        </select>
+    <form th:action="@{/url/convert}" th:object="${urlForm}" method="post">
         <input type="text" th:field="*{urlValue}">
         <input type="submit" value="GO!"/>
     </form>
