@@ -8,6 +8,7 @@
 
 ## 구현해야 할 기능 목록
 
+- [x] URL 포맷 검증
 - [ ] URL Shortening Key 생성
     - [ ] 8 Character 이내로 생성
     - [ ] 생성 알고리즘 2개 이상 제공
