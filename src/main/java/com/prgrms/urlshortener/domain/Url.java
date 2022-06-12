@@ -37,9 +37,14 @@ public class Url {
     }
 
     public Url(Long id, String originUrl) {
+        this(id, originUrl, null);
+    }
+
+    public Url(Long id, String originUrl, ShortedUrl shortedUrl) {
         validateUrl(originUrl);
         this.id = id;
         this.originUrl = originUrl;
+        this.shortedUrl = shortedUrl;
     }
 
     private void validateUrl(String url) {
