@@ -3,8 +3,10 @@ package com.prgrms.urlshortener.service.encoder;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
+@Component
 class MD5Encoder implements UrlEncoder {
 
     public static final int ENCODE_LENGTH = 7;
