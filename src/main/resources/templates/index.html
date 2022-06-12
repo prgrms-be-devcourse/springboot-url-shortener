@@ -3,18 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>ShortURL</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}"/>
 </head>
 <body>
-<div>
-    <h1>INPUT YOUR URL ! ! </h1>
-    <form th:action="@{/url/convert}" th:object="${urlForm}" method="post">
-        <input type="text" th:field="*{urlValue}">
-        <input type="submit" value="GO!"/>
+<div id="box">
+    <h2 id="center" >INPUT YOUR URL ! ! </h2>
+    <form id="center" th:action="@{/url/convert}" th:object="${urlForm}" method="post">
+        <div class="form-group my-3">
+            <input type="text" th:field="*{urlValue}" class="form-control">
+        </div>
+        <div class="my-3">
+            <input type="submit" value="GO!" class="btn btn-outline-primary"/>
+        </div>
     </form>
-</div>
-<div th:if="${urlResult != null}">
-    <h3>YOUR URL VALUE</h3>
-    <p th:text="${urlResult}"></p>
+    </br>
+    <div th:if="${urlResult != null}" >
+        <h3 id="center">🫵</h3>
+        <h3 id="center">YOUR URL VALUE</h3>
+        <p class="my-3" id="center" th:text="${urlResult}"></p>
+    </div>
 </div>
 </body>
 </html>
