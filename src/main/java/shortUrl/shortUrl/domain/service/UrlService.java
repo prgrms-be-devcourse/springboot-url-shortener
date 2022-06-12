@@ -3,7 +3,6 @@ package shortUrl.shortUrl.domain.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -62,11 +61,11 @@ public class UrlService {
         return shortUrl;
     }
 
-    public String findOriginUrl(ShortUrlDto shortUrlDto) {
+    public String findOriginUrlByShortUrl(ShortUrlDto shortUrlDto) {
         String shortUrl = shortUrlDto.getShortUrl();
         Url url = urlRepository.findByShortUrl(shortUrl)
-                .orElseThrow(() -> new NotExistException("존재하지 않습니다"));
-        url.hitCount();
+                .orElseThrow(() -> new NotExistException("존재하지 않습니다."));
+        url.increaseHits();
         return url.getOriginalUrl();
     }
 
@@ -74,20 +73,24 @@ public class UrlService {
     public ShortUrlDto getUrlInfo(ShortUrlDto shortUrlDto) {
         String shortUrl = shortUrlDto.getShortUrl();
         Url url = urlRepository.findByShortUrl(shortUrl)
-                        .orElseThrow(() -> new NotExistException("존재하지 않습니다"));
+                        .orElseThrow(() -> new NotExistException("존재하지 않습니다."));
         return ShortUrlDto.builder()
                 .originalUrl(url.getOriginalUrl())
+                .shortUrl(shortUrl)
                 .hits(url.getHits())
                 .algorithm(url.getAlgorithm())
                 .build();
     }
 
+    /**
+     * url 요청 후 2xx 응답일 경우 true, 아닐경우 false
+     */
     private boolean validateUrl(String originalUrl) {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<HttpResponse> responseEntity =
-                restTemplate.exchange(originalUrl, HttpMethod.HEAD, null, HttpResponse.class);
-
-        HttpStatus statusCode = responseEntity.getStatusCode();
+        HttpStatus statusCode
+                = restTemplate.exchange(originalUrl, HttpMethod.HEAD, null, HttpResponse.class)
+                .getStatusCode();
+        System.out.println("statusCode = " + statusCode);
         return statusCode.is2xxSuccessful();
     }
 }

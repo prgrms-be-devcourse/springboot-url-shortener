@@ -1,6 +1,5 @@
 package shortUrl.shortUrl.domain.entity;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +22,7 @@ class UrlTest {
     public void 조회수_증가() {
         Long hits = url.getHits();
         assertThat(hits).isEqualTo(0L);
-        url.hitCount();
+        url.increaseHits();
         Long afterHits = url.getHits();
         assertThat(afterHits).isEqualTo(1L);
     }

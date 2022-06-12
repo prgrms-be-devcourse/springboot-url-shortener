@@ -36,7 +36,7 @@ public class Url {
         this.hits = 0L;
     }
 
-    public void hitCount() {
+    public void increaseHits() {
         this.hits += 1;
         log.info("조회 수 1 증가.");
     }

@@ -12,7 +12,6 @@ import shortUrl.shortUrl.domain.value.Algorithm;
 public class CreateShortUrlDto {
 
     private String originalUrl;
-
     private Algorithm algorithm;
 
 }
