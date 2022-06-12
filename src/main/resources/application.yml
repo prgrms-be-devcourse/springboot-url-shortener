@@ -26,6 +26,10 @@ server:
     encoding:
       charset: UTF-8
       force-response: true
+  error:
+    include-exception: false
+    include-stacktrace: never
+    path: /error
 
 ---
 spring:
