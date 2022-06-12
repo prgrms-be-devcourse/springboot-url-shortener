@@ -12,12 +12,12 @@ public class Base62Encoder implements UrlEncoder {
     public String encode(long id) {
         StringBuilder shortUrl = new StringBuilder();
         while (id > 0) {
-            shortUrl.append(BASE62_FORMAT.charAt((int)id % BASE62));
+            shortUrl.append(BASE62_FORMAT.charAt((int)(id % BASE62)));
             id /= BASE62;
         }
         return shortUrl.reverse().toString();
     }
-    
+
     @Override
     public boolean resolve(String encodedType) {
         return EncodeType.BASE62.toString().equals(encodedType);
