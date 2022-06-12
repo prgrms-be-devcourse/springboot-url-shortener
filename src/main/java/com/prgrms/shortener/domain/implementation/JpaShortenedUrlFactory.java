@@ -24,11 +24,11 @@ public class JpaShortenedUrlFactory implements ShortenedUrlFactory {
     ShortenedUrl urlEntity = new ShortenedUrl();
     urlEntity.assignOriginalUrl(originalUrl);
 
-    urlEntity = urlRepository.saveAndFlush(urlEntity);
+    urlEntity = urlRepository.save(urlEntity);
     String hashedKey = shorteningStrategy.encode(urlEntity.getId());
     urlEntity.assignKey(hashedKey);
 
-    return urlRepository.saveAndFlush(urlEntity);
+    return urlRepository.save(urlEntity);
 
   }
 }

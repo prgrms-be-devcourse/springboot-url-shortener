@@ -15,10 +15,24 @@
       align-items: center;
     }
 
+    .form {
+      min-width: 80%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .form input {
+      min-width: 80%;
+      margin-bottom: 30px;
+      height: 50px;
+      padding-left: 20px;
+    }
+
     #result {
       margin-top: 20px;
       border: 2px solid gray;
-      padding: 5px 10px;
+      padding: 20px 30px;
       border-radius: 8px;
     }
   </style>
@@ -52,7 +66,19 @@
       }),
     });
     const data = await response.json();
-    result.innerText = data.url;
+    result.innerText = response.status === 400 ? data.message : data.url;
+
+    if (response.status === 400) {
+      result.innerText = data.message;
+      result.style.backgroundColor = "tomato";
+      setTimeout((component) => {
+        component.innerText = "URL을 입력해주세요"
+        component.style.backgroundColor = "white";
+      }, 2000, result)
+    } else {
+      result.innerText = data.url;
+      result.style.backgroundColor = "lightgreen"
+    }
     urlInput.value = "";
   });
 </script>

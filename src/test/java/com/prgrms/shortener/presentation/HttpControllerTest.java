@@ -81,6 +81,29 @@ class HttpControllerTest {
   }
 
   @Test
+  @DisplayName("원본 url이 url 형식에 맞지 않으면, 400 Bad Request가 담긴 응답을 보내야 한다.")
+  void should_return_400_bad_request_response_when_request_url_is_wrong() throws Exception {
+
+    // Given
+    String wrongPayload = json.writeValueAsString(Map.of("url", "asdkhvczlvdf"));
+
+    // When
+    ResultActions actions = mockMvc.perform(post("/url")
+        .content(wrongPayload)
+        .contentType(MediaType.APPLICATION_JSON));
+
+    // Then
+    actions.andExpectAll(
+        status().isBadRequest(),
+        jsonPath("message", Matchers.equalTo("잘못된 형식의 URL 문자열입니다."))
+    ).andDo(document("post-url-wrong-payload", requestFields(
+        fieldWithPath("url").type(JsonFieldType.STRING).description("Wrong url format")
+    ), responseFields(
+        fieldWithPath("message").type(JsonFieldType.STRING).description("Error description")
+    )));
+  }
+
+  @Test
   @DisplayName("저장되어 있는 축약된 url 요청이 들어오면, 원본 url로 성공적으로 redirect할 수 있어야 한다.")
   void redirect_to_original_url_successfully() throws Exception {
 
@@ -113,7 +136,6 @@ class HttpControllerTest {
 
   }
 
-  // TODO 1: HTML 컨텐츠를 전달하는 Controller도 restdocs를 작성해야 하는가?
   @Test
   @DisplayName("url에 path가 없을 경우 main html 페이지를 응답해야 한다.")
   void return_main_view_when_path_is_empty() throws Exception {
