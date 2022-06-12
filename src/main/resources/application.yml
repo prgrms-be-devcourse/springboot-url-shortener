@@ -1,2 +1,9 @@
 url-shortener:
   base-url: "localhost:8080/"
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:board
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
