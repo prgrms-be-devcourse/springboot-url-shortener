@@ -9,13 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 @ActiveProfiles("test")
 @SpringBootTest
-public class UrlInfoServiceTest {
+class UrlInfoServiceTest {
 
     @Autowired
     private UrlInfoRepository repository;

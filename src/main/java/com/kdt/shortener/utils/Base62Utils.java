@@ -5,12 +5,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class Base62Utils {
 
-    final int RADIX = 62;
+    static final int RADIX = 62;
 
-    final String CODE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    static final String CODE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     public String encoding(long id) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         while (id > 0) {
             sb.append(CODE.charAt((int) id % RADIX));
             id /= RADIX;

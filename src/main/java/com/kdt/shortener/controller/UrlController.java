@@ -32,7 +32,7 @@ public class UrlController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String startConvertPage(Model model) {
         model.addAttribute("urlForm", new UrlForm());
         return "shortUrl";
     }
