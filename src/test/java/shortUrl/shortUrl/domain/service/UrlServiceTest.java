@@ -48,9 +48,7 @@ class UrlServiceTest {
             String shortUrl = urlService.createShortUrl(base56UrlDto).getShortUrl();
 
             //when
-            ShortUrlDto shortUrlDto = new ShortUrlDto();
-            shortUrlDto.setShortUrl(shortUrl);
-            String originUrl = urlService.findOriginUrlByShortUrl(shortUrlDto).getOriginalUrl();
+            String originUrl = urlService.findOriginUrlByShortUrl(shortUrl);
 
             //then
             assertThat(originUrl).isEqualTo("https://www.naver.com/");
@@ -108,7 +106,7 @@ class UrlServiceTest {
         url.saveShortUrl(shortUrl);
 
         //when
-        Url save = urlRepository.save(url);
+        urlRepository.save(url);
 
         //then
         assertThrows(RuntimeException.class, () -> urlService.createShortUrl(base56UrlDto));
@@ -134,7 +132,7 @@ class UrlServiceTest {
             //when
             int n = 10;
             for (int i = 0; i < n; i++) {
-                urlService.findOriginUrlByShortUrl(shortUrlDto);
+                urlService.findOriginUrlByShortUrl(shortUrl);
             }
 
             //then
@@ -151,15 +149,11 @@ class UrlServiceTest {
             //given
             String shortUrl = urlService.createShortUrl(base56UrlDto).getShortUrl();
 
-
             //when
             String notExistShortUrl = "Not Exist Url";
-            ShortUrlDto shortUrlDto = new ShortUrlDto();
-            shortUrlDto.setShortUrl(notExistShortUrl);
-
 
             //then
-            assertThrows(RuntimeException.class, () -> urlService.findOriginUrlByShortUrl(shortUrlDto));
+            assertThrows(RuntimeException.class, () -> urlService.findOriginUrlByShortUrl(notExistShortUrl));
         }
     }
 
@@ -172,16 +166,14 @@ class UrlServiceTest {
 
             //given
             String shortUrl = urlService.createShortUrl(base56UrlDto).getShortUrl();
-            ShortUrlDto shortUrlDto = new ShortUrlDto();
-            shortUrlDto.setShortUrl(shortUrl);
 
             int n = 10;
             for (int i = 0; i < n; i++) {
-                urlService.findOriginUrlByShortUrl(shortUrlDto);
+                urlService.findOriginUrlByShortUrl(shortUrl);
             }
 
             //when
-            ShortUrlDto afterShortUrlDto = urlService.getUrlInfo(shortUrlDto);
+            ShortUrlDto afterShortUrlDto = urlService.getUrlInfo(shortUrl);
 
             //then
             assertThat(afterShortUrlDto.getOriginalUrl()).isEqualTo(base56UrlDto.getOriginalUrl());
@@ -196,14 +188,9 @@ class UrlServiceTest {
 
             //given
             String notExistShortUrl = "Not Exist Url";
-            ShortUrlDto shortUrlDto = new ShortUrlDto();
-            shortUrlDto.setShortUrl(notExistShortUrl);
 
             //then
-            assertThrows(RuntimeException.class, () -> urlService.getUrlInfo(shortUrlDto));
+            assertThrows(RuntimeException.class, () -> urlService.getUrlInfo(notExistShortUrl));
         }
     }
-
-
-
 }

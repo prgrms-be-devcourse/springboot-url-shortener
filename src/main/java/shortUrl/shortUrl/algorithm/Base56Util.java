@@ -1,6 +1,5 @@
 package shortUrl.shortUrl.algorithm;
 
-
 public class Base56Util {
 
     static final char[] BASE = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789".toCharArray();

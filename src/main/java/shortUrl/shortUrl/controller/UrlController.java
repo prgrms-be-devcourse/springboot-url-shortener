@@ -1,12 +1,12 @@
 package shortUrl.shortUrl.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import shortUrl.shortUrl.domain.dto.CreateShortUrlDto;
 import shortUrl.shortUrl.domain.dto.ShortUrlDto;
 import shortUrl.shortUrl.domain.service.UrlService;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 public class UrlController {
@@ -17,9 +17,29 @@ public class UrlController {
         this.urlService = urlService;
     }
 
-    @GetMapping("/")
+    @PostMapping("/create")
     public ShortUrlDto createShortUrl(@RequestBody CreateShortUrlDto createShortUrlDto) {
-//        String shortUrl = urlService.createShortUrl(createShortUrlDto);
-        return null;
+        return urlService.createShortUrl(createShortUrlDto);
+    }
+
+    @GetMapping("/link")
+    public void linkOriginalUrl(@RequestBody ShortUrlDto shortUrlDto,
+                                HttpServletResponse response) throws IOException {
+        String shortUrl = shortUrlDto.getShortUrl();
+        String originalUrl = urlService.findOriginUrlByShortUrl(shortUrl);
+
+        response.sendRedirect(originalUrl);
+    }
+
+    @GetMapping("/{shortUrl}")
+    public void redirectUrl(@PathVariable("shortUrl") String shortUrl, HttpServletResponse response) throws IOException {
+        String originalUrl = urlService.findOriginUrlByShortUrl(shortUrl);
+        response.sendRedirect(originalUrl);
+    }
+
+    @GetMapping("/{shortUrl}/info")
+    public ShortUrlDto getInfoShortUrl(@PathVariable("shortUrl") String shortUrl) throws IOException {
+
+        return urlService.getUrlInfo(shortUrl);
     }
 }

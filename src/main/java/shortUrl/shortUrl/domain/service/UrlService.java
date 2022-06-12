@@ -18,7 +18,6 @@ import shortUrl.shortUrl.exception.WrongUrlException;
 import java.net.http.HttpResponse;
 import java.util.Optional;
 
-
 @Service
 @Slf4j
 @Transactional
@@ -64,19 +63,16 @@ public class UrlService {
         return shortUrlDto;
     }
 
-    public ShortUrlDto findOriginUrlByShortUrl(ShortUrlDto shortUrlDto) {
-        String shortUrl = shortUrlDto.getShortUrl();
+    public String findOriginUrlByShortUrl(String shortUrl) {
         Url url = urlRepository.findByShortUrl(shortUrl)
                 .orElseThrow(() -> new NotExistException("존재하지 않습니다."));
         url.increaseHits();
 
-        shortUrlDto.setOriginalUrl(url.getOriginalUrl());
-        return shortUrlDto;
+        return url.getOriginalUrl();
     }
 
     @Transactional(readOnly = true)
-    public ShortUrlDto getUrlInfo(ShortUrlDto shortUrlDto) {
-        String shortUrl = shortUrlDto.getShortUrl();
+    public ShortUrlDto getUrlInfo(String shortUrl) {
         Url url = urlRepository.findByShortUrl(shortUrl)
                         .orElseThrow(() -> new NotExistException("존재하지 않습니다."));
         return ShortUrlDto.builder()

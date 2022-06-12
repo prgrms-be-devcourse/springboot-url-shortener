@@ -17,5 +17,4 @@ public interface UrlRepository extends JpaRepository<Url, Long> {
     @Query("select u from Url u where u.originalUrl = :originalUrl and u.algorithm = :algorithm")
     Optional<Url> findByOriginalUrlAndAlgorithm(@Param("originalUrl") String originalUrl,
                                           @Param("algorithm") Algorithm algorithm);
-
 }
