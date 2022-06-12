@@ -10,8 +10,6 @@ import shortUrl.shortUrl.domain.entity.Url;
 import shortUrl.shortUrl.domain.repository.UrlRepository;
 import shortUrl.shortUrl.domain.value.Algorithm;
 
-import java.sql.ResultSet;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,15 +42,15 @@ class UrlServiceTest {
     class 생성_테스트 {
 
         @Test
-        void 성공() {
+        public void 성공() {
 
             //given
-            String shortUrl = urlService.createShortUrl(base56UrlDto);
+            String shortUrl = urlService.createShortUrl(base56UrlDto).getShortUrl();
 
             //when
             ShortUrlDto shortUrlDto = new ShortUrlDto();
             shortUrlDto.setShortUrl(shortUrl);
-            String originUrl = urlService.findOriginUrlByShortUrl(shortUrlDto);
+            String originUrl = urlService.findOriginUrlByShortUrl(shortUrlDto).getOriginalUrl();
 
             //then
             assertThat(originUrl).isEqualTo("https://www.naver.com/");
@@ -60,7 +58,7 @@ class UrlServiceTest {
 
         @Test
         @DisplayName("예외 발생 : 유효하지 않은 originalUrl 입력")
-        void 실패_잘못된_originalUrl_예외발생() {
+        public void 실패_잘못된_originalUrl_예외발생() {
 
             //given
             String originalUrl = "https://www.naver.cm/";
@@ -72,13 +70,13 @@ class UrlServiceTest {
 
         @Test
         @DisplayName("성공 : 동일한 OriginalUrl - Algorithm로 생성한 ShortUrl이 존재하는 경우 기존의 것을 반환")
-        void 성공_이미존재하는_경우_기존의_shortUrl반환() {
+        public void 성공_이미존재하는_경우_기존의_shortUrl반환() {
 
             //given
-            String shortUrl = urlService.createShortUrl(base56UrlDto);
+            String shortUrl = urlService.createShortUrl(base56UrlDto).getShortUrl();
 
             //when
-            String createSameUrl = urlService.createShortUrl(base56UrlDto);
+            String createSameUrl = urlService.createShortUrl(base56UrlDto).getShortUrl();
 
             //then
             assertThat(createSameUrl).isEqualTo(shortUrl);
@@ -89,10 +87,10 @@ class UrlServiceTest {
         public void Test() throws Exception {
 
             //given
-            String base56Url = urlService.createShortUrl(base56UrlDto);
+            String base56Url = urlService.createShortUrl(base56UrlDto).getShortUrl();
 
             //when
-            String sha256Url = urlService.createShortUrl(sha256UrlDto);
+            String sha256Url = urlService.createShortUrl(sha256UrlDto).getShortUrl();
 
             //then
             assertThat(base56Url).isNotEqualTo(sha256Url);
@@ -124,7 +122,7 @@ class UrlServiceTest {
         public void 조회() throws Exception {
 
             //given
-            String shortUrl = urlService.createShortUrl(base56UrlDto);
+            String shortUrl = urlService.createShortUrl(base56UrlDto).getShortUrl();
             ShortUrlDto shortUrlDto = new ShortUrlDto();
             shortUrlDto.setShortUrl(shortUrl);
 
@@ -151,7 +149,7 @@ class UrlServiceTest {
         public void notExistShortUrl() throws Exception {
 
             //given
-            String shortUrl = urlService.createShortUrl(base56UrlDto);
+            String shortUrl = urlService.createShortUrl(base56UrlDto).getShortUrl();
 
 
             //when
@@ -173,7 +171,7 @@ class UrlServiceTest {
         public void info조회() throws Exception {
 
             //given
-            String shortUrl = urlService.createShortUrl(base56UrlDto);
+            String shortUrl = urlService.createShortUrl(base56UrlDto).getShortUrl();
             ShortUrlDto shortUrlDto = new ShortUrlDto();
             shortUrlDto.setShortUrl(shortUrl);
 

@@ -30,9 +30,10 @@ public class UrlService {
         this.urlRepository = urlRepository;
     }
 
-    public String createShortUrl(CreateShortUrlDto createShortUrlDto) {
+    public ShortUrlDto createShortUrl(CreateShortUrlDto createShortUrlDto) {
         String originalUrl = createShortUrlDto.getOriginalUrl();
         Algorithm algorithm = createShortUrlDto.getAlgorithm();
+        ShortUrlDto shortUrlDto = new ShortUrlDto();
 
         if (!validateUrl(originalUrl)) {
             throw new WrongUrlException("잘못된 url 입력입니다.");
@@ -42,7 +43,8 @@ public class UrlService {
         Optional<Url> existUrl = urlRepository.findByOriginalUrlAndAlgorithm(originalUrl, algorithm);
         if (existUrl.isPresent()) {
             log.info("algorithm[{}] 을 사용한 동일한 originalUrl[{}] 이 존재합니다.", algorithm, originalUrl);
-            return existUrl.get().getShortUrl();
+            shortUrlDto.setShortUrl(existUrl.get().getShortUrl());
+            return shortUrlDto;
         }
 
         Url url = new Url(originalUrl, algorithm);
@@ -58,15 +60,18 @@ public class UrlService {
             throw new AlreadyExistException("이미 존재하는 short url 입니다.");
         }
         savedUrl.saveShortUrl(shortUrl);
-        return shortUrl;
+        shortUrlDto.setShortUrl(shortUrl);
+        return shortUrlDto;
     }
 
-    public String findOriginUrlByShortUrl(ShortUrlDto shortUrlDto) {
+    public ShortUrlDto findOriginUrlByShortUrl(ShortUrlDto shortUrlDto) {
         String shortUrl = shortUrlDto.getShortUrl();
         Url url = urlRepository.findByShortUrl(shortUrl)
                 .orElseThrow(() -> new NotExistException("존재하지 않습니다."));
         url.increaseHits();
-        return url.getOriginalUrl();
+
+        shortUrlDto.setOriginalUrl(url.getOriginalUrl());
+        return shortUrlDto;
     }
 
     @Transactional(readOnly = true)
