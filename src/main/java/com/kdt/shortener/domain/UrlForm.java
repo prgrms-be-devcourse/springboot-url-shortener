@@ -8,7 +8,6 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Data
 public class UrlForm {
-    @NotBlank(message = "URL 값을 비워둘 수 없습니다.")
+    @NotBlank
     private String urlValue;
-
 }
