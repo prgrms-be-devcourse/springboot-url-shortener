@@ -1,4 +1,4 @@
-package com.prgrms.shortener.domain;
+package com.prgrms.shortener.domain.encoding;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

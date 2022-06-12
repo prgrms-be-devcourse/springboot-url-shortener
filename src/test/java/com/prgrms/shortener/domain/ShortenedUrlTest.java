@@ -28,7 +28,7 @@ class ShortenedUrlTest {
   }
 
   @Test
-  @DisplayName("key를 할당할 때 key의 길이가 8인지 확인해야 한다.")
+  @DisplayName("key를 할당할 때 key의 길이가 7인지 확인해야 한다.")
   void assignKeyValidationTest() {
 
     // Given
