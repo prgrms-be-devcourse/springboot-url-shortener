@@ -29,6 +29,6 @@ public class UrlInfoService {
         }
         UrlInfo urlInfo = new UrlInfo(originUrl);
         repository.save(urlInfo);
-        return "http://localhost:8080/" + base62Utils.encoding(urlInfo.getId());
+        return "http://localhost:8080/short/" + base62Utils.encoding(urlInfo.getId());
     }
 }

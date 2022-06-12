@@ -28,17 +28,17 @@ public class UrlController {
         String urlResult = service.makeShortUrl(urlForm.getUrlValue());
         model.addAttribute("urlForm", new UrlForm());
         model.addAttribute("urlResult", urlResult);
-        return "index";
+        return "shortUrl";
     }
 
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("urlForm", new UrlForm());
-        return "index";
+        return "shortUrl";
     }
 
-    @GetMapping("/{shortUrl}")
-    public String redirectPage(@PathVariable String shortUrl) {
+    @GetMapping("/short/{url}")
+    public String redirectPage(@PathVariable("url") String shortUrl) {
         String longUrl = service.turnOriginUrl(shortUrl).getOriginUrl();
         return "redirect:" + longUrl;
     }
