@@ -52,7 +52,7 @@ public class UrlService {
         Long id = savedUrl.getId();
         String shortUrl = algorithm.encoding(id);
 
-        // TODO: 2022/06/12 존재하면 그 후 처리는?
+        // TODO: 2022/06/12 존재하면 그 후 처리는? error log를 찍고 예외 처리가 아닌 char length가 +1인 url을 반환 후 보수?
         if (urlRepository.existsByShortUrl(shortUrl)) {
             log.error("중복되는 shortUrl 발생!!! originalUrl => {}, algorithm => {}, shortUrl => {}",
                     originalUrl, algorithm, shortUrl);
@@ -84,7 +84,7 @@ public class UrlService {
     }
 
     /**
-     * url 요청 후 2xx 응답일 경우 true, 아닐경우 false
+     * url 요청 후 2xx, 3xx 응답일 경우 true, 아닐경우 false
      */
     private boolean validateUrl(String originalUrl) {
         RestTemplate restTemplate = new RestTemplate();
@@ -92,6 +92,6 @@ public class UrlService {
                 = restTemplate.exchange(originalUrl, HttpMethod.HEAD, null, HttpResponse.class)
                 .getStatusCode();
         System.out.println("statusCode = " + statusCode);
-        return statusCode.is2xxSuccessful();
+        return statusCode.is2xxSuccessful() || statusCode.is3xxRedirection();
     }
 }

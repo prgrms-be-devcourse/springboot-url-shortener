@@ -22,7 +22,7 @@ public class UrlController {
         return urlService.createShortUrl(createShortUrlDto);
     }
 
-    @GetMapping("/link")
+    @PostMapping("/link")
     public void linkOriginalUrl(@RequestBody ShortUrlDto shortUrlDto,
                                 HttpServletResponse response) throws IOException {
         String shortUrl = shortUrlDto.getShortUrl();
@@ -31,7 +31,7 @@ public class UrlController {
         response.sendRedirect(originalUrl);
     }
 
-    @GetMapping("/{shortUrl}")
+    @PostMapping("/{shortUrl}")
     public void redirectUrl(@PathVariable("shortUrl") String shortUrl, HttpServletResponse response) throws IOException {
         String originalUrl = urlService.findOriginUrlByShortUrl(shortUrl);
         response.sendRedirect(originalUrl);
@@ -39,7 +39,6 @@ public class UrlController {
 
     @GetMapping("/{shortUrl}/info")
     public ShortUrlDto getInfoShortUrl(@PathVariable("shortUrl") String shortUrl) throws IOException {
-
         return urlService.getUrlInfo(shortUrl);
     }
 }
