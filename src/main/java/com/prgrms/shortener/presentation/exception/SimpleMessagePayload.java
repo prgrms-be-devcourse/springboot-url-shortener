@@ -3,11 +3,11 @@ package com.prgrms.shortener.presentation.exception;
 import lombok.Getter;
 
 @Getter
-public class SimpleMessagePayload {
+class SimpleMessagePayload {
 
   private final String message;
 
-  public SimpleMessagePayload(String message) {
+  SimpleMessagePayload(String message) {
     this.message = message;
   }
 }

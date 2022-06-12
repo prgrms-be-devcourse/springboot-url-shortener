@@ -1,8 +1,5 @@
-package com.prgrms.shortener.presentation;
+package com.prgrms.shortener.presentation.exception;
 
-import com.prgrms.shortener.presentation.exception.InvalidUrlRequestException;
-import com.prgrms.shortener.presentation.exception.ShortenedUrlNotFoundException;
-import com.prgrms.shortener.presentation.exception.SimpleMessagePayload;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @ControllerAdvice
 @Slf4j
-public class HttpControllerAdvice {
+public class HttpExceptionHandler {
 
   @ExceptionHandler(ShortenedUrlNotFoundException.class)
   public String shortenedUrlNotFoundExceptionHandler(ShortenedUrlNotFoundException exception, HttpServletResponse response) {
