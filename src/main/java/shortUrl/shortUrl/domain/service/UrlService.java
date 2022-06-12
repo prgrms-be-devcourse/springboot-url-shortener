@@ -47,6 +47,7 @@ public class UrlService {
         }
 
         Url savedUrl = urlRepository.save(new Url(originalUrl, algorithm));
+        log.info("{} url 영속화", savedUrl);
         String shortUrl = algorithm.encoding(savedUrl.getId());
 
         // TODO: 2022/06/12 존재하면 그 후 처리는? error log를 찍고 예외 처리가 아닌 char length가 +1인 url을 반환 후 보수?
@@ -56,8 +57,6 @@ public class UrlService {
         shortUrlDto.setShortUrl(shortUrl);
         return shortUrlDto;
     }
-
-
 
     public String findOriginUrlByShortUrl(String shortUrl) {
         Url url = urlRepository.findByShortUrl(shortUrl)
@@ -87,7 +86,7 @@ public class UrlService {
         HttpStatus statusCode
                 = restTemplate.exchange(originalUrl, HttpMethod.HEAD, null, HttpResponse.class)
                 .getStatusCode();
-        System.out.println("statusCode = " + statusCode);
+        log.info("statusCode => {}", statusCode);
         return statusCode.is2xxSuccessful() || statusCode.is3xxRedirection();
     }
 
