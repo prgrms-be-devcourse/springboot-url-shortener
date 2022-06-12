@@ -11,7 +11,7 @@ public class Base62Encoder implements UrlEncoder {
     }
 
     @Override
-    public boolean resolve(String encodedType) {
+    public boolean supports(String encodedType) {
         return EncodeType.BASE62.toString().equals(encodedType);
     }
 

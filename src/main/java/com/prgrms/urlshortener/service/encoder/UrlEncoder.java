@@ -4,6 +4,6 @@ public interface UrlEncoder {
 
     String encode(long id);
 
-    boolean resolve(String encodedType);
+    boolean supports(String encodedType);
 
 }

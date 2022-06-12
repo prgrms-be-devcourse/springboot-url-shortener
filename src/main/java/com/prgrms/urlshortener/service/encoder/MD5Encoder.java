@@ -44,7 +44,7 @@ class MD5Encoder implements UrlEncoder {
     }
 
     @Override
-    public boolean resolve(String encodedType) {
+    public boolean supports(String encodedType) {
         return EncodeType.MD5.toString().equals(encodedType);
     }
 
