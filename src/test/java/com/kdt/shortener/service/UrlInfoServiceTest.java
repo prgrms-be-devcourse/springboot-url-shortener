@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ActiveProfiles("test")
 @SpringBootTest
@@ -40,6 +41,18 @@ class UrlInfoServiceTest {
 
         //then
         assertThat(result.getOriginUrl(), is(originUrl));
+    }
+
+    @Test
+    @DisplayName("잘못된 shortURL 입력 테스트")
+    void illegalShortUrlInputTest(){
+
+        //given
+        String wrongUrl = "http://localhost:8080/short/ERROR";
+
+        assertThrows(IllegalArgumentException.class, () ->
+                service.turnOriginUrl(wrongUrl));
+
     }
 
 }
