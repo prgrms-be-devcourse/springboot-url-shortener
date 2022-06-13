@@ -34,9 +34,7 @@ public class UrlService {
         Algorithm algorithm = createShortUrlDto.getAlgorithm();
         ShortUrlDto shortUrlDto = new ShortUrlDto();
 
-        if (!validateUrl(originalUrl)) {
-            throw new WrongUrlException("잘못된 url 입력입니다.");
-        }
+        Url url = new Url(originalUrl, algorithm);
 
         // TODO: 2022/06/11 코드 개선 방향이 있는가?
         Optional<Url> existUrl = urlRepository.findByOriginalUrlAndAlgorithm(originalUrl, algorithm);
@@ -46,7 +44,7 @@ public class UrlService {
             return shortUrlDto;
         }
 
-        Url savedUrl = urlRepository.save(new Url(originalUrl, algorithm));
+        Url savedUrl = urlRepository.save(url);
         log.info("{} url 영속화", savedUrl);
         String shortUrl = algorithm.encoding(savedUrl.getId());
 
@@ -76,18 +74,6 @@ public class UrlService {
                 .hits(url.getHits())
                 .algorithm(url.getAlgorithm())
                 .build();
-    }
-
-    /**
-     * url 요청 후 2xx, 3xx 응답일 경우 true, 아닐경우 false
-     */
-    private boolean validateUrl(String originalUrl) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpStatus statusCode
-                = restTemplate.exchange(originalUrl, HttpMethod.HEAD, null, HttpResponse.class)
-                .getStatusCode();
-        log.info("statusCode => {}", statusCode);
-        return statusCode.is2xxSuccessful() || statusCode.is3xxRedirection();
     }
 
     private void checkSameShortUrl(String originalUrl, Algorithm algorithm, String shortUrl) {

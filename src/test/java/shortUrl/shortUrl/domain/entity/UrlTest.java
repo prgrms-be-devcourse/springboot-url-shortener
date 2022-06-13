@@ -14,7 +14,7 @@ class UrlTest {
 
     @BeforeEach
     void setup() {
-        String originalUrl = "naver.com";
+        String originalUrl = "https://www.naver.com/";
         url = new Url(originalUrl, Algorithm.BASE_56);
     }
 

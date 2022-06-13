@@ -5,9 +5,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.RestTemplate;
 import shortUrl.shortUrl.domain.value.Algorithm;
+import shortUrl.shortUrl.exception.WrongUrlException;
 
 import javax.persistence.*;
+import java.net.http.HttpResponse;
 
 @Entity
 @Table(name = "url")
@@ -31,6 +36,9 @@ public class Url {
     private Algorithm algorithm;
 
     public Url(String originalUrl, Algorithm algorithm) {
+        if (!validateUrl(originalUrl)) {
+            throw new WrongUrlException("잘못된 url 입력입니다.");
+        }
         this.originalUrl = originalUrl;
         this.algorithm = algorithm;
         this.hits = 0L;
@@ -48,5 +56,17 @@ public class Url {
         }
         this.shortUrl = shortUrl;
         log.info("shortUrl => {} 저장.", shortUrl);
+    }
+
+    /**
+     * url 요청 후 2xx, 3xx 응답일 경우 true, 아닐경우 false
+     */
+    private boolean validateUrl(String originalUrl) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpStatus statusCode
+                = restTemplate.exchange(originalUrl, HttpMethod.HEAD, null, HttpResponse.class)
+                .getStatusCode();
+        log.info("statusCode => {}", statusCode);
+        return statusCode.is2xxSuccessful() || statusCode.is3xxRedirection();
     }
 }
