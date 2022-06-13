@@ -40,4 +40,10 @@ public class UrlServiceImpl implements UrlService {
 
         return savedUrl.getOriginal();
     }
+
+    @Override
+    public long getCalledData(String shortenUrl) {
+        Long originalUrlKey = Long.valueOf(Encoding.getOriginalUrlKey(shortenUrl));
+        return urlRepository.findCalledById(originalUrlKey).getCalled();
+    }
 }

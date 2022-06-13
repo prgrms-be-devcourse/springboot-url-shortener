@@ -22,7 +22,6 @@ final class Base62Encoder extends Encoder {
     String encode(long id) {
         StringBuilder sb = new StringBuilder();
         while (id > 0) {
-            long maxValue = Long.MAX_VALUE;
             int i = (int) (id % CHARSET_LENGTH);
             sb.append(charsetData[i]);
             id = id / CHARSET_LENGTH;

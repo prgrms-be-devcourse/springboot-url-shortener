@@ -1,16 +1,13 @@
 package org.programmers.springbooturlshortener.encoding;
 
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.params.provider.Arguments.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 class Base62EncoderTest {
 
@@ -32,14 +29,14 @@ class Base62EncoderTest {
 
     private static Stream<Arguments> encodeParams() {
         return Stream.of(
-                arguments(1L,                   "1"),
-                arguments(61L,                  "z"),
-                arguments(12395432L,            "Kc0q"),
-                arguments(7952117461L,          "31HAg8"),
-                arguments(56800235584L,         "0000001"),
-                arguments(3521614606207L,       "zzzzzzz"),
-                arguments(3521614606208L,       "00000001"),
-                arguments(218340105584895L,     "zzzzzzzz")
+                arguments(1L, "1"),
+                arguments(61L, "z"),
+                arguments(12395432L, "Kc0q"),
+                arguments(7952117461L, "31HAg8"),
+                arguments(56800235584L, "0000001"),
+                arguments(3521614606207L, "zzzzzzz"),
+                arguments(3521614606208L, "00000001"),
+                arguments(218340105584895L, "zzzzzzzz")
         );
     }
 }

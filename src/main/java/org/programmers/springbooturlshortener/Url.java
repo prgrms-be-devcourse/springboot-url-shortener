@@ -23,9 +23,9 @@ public class Url {
     private Long id;
     private String original;
     @Column(nullable = false)
-    private int called = 0;
+    private long called = 0;
 
-    public int addCalledTime() {
+    public long addCalledTime() {
         return ++called;
     }
 }

@@ -11,8 +11,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class UrlCreateCommandObject {
 
-    @NotBlank
+    @NotBlank(message = "URL을 입력해주세요.")
     private String original;
-    @NotNull
+    @NotNull(message = "인코딩을 선택해주세요.")
     private Encoding encoding;
 }
