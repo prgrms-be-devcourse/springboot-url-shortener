@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.prgrms.urlshortener.domain.ShortedUrl;
 import com.prgrms.urlshortener.domain.Url;
 import com.prgrms.urlshortener.dto.CreateShortenUrlRequest;
+import com.prgrms.urlshortener.dto.UrlResponse;
 import com.prgrms.urlshortener.repository.UrlRepository;
 import com.prgrms.urlshortener.service.encoder.UrlEncoder;
 import com.prgrms.urlshortener.service.encoder.UrlEncoders;
@@ -83,6 +84,23 @@ class UrlServiceTest {
         // then
         assertThatThrownBy(() -> urlService.getOriginUrl(shortedUrl))
             .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("단축 Url로 Url 정보를 조회한다.")
+    @Test
+    void getUrlInfromation() {
+        // given
+        String shortedUrl = "12345";
+        Url url = createUrl_WithShortedUrl(shortedUrl);
+        given(urlRepository.findUrlByShortedUrl(any(ShortedUrl.class))).willReturn(Optional.of(url));
+
+        // when
+        UrlResponse urlResponse = urlService.getUrlInformation(shortedUrl);
+
+        // then
+        assertThat(urlResponse.getRequestCount()).isEqualTo(url.getRequestCount());
+
+        then(urlRepository).should(times(1)).findUrlByShortedUrl(any(ShortedUrl.class));
     }
 
     private Url createUrl() {

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.prgrms.urlshortener.domain.ShortedUrl;
 import com.prgrms.urlshortener.domain.Url;
 import com.prgrms.urlshortener.dto.CreateShortenUrlRequest;
+import com.prgrms.urlshortener.dto.UrlResponse;
 import com.prgrms.urlshortener.repository.UrlRepository;
 import com.prgrms.urlshortener.service.encoder.UrlEncoder;
 import com.prgrms.urlshortener.service.encoder.UrlEncoders;
@@ -40,4 +41,9 @@ public class UrlService {
         return url.getOriginUrl();
     }
 
+    public UrlResponse getUrlInformation(String shortedUrl) {
+        return urlRepository.findUrlByShortedUrl(new ShortedUrl(shortedUrl))
+            .map(UrlResponse::from)
+            .orElseThrow(() -> new IllegalArgumentException(shortedUrl + "로 저장된 URL이 없습니다."));
+    }
 }
