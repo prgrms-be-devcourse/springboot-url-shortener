@@ -1,5 +1,7 @@
 package com.spring.shorturl.domain;
 
+import com.spring.shorturl.domain.data.Url;
+import com.spring.shorturl.domain.data.UrlDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -7,15 +9,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class Converter {
 
-    public Post convertPost(PostDto.SaveRequest postDto) {
-        return Post.builder()
-                .title(postDto.title())
-                .build();
+    public UrlDto.Response convertUrlDto(Url url){
+        return new UrlDto.Response(url.getShortUrl());
     }
 
-    public PostDto.Response convertPostDto(Post post) {
-        return new PostDto.Response(
-                post.getId(),
-                post.getTitle());
-    }
 }
