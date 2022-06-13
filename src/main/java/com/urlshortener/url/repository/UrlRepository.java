@@ -1,6 +1,6 @@
-package com.urlshortener.shorturl.repository;
+package com.urlshortener.url.repository;
 
-import com.urlshortener.shorturl.model.entity.Url;
+import com.urlshortener.url.model.entity.Url;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

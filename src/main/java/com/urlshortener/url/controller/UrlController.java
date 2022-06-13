@@ -1,8 +1,8 @@
-package com.urlshortener.shorturl.controller;
+package com.urlshortener.url.controller;
 
-import com.urlshortener.shorturl.model.dto.CreateRequest;
-import com.urlshortener.shorturl.model.dto.CreateResponse;
-import com.urlshortener.shorturl.service.UrlService;
+import com.urlshortener.url.model.dto.CreateRequest;
+import com.urlshortener.url.model.dto.CreateResponse;
+import com.urlshortener.url.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

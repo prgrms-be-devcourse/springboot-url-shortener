@@ -1,4 +1,4 @@
-package com.urlshortener.shorturl.model.entity;
+package com.urlshortener.url.model.entity;
 
 import lombok.*;
 

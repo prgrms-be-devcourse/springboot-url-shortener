@@ -1,4 +1,4 @@
-package com.urlshortener.shorturl.model.dto;
+package com.urlshortener.url.model.dto;
 
 import lombok.Getter;
 import org.hibernate.validator.constraints.URL;

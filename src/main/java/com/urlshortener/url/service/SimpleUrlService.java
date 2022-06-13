@@ -1,11 +1,11 @@
-package com.urlshortener.shorturl.service;
+package com.urlshortener.url.service;
 
-import com.urlshortener.shorturl.component.ShortUrlGenerator;
-import com.urlshortener.shorturl.model.converter.UrlConverter;
-import com.urlshortener.shorturl.model.dto.CreateRequest;
-import com.urlshortener.shorturl.model.dto.CreateResponse;
-import com.urlshortener.shorturl.model.entity.Url;
-import com.urlshortener.shorturl.repository.UrlRepository;
+import com.urlshortener.url.component.ShortUrlGenerator;
+import com.urlshortener.url.model.converter.UrlConverter;
+import com.urlshortener.url.model.dto.CreateRequest;
+import com.urlshortener.url.model.dto.CreateResponse;
+import com.urlshortener.url.model.entity.Url;
+import com.urlshortener.url.repository.UrlRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

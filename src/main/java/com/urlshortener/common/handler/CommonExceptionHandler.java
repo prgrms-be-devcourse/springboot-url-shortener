@@ -1,4 +1,4 @@
-package com.urlshortener.common.exception;
+package com.urlshortener.common.handler;
 
 import lombok.Data;
 import org.springframework.http.ResponseEntity;

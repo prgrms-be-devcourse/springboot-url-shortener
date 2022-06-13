@@ -1,7 +1,7 @@
-package com.urlshortener.shorturl.model.converter;
+package com.urlshortener.url.model.converter;
 
-import com.urlshortener.shorturl.model.dto.CreateResponse;
-import com.urlshortener.shorturl.model.entity.Url;
+import com.urlshortener.url.model.dto.CreateResponse;
+import com.urlshortener.url.model.entity.Url;
 import org.springframework.stereotype.Component;
 
 @Component
