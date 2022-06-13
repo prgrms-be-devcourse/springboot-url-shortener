@@ -1,4 +1,4 @@
-package org.programmers.springbooturlshortener;
+package org.programmers.springbooturlshortener.repository;
 
 public final class DuplicateUrlException extends IllegalArgumentException {
     public DuplicateUrlException(String original) {

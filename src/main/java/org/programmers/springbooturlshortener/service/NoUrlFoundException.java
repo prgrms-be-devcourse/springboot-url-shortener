@@ -1,4 +1,4 @@
-package org.programmers.springbooturlshortener;
+package org.programmers.springbooturlshortener.service;
 
 public class NoUrlFoundException extends IllegalArgumentException {
     public NoUrlFoundException(String shortenUrl, Long key) {
