@@ -5,10 +5,16 @@ import com.spring.shorturl.domain.data.Url;
 import com.spring.shorturl.domain.data.UrlDto;
 import com.spring.shorturl.domain.UrlService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URISyntaxException;
+
 
 @RestController
 @RequestMapping("/urls")
@@ -37,12 +43,24 @@ public class UrlController {
     }
     //////////////////////////
 
+    // json body 로 shortUrl을 넘겼을때 redirect
     @PostMapping("/find")
     public void findOriginalUrlByShortUrl(
             HttpServletResponse response,
             @RequestBody UrlDto.ShortUrlRequest shortUrl
-    ) throws IOException {
+    ) throws URISyntaxException, IOException {
         Url url = urlService.findByShortUrl(shortUrl.shortUrl());
+
         response.sendRedirect(url.getOriginUrl());
+    }
+
+    // parameter 로 shortUrl을 넘겼을때 redirect
+    @GetMapping("/{url}")
+    public ResponseEntity<Void> redirect(@PathVariable String url) {
+        Url byShortUrl = urlService.findByShortUrl(url);
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .header(HttpHeaders.LOCATION, byShortUrl.getOriginUrl())
+                .build();
     }
 }
