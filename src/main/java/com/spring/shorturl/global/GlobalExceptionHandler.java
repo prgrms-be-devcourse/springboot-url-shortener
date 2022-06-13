@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NotFoundEntityByIdException.class)
     protected ApiResponse<?> handleEntityNotFoundEntityByIdException(NotFoundEntityByIdException e) {
-        log.warn("NotFoundEntityByIdException {}", e.getMessage(), e);
+        log.error("NotFoundEntityByIdException {}", e.getMessage(), e);
         return ApiResponse.fail(HttpStatus.NOT_FOUND.value(), e);
     }
 }
