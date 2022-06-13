@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import com.prgrms.urlshortener.exception.InvalidShortedUrlException;
+import com.prgrms.urlshortener.exception.InvalidUrlException;
+
 class UrlTest {
 
     @DisplayName("올바른 URL이라면 Url 객체를 생성한다.")
@@ -37,7 +40,8 @@ class UrlTest {
     })
     void generate_Url_with_wrong_URL(String url) {
         assertThatThrownBy(() -> new Url(url))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(InvalidUrlException.class)
+            .hasMessage("%s은 잘못된 URL 포맷입니다.".formatted(url));
     }
 
     @DisplayName("단축 Url을 할당할 수 있다.")
@@ -65,7 +69,8 @@ class UrlTest {
         // when
         // then
         assertThatThrownBy(() -> url.assignShortedUrl(shortedUrl))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(InvalidShortedUrlException.class)
+            .hasMessage("이미 단축 URL이 할당되어 있습니다.");
     }
 
 }

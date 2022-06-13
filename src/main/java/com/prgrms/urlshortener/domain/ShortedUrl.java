@@ -5,6 +5,8 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import com.prgrms.urlshortener.exception.InvalidShortedUrlException;
+
 @Embeddable
 public class ShortedUrl {
 
@@ -28,13 +30,13 @@ public class ShortedUrl {
 
     private void validateEmpty(String url) {
         if (Objects.isNull(url) || url.isBlank()) {
-            throw new IllegalArgumentException("단축된 URL은 비어있을 수 없습니다.");
+            throw new InvalidShortedUrlException("단축된 URL은 비어있을 수 없습니다.");
         }
     }
 
     private void validateLength(String url) {
         if (url.length() > MAX_SHORTED_URL_LENGTH) {
-            throw new IllegalArgumentException("단축된 URL은 8자를 넘을 수 없습니다.");
+            throw new InvalidShortedUrlException("단축된 URL은 8자를 넘을 수 없습니다.");
         }
     }
 

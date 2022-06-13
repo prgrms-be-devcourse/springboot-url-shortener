@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.prgrms.urlshortener.exception.InvalidEncodeTypeException;
+
 @Component
 public class UrlEncoders {
 
@@ -17,7 +19,7 @@ public class UrlEncoders {
         return urlEncoders.stream()
             .filter(encoder -> encoder.supports(encoderType))
             .findAny()
-            .orElseThrow(() -> new IllegalArgumentException(encoderType + "은 지원하는 알고리즘이 아닙니다."));
+            .orElseThrow(() -> new InvalidEncodeTypeException(encoderType));
     }
 
 }

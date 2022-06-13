@@ -7,6 +7,7 @@ import com.prgrms.urlshortener.domain.ShortedUrl;
 import com.prgrms.urlshortener.domain.Url;
 import com.prgrms.urlshortener.dto.CreateShortenUrlRequest;
 import com.prgrms.urlshortener.dto.UrlResponse;
+import com.prgrms.urlshortener.exception.NotFoundUrlException;
 import com.prgrms.urlshortener.repository.UrlRepository;
 import com.prgrms.urlshortener.service.encoder.UrlEncoder;
 import com.prgrms.urlshortener.service.encoder.UrlEncoders;
@@ -36,7 +37,7 @@ public class UrlService {
     @Transactional
     public String getOriginUrl(String shortedUrl) {
         Url url = urlRepository.findUrlByShortedUrl(new ShortedUrl(shortedUrl))
-            .orElseThrow(() -> new IllegalArgumentException(shortedUrl + "로 저장된 URL이 없습니다."));
+            .orElseThrow(() -> new NotFoundUrlException(shortedUrl));
 
         url.addRequestCount();
         return url.getOriginUrl();
@@ -45,7 +46,7 @@ public class UrlService {
     public UrlResponse getUrlInformation(String shortedUrl) {
         return urlRepository.findUrlByShortedUrl(new ShortedUrl(shortedUrl))
             .map(UrlResponse::from)
-            .orElseThrow(() -> new IllegalArgumentException(shortedUrl + "로 저장된 URL이 없습니다."));
+            .orElseThrow(() -> new NotFoundUrlException(shortedUrl));
     }
 
 }

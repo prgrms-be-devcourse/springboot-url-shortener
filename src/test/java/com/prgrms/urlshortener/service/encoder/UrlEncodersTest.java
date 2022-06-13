@@ -12,6 +12,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.prgrms.urlshortener.exception.InvalidEncodeTypeException;
+
 @SpringBootTest
 class UrlEncodersTest {
 
@@ -40,8 +42,11 @@ class UrlEncodersTest {
     @DisplayName("지원하지 않는 타입이라면 예외를 발생한다.")
     @Test
     void getUrlEncoderByType_WrongType() {
-        assertThatThrownBy(() -> urlEncoders.getUrlEncoderByType("SHA-256"))
-            .isInstanceOf(IllegalArgumentException.class);
+        String encodeType = "SHA-256";
+
+        assertThatThrownBy(() -> urlEncoders.getUrlEncoderByType(encodeType))
+            .isInstanceOf(InvalidEncodeTypeException.class)
+            .hasMessage("%s은 지원하는 인코딩이 아닙니다.".formatted(encodeType));
     }
 
 }

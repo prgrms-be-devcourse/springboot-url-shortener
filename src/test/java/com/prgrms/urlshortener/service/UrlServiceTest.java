@@ -16,6 +16,7 @@ import com.prgrms.urlshortener.domain.ShortedUrl;
 import com.prgrms.urlshortener.domain.Url;
 import com.prgrms.urlshortener.dto.CreateShortenUrlRequest;
 import com.prgrms.urlshortener.dto.UrlResponse;
+import com.prgrms.urlshortener.exception.NotFoundUrlException;
 import com.prgrms.urlshortener.repository.UrlRepository;
 import com.prgrms.urlshortener.service.encoder.UrlEncoder;
 import com.prgrms.urlshortener.service.encoder.UrlEncoders;
@@ -83,7 +84,8 @@ class UrlServiceTest {
         // when
         // then
         assertThatThrownBy(() -> urlService.getOriginUrl(shortedUrl))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(NotFoundUrlException.class)
+            .hasMessage("%s로 저장된 URL이 없습니다.".formatted(shortedUrl));
     }
 
     @DisplayName("단축 Url로 Url 정보를 조회한다.")

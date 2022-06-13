@@ -10,6 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.prgrms.urlshortener.exception.InvalidShortedUrlException;
+import com.prgrms.urlshortener.exception.InvalidUrlException;
+
 @Entity
 public class Url {
 
@@ -49,7 +52,7 @@ public class Url {
 
     private void validateUrl(String url) {
         if (!URL_PATTERN.matcher(url).matches()) {
-            throw new IllegalArgumentException("%s은 잘못된 URL 포맷입니다.".formatted(url));
+            throw new InvalidUrlException(url);
         }
     }
 
@@ -64,7 +67,7 @@ public class Url {
 
     private void validateAssigned() {
         if (Objects.nonNull(this.shortedUrl)) {
-            throw new IllegalArgumentException("이미 단축 URL이 할당되어 있습니다.");
+            throw new InvalidShortedUrlException("이미 단축 URL이 할당되어 있습니다.");
         }
     }
 
