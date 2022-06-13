@@ -1,7 +1,7 @@
 function send() {
     $.ajax({
         cache : false,
-        url: "/",
+        url: "/api",
         type: "post",
         dataType: "json",
         contentType: "application/json;charset=UTF-8",

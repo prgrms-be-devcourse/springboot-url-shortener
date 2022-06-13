@@ -17,7 +17,7 @@ import java.net.URISyntaxException;
 public class ShortUrlController {
     private final UrlService urlService;
 
-    @PostMapping
+    @PostMapping("/api")
     public ResponseEntity<CreateResponse> registerUrl(@RequestBody CreateRequest request) {
         CreateResponse response = urlService.save(request);
         return ResponseEntity.ok().body(response);
