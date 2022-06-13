@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prgrms.shortener.domain.ShortenedUrlService;
 import java.util.Map;
 import org.hamcrest.Matchers;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,21 +37,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 class HttpControllerTest {
 
-  private static final ObjectMapper json = new ObjectMapper();
-  private static final String ORIGINAL_URL = "https://github.com/epicblues/springboot-url-shortener";
+  private static final ObjectMapper json;
+  private static final String ORIGINAL_URL;
+  private static final Map<String, String> requestBody;
+  private static final String jsonBody;
 
-  private static String jsonBody;
+  static {
+    try {
+      json = new ObjectMapper();
+      ORIGINAL_URL = "https://github.com/epicblues/springboot-url-shortener";
+      requestBody = Map.of("url", ORIGINAL_URL);
+      jsonBody = json.writeValueAsString(requestBody);
+    } catch (JsonProcessingException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   @Autowired
   private ShortenedUrlService urlService;
 
   @Autowired
   private MockMvc mockMvc;
-
-  @BeforeAll
-  private static void setup() throws JsonProcessingException {
-    Map<String, String> requestBody = Map.of("url", ORIGINAL_URL);
-    jsonBody = json.writeValueAsString(requestBody);
-  }
 
   @Test
   @DisplayName("url을 요청하면 축약한 url을 반환해야 한다.")

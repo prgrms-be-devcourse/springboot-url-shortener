@@ -26,9 +26,9 @@ public class HttpExceptionHandler {
     return new SimpleMessagePayload(message);
   }
 
-  @ExceptionHandler(RuntimeException.class)
+  @ExceptionHandler(Exception.class)
   @ResponseBody
-  public SimpleMessagePayload runtimeExceptionHandler(RuntimeException exception, HttpServletResponse response) {
+  public SimpleMessagePayload exceptionHandler(Exception exception, HttpServletResponse response) {
     log.error(exception.getClass().getSimpleName(), exception);
     response.setStatus(500);
     return new SimpleMessagePayload("Internal Server Error");
