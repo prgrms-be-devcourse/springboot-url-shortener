@@ -21,16 +21,16 @@ public class UrlController {
         this.urlService = urlService;
     }
 
-    @GetMapping("/")
+    @GetMapping
     public String home() {
         return "index";
     }
 
-    @PostMapping("/")
+    @PostMapping
     public String shortUrlAdd(@RequestParam String url, Model model) {
         UrlResponse urlResponse = urlService.convertUrl(new UrlRequest(url));
         model.addAttribute("shorturl", urlResponse.getShortenUrl());
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/{shortUrl}")
