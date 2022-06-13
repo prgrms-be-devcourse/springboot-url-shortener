@@ -3,30 +3,29 @@ package org.programmers.springbooturlshortener;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.programmers.springbooturlshortener.encoding.Encoding;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Url {
 
-    public Url(String original, Encoding encoding) {
+    public Url(String original) {
         this.original = original;
-        this.encoding = encoding;
-    }
-
-    public Url(Long id, String original, Encoding encoding) {
-        this.id = id;
-        this.original = original;
-        this.encoding = encoding;
     }
 
     @Id
+    @GeneratedValue
     private Long id;
     private String original;
     @Column(nullable = false)
-    private int called;
-    private Encoding encoding;
+    private int called = 0;
+
+    public int addCalledTime() {
+        return ++called;
+    }
 }
