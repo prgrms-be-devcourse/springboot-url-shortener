@@ -14,14 +14,8 @@ import java.net.URISyntaxException;
 
 @RestController
 @RequiredArgsConstructor
-public class ShortUrlController {
+public class UrlController {
     private final UrlService urlService;
-
-    @PostMapping("/api")
-    public ResponseEntity<CreateResponse> registerUrl(@RequestBody CreateRequest request) {
-        CreateResponse response = urlService.save(request);
-        return ResponseEntity.ok().body(response);
-    }
 
     @GetMapping("/{url}")
     public ResponseEntity<String> getTest(@PathVariable("url") String url) throws URISyntaxException {
@@ -30,5 +24,11 @@ public class ShortUrlController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setLocation(redirectUri);
         return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
+    }
+
+    @PostMapping("/api/urls")
+    public ResponseEntity<CreateResponse> registerUrl(@RequestBody CreateRequest request) {
+        CreateResponse response = urlService.save(request);
+        return ResponseEntity.ok().body(response);
     }
 }

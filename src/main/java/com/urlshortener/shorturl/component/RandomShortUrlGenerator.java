@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
-public class SimpleShortUrlGenerator implements ShortUrlGenerator {
+public class RandomShortUrlGenerator implements ShortUrlGenerator {
     private final Random random = new Random();
     private static final int totalLength = 8;
     private static final char[] charTable = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'p', 'q', 'r',

@@ -1,6 +1,7 @@
 package com.urlshortener.shorturl.service;
 
 import com.urlshortener.shorturl.component.ShortUrlGenerator;
+import com.urlshortener.shorturl.model.converter.UrlConverter;
 import com.urlshortener.shorturl.model.dto.CreateRequest;
 import com.urlshortener.shorturl.model.dto.CreateResponse;
 import com.urlshortener.shorturl.model.entity.Url;
@@ -16,21 +17,19 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class SimpleUrlService implements UrlService {
     private final UrlRepository urlRepository;
+    private final UrlConverter urlConverter;
     private final ShortUrlGenerator shortUrlGenerator;
 
     @Override
     public CreateResponse save(CreateRequest request) {
-        CreateResponse response = new CreateResponse();
         Url result = urlRepository.findUrlByOriginUrlEquals(request.getUrl());
         if (Objects.nonNull(result)) {
-            response.setShortUrl(result.getShortUrl());
-        } else {
-            String shortUrl = getUniqueShortUrl();
-            Url url = new Url(request.getUrl(), shortUrl);
-            urlRepository.save(url);
-            response.setShortUrl(shortUrl);
+            return urlConverter.getCreateResponseFrom(result);
         }
-        return response;
+        String shortUrl = getUniqueShortUrl();
+        Url url = new Url(request.getUrl(), shortUrl);
+        urlRepository.save(url);
+        return urlConverter.getCreateResponseFrom(url);
     }
 
     @Override

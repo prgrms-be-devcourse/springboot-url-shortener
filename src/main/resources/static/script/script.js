@@ -1,7 +1,7 @@
 function send() {
     $.ajax({
-        cache : false,
-        url: "/api",
+        cache: false,
+        url: "/api/urls",
         type: "post",
         dataType: "json",
         contentType: "application/json;charset=UTF-8",
@@ -11,6 +11,7 @@ function send() {
         success: function (data) {
             Swal.fire('생성 성공', '단축 URL이 만들어졌어요!', 'success');
             $('#result-url').val(location.href + data.shortUrl);
+            $('#count').text(data.count + '명의 사람들이 이 링크를 사용했어요!');
         },
         error: function (e) {
             Swal.fire('생성 실패', '다시 한 번 시도해주세요.', 'error');
