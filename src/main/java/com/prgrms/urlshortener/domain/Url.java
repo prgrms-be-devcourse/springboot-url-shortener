@@ -58,7 +58,7 @@ public class Url {
         this.shortedUrl = shortedUrl;
     }
 
-    public void addReqeustCount() {
+    public void addRequestCount() {
         this.requestCount++;
     }
 

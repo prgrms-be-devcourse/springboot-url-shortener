@@ -38,7 +38,7 @@ public class UrlService {
         Url url = urlRepository.findUrlByShortedUrl(new ShortedUrl(shortedUrl))
             .orElseThrow(() -> new IllegalArgumentException(shortedUrl + "로 저장된 URL이 없습니다."));
 
-        url.addReqeustCount();
+        url.addRequestCount();
         return url.getOriginUrl();
     }
 
@@ -47,4 +47,5 @@ public class UrlService {
             .map(UrlResponse::from)
             .orElseThrow(() -> new IllegalArgumentException(shortedUrl + "로 저장된 URL이 없습니다."));
     }
+
 }
