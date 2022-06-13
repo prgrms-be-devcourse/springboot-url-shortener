@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface ShortUrlRepository extends JpaRepository<Url, Integer> {
 
-    
+    @Query("SELECT u FROM Url u WHERE u.originUrl =?1")
+    Optional<Url> findUrlByOriginUrl(String url);
 }

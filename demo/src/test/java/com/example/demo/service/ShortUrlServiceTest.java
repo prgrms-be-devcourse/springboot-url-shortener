@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Url;
+import com.example.demo.exception.ShortUrlNotFoundException;
 import com.example.demo.repository.ShortUrlRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,8 +14,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doReturn;
 
 @ExtendWith(MockitoExtension.class)
 class ShortUrlServiceTest {
@@ -73,5 +76,42 @@ class ShortUrlServiceTest {
 
         //then
         assertThat(shortUrlFirst).isEqualTo(shortUrlAgain);
+    }
+
+    @Test
+    @DisplayName("shortURL로 원본URL을 가져온다")
+    void getOriginUrlTest() {
+        //given
+        String originUrl = "https://miro.com/?utm_source=google&utm_medium=cpc&utm_" +
+                "campaign=S|GOO|BRN|WW|KO-KO|Brand|Exact&utm_adgroup=&utm_custom=10501506958&" +
+                "utm_content=447030169338&utm_term=miro&device=c&location=1009871&gclid=" +
+                "CjwKCAjwnZaVBhA6EiwAVVyv9NZnYeotOUPYl5Dtnr-YiliYKv1dRIYA3C_FKhlnuUsbwzB8Lcx0nxoCOO8QAvD_BwE";
+
+        String shortUrl = "Ab3df";
+
+        Url url = new Url(originUrl, 1);
+
+        given(shortUrlRepository.findById(any()))
+                .willReturn(Optional.of(url));
+        //when
+        String returnUrl = shortUrlService.getOriginUrl(shortUrl);
+
+        //then
+        assertThat(returnUrl).isEqualTo(originUrl);
+    }
+
+    @Test
+    @DisplayName("저장되지 않은 URL을 가져오려고하면 에러가 발생한다")
+    void getInvalidUrlTest() {
+
+        //given
+        String shortUrl = "Ab3df";
+
+        given(shortUrlRepository.findById(any()))
+                .willReturn(Optional.empty());
+        //when
+
+        //then
+        assertThrows(ShortUrlNotFoundException.class, () -> shortUrlService.getOriginUrl(shortUrl));
     }
 }

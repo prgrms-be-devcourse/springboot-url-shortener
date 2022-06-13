@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.domain.Url;
+import com.example.demo.exception.ShortUrlNotFoundException;
 import com.example.demo.repository.ShortUrlRepository;
 import com.example.demo.shorturlutil.Base62Util;
 import lombok.RequiredArgsConstructor;
@@ -24,10 +25,16 @@ public class ShortUrlService {
         if (findUrl.isEmpty()) {
             Url originUrl = new Url(url, 1);
             Url savedUrl = shortUrlRepository.save(originUrl);
-            log.info("id: " + savedUrl.getId());
             return Base62Util.encoding(savedUrl.getId());
         }
         return Base62Util.encoding(findUrl.get().getId());
+    }
+
+    public String getOriginUrl(String shortUrl) {
+        int urlId = Base62Util.decoding(shortUrl);
+        return shortUrlRepository.findById(urlId)
+                 .orElseThrow(ShortUrlNotFoundException::new)
+                 .getOriginUrl();
     }
 
     private Optional<Url> findByUrl(String url) {
