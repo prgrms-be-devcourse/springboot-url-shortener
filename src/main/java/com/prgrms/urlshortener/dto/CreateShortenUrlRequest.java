@@ -2,12 +2,12 @@ package com.prgrms.urlshortener.dto;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.URL;
+import org.hibernate.validator.constraints.Length;
 
 public class CreateShortenUrlRequest {
 
-    @URL(message = "URL 포맷이 아닙니다.")
     @NotNull(message = "URL을 입력해주세요.")
+    @Length(max = 255, message = "길이가 {max}이하의 URL만 가능합니다.")
     private String originUrl;
 
     @NotNull(message = "인코딩 타입을 입력해주세요.")

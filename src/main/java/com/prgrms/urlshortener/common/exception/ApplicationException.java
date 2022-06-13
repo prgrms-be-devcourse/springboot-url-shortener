@@ -1,4 +1,4 @@
-package com.prgrms.urlshortener.exception;
+package com.prgrms.urlshortener.common.exception;
 
 import org.springframework.http.HttpStatus;
 
