@@ -33,15 +33,21 @@ public class MainController {
     }
 
     @PostMapping("/")
-    public String createCommand(@Valid @ModelAttribute("url") UrlCreateCommandObject url, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String createCommand(@Valid @ModelAttribute("url") UrlCreateCommandObject url, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+        Encoding[] encodings = Encoding.values();
+        model.addAttribute("encodings", encodings);
+
         try {
-            String shortenUrl = urlService.newUrl(url.getOriginal(), url.getEncoding());
-            redirectAttributes.addFlashAttribute("shortenUrl", shortenUrl);
-            return "redirect:";
+            if (!bindingResult.hasErrors()) {
+                String shortenUrl = urlService.newUrl(url.getOriginal(), url.getEncoding());
+                redirectAttributes.addFlashAttribute("shortenUrl", shortenUrl);
+                return "redirect:";
+            }
         } catch (DuplicateUrlException e) {
             bindingResult.reject("url.duplicate", new Object[]{url.getOriginal()}, "이미 저장된 url입니다.");
             return "main";
         }
+        return "main";
     }
 
     @GetMapping("/{shortenUrl}")
