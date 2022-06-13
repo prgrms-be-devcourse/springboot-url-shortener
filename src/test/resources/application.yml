@@ -1,17 +1,19 @@
 spring:
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     database: H2
-    show-sql: false
+    show-sql: true
     open-in-view: false
     properties:
       hibernate:
         query.in_clause_parameter_padding: true
-
   datasource:
     url:
-      jdbc:h2:~/shortener
+      jdbc:h2:mem:url-shorten
     username: "sa"
     password: ""
     driver-class-name: org.h2.Driver
+  sql:
+    init:
+      mode: never
