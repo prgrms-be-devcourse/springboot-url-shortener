@@ -114,4 +114,27 @@ class ShortUrlServiceTest {
         //then
         assertThrows(ShortUrlNotFoundException.class, () -> shortUrlService.getOriginUrl(shortUrl));
     }
+
+    @Test
+    @DisplayName("기존에 있던 URL을 단축 요청하면 호출 횟수가 증가한다")
+    void increaseShortUrlCalledTimes() {
+
+        //given
+        String newUrl = "https://miro.com/?utm_source=google&utm_medium=cpc&utm_" +
+                "campaign=S|GOO|BRN|WW|KO-KO|Brand|Exact&utm_adgroup=&utm_custom=10501506958&" +
+                "utm_content=447030169338&utm_term=miro&device=c&location=1009871&gclid=" +
+                "CjwKCAjwnZaVBhA6EiwAVVyv9NZnYeotOUPYl5Dtnr-YiliYKv1dRIYA3C_FKhlnuUsbwzB8Lcx0nxoCOO8QAvD_BwE";
+
+        Url url = new Url(newUrl, 1);
+        ReflectionTestUtils.setField(url, "id", 1000000);
+
+        //mocking
+        given(shortUrlRepository.findUrlByOriginUrl(newUrl))
+                .willReturn(Optional.of(url));
+        //when
+        String againShortenUrl = shortUrlService.createShortUrl(newUrl);
+
+        //then
+        assertThat(url.getCalledTimes()).isEqualTo(2);
+    }
 }

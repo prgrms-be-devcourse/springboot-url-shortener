@@ -27,6 +27,7 @@ public class ShortUrlService {
             Url savedUrl = shortUrlRepository.save(originUrl);
             return Base62Util.encoding(savedUrl.getId());
         }
+        findUrl.get().increaseCalledTimes();
         return Base62Util.encoding(findUrl.get().getId());
     }
 

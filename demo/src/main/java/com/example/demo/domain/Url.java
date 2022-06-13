@@ -40,4 +40,8 @@ public class Url {
             throw new IllegalArgumentException();
         }
     }
+
+    public void increaseCalledTimes() {
+        this.calledTimes++;
+    }
 }
