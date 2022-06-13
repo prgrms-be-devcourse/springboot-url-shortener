@@ -1,48 +1,19 @@
 # springboot-url-shortener
-
-SprintBoot URL Shortener 구현 미션 Repository 입니다.
-
 ## 요구사항
-
-각 요구사항을 모두 충족할 수 있도록 노력해봅시다.
-
-- [ ] URL 입력폼 제공 및 결과 출력
-- [ ] URL Shortening Key는 8 Character 이내로 생성
-- [ ] 단축된 URL 요청시 원래 URL로 리다이렉트
-- [ ] 단축된 URL에 대한 요청 수 정보저장 (optional)
+- [v] URL 입력폼 제공 및 결과 출력
+- [v] URL Shortening Key는 8 Character 이내로 생성
+- [v] 단축된 URL 요청시 원래 URL로 리다이렉트
+- [v] 단축된 URL에 대한 요청 수 정보저장 (optional)
 - [ ] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional)
 
-## Short URL Service
-
-### 읽으면 좋은 레퍼런스
-
-- [Naver 단축 URL API](https://developers.naver.com/docs/utils/shortenurl/)
-- [짧게 줄인 URL의 실제 URL 확인 원리 및 방법](https://metalkin.tistory.com/50)
-- [짧게 줄인 URL 알고리즘 고찰](https://metalkin.tistory.com/53)
-- [단축 URL 원리 및 개발](https://blog.siyeol.com/26)
-
-### Short URL의 동작 과정
-
-예시로 bitly를 봅시다
-![image1](./image1.png)
-![image2](./image2.png)
-
-1. 원본 URL을 입력하고 Shorten 버튼을 클릭합니다.
-2. Unique Key를 7문자 생성합니다.
-3. Unique Key와 원본 URL을 DB에 저장합니다.
-4. bitly.com/{Unique Key} 로 접근하면, DB를 조회하여 원본 URL로 redirect합니다.
-
-### Short URL의 특징
-
-단축 URL서비스는 간편하지만, 단점(위험성)이 있습니다. 링크를 클릭하는 사용자는 단축된 URL만 보고 클릭하기 때문에 어떤 곳으로 이동할지 알 수 없습니다.
-
-- Short URL 서비스는 주로 요청을 Redirect 시킵니다. (Redirect와 Forward의 차이점에 대해 검색해보세요.)
-- 긴 URL을 짧은 URL로 압축할 수 있다.
-- short url만으로는 어디에 연결되어있는 지 알 수 없다. 때문에 피싱 사이트 등의 보안에 취약하다.
-- 광고를 본 뒤에 원본url로 넘겨주기도 한다. 이 과정에서 악성 광고가 나올 수 있다.
-- 당연하지만 이미 존재하는 키를 입력하여 들어오는 사람이 존재할 수 있다.
-- 기존의 원본 URL 변경되었더라도 단축 URL을 유지하여, 혼란을 방지할 수 있다.
-
-### 예시 사이트
-
-[https://url.kr/](https://url.kr/)
+✅ PR 포인트 & 궁금한 점
+- 아직 요청 수에 대한 조회, 동적 알고리즘 변경 기능은 구현하지 못 했습니다.
+- 이번 과제의 경우 구체적인 코드에 대해서 보다는 일반적인 부분에 대해 궁금한 점이 있었습니다.
+  - 스프링의 redirect의 경우 protocol을 명시하지 않았을 경우 외부 링크로 가지 않고, 프로젝트 내 경로로 이동하게 되는데,
+    - 저 같은 경우 http://나 https:// 등 프로토콜이 명시되어 있지 않은 링크의 경우 인위적으로 http://를 붙여주는 식으로 구현했습니다.
+      - (bit.ly의 경우에도 이런 방식으로 작동하더라구요)
+    - 스프링을 사용하면서, 인위적으로 프로토콜을 붙여 주지 않으면서 위 문제를 해결할 수 있는 방법이 있는지 궁금합니다.
+  - 메인 페이지("/"), 단축 url 연결 페이지("/*)로 구별했는데,
+    - 이 경우 특정 경로만 단축 url 연결 페이지로 매핑되지 않게 만들 방법이 있을까요? ("/item"이나 "/data/statistics" 등...)
+      - 필터나 인터셉터랑 다르게 스프링 URL 매핑의 경우 별도의 exclude 기능을 찾지 못 해서 질문 드립니다.
+### 리뷰 감사드립니다.
