@@ -3,6 +3,11 @@ package com.example.demo.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 
 @Entity
 @Getter
@@ -22,7 +27,17 @@ public class Url {
     private int calledTimes;
 
     public Url(String originUrl, int calledTimes) {
+        validateUrl(originUrl);
         this.originUrl = originUrl;
         this.calledTimes = calledTimes;
+    }
+
+    private void validateUrl(String url) {
+        try {
+            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
+            connection.connect();
+        } catch (Exception e) {
+            throw new IllegalArgumentException();
+        }
     }
 }
