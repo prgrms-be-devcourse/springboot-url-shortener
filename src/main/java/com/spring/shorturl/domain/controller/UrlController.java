@@ -33,22 +33,23 @@ public class UrlController {
         return ApiResponse.ok(response);
     }
 
-    //////////////////////////
-    // Test 를 위한 코드
-    @GetMapping
-    public ApiResponse<UrlDto.Response> checkCountOfUrlVisit() {
-        Url url = urlService.findById(1L);
-        UrlDto.Response response = new UrlDto.Response(String.valueOf(url.getRequestCount()));
+
+    // shortUrl 호출 count 를 body 로 전달
+    @GetMapping("/count/{url}")
+    public ApiResponse<UrlDto.Response> checkCountOfShortUrlVisit(
+            @PathVariable String url
+    ) {
+        Url findByShortUrl = urlService.findByShortUrl(url);
+        UrlDto.Response response = new UrlDto.Response(String.valueOf(findByShortUrl.getRequestCount()));
         return ApiResponse.ok(response);
     }
-    //////////////////////////
 
     // json body 로 shortUrl을 넘겼을때 redirect
     @PostMapping("/find")
-    public void findOriginalUrlByShortUrl(
+    public void redirectByShortUrl(
             HttpServletResponse response,
             @RequestBody UrlDto.ShortUrlRequest shortUrl
-    ) throws URISyntaxException, IOException {
+    ) throws  IOException {
         Url url = urlService.findByShortUrl(shortUrl.shortUrl());
 
         response.sendRedirect(url.getOriginUrl());
@@ -56,11 +57,13 @@ public class UrlController {
 
     // parameter 로 shortUrl을 넘겼을때 redirect
     @GetMapping("/{url}")
-    public ResponseEntity<Void> redirect(@PathVariable String url) {
-        Url byShortUrl = urlService.findByShortUrl(url);
+    public ResponseEntity<Void> redirectByShortUrl(
+            @PathVariable String url
+    ) {
+        Url findByShortUrl = urlService.findByShortUrl(url);
         return ResponseEntity
                 .status(HttpStatus.FOUND)
-                .header(HttpHeaders.LOCATION, byShortUrl.getOriginUrl())
+                .header(HttpHeaders.LOCATION, findByShortUrl.getOriginUrl())
                 .build();
     }
 }
