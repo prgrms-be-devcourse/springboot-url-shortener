@@ -33,6 +33,7 @@ public class UrlService {
         return shortUrl;
     }
 
+    @Transactional
     public String getOriginUrl(String shortedUrl) {
         Url url = urlRepository.findUrlByShortedUrl(new ShortedUrl(shortedUrl))
             .orElseThrow(() -> new IllegalArgumentException(shortedUrl + "로 저장된 URL이 없습니다."));
