@@ -14,7 +14,8 @@ function send() {
             $('#count').text(data.count + '명의 사람들이 이 링크를 사용했어요!');
         },
         error: function (e) {
-            Swal.fire('생성 실패', '다시 한 번 시도해주세요.', 'error');
+            let message = e.responseJSON.message;
+            Swal.fire('생성 실패', message, 'error');
         }
     });
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -27,7 +28,7 @@ public class UrlController {
     }
 
     @PostMapping("/api/urls")
-    public ResponseEntity<CreateResponse> registerUrl(@RequestBody CreateRequest request) {
+    public ResponseEntity<CreateResponse> registerUrl(@RequestBody @Valid CreateRequest request) {
         CreateResponse response = urlService.save(request);
         return ResponseEntity.ok().body(response);
     }
