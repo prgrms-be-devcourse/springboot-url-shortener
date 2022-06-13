@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 public interface UrlRepository extends JpaRepository<Url, Long> {
     Url findUrlByShortUrlEquals(String url);
 
-    Url findUrlByLongUrlEquals(String url);
+    Url findUrlByOriginUrlEquals(String url);
 
     @Modifying
     @Query("update Url u set u.count = u.count + 1 where u.id = :id")

@@ -1,9 +1,6 @@
 package com.urlshortener.shorturl.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -19,12 +16,18 @@ public class Url {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "long_url", length = 500, unique = true, nullable = false)
-    private String longUrl;
+    @Column(name = "origin_url", length = 500, unique = true, nullable = false)
+    private String originUrl;
 
     @Column(name = "short_url", length = 10, unique = true, nullable = false)
     private String shortUrl;
 
     @Column(name = "count")
     private Integer count;
+
+    public Url(String originUrl, String shortUrl) {
+        this.originUrl = originUrl;
+        this.shortUrl = shortUrl;
+        this.count = 0;
+    }
 }

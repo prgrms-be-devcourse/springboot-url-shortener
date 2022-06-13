@@ -1,7 +1,3 @@
-url:
-  length: 8
-  source: abcdefghijkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789
-
 spring:
   h2:
     console:

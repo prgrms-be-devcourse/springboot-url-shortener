@@ -21,16 +21,12 @@ public class SimpleUrlService implements UrlService {
     @Override
     public CreateResponse save(CreateRequest request) {
         CreateResponse response = new CreateResponse();
-        Url test = urlRepository.findUrlByLongUrlEquals(request.getUrl());
-        if (Objects.nonNull(test)) {
-            response.setShortUrl(test.getShortUrl());
-            return response;
+        Url result = urlRepository.findUrlByOriginUrlEquals(request.getUrl());
+        if (Objects.nonNull(result)) {
+            response.setShortUrl(result.getShortUrl());
         } else {
-            String shortUrl = shortUrlGenerator.generate(request.getUrl());
-            Url url = new Url();
-            url.setLongUrl(request.getUrl());
-            url.setShortUrl(shortUrl);
-            url.setCount(0);
+            String shortUrl = getUniqueShortUrl();
+            Url url = new Url(request.getUrl(), shortUrl);
             urlRepository.save(url);
             response.setShortUrl(shortUrl);
         }
@@ -41,6 +37,16 @@ public class SimpleUrlService implements UrlService {
     public String findOne(String shortUrl) {
         Url originUrl = urlRepository.findUrlByShortUrlEquals(shortUrl);
         urlRepository.updateCount(originUrl.getId());
-        return originUrl.getLongUrl();
+        return originUrl.getOriginUrl();
+    }
+
+    private String getUniqueShortUrl() {
+        while (true) {
+            String shortUrl = shortUrlGenerator.generate(null);
+            Url result = urlRepository.findUrlByShortUrlEquals(shortUrl);
+            if (Objects.isNull(result)) {
+                return shortUrl;
+            }
+        }
     }
 }
