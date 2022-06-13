@@ -36,6 +36,10 @@ public enum Encoding {
     }
 
     public static String getOriginalUrlKey(String shortenUrl) {
+        if (COMMON_PREFIX.equals(shortenUrl.substring(0, COMMON_PREFIX.length()))) {
+            shortenUrl.substring(COMMON_PREFIX.length());
+        }
+
         Encoding encoding = ofShortenUrl(shortenUrl);
         String key = shortenUrl.substring(1);
         if (!StringUtils.hasText(key) || !encoding.encoder.charset.contains(key)) {
