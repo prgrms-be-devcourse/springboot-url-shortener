@@ -46,8 +46,15 @@ public class Url {
     public Url(Long id, String originUrl, ShortedUrl shortedUrl) {
         validateUrl(originUrl);
         this.id = id;
-        this.originUrl = originUrl;
+        this.originUrl = convertUrl(originUrl);
         this.shortedUrl = shortedUrl;
+    }
+
+    private String convertUrl(String originUrl) {
+        if (!originUrl.startsWith("http")) {
+            return "http://" + originUrl;
+        }
+        return originUrl;
     }
 
     private void validateUrl(String url) {
