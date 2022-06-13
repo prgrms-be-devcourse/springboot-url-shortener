@@ -44,7 +44,7 @@ spring:
   sql:
     init:
       schema-locations: classpath:schema.sql
-      mode: never
+      mode: always
 
 ---
 spring:
