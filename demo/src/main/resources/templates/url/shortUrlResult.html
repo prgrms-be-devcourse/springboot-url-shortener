@@ -10,6 +10,11 @@
 <div class="container">
     <div class="jumbotron"> <h1></h1>
         <form role="form" th:action="@{/url}" method="post">
+            <select th:field="*{shortUrlViewForm}" class="form-select" aria-label="Default select example">
+                <option th:each="status : ${T(com.example.demo.shorturlutil.ShortenAlgorithm).values()}"
+                th:value="${status}" th:text="${status}">option</option>
+            </select>
+
             <label class="form-label">shorten URL</label>
             <div class="input-group mb-3">
                 <a th:href="@{/url/{shortUrl}(shortUrl = ${shortUrl})}" class="basic-url">

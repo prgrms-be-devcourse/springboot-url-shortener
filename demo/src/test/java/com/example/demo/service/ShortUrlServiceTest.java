@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.domain.Url;
 import com.example.demo.exception.ShortUrlNotFoundException;
 import com.example.demo.repository.ShortUrlRepository;
+import com.example.demo.shorturlutil.ShortenAlgorithm;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,7 +47,7 @@ class ShortUrlServiceTest {
                 .willReturn(Optional.empty());
 
         //when
-        String shortUrl = shortUrlService.createShortUrl(newUrl);
+        String shortUrl = shortUrlService.createShortUrl(newUrl, ShortenAlgorithm.BASE62);
 
         //then
         assertThat(shortUrl.length()).isLessThan(newUrl.length());
@@ -71,8 +72,8 @@ class ShortUrlServiceTest {
                 .willReturn(Optional.empty());
 
         //when
-        String shortUrlFirst = shortUrlService.createShortUrl(newUrl);
-        String shortUrlAgain = shortUrlService.createShortUrl(newUrl);
+        String shortUrlFirst = shortUrlService.createShortUrl(newUrl, ShortenAlgorithm.BASE62);
+        String shortUrlAgain = shortUrlService.createShortUrl(newUrl, ShortenAlgorithm.BASE62);
 
         //then
         assertThat(shortUrlFirst).isEqualTo(shortUrlAgain);
@@ -132,7 +133,7 @@ class ShortUrlServiceTest {
         given(shortUrlRepository.findUrlByOriginUrl(newUrl))
                 .willReturn(Optional.of(url));
         //when
-        String againShortenUrl = shortUrlService.createShortUrl(newUrl);
+        String againShortenUrl = shortUrlService.createShortUrl(newUrl, ShortenAlgorithm.BASE62);
 
         //then
         assertThat(url.getCalledTimes()).isEqualTo(2);
