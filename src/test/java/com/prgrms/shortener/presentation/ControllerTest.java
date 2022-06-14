@@ -37,7 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @Transactional
-class HttpControllerTest {
+class ControllerTest {
 
   private static final ObjectMapper json;
   private static final String ORIGINAL_URL;

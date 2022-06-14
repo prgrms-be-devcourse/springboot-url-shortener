@@ -1,13 +1,13 @@
 package com.prgrms.shortener.presentation.exception;
 
 import com.prgrms.shortener.domain.exception.ShortenedUrlNotFoundException;
+import com.prgrms.shortener.presentation.HttpController;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-@ControllerAdvice
+@ControllerAdvice(assignableTypes = HttpController.class)
 @Slf4j
 public class HttpExceptionHandler {
 
@@ -18,29 +18,10 @@ public class HttpExceptionHandler {
     return "failure";
   }
 
-  @ExceptionHandler({InvalidUrlRequestException.class})
-  @ResponseBody
-  public SimpleMessagePayload invalidUrlRequestHandler(InvalidUrlRequestException exception, HttpServletResponse response) {
-    log.warn(exception.getClass().getSimpleName(), exception);
-    String message = exception.getMessage();
-    response.setStatus(400);
-    return new SimpleMessagePayload(message);
-  }
-
-  @ExceptionHandler({IllegalArgumentException.class})
-  @ResponseBody
-  public SimpleMessagePayload illegalArgumentExceptionHandler(IllegalArgumentException exception, HttpServletResponse response) {
-    log.warn(exception.getClass().getSimpleName(), exception);
-    response.setStatus(400);
-    return new SimpleMessagePayload(exception.getMessage());
-  }
-
   @ExceptionHandler(Exception.class)
-  @ResponseBody
-  public SimpleMessagePayload exceptionHandler(Exception exception, HttpServletResponse response) {
+  public String exceptionHandler(Exception exception, HttpServletResponse response) {
     log.error(exception.getClass().getSimpleName(), exception);
     response.setStatus(500);
-    return new SimpleMessagePayload("Internal Server Error");
+    return "500";
   }
-
 }
