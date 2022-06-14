@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class Base62Utils {
 
-    static final int RADIX = 62;
+    private static final int RADIX = 62;
 
-    static final String CODE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private static final String CODE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     public String encoding(long id) {
         StringBuilder sb = new StringBuilder();
