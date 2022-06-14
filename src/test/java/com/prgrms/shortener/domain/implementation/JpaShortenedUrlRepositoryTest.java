@@ -62,4 +62,20 @@ class JpaShortenedUrlRepositoryTest {
 
   }
 
+  @Test
+  @DisplayName("increaseCount 메서드를 호출하면 id와 일치하는 ShortenedUrl의 조회수를 1 증가시킨다.")
+  void increaseCount_successful_case() {
+
+    // Given
+    ShortenedUrl savedUrl = new ShortenedUrl();
+    savedUrl = jpaShortenedUrlRepository.save(savedUrl);
+
+    // When
+    jpaShortenedUrlRepository.increaseCount(savedUrl.getId());
+    savedUrl = jpaShortenedUrlRepository.findById(1).get();
+    // Then
+    assertThat(savedUrl.getCount()).isEqualTo(1);
+
+  }
+
 }

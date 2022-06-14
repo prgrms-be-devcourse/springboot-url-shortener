@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ShortenedUrlService {
 
   private final ShortenedUrlRepository urlRepository;
@@ -15,7 +16,6 @@ public class ShortenedUrlService {
     this.urlFactory = urlFactory;
   }
 
-  @Transactional
   public String shorten(String originalUrl) {
 
     Optional<ShortenedUrl> savedUrl = urlRepository.findByOriginalUrl(originalUrl);
@@ -28,8 +28,12 @@ public class ShortenedUrlService {
     return createdUrl.getShortenedKey();
   }
 
-  @Transactional(readOnly = true)
   public Optional<String> findOriginalUrlByKey(String key) {
-    return urlRepository.findByShortenedKey(key).map(ShortenedUrl::getOriginalUrl);
+    Optional<ShortenedUrl> storedUrl = urlRepository.findByShortenedKey(key);
+    if (storedUrl.isEmpty()) {
+      return Optional.empty();
+    }
+    urlRepository.increaseCount(storedUrl.get().getId());
+    return Optional.of(storedUrl.get().getOriginalUrl());
   }
 }

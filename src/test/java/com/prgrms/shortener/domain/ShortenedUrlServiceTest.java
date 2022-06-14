@@ -65,19 +65,20 @@ class ShortenedUrlServiceTest {
   }
 
   @Test
-  @DisplayName("key를 이용하여 저장된 ShortenedUrl을 repository를 활용하여 가져올 수 있어야 한다.")
+  @DisplayName("key를 이용하여 repository에 저장된 OriginalUrl을 조회수를 갱신한 뒤 가져올 수 있어야 한다.")
   void delegates_search_by_key_to_repository() {
 
     // given
-    ShortenedUrl createdUrl = new ShortenedUrl(1);
-    createdUrl.assignKey(KEY);
-    createdUrl.assignOriginalUrl(ORIGINAL_URL);
+    ShortenedUrl savedUrl = new ShortenedUrl(1);
+    savedUrl.assignKey(KEY);
+    savedUrl.assignOriginalUrl(ORIGINAL_URL);
 
     // When
-    when(repository.findByShortenedKey(KEY)).thenReturn(Optional.of(createdUrl));
+    when(repository.findByShortenedKey(KEY)).thenReturn(Optional.of(savedUrl));
     Optional<String> originalUrl = shortenedUrlService.findOriginalUrlByKey(KEY);
 
     // Then
+    verify(repository, times(1)).increaseCount(savedUrl.getId());
     assertThat(originalUrl).isNotEmpty().get().isEqualTo(ORIGINAL_URL);
 
   }

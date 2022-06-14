@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class ShortenedUrlTest {
 
   @Test
-  @DisplayName("ShortenedUrl에는 id, originalUrl, key가 있어야 한다")
+  @DisplayName("ShortenedUrl에는 id, originalUrl, key, count가 있어야 한다")
   void field_test() {
 
     // Given
@@ -24,7 +24,7 @@ class ShortenedUrlTest {
     assertThat(shortenedUrl.getId()).isNull();
     assertThat(shortenedUrl.getOriginalUrl()).isEqualTo(url);
     assertThat(shortenedUrl.getShortenedKey()).isEqualTo("abcdefg");
-
+    assertThat(shortenedUrl.getCount()).isZero();
   }
 
   @Test
@@ -38,6 +38,25 @@ class ShortenedUrlTest {
     assertThatThrownBy(() ->
         shortenedUrl.assignKey(wrongKey)
     ).hasMessage("key는 7개의 문자로 구성되어야 합니다.");
+  }
+
+  @Test
+  @DisplayName("원본 url을 할당할 때 문자열 길이가 1000이 넘어가면 IllegalArgumentException을 발생시킨다.")
+  void throws_illegal_argument_exception() {
+
+    // Given
+    StringBuilder chunk = new StringBuilder();
+    for (int i = 0; i < 1000; i++) {
+      chunk.append("a");
+    }
+    String longUrl = "http://" + chunk.toString();
+
+    // When
+    ShortenedUrl shortenedUrl = new ShortenedUrl();
+
+    // Then
+    assertThatThrownBy(() -> shortenedUrl.assignOriginalUrl(longUrl)).isInstanceOf(IllegalArgumentException.class);
+
   }
 
 }

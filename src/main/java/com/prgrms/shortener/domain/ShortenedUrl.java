@@ -19,16 +19,19 @@ public class ShortenedUrl {
   @Column
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
-  @Column(unique = true)
+  @Column(unique = true, length = 1000)
   private String originalUrl;
   @Column(length = 7, unique = true)
   private String shortenedKey;
+  @Column
+  private long count;
 
   public ShortenedUrl(Integer id) {
     this.id = id;
   }
 
   public void assignOriginalUrl(String url) {
+    checkArgument(url.length() <= 1000, "url의 최대 길이는 1000 이하입니다.");
     this.originalUrl = url;
   }
 
@@ -37,4 +40,7 @@ public class ShortenedUrl {
     this.shortenedKey = key;
   }
 
+  public long getCount() {
+    return count;
+  }
 }
