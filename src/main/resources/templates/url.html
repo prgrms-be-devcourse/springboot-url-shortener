@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+          name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <title>Url Shortener</title>
+</head>
+<body>
+<div class="container">
+    <div class="justify-content-center">
+        <h1>URL 단축 서비스</h1>
+        <div class="alert alert-info alert-dismissible" role="alert" th:if="${message}">
+            <button aria-label="Close" class="close" data-dismiss="alert" type="button">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <text th:text="${message}"></text>
+        </div>
+        <form th:obejct="${url}">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="original-url">원본 url</label>
+                    <input class="form-control form-control-lg" id="original-url" style="height: 40px; font-size: 20px"
+                           th:value="${url.originalUrl}" type="text">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <label for="short-url">단축 url</label>
+                    <input class="form-control form-control-lg" id="short-url" style="height: 40px; font-size: 20px"
+                           th:value="${url.shortUrl}" type="text">
+                </div>
+            </div>
+            <div class="form-row">
+            </div>
+
+        </form>
+    </div>
+</div>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        changeColor();
+    })
+
+    function changeColor() {
+        $('#table tr').mouseover(function () {
+            $(this).addClass('changeColor');
+        }).mouseout(function () {
+            $(this).removeClass('changeColor');
+        });
+    }
+</script>
+
+</body>
+</html>
