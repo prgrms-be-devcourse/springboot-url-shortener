@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 public class UrlRequestDto {
 
     @NotBlank
-    @Pattern(regexp = "/^(https?:\\/\\/)?([\\w\\d-_]+)\\.([\\w\\d-_\\.]+)\\/?\\??([^#\\n\\r]*)?#?([^\\n\\r]*)/gm")
+    @Pattern(regexp = "(https?:\\/\\/)?([\\w\\d-_]+)\\.([\\w\\d-_\\.]+)\\/?\\??([^#\\n\\r]*)?#?([^\\n\\r]*)")
     private String longUrl;
 }
