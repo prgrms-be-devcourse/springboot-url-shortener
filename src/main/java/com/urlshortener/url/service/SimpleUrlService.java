@@ -1,5 +1,6 @@
 package com.urlshortener.url.service;
 
+import com.urlshortener.url.component.DefaultShortUrlGenerator;
 import com.urlshortener.url.component.ShortUrlGenerator;
 import com.urlshortener.url.model.converter.UrlConverter;
 import com.urlshortener.url.model.dto.CreateRequest;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -18,7 +20,7 @@ import java.util.Objects;
 public class SimpleUrlService implements UrlService {
     private final UrlRepository urlRepository;
     private final UrlConverter urlConverter;
-    private final ShortUrlGenerator shortUrlGenerator;
+    private final Map<String, ShortUrlGenerator> generatorMap;
 
     @Override
     public CreateResponse register(CreateRequest request) {
@@ -26,7 +28,7 @@ public class SimpleUrlService implements UrlService {
         if (Objects.nonNull(result)) {
             return urlConverter.getCreateResponseFrom(result);
         }
-        String shortUrl = getUniqueShortUrl();
+        String shortUrl = getUniqueShortUrl(request);
         Url url = new Url(request.getUrl(), shortUrl);
         urlRepository.save(url);
         return urlConverter.getCreateResponseFrom(url);
@@ -39,9 +41,16 @@ public class SimpleUrlService implements UrlService {
         return originUrl.getOriginUrl();
     }
 
-    private String getUniqueShortUrl() {
+    private String getUniqueShortUrl(CreateRequest request) {
+        ShortUrlGenerator shortUrlGenerator;
+        if (generatorMap.containsKey(request.getType())) {
+            shortUrlGenerator = generatorMap.get(request.getType());
+        } else {
+            shortUrlGenerator = generatorMap.get(DefaultShortUrlGenerator.NAME);
+        }
+
         while (true) {
-            String shortUrl = shortUrlGenerator.generate(null);
+            String shortUrl = shortUrlGenerator.generate(request.getUrl());
             Url result = urlRepository.findUrlByShortUrlEquals(shortUrl);
             if (Objects.isNull(result)) {
                 return shortUrl;

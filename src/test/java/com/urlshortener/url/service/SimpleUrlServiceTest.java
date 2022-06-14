@@ -44,7 +44,7 @@ class SimpleUrlServiceTest {
             // Given, When
             AtomicInteger totalCount = new AtomicInteger();
             originUrls.forEach(url -> {
-                CreateResponse response = urlService.register(new CreateRequest(url));
+                CreateResponse response = urlService.register(new CreateRequest(url, null));
                 if (Objects.nonNull(response)){
                     totalCount.getAndIncrement();
                 }
@@ -59,12 +59,12 @@ class SimpleUrlServiceTest {
             // Given
             Map<String, String> originShortUrls = new HashMap<>();
             originUrls.forEach(origin -> {
-                CreateResponse response = urlService.register(new CreateRequest(origin));
+                CreateResponse response = urlService.register(new CreateRequest(origin, null));
                 originShortUrls.put(origin, response.getShortUrl());
             });
             // When, Then
             originUrls.forEach(origin -> {
-                CreateResponse response = urlService.register(new CreateRequest(origin));
+                CreateResponse response = urlService.register(new CreateRequest(origin, null));
                 assertThat(response.getShortUrl()).isEqualTo(originShortUrls.get(origin));
             });
         }
@@ -89,7 +89,7 @@ class SimpleUrlServiceTest {
         void success() {
             // Given
             originUrls.forEach(s -> {
-                CreateResponse response = urlService.register(new CreateRequest(s));
+                CreateResponse response = urlService.register(new CreateRequest(s, null));
                 shortOriginUrls.put(response.getShortUrl(), s);
             });
             // When, Then
