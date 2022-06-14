@@ -1,18 +1,24 @@
 package com.prgrms.urlshortener.domain;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.prgrms.urlshortener.exception.InvalidShortedUrlException;
 import com.prgrms.urlshortener.exception.InvalidUrlException;
 
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class Url {
 
@@ -31,6 +37,9 @@ public class Url {
 
     @Column(nullable = false)
     private long requestCount = 0L;
+
+    @CreatedDate
+    private LocalDateTime createdDateTime;
 
     protected Url() {
     }
@@ -92,5 +101,9 @@ public class Url {
 
     public long getRequestCount() {
         return requestCount;
+    }
+
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
     }
 }

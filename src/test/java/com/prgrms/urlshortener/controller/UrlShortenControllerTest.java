@@ -110,7 +110,8 @@ class UrlShortenControllerTest {
         assertAll(
             () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value()),
             () -> assertThat(response.jsonPath().getString("originUrl")).isEqualTo(originUrl),
-            () -> assertThat(response.jsonPath().getLong("requestCount")).isEqualTo(1)
+            () -> assertThat(response.jsonPath().getLong("requestCount")).isEqualTo(1),
+            () -> assertThat(response.jsonPath().getString("createdDateTime")).isNotBlank()
         );
     }
 
@@ -139,7 +140,11 @@ class UrlShortenControllerTest {
     }
 
     private void 단축URL_생성_실패(ExtractableResponse<Response> response) {
-        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertAll(
+            () -> assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value()),
+            () -> assertThat(response.jsonPath().getString("message")).isEqualTo("잘못된 URL 포맷입니다.")
+        );
+
     }
 
     private void 원본URL로_리다이렉션됨(String originUrl, ExtractableResponse<Response> response) {
