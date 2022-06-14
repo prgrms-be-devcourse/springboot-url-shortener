@@ -6,7 +6,7 @@ import java.util.Random;
 
 @Component("defaultShortUrlGenerator")
 public class DefaultShortUrlGenerator implements ShortUrlGenerator {
-    public static final String NAME = "default";
+    public static final String NAME = "defaultShortUrlGenerator";
     private static final Random random = new Random();
     private static final int totalLength = 8;
     private static final char[] charTable = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'p',

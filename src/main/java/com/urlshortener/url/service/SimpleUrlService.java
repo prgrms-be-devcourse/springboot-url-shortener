@@ -2,6 +2,7 @@ package com.urlshortener.url.service;
 
 import com.urlshortener.url.component.DefaultShortUrlGenerator;
 import com.urlshortener.url.component.ShortUrlGenerator;
+import com.urlshortener.url.exception.MaxRequestException;
 import com.urlshortener.url.model.converter.UrlConverter;
 import com.urlshortener.url.model.dto.CreateRequest;
 import com.urlshortener.url.model.dto.CreateResponse;
@@ -21,6 +22,7 @@ public class SimpleUrlService implements UrlService {
     private final UrlRepository urlRepository;
     private final UrlConverter urlConverter;
     private final Map<String, ShortUrlGenerator> generatorMap;
+    private final static int MAX_REQUEST_COUNT = 10;
 
     @Override
     public CreateResponse register(CreateRequest request) {
@@ -49,12 +51,12 @@ public class SimpleUrlService implements UrlService {
             shortUrlGenerator = generatorMap.get(DefaultShortUrlGenerator.NAME);
         }
 
-        while (true) {
+        int count = 0;
+        while (count++ < MAX_REQUEST_COUNT) {
             String shortUrl = shortUrlGenerator.generate(request.getUrl());
             Url result = urlRepository.findUrlByShortUrlEquals(shortUrl);
-            if (Objects.isNull(result)) {
-                return shortUrl;
-            }
+            if (Objects.isNull(result)) return shortUrl;
         }
+        throw new MaxRequestException();
     }
 }
