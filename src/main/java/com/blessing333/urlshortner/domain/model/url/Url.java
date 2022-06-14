@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
@@ -14,7 +15,9 @@ import java.time.LocalDateTime;
 public class Url {
     @Id
     private String id;
+    @Column(unique = true)
     private String originalUrl;
+    @Column(unique = true)
     private String shortUrl;
     private Long viewCount;
     private LocalDateTime createdDate;
