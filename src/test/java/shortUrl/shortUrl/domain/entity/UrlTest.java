@@ -21,6 +21,25 @@ class UrlTest {
     Url url;
 
     @Test
+    @DisplayName("성공 : 정상적인 url 생성")
+    public void createUrl() throws Exception {
+
+        String originalUrl = "https://www.naver.com/";
+        Url url = new Url(originalUrl, Algorithm.BASE_56);
+
+    }
+
+    @Test
+    @DisplayName("예외 발생 : 비 정상적인 url 생성")
+    public void createUrl_fail() throws Exception {
+
+        String originalUrl = "https://www.naver./";
+        Assertions.assertThrows(RuntimeException.class, () -> new Url(originalUrl, Algorithm.BASE_56));
+
+
+    }
+
+    @Test
     @DisplayName("성공 : 조회수 증가")
     public void 조회수_증가() {
         Long hits = url.getHits();
