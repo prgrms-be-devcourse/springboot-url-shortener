@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.prgrms.urlshortener.exception.InvalidEncodeTypeException;
 
-@SpringBootTest
+@SpringBootTest(classes = {UrlEncoders.class, Base62Encoder.class, MD5Encoder.class})
 class UrlEncodersTest {
 
     @Autowired
