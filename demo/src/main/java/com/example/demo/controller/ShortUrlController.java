@@ -1,12 +1,14 @@
 package com.example.demo.controller;
 
-import com.example.demo.ShortUrlViewForm;
 import com.example.demo.service.ShortUrlService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -17,10 +19,10 @@ public class ShortUrlController {
     private final ShortUrlService shortUrlService;
 
     @PostMapping("/url")
-    public String createShortUrl(@ModelAttribute("shortUrlViewForm") ShortUrlViewForm shortUrlViewForm, Model model) {
-        String shortUrl = shortUrlService.createShortUrl(shortUrlViewForm.getUrl(), shortUrlViewForm.getShortenAlgorithm());
+    public String createShortUrl(@RequestParam(value = "url") String url, Model model) {
+        String shortUrl = shortUrlService.createShortUrl(url);
         model.addAttribute("shortUrl", shortUrl);
-        model.addAttribute("originUrl", shortUrlViewForm.getUrl());
+        model.addAttribute("originUrl", url);
         return "url/shortUrlResult";
     }
 
