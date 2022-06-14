@@ -4,7 +4,7 @@ import com.urlshortener.url.model.dto.CreateRequest;
 import com.urlshortener.url.model.dto.CreateResponse;
 
 public interface UrlService {
-    CreateResponse save(CreateRequest request);
+    CreateResponse register(CreateRequest request);
 
     String findOne(String shortUrl);
 }

@@ -21,7 +21,7 @@ public class SimpleUrlService implements UrlService {
     private final ShortUrlGenerator shortUrlGenerator;
 
     @Override
-    public CreateResponse save(CreateRequest request) {
+    public CreateResponse register(CreateRequest request) {
         Url result = urlRepository.findUrlByOriginUrlEquals(request.getUrl());
         if (Objects.nonNull(result)) {
             return urlConverter.getCreateResponseFrom(result);

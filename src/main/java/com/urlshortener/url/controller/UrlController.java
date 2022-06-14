@@ -29,7 +29,7 @@ public class UrlController {
 
     @PostMapping("/api/urls")
     public ResponseEntity<CreateResponse> registerUrl(@RequestBody @Valid CreateRequest request) {
-        CreateResponse response = urlService.save(request);
+        CreateResponse response = urlService.register(request);
         return ResponseEntity.ok().body(response);
     }
 }
