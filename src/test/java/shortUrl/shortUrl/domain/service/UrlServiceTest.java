@@ -173,7 +173,7 @@ class UrlServiceTest {
             }
 
             //when
-            ShortUrlDto afterShortUrlDto = urlService.getUrlInfo(shortUrl);
+            ShortUrlDto afterShortUrlDto = urlService.findShortUrlInfo(shortUrl);
 
             //then
             assertThat(afterShortUrlDto.getOriginalUrl()).isEqualTo(base56UrlDto.getOriginalUrl());
@@ -190,7 +190,7 @@ class UrlServiceTest {
             String notExistShortUrl = "Not Exist Url";
 
             //then
-            assertThrows(RuntimeException.class, () -> urlService.getUrlInfo(notExistShortUrl));
+            assertThrows(RuntimeException.class, () -> urlService.findShortUrlInfo(notExistShortUrl));
         }
     }
 }

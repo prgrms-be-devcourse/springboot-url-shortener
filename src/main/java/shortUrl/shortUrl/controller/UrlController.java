@@ -23,8 +23,8 @@ public class UrlController {
     }
 
     @PostMapping("/link")
-    public void linkOriginalUrl(@RequestBody ShortUrlDto shortUrlDto,
-                                HttpServletResponse response) throws IOException {
+    public void linkUrl(@RequestBody ShortUrlDto shortUrlDto,
+                        HttpServletResponse response) throws IOException {
         String shortUrl = shortUrlDto.getShortUrl();
         String originalUrl = urlService.findOriginUrlByShortUrl(shortUrl);
 
@@ -38,7 +38,7 @@ public class UrlController {
     }
 
     @GetMapping("/{shortUrl}/info")
-    public ShortUrlDto getInfoShortUrl(@PathVariable("shortUrl") String shortUrl) throws IOException {
-        return urlService.getUrlInfo(shortUrl);
+    public ShortUrlDto getShortUrlInfo(@PathVariable("shortUrl") String shortUrl) throws IOException {
+        return urlService.findShortUrlInfo(shortUrl);
     }
 }

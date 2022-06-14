@@ -36,7 +36,7 @@ public class Url {
     private Algorithm algorithm;
 
     public Url(String originalUrl, Algorithm algorithm) {
-        if (!validateUrl(originalUrl)) {
+        if (!checkOriginalUrl(originalUrl)) {
             throw new WrongUrlException("잘못된 url 입력입니다.");
         }
         this.originalUrl = originalUrl;
@@ -61,7 +61,7 @@ public class Url {
     /**
      * url 요청 후 2xx, 3xx 응답일 경우 true, 아닐경우 false
      */
-    private boolean validateUrl(String originalUrl) {
+    private boolean checkOriginalUrl(String originalUrl) {
         RestTemplate restTemplate = new RestTemplate();
         HttpStatus statusCode
                 = restTemplate.exchange(originalUrl, HttpMethod.HEAD, null, HttpResponse.class)

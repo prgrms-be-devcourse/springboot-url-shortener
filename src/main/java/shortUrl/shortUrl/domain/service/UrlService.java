@@ -1,11 +1,8 @@
 package shortUrl.shortUrl.domain.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 import shortUrl.shortUrl.domain.entity.Url;
 import shortUrl.shortUrl.domain.repository.UrlRepository;
 import shortUrl.shortUrl.domain.value.Algorithm;
@@ -13,9 +10,7 @@ import shortUrl.shortUrl.domain.dto.CreateShortUrlDto;
 import shortUrl.shortUrl.domain.dto.ShortUrlDto;
 import shortUrl.shortUrl.exception.AlreadyExistException;
 import shortUrl.shortUrl.exception.NotExistException;
-import shortUrl.shortUrl.exception.WrongUrlException;
 
-import java.net.http.HttpResponse;
 import java.util.Optional;
 
 @Service
@@ -45,7 +40,7 @@ public class UrlService {
         }
 
         Url savedUrl = urlRepository.save(url);
-        log.info("{} url 영속화", savedUrl);
+        log.info("{} url 저장 및 영속화", savedUrl);
         String shortUrl = algorithm.encoding(savedUrl.getId());
 
         // TODO: 2022/06/12 존재하면 그 후 처리는? error log를 찍고 예외 처리가 아닌 char length가 +1인 url을 반환 후 보수?
@@ -58,16 +53,16 @@ public class UrlService {
 
     public String findOriginUrlByShortUrl(String shortUrl) {
         Url url = urlRepository.findByShortUrl(shortUrl)
-                .orElseThrow(() -> new NotExistException("존재하지 않습니다."));
+                .orElseThrow(() -> new NotExistException("존재하지 않는 주소입니다."));
         url.increaseHits();
 
         return url.getOriginalUrl();
     }
 
     @Transactional(readOnly = true)
-    public ShortUrlDto getUrlInfo(String shortUrl) {
+    public ShortUrlDto findShortUrlInfo(String shortUrl) {
         Url url = urlRepository.findByShortUrl(shortUrl)
-                        .orElseThrow(() -> new NotExistException("존재하지 않습니다."));
+                        .orElseThrow(() -> new NotExistException("존재하지 않는 주소입니다."));
         return ShortUrlDto.builder()
                 .originalUrl(url.getOriginalUrl())
                 .shortUrl(shortUrl)
