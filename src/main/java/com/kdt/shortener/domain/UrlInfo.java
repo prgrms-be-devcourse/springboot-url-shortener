@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class UrlInfo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "origin_url", unique = true, length = 1000)
