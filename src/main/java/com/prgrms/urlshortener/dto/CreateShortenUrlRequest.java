@@ -16,9 +16,6 @@ public class CreateShortenUrlRequest {
     @NotNull(message = "인코딩 타입을 입력해주세요.")
     private String encodedType;
 
-    private CreateShortenUrlRequest() {
-    }
-
     public CreateShortenUrlRequest(String originUrl, String encodedType) {
         this.originUrl = originUrl;
         this.encodedType = encodedType;

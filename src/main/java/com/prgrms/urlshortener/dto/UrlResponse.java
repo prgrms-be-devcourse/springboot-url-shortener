@@ -14,9 +14,6 @@ public class UrlResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdDateTime;
 
-    private UrlResponse() {
-    }
-
     public UrlResponse(String originUrl, String shortedUrl, long requestCount, LocalDateTime createdDateTime) {
         this.originUrl = originUrl;
         this.shortedUrl = shortedUrl;
