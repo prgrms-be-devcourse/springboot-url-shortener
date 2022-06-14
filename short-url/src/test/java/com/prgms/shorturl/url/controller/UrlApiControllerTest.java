@@ -58,4 +58,22 @@ class UrlApiControllerTest {
             .andExpect(MockMvcResultMatchers.status().isFound())
             .andDo(MockMvcResultHandlers.print());
     }
+
+    @Test
+    @DisplayName("bean validation 실패시 ConstraintViolationException 발생")
+    void validationTest() throws Exception {
+        // Given
+        String longUrl = "programmers";
+        UrlRequestDto urlRequestDto = new UrlRequestDto(longUrl);
+        given(urlRepository.save(new Url(longUrl)))
+            .willReturn(new Url(100L, longUrl));
+
+        // When
+        mockMvc.perform(MockMvcRequestBuilders.post("/urls")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(urlRequestDto)))
+            .andExpect(MockMvcResultMatchers.status().isBadRequest())
+            .andDo(MockMvcResultHandlers.print());
+        // Then
+    }
 }

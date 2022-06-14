@@ -1,5 +1,7 @@
 package com.prgms.shorturl.url.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,5 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UrlRequestDto {
 
+    @NotBlank
+    @Pattern(regexp = "/^(https?:\\/\\/)?([\\w\\d-_]+)\\.([\\w\\d-_\\.]+)\\/?\\??([^#\\n\\r]*)?#?([^\\n\\r]*)/gm")
     private String longUrl;
 }
