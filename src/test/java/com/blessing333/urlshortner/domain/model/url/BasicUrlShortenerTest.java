@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BasicUrlShortenerTest {
+    private static final String HOST = "http://localhost:8080/";
     private final Base62KeyGenerator keyGenerator = new Base62KeyGenerator();
     private final BasicUrlShortener urlShortener = new BasicUrlShortener(keyGenerator);
 
@@ -20,6 +21,6 @@ class BasicUrlShortenerTest {
 
         String shortUrl = urlShortener.shorteningUrl(urlCreateCommand).getNewUrl();
 
-        assertThat(shortUrl).isEqualTo(encodedKey);
+        assertThat(shortUrl).isEqualTo(HOST + encodedKey);
     }
 }
