@@ -1,5 +1,6 @@
 package com.prgrms.shortener.domain;
 
+import com.prgrms.shortener.domain.exception.ShortenedUrlNotFoundException;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,12 +29,12 @@ public class ShortenedUrlService {
     return createdUrl.getShortenedKey();
   }
 
-  public Optional<String> findOriginalUrlByKey(String key) {
+  public String findOriginalUrlByKey(String key) {
     Optional<ShortenedUrl> storedUrl = urlRepository.findByShortenedKey(key);
     if (storedUrl.isEmpty()) {
-      return Optional.empty();
+      throw new ShortenedUrlNotFoundException();
     }
     urlRepository.increaseCount(storedUrl.get().getId());
-    return Optional.of(storedUrl.get().getOriginalUrl());
+    return storedUrl.get().getOriginalUrl();
   }
 }

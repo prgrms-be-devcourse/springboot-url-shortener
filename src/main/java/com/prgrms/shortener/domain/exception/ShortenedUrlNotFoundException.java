@@ -1,4 +1,4 @@
-package com.prgrms.shortener.presentation.exception;
+package com.prgrms.shortener.domain.exception;
 
 public class ShortenedUrlNotFoundException extends RuntimeException {
 

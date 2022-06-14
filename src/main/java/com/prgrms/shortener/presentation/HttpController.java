@@ -2,8 +2,6 @@ package com.prgrms.shortener.presentation;
 
 import com.prgrms.shortener.domain.ShortenedUrlService;
 import com.prgrms.shortener.presentation.exception.InvalidUrlRequestException;
-import com.prgrms.shortener.presentation.exception.ShortenedUrlNotFoundException;
-import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -38,9 +36,9 @@ public class HttpController {
   @GetMapping("/{key}")
   public String handleShortenedUrl(@PathVariable String key) {
 
-    Optional<String> originalUrl = shortenedUrlService.findOriginalUrlByKey(key);
+    String originalUrl = shortenedUrlService.findOriginalUrlByKey(key);
 
-    return originalUrl.map(url -> "redirect:" + url).orElseThrow(ShortenedUrlNotFoundException::new);
+    return "redirect:" + originalUrl;
 
   }
 

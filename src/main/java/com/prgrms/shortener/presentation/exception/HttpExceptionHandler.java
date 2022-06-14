@@ -1,5 +1,6 @@
 package com.prgrms.shortener.presentation.exception;
 
+import com.prgrms.shortener.domain.exception.ShortenedUrlNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -24,6 +25,14 @@ public class HttpExceptionHandler {
     String message = exception.getMessage();
     response.setStatus(400);
     return new SimpleMessagePayload(message);
+  }
+
+  @ExceptionHandler({IllegalArgumentException.class})
+  @ResponseBody
+  public SimpleMessagePayload illegalArgumentExceptionHandler(IllegalArgumentException exception, HttpServletResponse response) {
+    log.warn(exception.getClass().getSimpleName(), exception);
+    response.setStatus(400);
+    return new SimpleMessagePayload(exception.getMessage());
   }
 
   @ExceptionHandler(Exception.class)

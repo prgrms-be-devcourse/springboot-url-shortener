@@ -75,11 +75,11 @@ class ShortenedUrlServiceTest {
 
     // When
     when(repository.findByShortenedKey(KEY)).thenReturn(Optional.of(savedUrl));
-    Optional<String> originalUrl = shortenedUrlService.findOriginalUrlByKey(KEY);
+    String originalUrl = shortenedUrlService.findOriginalUrlByKey(KEY);
 
     // Then
     verify(repository, times(1)).increaseCount(savedUrl.getId());
-    assertThat(originalUrl).isNotEmpty().get().isEqualTo(ORIGINAL_URL);
+    assertThat(originalUrl).isEqualTo(ORIGINAL_URL);
 
   }
 

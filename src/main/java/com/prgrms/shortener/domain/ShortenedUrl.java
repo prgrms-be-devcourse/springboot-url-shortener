@@ -31,7 +31,7 @@ public class ShortenedUrl {
   }
 
   public void assignOriginalUrl(String url) {
-    checkArgument(url.length() <= 1000, "url의 최대 길이는 1000 이하입니다.");
+    checkArgument(url.length() <= 1000, "url의 최대 길이는 1000입니다.");
     this.originalUrl = url;
   }
 

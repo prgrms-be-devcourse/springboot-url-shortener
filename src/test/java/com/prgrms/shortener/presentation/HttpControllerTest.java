@@ -18,6 +18,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prgrms.shortener.domain.ShortenedUrlService;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -106,6 +108,30 @@ class HttpControllerTest {
     ), responseFields(
         fieldWithPath("message").type(JsonFieldType.STRING).description("Error description")
     )));
+  }
+
+  @Test
+  @DisplayName("원본 URL의 길이가 1000 이상 넘으면 400 코드가 담긴 메시지를 응답해야 한다.")
+  void response_400_with_message_when_url_length_exceeds_1000_characters() throws Exception {
+    // Given
+    String longUrl = "http://naver.com/" + Stream.generate(() -> "a").limit(1000).collect(Collectors.joining());
+    String wrongPayload = json.writeValueAsString(Map.of("url", longUrl));
+
+    // When
+    ResultActions actions = mockMvc.perform(post("/url")
+        .content(wrongPayload)
+        .contentType(MediaType.APPLICATION_JSON));
+
+    // Then
+    actions.andExpectAll(
+        status().isBadRequest(),
+        jsonPath("message").exists()
+    ).andDo(document("post-url-large-payload", requestFields(
+        fieldWithPath("url").type(JsonFieldType.STRING).description("Url length exceeds 1000 character")
+    ), responseFields(
+        fieldWithPath("message").type(JsonFieldType.STRING).description("Error description")
+    )));
+
   }
 
   @Test
