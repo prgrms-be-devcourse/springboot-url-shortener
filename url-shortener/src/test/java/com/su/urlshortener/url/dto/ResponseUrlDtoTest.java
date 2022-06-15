@@ -1,4 +1,4 @@
-package com.su.urlshortener.controller.dto;
+package com.su.urlshortener.url.dto;
 
 import com.su.urlshortener.url.entity.Url;
 import com.su.urlshortener.url.service.shortener.ShorteningAlgorithm;
