@@ -1,4 +1,4 @@
-package com.pppp0722.springbooturlshortener.domain.url;
+package com.pppp0722.springbooturlshortener.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

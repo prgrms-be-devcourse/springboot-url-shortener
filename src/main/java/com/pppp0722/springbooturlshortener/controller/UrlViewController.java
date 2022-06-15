@@ -1,8 +1,8 @@
-package com.pppp0722.springbooturlshortener.controller.url;
+package com.pppp0722.springbooturlshortener.controller;
 
-import com.pppp0722.springbooturlshortener.domain.url.UrlRequestDto;
-import com.pppp0722.springbooturlshortener.domain.url.UrlResponseDto;
-import com.pppp0722.springbooturlshortener.service.url.UrlService;
+import com.pppp0722.springbooturlshortener.domain.UrlRequestDto;
+import com.pppp0722.springbooturlshortener.domain.UrlResponseDto;
+import com.pppp0722.springbooturlshortener.service.UrlService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +27,14 @@ public class UrlViewController {
     public String getShortUrl(UrlRequestDto urlRequestDto, Model model) {
         UrlResponseDto urlResponseDto = urlService.createUrl(urlRequestDto);
         model.addAttribute("urlResponseDto", urlResponseDto);
+
         return "result";
     }
 
     @GetMapping("/{shortId}")
     public String redirectOriginalUrl(@PathVariable String shortId) {
         String originalUrl = urlService.getOriginalUrl(shortId);
+
         return "redirect:" + originalUrl;
     }
 }

@@ -1,9 +1,10 @@
-package com.pppp0722.springbooturlshortener.service.url;
+package com.pppp0722.springbooturlshortener.service;
 
-import com.pppp0722.springbooturlshortener.domain.url.Url;
-import com.pppp0722.springbooturlshortener.domain.url.UrlRepository;
-import com.pppp0722.springbooturlshortener.domain.url.UrlRequestDto;
-import com.pppp0722.springbooturlshortener.domain.url.UrlResponseDto;
+import com.pppp0722.springbooturlshortener.domain.Url;
+import com.pppp0722.springbooturlshortener.domain.UrlRepository;
+import com.pppp0722.springbooturlshortener.domain.UrlRequestDto;
+import com.pppp0722.springbooturlshortener.domain.UrlResponseDto;
+import com.pppp0722.springbooturlshortener.exception.UrlNotFoundException;
 import com.pppp0722.springbooturlshortener.util.Base62;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,6 @@ public class UrlServiceImpl implements UrlService {
         } else {
             url = retrievedUrl.get();
         }
-
         String shortUrl = URL + Base62.encoding(url.getId());
 
         return new UrlResponseDto(originalUrl, shortUrl);
@@ -43,10 +43,11 @@ public class UrlServiceImpl implements UrlService {
         Optional<Url> retrievedUrl = urlRepository.findById(id);
         String originalUrl;
         if (retrievedUrl.isEmpty()) {
-            throw new RuntimeException("url not found!");
+            throw new UrlNotFoundException("존재하지 않는 URL 입니다!");
         } else {
             originalUrl = retrievedUrl.get().getOriginalUrl();
         }
+
         return originalUrl;
     }
 }

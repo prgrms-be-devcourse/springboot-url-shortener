@@ -1,6 +1,6 @@
-package com.pppp0722.springbooturlshortener.domain.url;
+package com.pppp0722.springbooturlshortener.domain;
 
-import com.pppp0722.springbooturlshortener.exception.IllegalUrlArgumentException;
+import com.pppp0722.springbooturlshortener.exception.UrlIllegalArgumentException;
 import com.pppp0722.springbooturlshortener.util.Regex;
 import java.util.regex.Pattern;
 import javax.persistence.Column;
@@ -21,18 +21,14 @@ public class Url {
     @Column(unique = true, nullable = false)
     private String originalUrl;
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getOriginalUrl() {
-        return originalUrl;
-    }
-
-    public void changeOriginalUrl(String originalUrl) {
-        if (!Pattern.matches(Regex.URL, originalUrl)) {
-            throw new IllegalUrlArgumentException("올바르지 않은 URL 형식입니다!");
-        }
+    public void setOriginalUrl(String originalUrl) {
+        validateOriginalUrl(originalUrl);
         this.originalUrl = originalUrl;
+    }
+
+    private void validateOriginalUrl(String originalUrl) {
+        if (!Pattern.matches(Regex.URL, originalUrl)) {
+            throw new UrlIllegalArgumentException("올바르지 않은 URL 형식입니다!");
+        }
     }
 }

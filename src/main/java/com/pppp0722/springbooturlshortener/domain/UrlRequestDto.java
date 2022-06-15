@@ -1,4 +1,4 @@
-package com.pppp0722.springbooturlshortener.domain.url;
+package com.pppp0722.springbooturlshortener.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,8 @@ public class UrlRequestDto {
 
     public Url toEntity() {
         Url url = new Url();
-        url.changeOriginalUrl(originalUrl);
+        url.setOriginalUrl(originalUrl);
+
         return url;
     }
 }
