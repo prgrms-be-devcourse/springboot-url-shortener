@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>URL 단축 서비스</title>
+  <style>
+  </style>
+</head>
+<body>
+  <div>
+    <a th:href="@{/}">메인 페이지로 이동</a>
+  </div>
+  <div>
+    기존 URL : <span th:text="${urlResponseDto.originalUrl}"/>
+  </div>
+  <div>
+    단축된 URL : <span th:text="${urlResponseDto.shortUrl}"/>
+  </div>
+</body>
+</html>
