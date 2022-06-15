@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/head::headFragment"></head>
+
+<body>
+<div class="d-grid gap-2 justify-content-md-center">
+    <br/>
+    <h1>단축 URL 상세 페이지</h1>
+    <!--    <h3> Made by : su</h3>-->
+    <div>
+        <h3 th:text="|Generated Token Value : ${url.shotToken}|"></h3>
+    </div>
+
+    <form>
+        <fieldset disabled>
+
+            <div class="mb-3">
+                <label class="form-label" for="disabledTextInput1">Id</label>
+                <input class="form-control" id="disabledTextInput1" placeholder="Id" th:placeholder="${url.id}"
+                       type="text">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="disabledSelect">algorithm</label>
+                <select class="form-select" id="disabledSelect">
+                    <option th:text="${url.algorithm}">NORMAL</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="originUrl">Name</label>
+                <input class="form-control" id="originUrl" placeholder="Amount" th:placeholder="${url.originUrl}"
+                       type="text">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="shortUrl">ShotToken</label>
+                <input class="form-control" id="shortUrl" placeholder="Amount" th:placeholder="${url.shotToken}"
+                       type="text">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="requestNum">visitNum</label>
+                <input class="form-control" id="requestNum" placeholder="CreatedAt" th:placeholder="${url.visitNum}"
+                       type="text">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="createdAt">CreatedAt</label>
+                <input class="form-control" id="createdAt" placeholder="CreatedAt" th:placeholder="${url.createdAt}"
+                       type="text">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="updatedAt">UpdatedAt</label>
+                <input class="form-control" id="updatedAt" placeholder="UpdatedAt" th:placeholder="${url.updatedAt}"
+                       type="text">
+            </div>
+        </fieldset>
+    </form>
+    <div>
+        <a class="btn btn-outline-dark btn-lg"
+           th:href="@{http://localhost:8080/{param1}(param1=${url.shotToken})}" type="button">
+            ⚡️ㅤ단축 URL 바로가기ㅤ⚡️
+        </a>
+        <a class="btn btn-outline-dark btn-lg" href="/" type="button">⚡️ㅤ홈으로ㅤ⚡️</a>
+    </div>
+
+</div>
+</body>
+</html>

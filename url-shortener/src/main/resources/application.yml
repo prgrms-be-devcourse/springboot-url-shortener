@@ -1,0 +1,24 @@
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/urls
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database: H2
+    show-sql: true
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      format_sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
