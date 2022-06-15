@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/url_shortener
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root1234!
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+      format-sql: true
+  sql:
+    init:
+      mode: always
+
+server:
+  port: 8080
+  host: localhost
+
