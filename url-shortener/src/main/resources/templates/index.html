@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/head::headFragment"></head>
+
+<body>
+<div class="d-grid gap-2 justify-content-md-center">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <h1>URL SHORTNER</h1>
+
+    <form action="/urls/short" method="post" th:action="@{/urls}" th:method="post">
+
+        <div class="form-floating">
+            <select class="form-select" id="urlType" name="algorithm">
+                <option selected value="SEQUENCE">SEQUENCE</option>
+                <option value="RANDOM">RANDOM</option>
+            </select>
+            <label for="urlType">URL 단축 타입</label>
+        </div>
+
+        <br/>
+
+        <div class="mb-3">
+            <input class="form-control" id="originUrl" name="originUrl" placeholder="input your origin url" type="text">
+        </div>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+            <button class="btn btn-outline-primary btn-lg" type="submit">단축하기</button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
