@@ -43,11 +43,3 @@ public class UrlController {
         return "redirect:" + urlService.findOriginUrlByToken(shotToken);
     }
 }
-
-/**
- * https://kotlinworld.com/329
- * 리다이렉트와 포워드 차이
- * <p>
- * http://jmlim.github.io/spring/2019/09/30/spring-redirect-to-an-external-url/
- * 외부 url
- */
