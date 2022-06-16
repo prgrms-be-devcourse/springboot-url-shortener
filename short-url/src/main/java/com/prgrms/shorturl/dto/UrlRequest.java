@@ -1,8 +1,5 @@
 package com.prgrms.shorturl.dto;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 public class UrlRequest {
 
     private String url;

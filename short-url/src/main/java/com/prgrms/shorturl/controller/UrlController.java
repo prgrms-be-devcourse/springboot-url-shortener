@@ -3,7 +3,6 @@ package com.prgrms.shorturl.controller;
 import com.prgrms.shorturl.dto.UrlRequest;
 import com.prgrms.shorturl.dto.UrlResponse;
 import com.prgrms.shorturl.service.UrlService;
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
