@@ -1,0 +1,19 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: H2
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        query.in_clause_parameter_padding: true
+
+  datasource:
+    url:
+      jdbc:h2:~/shortener
+    username: "sa"
+    password: ""
+    driver-class-name: org.h2.Driver
+  jackson:
+    default-property-inclusion: non_null
