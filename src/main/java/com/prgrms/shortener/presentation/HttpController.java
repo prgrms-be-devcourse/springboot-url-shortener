@@ -27,4 +27,9 @@ public class HttpController {
   public String handleMainUrl() {
     return "home";
   }
+
+  @GetMapping("/meta")
+  public String handleMetaUrl() {
+    return "meta";
+  }
 }

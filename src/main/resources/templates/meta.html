@@ -40,49 +40,55 @@
 <body>
 <div class="container">
   <h1>Url Shortener</h1>
+  <h2>정보 조회</h2>
   <form class="form">
-    <input id="url" placeholder="URL을 입력해주세요" type="text"/>
-    <button>Shorten</button>
+    <input id="url" type="text"/>
+    <button>Search</button>
   </form>
   <div id="result">
-    URL을 입력해주세요
-  </div>
-  <br/>
-  <a href="/meta">👉👉👉👉 축약 URL 정보 조회</a>
-</div>
+    축약된 URL을 입력해주세요
+    <div id="#metadata">
 
+    </div>
+  </div>
+</div>
 <script>
   const form = document.querySelector(".form");
   const urlInput = document.querySelector(".form input");
   const result = document.querySelector("#result");
+  const stringifyMetadata = (payload) => `<div>URL : ${payload.url}</div><div>원본 URL : ${payload.originalUrl}</div><div>누적 접속 수 : ${payload.count}</div>`
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const originalUrl = urlInput.value;
-    const response = await fetch("/url", {
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        url: originalUrl,
-      }),
+    const shortenedUrl = urlInput.value;
+    const urlRegex = /^https?:\/\/[^\/\s]+\/[\w\d]{7}/;
+    if (!urlRegex.test(shortenedUrl)) {
+      alert("url 형식에 맞지 않습니다.")
+      urlInput.value = '';
+      urlInput.focus();
+      return;
+    }
+    const key = shortenedUrl.match(/[\w\d]{7}$/);
+
+    const response = await fetch("/url?key=" + key, {
+      method: "get",
     });
     const data = await response.json();
-    result.innerText = response.status === 400 ? data.message : data.url;
 
     if (response.status === 400) {
       result.innerText = data.message;
       result.style.backgroundColor = "tomato";
       setTimeout((component) => {
-        component.innerText = "URL을 입력해주세요"
+        component.innerText = "축약된 URL을 입력해주세요"
         component.style.backgroundColor = "white";
       }, 2000, result)
     } else {
-      result.innerText = data.url;
+      result.innerHTML = stringifyMetadata(data);
       result.style.backgroundColor = "lightgreen"
     }
     urlInput.value = "";
   });
 </script>
+
 </body>
 </html>
+

@@ -24,6 +24,8 @@ import java.util.stream.Stream;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -169,17 +171,6 @@ class ControllerTest {
   }
 
   @Test
-  @DisplayName("url에 path가 없을 경우 main html 페이지를 응답해야 한다.")
-  void return_main_view_when_path_is_empty() throws Exception {
-
-    mockMvc.perform(get("/")).andExpectAll(
-        status().is2xxSuccessful(),
-        view().name("home")
-    );
-
-  }
-
-  @Test
   @DisplayName("key값을 받으면 연결 요청 수와, 원본 url을 반환해야 한다.")
   void respond_url_metadata() throws Exception {
 
@@ -203,9 +194,18 @@ class ControllerTest {
             fieldWithPath("originalUrl").type(JsonFieldType.STRING).description("원본 URL"),
             fieldWithPath("count").type(JsonFieldType.NUMBER).description("누적 요청 횟수")
         )
-
     ));
+  }
 
+  @DisplayName("url 매핑 응답")
+  @ParameterizedTest
+  @CsvSource({"/,home", "/meta,meta"})
+  void response_with_mapped_view_with_url(String url, String viewName) throws Exception {
+
+    mockMvc.perform(get(url)).andExpectAll(
+        status().is2xxSuccessful(),
+        view().name(viewName)
+    );
   }
 
 }
