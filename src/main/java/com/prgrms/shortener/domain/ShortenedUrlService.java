@@ -1,8 +1,10 @@
 package com.prgrms.shortener.domain;
 
+import com.prgrms.shortener.domain.dto.UrlMetadata;
 import com.prgrms.shortener.domain.exception.ShortenedUrlNotFoundException;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -29,12 +31,25 @@ public class ShortenedUrlService {
     return createdUrl.getShortenedKey();
   }
 
+  @Transactional(isolation = Isolation.READ_UNCOMMITTED)
   public String findOriginalUrlByKey(String key) {
+    ShortenedUrl storedUrl = getShortenedUrl(key);
+    urlRepository.increaseCount(storedUrl.getId());
+    return storedUrl.getOriginalUrl();
+  }
+
+  @Transactional(readOnly = true)
+  public UrlMetadata getUrlMetadata(String key) {
+    ShortenedUrl storedUrl = getShortenedUrl(key);
+
+    return UrlMetadata.from(storedUrl);
+  }
+
+  private ShortenedUrl getShortenedUrl(String key) {
     Optional<ShortenedUrl> storedUrl = urlRepository.findByShortenedKey(key);
     if (storedUrl.isEmpty()) {
       throw new ShortenedUrlNotFoundException();
     }
-    urlRepository.increaseCount(storedUrl.get().getId());
-    return storedUrl.get().getOriginalUrl();
+    return storedUrl.get();
   }
 }

@@ -5,6 +5,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.prgrms.shortener.domain.dto.UrlMetadata;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -80,6 +81,26 @@ class ShortenedUrlServiceTest {
     // Then
     verify(repository, times(1)).increaseCount(savedUrl.getId());
     assertThat(originalUrl).isEqualTo(ORIGINAL_URL);
+
+  }
+
+  @Test
+  @DisplayName("매개변수로 주어진 key로 ShortenedUrl의 메타데이터를 반환해야 한다.")
+  void get_metadata_using_key() {
+
+    // when - 데이터가 저장되어 있을 경우에
+    ShortenedUrl savedUrl = new ShortenedUrl(1);
+    savedUrl.assignKey(KEY);
+    savedUrl.assignOriginalUrl(ORIGINAL_URL);
+
+    // when
+    when(repository.findByShortenedKey(KEY)).thenReturn(Optional.of(savedUrl));
+    UrlMetadata metadata = shortenedUrlService.getUrlMetadata(KEY);
+
+    // Then
+    assertThat(metadata.getKey()).isEqualTo(KEY);
+    assertThat(metadata.getCount()).isZero();
+    assertThat(metadata.getOriginalUrl()).isEqualTo(ORIGINAL_URL);
 
   }
 

@@ -1,5 +1,6 @@
 package com.prgrms.shortener.presentation;
 
+import static org.springframework.restdocs.http.HttpDocumentation.httpRequest;
 import static org.springframework.restdocs.http.HttpDocumentation.httpResponse;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -175,6 +176,35 @@ class ControllerTest {
         status().is2xxSuccessful(),
         view().name("home")
     );
+
+  }
+
+  @Test
+  @DisplayName("key값을 받으면 연결 요청 수와, 원본 url을 반환해야 한다.")
+  void respond_url_metadata() throws Exception {
+
+    // Given
+    String key = urlService.shorten(ORIGINAL_URL);
+    urlService.findOriginalUrlByKey(key);
+    urlService.findOriginalUrlByKey(key);
+    urlService.findOriginalUrlByKey(key);
+
+    // When
+    ResultActions actions = mockMvc.perform(get("/url?key=" + key));
+
+    // Then
+    actions.andExpectAll(
+        status().is2xxSuccessful(),
+        jsonPath("url").value(Matchers.matchesRegex("^https?://[^/\\s]+/" + key + "$")),
+        jsonPath("originalUrl").value(ORIGINAL_URL),
+        jsonPath("count").value(3)
+    ).andDo(document("get-metadata", httpRequest(),
+        responseFields(fieldWithPath("url").type(JsonFieldType.STRING).description("Shortened URL"),
+            fieldWithPath("originalUrl").type(JsonFieldType.STRING).description("원본 URL"),
+            fieldWithPath("count").type(JsonFieldType.NUMBER).description("누적 요청 횟수")
+        )
+
+    ));
 
   }
 
