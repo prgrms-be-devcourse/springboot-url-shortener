@@ -3,6 +3,7 @@ package com.example.springbooturlshortener.controller.api;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import com.example.springbooturlshortener.service.UrlService;
@@ -33,6 +34,8 @@ class UrlApiControllerTest {
 
   private final String baseUrl = "/api/v1/url";
   private final String shortenUrl = baseUrl + "/shortenUrl";
+  private final String originalUrl = "https://programmers.co.kr/";
+  private final String key = "aldjfskad";
 
   @Nested
   class shortenUrl메서드는 {
@@ -41,10 +44,8 @@ class UrlApiControllerTest {
     @DisplayName("원본 url를 이용해 단축 url을 생성한다")
     void 원본_url를_이용해_단축_url을_생성한다() throws Exception {
       //given
-      String originalUrl = "https://programmers.co.kr/";
-
       given(urlService.shortenUrl(anyString()))
-        .willReturn("/api/v1/url/aldjfskad");
+        .willReturn("/api/v1/url/" + key);
 
       //when, then
       MvcResult mvcResult = mockMvc.perform(post(shortenUrl)
@@ -53,6 +54,7 @@ class UrlApiControllerTest {
                                    .andExpect(status().isOk())
                                    .andReturn();
       // then
+      verify(urlService).shortenUrl(anyString());
       assertThat(mvcResult.getResponse().getContentAsString()).isNotBlank();
     }
 
