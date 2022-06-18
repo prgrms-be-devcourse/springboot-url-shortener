@@ -5,14 +5,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class Base62UniqueKeyUtils implements UniqueKeyUtils {
 
+  private final char[] BASE62 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
+
   @Override
   public String createKey(Long id) {
-    return null;
+    StringBuffer sb = new StringBuffer();
+    while (id > 0) {
+      sb.append(BASE62[(int) (id % 62)]);
+      id /= 62;
+    }
+    return sb.toString();
   }
 
   @Override
-  public String decodeKey(String key) {
   public int decodeKey(String key) {
-    return 0;
+    int result = 0;
+    int power = 1;
+    for (int i = 0; i < key.length(); i++) {
+      int digit = new String(BASE62).indexOf(key.charAt(i));
+      result += digit * power;
+      power *= 62;
+    }
+    return result;
   }
 }
