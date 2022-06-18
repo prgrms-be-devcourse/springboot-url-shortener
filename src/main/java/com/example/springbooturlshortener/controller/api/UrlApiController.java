@@ -18,7 +18,7 @@ public class UrlApiController {
   }
 
   @PostMapping("/shortenUrl")
-  public void shortenUrl(@Valid UrlRequest urlRequest) {
-    urlService.shortenUrl(urlRequest.getOriginalUrl());
+  public String shortenUrl(@Valid UrlRequest urlRequest) {
+    return urlService.shortenUrl(urlRequest.getOriginalUrl());
   }
 }
