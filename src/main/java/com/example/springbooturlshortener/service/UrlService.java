@@ -35,4 +35,8 @@ public class UrlService {
       throw new CustomException(INVALID_URL);
     }
   }
+
+  public String findOriginalUrl(String key) {
+    return null;
+  }
 }

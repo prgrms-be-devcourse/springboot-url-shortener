@@ -22,4 +22,16 @@ public class ErrorResponse {
                              errorCode.getDetail())
                          );
   }
+
+  public LocalDateTime getTimestamp() {
+    return timestamp;
+  }
+
+  public String getError() {
+    return error;
+  }
+
+  public String getMessage() {
+    return message;
+  }
 }
