@@ -1,6 +1,6 @@
 package com.example.springbooturlshortener.util;
 
-public interface UniqueKeyUtils {
+public interface KeyUtils {
 
   String createKey(Long id);
 

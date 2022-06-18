@@ -8,7 +8,7 @@ import static org.mockito.BDDMockito.given;
 import com.example.springbooturlshortener.domain.Url;
 import com.example.springbooturlshortener.domain.UrlRepository;
 import com.example.springbooturlshortener.exception.CustomException;
-import com.example.springbooturlshortener.util.UniqueKeyUtils;
+import com.example.springbooturlshortener.util.KeyUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -30,7 +30,7 @@ class UrlServiceTest {
   private UrlService urlService;
 
   @Mock
-  private UniqueKeyUtils uniqueKeyUtils;
+  private KeyUtils keyUtils;
 
   @Mock
   private UrlRepository urlRepository;
@@ -48,7 +48,7 @@ class UrlServiceTest {
       String key = "aldjkfl123";
       given(urlRepository.save(any(Url.class)))
         .willReturn(id);
-      given(uniqueKeyUtils.createKey(anyLong()))
+      given(keyUtils.createKey(anyLong()))
         .willReturn(key);
 
       //when

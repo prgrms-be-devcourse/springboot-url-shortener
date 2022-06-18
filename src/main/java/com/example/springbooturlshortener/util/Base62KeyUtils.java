@@ -3,7 +3,7 @@ package com.example.springbooturlshortener.util;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Base62UniqueKeyUtils implements UniqueKeyUtils {
+public class Base62KeyUtils implements KeyUtils {
 
   private final char[] BASE62 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
 
