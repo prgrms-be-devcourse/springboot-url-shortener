@@ -1,5 +1,8 @@
 package com.example.springbooturlshortener.controller.api;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import com.example.springbooturlshortener.service.UrlService;
@@ -16,10 +19,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 @WebMvcTest(controllers = UrlApiController.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class UrlApiControllerTest {
+
   @Autowired
   private MockMvc mockMvc;
 
@@ -28,22 +33,32 @@ class UrlApiControllerTest {
 
   private final String baseUrl = "/api/v1/url";
   private final String shortenUrl = baseUrl + "/shortenUrl";
+
   @Nested
   class shortenUrl메서드는 {
+
     @Test
     @DisplayName("원본 url를 이용해 단축 url을 생성한다")
     void 원본_url를_이용해_단축_url을_생성한다() throws Exception {
       //given
       String originalUrl = "https://programmers.co.kr/";
 
+      given(urlService.shortenUrl(anyString()))
+        .willReturn("/api/v1/url/aldjfskad");
+
       //when, then
-      mockMvc.perform(post(shortenUrl)
-          .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-          .param("originalUrl", originalUrl))
-        .andExpect(status().isOk());
+      MvcResult mvcResult = mockMvc.perform(post(shortenUrl)
+                                   .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                                   .param("originalUrl", originalUrl))
+                                   .andExpect(status().isOk())
+                                   .andReturn();
+      // then
+      assertThat(mvcResult.getResponse().getContentAsString()).isNotBlank();
     }
+
     @Nested
     class OriginalUrl이_null이거나_공백_또는_빈_값이라면 {
+
       @ParameterizedTest
       @NullAndEmptySource
       @ValueSource(strings = {" "})
@@ -52,8 +67,8 @@ class UrlApiControllerTest {
 
         //when, then
         mockMvc.perform(post(shortenUrl)
-                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                 .param("originalUrl", originalUrl))
+               .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+               .param("originalUrl", originalUrl))
                .andExpect(status().isBadRequest());
       }
     }
