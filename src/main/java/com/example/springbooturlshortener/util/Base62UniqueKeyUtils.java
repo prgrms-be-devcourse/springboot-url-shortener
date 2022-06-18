@@ -12,6 +12,7 @@ public class Base62UniqueKeyUtils implements UniqueKeyUtils {
 
   @Override
   public String decodeKey(String key) {
-    return null;
+  public int decodeKey(String key) {
+    return 0;
   }
 }

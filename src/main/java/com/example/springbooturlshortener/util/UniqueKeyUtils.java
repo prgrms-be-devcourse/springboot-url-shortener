@@ -4,5 +4,5 @@ public interface UniqueKeyUtils {
 
   String createKey(Long id);
 
-  String decodeKey(String key);
+  int decodeKey(String key);
 }
