@@ -4,5 +4,5 @@ public interface KeyUtils {
 
   String createKey(Long id);
 
-  int decodeKey(String key);
+  Long decodeKey(String key);
 }

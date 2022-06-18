@@ -18,8 +18,8 @@ public class Base62KeyUtils implements KeyUtils {
   }
 
   @Override
-  public int decodeKey(String key) {
-    int result = 0;
+  public Long decodeKey(String key) {
+    Long result = 0L;
     int power = 1;
     for (int i = 0; i < key.length(); i++) {
       int digit = new String(BASE62).indexOf(key.charAt(i));
