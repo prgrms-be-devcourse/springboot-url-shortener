@@ -24,6 +24,14 @@ dependencies {
 
     // web
     implementation 'org.springframework.boot:spring-boot-starter-web:2.7.0'
+
+    // valid
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.7'
+
+    // assertj
+    testImplementation 'org.assertj:assertj-core:3.22.0'
+
+
 }
 
 tasks.named('test') {
