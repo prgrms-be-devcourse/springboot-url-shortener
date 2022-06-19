@@ -4,7 +4,6 @@ import com.example.springbooturlshortener.dto.UrlRequest;
 import com.example.springbooturlshortener.service.UrlService;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
