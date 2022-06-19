@@ -22,8 +22,8 @@ public class UrlApiController {
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public void create(@Valid @RequestBody UrlCreateRequest request) {
-    urlService.shorten(request.orgUrl(), request.hashType());
+  public String create(@Valid @RequestBody UrlCreateRequest request) {
+    return urlService.shorten(request.orgUrl(), request.hashType());
   }
 
 }
