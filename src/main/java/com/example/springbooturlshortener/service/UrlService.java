@@ -25,7 +25,12 @@ public class UrlService {
 
   public String shortenUrl(String originalUrl) {
     validateUrl(originalUrl);
-    Url url = new Url(originalUrl);
+    Url url;
+    if ((url = findByOriginalUrl(originalUrl)) != null) {
+      return url.getOriginalUrl();
+    }
+
+    url = new Url(originalUrl);
     Long id = urlRepository.save(new Url(originalUrl)).getId();
     String key = keyUtils.createKey(id);
     url.setUniqueKey(key);
@@ -49,5 +54,9 @@ public class UrlService {
     if (key == null || key.isBlank()) {
       throw new CustomException(INVALID_KEY);
     }
+  }
+
+  private Url findByOriginalUrl(String originalUrl) {
+    return urlRepository.findByOriginalUrl(originalUrl).orElse(null);
   }
 }

@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import com.example.springbooturlshortener.domain.Url;
@@ -82,6 +83,24 @@ class UrlServiceTest {
           urlService.shortenUrl(originalUrl))
           .isInstanceOf(CustomException.class)
           .hasMessage("잘못된 URL 정보입니다.");
+      }
+    }
+
+    @Nested
+    class URL이_이미_DB에_존재하는_URL이라면 {
+
+      @DisplayName("URL을_새로_생성하지_않는다")
+      @Test
+      void URL을_새로_생성하지_않는다() {
+        //given
+        given(urlRepository.findByOriginalUrl(originalUrl))
+          .willReturn(Optional.of(url));
+
+        //when
+        urlService.shortenUrl(originalUrl);
+
+        //then
+        verify(urlRepository, times(0)).save(any(Url.class));
       }
     }
   }
