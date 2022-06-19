@@ -17,7 +17,7 @@ public class Url {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE,
-                  generator = "URL_SEQ_GEN"
+    generator = "URL_SEQ_GEN"
   )
   private Long id;
 
