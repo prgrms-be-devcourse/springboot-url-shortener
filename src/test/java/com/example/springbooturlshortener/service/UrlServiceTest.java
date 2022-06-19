@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import com.example.springbooturlshortener.domain.Url;
 import com.example.springbooturlshortener.domain.UrlRepository;
 import com.example.springbooturlshortener.exception.CustomException;
@@ -41,6 +42,8 @@ class UrlServiceTest {
 
   private final String originalUrl = "https://programmers.co.kr/";
   private final String key = "akjsdfhk";
+  private final Url url = new Url(originalUrl);
+
 
   @Nested
   class shortenUrl메서드는 {
@@ -72,11 +75,11 @@ class UrlServiceTest {
       @ParameterizedTest
       @NullAndEmptySource
       @ValueSource(strings = {" "})
-      void CustomException_예외를_던진다(String url) {
+      void CustomException_예외를_던진다(String originalUrl) {
         //given
         //when, then
         assertThatThrownBy(() ->
-          urlService.shortenUrl(url))
+          urlService.shortenUrl(originalUrl))
           .isInstanceOf(CustomException.class)
           .hasMessage("잘못된 URL 정보입니다.");
       }
@@ -91,7 +94,6 @@ class UrlServiceTest {
     void 짧은_URL에_해당하는_원래_URL을_반환한다() {
       //given
       Long id = 1L;
-      Url url = new Url(originalUrl);
       given(keyUtils.decodeKey(anyString()))
         .willReturn(id);
       given(urlRepository.findById(anyLong()))
