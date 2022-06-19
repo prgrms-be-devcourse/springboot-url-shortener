@@ -26,7 +26,7 @@ public class Url {
   @Column(unique = true, nullable = false)
   private String originalUrl;
 
-  @Column(unique = true, nullable = false)
+  @Column(unique = true, nullable = true)
   private String uniqueKey;
 
 
