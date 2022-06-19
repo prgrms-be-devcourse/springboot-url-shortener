@@ -2,6 +2,7 @@ package com.waterfogsw.springbooturlshortener.url.serivce;
 
 import static org.hibernate.internal.util.StringHelper.isNotEmpty;
 
+import com.waterfogsw.springbooturlshortener.common.exception.NotFoundException;
 import com.waterfogsw.springbooturlshortener.common.properties.AppProperties;
 import com.waterfogsw.springbooturlshortener.url.entity.HashType;
 import com.waterfogsw.springbooturlshortener.url.entity.Url;
@@ -53,5 +54,15 @@ public class DefaultUrlService implements UrlService {
     final var encodedValue = urlBase64Encoder.encode(savedUrl.getHash());
 
     return MessageFormat.format("{0}/{1}", appProperties.getUrl(), encodedValue);
+  }
+
+  @Override
+  public String getRedirectUrl(String shortKey) {
+    Assert.isTrue(isNotEmpty(shortKey), "Short key must be provided");
+    final var hash = urlBase64Encoder.decode(shortKey);
+
+    return urlRepository.findByHash(hash)
+        .orElseThrow(NotFoundException::new)
+        .getOrgUrl();
   }
 }
