@@ -33,6 +33,10 @@ public class Url {
     this.originalUrl = originalUrl;
   }
 
+  public String getOriginalUrl() {
+    return originalUrl;
+  }
+
   public void setUniqueKey(String uniqueKey) {
     this.uniqueKey = uniqueKey;
   }
