@@ -34,7 +34,7 @@ class UrlApiControllerTest {
   private UrlService urlService;
 
   private final String baseUrl = "/api/v1/url";
-  private final String shortenUrl = baseUrl + "/shortenUrl";
+  private final String ShortenedUrl = baseUrl + "/shortenUrl";
   private final String redirectOriginalUrl = baseUrl + "/";
 
   private final String originalUrl = "https://programmers.co.kr/";
@@ -51,7 +51,7 @@ class UrlApiControllerTest {
         .willReturn("/api/v1/url/" + key);
 
       //when, then
-      MvcResult mvcResult = mockMvc.perform(post(shortenUrl)
+      MvcResult mvcResult = mockMvc.perform(post(ShortenedUrl)
                                    .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                    .param("originalUrl", originalUrl))
                                    .andExpect(status().isOk())
@@ -71,7 +71,7 @@ class UrlApiControllerTest {
         //given
 
         //when, then
-        mockMvc.perform(post(shortenUrl)
+        mockMvc.perform(post(ShortenedUrl)
                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                .param("originalUrl", originalUrl))
                .andExpect(status().isBadRequest());
