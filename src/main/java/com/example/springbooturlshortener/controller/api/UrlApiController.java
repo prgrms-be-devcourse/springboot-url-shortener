@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping("api/v1/url")
 @Validated
@@ -31,8 +32,8 @@ public class UrlApiController {
 
   @GetMapping("/{key}")
   @ResponseStatus(code = HttpStatus.TEMPORARY_REDIRECT)
-  public String redirectOriginalUrl(@NotBlank @PathVariable("key") String key) {
+  public ModelAndView redirectOriginalUrl(@NotBlank @PathVariable("key") String key) {
     String originalUrl = urlService.findOriginalUrl(key);
-    return "redirect:/" + originalUrl;
+    return new ModelAndView("redirect:" + originalUrl);
   }
 }
