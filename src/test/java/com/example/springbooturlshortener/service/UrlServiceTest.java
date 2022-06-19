@@ -24,6 +24,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -50,8 +51,10 @@ class UrlServiceTest {
       //given
       Long id = 1000000L;
       String key = "aldjkfl123";
-      given(urlRepository.save(any(Url.class)))
-        .willReturn(id);
+      Url localUrl = new Url(originalUrl);
+      ReflectionTestUtils.setField(localUrl, "id", id);
+      when(urlRepository.save(any(Url.class)))
+        .thenReturn(localUrl);
       given(keyUtils.createKey(anyLong()))
         .willReturn(key);
 
