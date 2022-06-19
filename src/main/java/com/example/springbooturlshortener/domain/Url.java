@@ -49,8 +49,7 @@ public class Url {
     this.uniqueKey = uniqueKey;
   }
 
-  public String shortenUrl() {
+  public String getShortenUrl() {
     return BASE_URL + uniqueKey;
   }
-  
 }

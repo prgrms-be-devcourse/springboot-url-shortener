@@ -34,7 +34,7 @@ public class UrlService {
     Long id = urlRepository.save(new Url(originalUrl)).getId();
     String key = keyUtils.createKey(id);
     url.setUniqueKey(key);
-    return url.shortenUrl();
+    return url.getShortenUrl();
   }
 
   public String findOriginalUrl(String key) {
