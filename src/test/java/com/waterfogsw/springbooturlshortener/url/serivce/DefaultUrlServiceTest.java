@@ -1,5 +1,6 @@
 package com.waterfogsw.springbooturlshortener.url.serivce;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -13,6 +14,7 @@ import com.waterfogsw.springbooturlshortener.url.entity.Url;
 import com.waterfogsw.springbooturlshortener.url.repository.UrlRepository;
 import com.waterfogsw.springbooturlshortener.url.util.HashGenerator;
 import com.waterfogsw.springbooturlshortener.url.util.UrlBase64Encoder;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -118,7 +120,50 @@ class DefaultUrlServiceTest {
 
       }
     }
+  }
 
+  @Nested
+  @DisplayName("getRedirectUrl 메서드는")
+  class DescribeGetRedirectUrl {
+
+    @Nested
+    @DisplayName("null 또는 빈값이 전달되면")
+    class ContextWithNullOrEmpty {
+
+      @ParameterizedTest
+      @NullAndEmptySource
+      @DisplayName("IllegalArgumentException 에러를 발생시킨다")
+      void ItThrowsIllegalArgumentException(String shortKey) {
+        //when, then
+        assertThrows(IllegalArgumentException.class,
+            () -> defaultUrlService.getRedirectUrl(shortKey));
+      }
+    }
+
+    @Nested
+    @DisplayName("ShortKey 값이 전달되면")
+    class ContextWithShortKey {
+
+      @Test
+      @DisplayName("해시값을 통해 DB 에서 값을 조회하고 원본 url 을 반환한다")
+      void It() {
+        //given
+        final var orgUrl = "https://www.naver.com";
+        final var url = Url.builder()
+            .orgUrl(orgUrl)
+            .hashType(HashType.SHA256)
+            .build();
+
+        given(urlBase64Encoder.decode(anyString())).willReturn("testValue");
+        given(urlRepository.findByHash(anyString())).willReturn(Optional.of(url));
+        //when
+        final var result = defaultUrlService.getRedirectUrl("test");
+
+        //then
+        verify(urlRepository).findByHash(anyString());
+        assertEquals(orgUrl, result);
+      }
+    }
 
   }
 }
