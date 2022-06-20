@@ -4,13 +4,11 @@ import com.example.springbooturlshortener.dto.UrlRequest;
 import com.example.springbooturlshortener.service.UrlService;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,7 +29,6 @@ public class UrlApiController {
   }
 
   @GetMapping("/{key}")
-  @ResponseStatus(code = HttpStatus.TEMPORARY_REDIRECT)
   public ModelAndView redirectOriginalUrl(@NotBlank @PathVariable("key") String key) {
     String originalUrl = urlService.findOriginalUrl(key);
     return new ModelAndView("redirect:" + originalUrl);
