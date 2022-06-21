@@ -27,7 +27,6 @@ public class UrlRedirectController {
       HttpServletResponse response,
       @PathVariable @NotEmpty String shortKey
   ) {
-    System.out.println("ee");
     final var redirectUri = urlService.getRedirectUrl(shortKey);
 
     try {
