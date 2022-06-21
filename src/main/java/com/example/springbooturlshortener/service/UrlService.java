@@ -14,13 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UrlService {
 
-  private KeyUtils keyUtils;
-  private UrlRepository urlRepository;
+  private final KeyUtils keyUtils;
+  private final UrlRepository urlRepository;
 
-  public UrlService(KeyUtils uniqueKeyUtils,
-    UrlRepository userRepository) {
-    this.keyUtils = uniqueKeyUtils;
-    this.urlRepository = userRepository;
+  public UrlService(KeyUtils keyUtils,
+    UrlRepository urlRepository) {
+    this.keyUtils = keyUtils;
+    this.urlRepository = urlRepository;
   }
 
   public String shortenUrl(String originalUrl) {

@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 public class UrlApiController {
 
-  private UrlService urlService;
+  private final UrlService urlService;
 
   public UrlApiController(UrlService urlService) {
     this.urlService = urlService;

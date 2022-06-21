@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 
 public class ErrorResponse {
 
-  private LocalDateTime timestamp = LocalDateTime.now();
-  private String error;
-  private String message;
+  private final LocalDateTime timestamp = LocalDateTime.now();
+  private final String error;
+  private final String message;
 
   private ErrorResponse(String error, String message) {
     this.error = error;
