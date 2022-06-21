@@ -63,6 +63,10 @@ public class Url extends BaseTime {
     return orgUrl;
   }
 
+  public void updateRequestCount() {
+    requestCount++;
+  }
+
   public String getHash() {
     return hash;
   }

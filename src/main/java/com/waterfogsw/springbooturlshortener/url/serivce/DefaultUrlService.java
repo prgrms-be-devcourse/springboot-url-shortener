@@ -57,12 +57,16 @@ public class DefaultUrlService implements UrlService {
   }
 
   @Override
+  @Transactional
   public String getRedirectUrl(String shortKey) {
     Assert.isTrue(isNotEmpty(shortKey), "Short key must be provided");
     final var hash = urlBase64Encoder.decode(shortKey);
 
-    return urlRepository.findByHash(hash)
-        .orElseThrow(NotFoundException::new)
-        .getOrgUrl();
+    final var found = urlRepository.findByHash(hash)
+        .orElseThrow(NotFoundException::new);
+
+    found.updateRequestCount();
+
+    return found.getOrgUrl();
   }
 }
