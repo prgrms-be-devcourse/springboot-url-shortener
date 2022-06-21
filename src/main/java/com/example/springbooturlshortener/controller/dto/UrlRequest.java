@@ -1,4 +1,4 @@
-package com.example.springbooturlshortener.dto;
+package com.example.springbooturlshortener.controller.dto;
 
 import javax.validation.constraints.NotBlank;
 

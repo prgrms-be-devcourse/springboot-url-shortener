@@ -1,6 +1,6 @@
 package com.example.springbooturlshortener.controller.api;
 
-import com.example.springbooturlshortener.dto.UrlRequest;
+import com.example.springbooturlshortener.controller.dto.UrlRequest;
 import com.example.springbooturlshortener.service.UrlService;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
