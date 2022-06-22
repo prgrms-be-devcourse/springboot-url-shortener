@@ -51,9 +51,9 @@ public class DefaultUrlService implements UrlService {
         .build();
 
     final var savedUrl = urlRepository.save(url);
-    final var encodedValue = urlBase64Encoder.encode(savedUrl.getHash());
+    final var shortKey = urlBase64Encoder.encode(savedUrl.getHash());
 
-    return MessageFormat.format("{0}/{1}", appProperties.getUrl(), encodedValue);
+    return MessageFormat.format("{0}/{1}", appProperties.getUrl(), shortKey);
   }
 
   @Override
