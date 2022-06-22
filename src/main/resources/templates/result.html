@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Short URL</title>
+</head>
+<body>
+<h1>ShortUrl 변환</h1>
+<div class="container-fluid">
+  <div>
+    <a th:href="@{/}">다시 만들러 가기</a>
+  </div>
+  <div>
+    기존 URL : <span th:text="${urlResponseDto.originalUrl}"/>
+  </div>
+  <div>
+    단축된 URL : <span th:text="${urlResponseDto.shortUrl}"/>
+    <a th:href="@{${urlResponseDto.shortUrl}}">바로가기</a>
+  </div>
+</div>
+
+</body>
+</html>
