@@ -7,8 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotBlank;
 
-import org.springframework.util.Assert;
-
 @Entity
 @TableGenerator(
     name = "URL_SEQ_GEN",
