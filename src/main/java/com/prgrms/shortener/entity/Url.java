@@ -4,56 +4,79 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotBlank;
 
+import org.springframework.util.Assert;
+
 @Entity
-public class Url {
+@TableGenerator(
+    name = "URL_SEQ_GEN",
+    initialValue = 10000000,
+    allocationSize = 1
+)
+public class Url extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE, generator = "URL_SEQ_GEN")
+  private Long id;
 
-    @NotBlank
+  @NotBlank
+  private String originalUrl;
+
+  private String uniqueKey;
+
+  protected Url() {
+
+  }
+
+  private Url(Builder builder) {
+
+    this.originalUrl = builder.originalUrl;
+  }
+
+  public void saveUniqueKey(String uniqueKey) {
+
+    if (uniqueKey == null) {
+      throw new IllegalArgumentException();
+    }
+
+    this.uniqueKey = uniqueKey;
+  }
+
+  public static class Builder {
+
     private String originalUrl;
 
-    @NotBlank
-    private String uniqueKey;
+    public Builder originalUrl(String originalUrl) {
 
-    protected Url() {
-
+      this.originalUrl = originalUrl;
+      return this;
     }
 
-    private Url(Builder builder) {
+    public Url build() {
 
-        this.originalUrl = builder.originalUrl;
-        this.uniqueKey = builder.uniqueKey;
+      return new Url(this);
     }
+  }
 
-    static class Builder {
+  public static Builder builder() {
 
-        private String originalUrl;
-        private String uniqueKey;
+    return new Builder();
+  }
 
-        public Builder originalUrl(String originalUrl) {
+  public Long getId() {
 
-            this.originalUrl = originalUrl;
-            return this;
-        }
+    return id;
+  }
 
-        public Builder uniqueKey(String uniqueKey) {
+  public String getOriginalUrl() {
 
-            this.uniqueKey = uniqueKey;
-            return this;
-        }
+    return originalUrl;
+  }
 
-        public Url build() {
+  public String getUniqueKey() {
 
-            return new Url(this);
-        }
-    }
-
-    public static Builder builder() {
-
-        return new Builder();
-    }
+    return uniqueKey;
+  }
 }
