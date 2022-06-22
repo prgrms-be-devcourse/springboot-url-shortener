@@ -1,0 +1,39 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.7'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.prgrms'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // h2
+    implementation 'com.h2database:h2:2.1.214'
+
+    // jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.0'
+
+    // web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // valid
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.6.7'
+
+    // assertj
+    testImplementation 'org.assertj:assertj-core:3.22.0'
+
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
