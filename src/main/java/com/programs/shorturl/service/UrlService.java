@@ -1,14 +1,11 @@
 package com.programs.shorturl.service;
 
 import com.programs.shorturl.domain.Url;
-
 import com.programs.shorturl.dto.UrlRequestDto;
 import com.programs.shorturl.dto.UrlResponseDto;
 import com.programs.shorturl.exception.NotExistException;
 import com.programs.shorturl.repository.UrlRepository;
 import com.programs.shorturl.util.Base58;
-import java.util.Optional;
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
