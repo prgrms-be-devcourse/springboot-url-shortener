@@ -1,0 +1,62 @@
+package com.example.springbooturlshortener.service;
+
+import static com.example.springbooturlshortener.exception.ErrorCode.INVALID_KEY;
+import static com.example.springbooturlshortener.exception.ErrorCode.INVALID_URL;
+import static com.example.springbooturlshortener.exception.ErrorCode.URL_NOT_FOUND;
+import com.example.springbooturlshortener.domain.Url;
+import com.example.springbooturlshortener.domain.UrlRepository;
+import com.example.springbooturlshortener.exception.CustomException;
+import com.example.springbooturlshortener.util.KeyUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Transactional
+@Service
+public class UrlService {
+
+  private final KeyUtils keyUtils;
+  private final UrlRepository urlRepository;
+
+  public UrlService(KeyUtils keyUtils,
+    UrlRepository urlRepository) {
+    this.keyUtils = keyUtils;
+    this.urlRepository = urlRepository;
+  }
+
+  public String shortenUrl(String originalUrl) {
+    validateUrl(originalUrl);
+    Url url;
+    if ((url = findByOriginalUrl(originalUrl)) != null) {
+      return url.getShortenUrl();
+    }
+
+    url = new Url(originalUrl);
+    Long id = urlRepository.save(new Url(originalUrl)).getId();
+    String key = keyUtils.createKey(id);
+    url.setUniqueKey(key);
+    return url.getShortenUrl();
+  }
+
+  public String findOriginalUrl(String key) {
+    validateKey(key);
+    Long id = keyUtils.decodeKey(key);
+    Url url = urlRepository.findById(id).orElseThrow(() -> new CustomException(URL_NOT_FOUND));
+    return url.getOriginalUrl();
+  }
+
+  private void validateUrl(String url) {
+    if (url == null || url.isBlank()) {
+      throw new CustomException(INVALID_URL);
+    }
+  }
+
+  private void validateKey(String key) {
+    if (key == null || key.isBlank()) {
+      throw new CustomException(INVALID_KEY);
+    }
+  }
+
+  private Url findByOriginalUrl(String originalUrl) {
+    return urlRepository.findByOriginalUrl(originalUrl).orElse(null);
+  }
+}
