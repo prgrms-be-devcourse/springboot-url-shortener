@@ -27,7 +27,7 @@ public class UrlService {
     validateUrl(originalUrl);
     Url url;
     if ((url = findByOriginalUrl(originalUrl)) != null) {
-      return url.getOriginalUrl();
+      return url.getShortenUrl();
     }
 
     url = new Url(originalUrl);
