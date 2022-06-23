@@ -1,0 +1,29 @@
+spring:
+  h2:
+    console:
+      enabled: true
+      path: /test_db
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:./test_db;MODE=MYSQL
+    username: sa
+    password:
+    hikari:
+      minimum-idle: 1
+      maximum-pool-size: 5
+      pool-name: H2_DB
+  sql:
+    init:
+      platform: h2
+      schema-locations: classpath:schema.sql
+      encoding: UTF-8
+  jpa:
+    database: h2
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
