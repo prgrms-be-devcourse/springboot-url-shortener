@@ -63,7 +63,7 @@ public class DefaultUrlService implements UrlService {
     final var hash = urlBase64Encoder.decode(shortKey);
 
     final var found = urlRepository.findByHash(hash)
-        .orElseThrow(NotFoundException::new);
+        .orElseThrow(() -> new NotFoundException("Url not found"));
 
     found.updateRequestCount();
 
