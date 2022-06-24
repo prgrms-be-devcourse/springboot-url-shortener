@@ -23,12 +23,12 @@ public class UrlRedirectController {
     this.urlService = urlService;
   }
 
-  @GetMapping("{shortKey}")
+  @GetMapping("{key}")
   public void redirect(
       HttpServletResponse response,
-      @PathVariable @NotEmpty String shortKey
+      @PathVariable @NotEmpty String key
   ) {
-    final var redirectUri = urlService.getRedirectUrl(shortKey);
+    final var redirectUri = urlService.getRedirectUrl(key);
 
     try {
       response.sendRedirect(redirectUri);
