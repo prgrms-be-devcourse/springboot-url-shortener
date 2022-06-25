@@ -1,0 +1,39 @@
+:hardbreaks:
+ifndef::snippets[]
+:snippets: ../../build/generated-snippets
+endif::[]
+
+== Short-Url API
+
+=== Create short-url
+
+=== POST /api/v1/short-url
+
+.Request
+include::{snippets}/shortUrl-create/http-request.adoc[]
+include::{snippets}/shortUrl-create/request-fields.adoc[]
+
+.Response
+include::{snippets}/shortUrl-create/http-response.adoc[]
+include::{snippets}/shortUrl-create/response-fields.adoc[]
+
+=== Read short-url
+
+=== GET /api/v1/short-url/{short-id}
+
+.Request
+include::{snippets}/shortUrl-read/http-request.adoc[]
+
+.Response
+include::{snippets}/shortUrl-read/http-response.adoc[]
+include::{snippets}/shortUrl-read/response-fields.adoc[]
+
+=== Redirect short-url
+
+=== GET /{short-id}
+
+.Request
+include::{snippets}/shortUrl-redirect/http-request.adoc[]
+
+.Response
+include::{snippets}/shortUrl-redirect/http-response.adoc[]
