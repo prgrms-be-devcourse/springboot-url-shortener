@@ -3,11 +3,11 @@ SprintBoot URL Shortener 구현 미션 Repository 입니다.
 
 ## 요구사항
 각 요구사항을 모두 충족할 수 있도록 노력해봅시다.
-- [ ] URL 입력폼 제공 및 결과 출력
-- [ ] URL Shortening Key는 8 Character 이내로 생성
-- [ ] 단축된 URL 요청시 원래 URL로 리다이렉트
-- [ ] 단축된 URL에 대한 요청 수 정보저장 (optional)
-- [ ] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional) 
+- [x] URL 입력폼 제공 및 결과 출력
+- [x] URL Shortening Key는 8 Character 이내로 생성
+- [x] 단축된 URL 요청시 원래 URL로 리다이렉트
+- [x] 단축된 URL에 대한 요청 수 정보저장 (optional)
+- [x] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional) 
 
 
 ## Short URL Service
@@ -19,8 +19,8 @@ SprintBoot URL Shortener 구현 미션 Repository 입니다.
 
 ### Short URL의 동작 과정
 예시로 bitly를 봅시다
-![image1](./image1.png)
-![image2](./image2.png)
+![image1](https://github.com/prgrms-be-devcourse/springboot-url-shortener/blob/main/image1.png?raw=true)
+![image2](https://github.com/prgrms-be-devcourse/springboot-url-shortener/blob/main/image2.png?raw=true)
 1. 원본 URL을 입력하고 Shorten 버튼을 클릭합니다.
 2. Unique Key를 7문자 생성합니다.
 3. Unique Key와 원본 URL을 DB에 저장합니다.
