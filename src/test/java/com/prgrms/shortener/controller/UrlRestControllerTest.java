@@ -3,6 +3,7 @@ package com.prgrms.shortener.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.prgrms.shortener.controller.dto.ShortUrlRequest;
+import com.prgrms.shortener.controller.dto.UrlRequest;
 import com.prgrms.shortener.service.UrlService;
 
 import org.junit.jupiter.api.DisplayName;
@@ -72,7 +73,8 @@ public class UrlRestControllerTest {
       void ItReturnCreated() throws Exception {
 
         final String validUrl = "www.naver.com";
-        final ShortUrlRequest urlRequest = new ShortUrlRequest(validUrl);
+        //final ShortUrlRequest urlRequest = new ShortUrlRequest(validUrl);
+        final UrlRequest urlRequest = new UrlRequest(validUrl);
 
         final MockHttpServletRequestBuilder request = post(url)
             .contentType(MediaType.APPLICATION_JSON)

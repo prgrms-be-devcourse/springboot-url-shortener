@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.prgrms.shortener.controller.dto.ShortUrlRequest;
+import com.prgrms.shortener.controller.dto.UrlRequest;
 import com.prgrms.shortener.exception.ErrorMessage;
 import com.prgrms.shortener.service.UrlService;
 
@@ -29,9 +30,10 @@ public class UrlRestController {
 
   @PostMapping("api/v1/urls")
   @ResponseStatus(HttpStatus.CREATED)
-  public String createShortUrl(@RequestBody @Valid ShortUrlRequest request) {
+  public String createShortUrl(/*@RequestBody @Valid ShortUrlRequest request*/
+    @RequestBody @Valid UrlRequest request) {
 
-    return urlService.createShortUrl(request.originalUrl());
+    return urlService.createShortUrl(request.getOriginalUrl());
   }
 
   @GetMapping("{uniqueKey}")
