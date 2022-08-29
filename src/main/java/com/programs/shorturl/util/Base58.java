@@ -8,7 +8,7 @@ public class Base58 {
 
   private static final char[] list = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
 
-  public String GenerateShortUrl() {
+  public String generateShortUrl() {
 
     StringBuilder sb = new StringBuilder();
     Random random = new Random();

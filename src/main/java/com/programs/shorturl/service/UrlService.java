@@ -16,29 +16,34 @@ public class UrlService {
   private final UrlRepository urlRepository;
   private final Base58 base58;
 
-
   public UrlService(UrlRepository urlRepository, Base58 base58) {
     this.urlRepository = urlRepository;
     this.base58 = base58;
   }
 
   public UrlResponseDto createShortUrl(UrlRequestDto urlRequestDto) {
-    String url = urlRequestDto.getOriginalUrl();
-    String shortUrl = base58.GenerateShortUrl();
-    Url temp = urlRepository.findByUrl(url).orElseGet(
+    String originalUrl;
+    if (!urlRequestDto.getOriginalUrl().startsWith("http")) {
+      originalUrl = "https://" + urlRequestDto.getOriginalUrl();
+    }else{
+      originalUrl = urlRequestDto.getOriginalUrl();
+    }
+
+    String shortUrl = base58.generateShortUrl();
+    Url temp = urlRepository.findByOriginalUrl(originalUrl).orElseGet(
         () -> urlRepository.save(
             Url.builder()
-                .url(url)
+                .originalUrl(originalUrl)
                 .shortUrl(shortUrl)
                 .build()
         )
     );
 
-    return new UrlResponseDto(temp.getUrl(), "http://localhost:8080/"+ temp.getShortUrl());
+    return new UrlResponseDto(temp.getOriginalUrl(),  temp.getShortUrl());
   }
 
   public String getOriginalUrl(String shortUrl) {
     Url url = urlRepository.findByShortUrl(shortUrl).orElseThrow(NotExistException::new);
-    return url.getUrl();
+    return url.getOriginalUrl();
   }
 }
