@@ -5,9 +5,14 @@ import java.util.List;
 
 import org.springframework.validation.BindingResult;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 public record ErrorResponse(
+	@Schema(description = "에러 코드")
 	String errorCode,
+	@Schema(description = "에러 메시지")
 	String message,
+	@Schema(description = "필드 에러 리스트")
 	List<CustomFieldError> errors
 ) {
 

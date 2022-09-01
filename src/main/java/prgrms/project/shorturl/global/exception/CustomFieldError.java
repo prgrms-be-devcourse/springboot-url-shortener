@@ -5,7 +5,16 @@ import java.util.List;
 
 import org.springframework.validation.BindingResult;
 
-public record CustomFieldError(String field, Object value, String cause) {
+import io.swagger.v3.oas.annotations.media.Schema;
+
+public record CustomFieldError(
+	@Schema(description = "필드 이름")
+	String field,
+	@Schema(description = "입력된 값")
+	Object value,
+	@Schema(description = "원인")
+	String cause
+) {
 
 	public static List<CustomFieldError> from(BindingResult bindingResult) {
 		var fieldErrors = bindingResult.getFieldErrors();
