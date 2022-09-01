@@ -27,9 +27,13 @@ public class ShortUrl extends BaseTimeEntity {
 	protected ShortUrl() {
 	}
 
-	public ShortUrl(String originUrl, String shortenUrl) {
+	private ShortUrl(String originUrl, String shortenUrl) {
 		this.originUrl = originUrl;
 		this.shortenUrl = shortenUrl;
+	}
+
+	public static ShortUrl createShortUrl(String originUrl, String shortenUrl) {
+		return new ShortUrl(originUrl, shortenUrl);
 	}
 
 	public void increaseNumberOfRequests() {

@@ -13,7 +13,6 @@ import prgrms.project.shorturl.dto.ShortUrlCreateRequest;
 import prgrms.project.shorturl.dto.ShortUrlRedirectResponse;
 import prgrms.project.shorturl.dto.ShortUrlRequest;
 import prgrms.project.shorturl.dto.ShortUrlResponse;
-import prgrms.project.shorturl.domain.ShortUrlService;
 
 @RestController
 @RequestMapping("/api/v1/short-urls")

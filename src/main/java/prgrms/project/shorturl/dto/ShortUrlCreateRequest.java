@@ -6,6 +6,6 @@ public record ShortUrlCreateRequest(
 	String originUrl,
 
 	@NotBlank
-	String algorithm
+	String method
 ) {
 }

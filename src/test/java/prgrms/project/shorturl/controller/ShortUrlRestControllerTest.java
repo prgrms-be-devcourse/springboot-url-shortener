@@ -80,7 +80,7 @@ class ShortUrlRestControllerTest {
     private RequestFieldsSnippet requestShortUrlCreate() {
         return requestFields(
             fieldWithPath("originUrl").type(STRING).description("원본 주소"),
-            fieldWithPath("algorithm").type(STRING).description("주소 변환 알고리즘")
+            fieldWithPath("method").type(STRING).description("주소 변환 알고리즘")
         );
     }
 
