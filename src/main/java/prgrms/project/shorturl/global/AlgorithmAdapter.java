@@ -1,4 +1,4 @@
-package prgrms.project.shorturl.global.algorithm;
+package prgrms.project.shorturl.global;
 
 public enum AlgorithmAdapter {
 

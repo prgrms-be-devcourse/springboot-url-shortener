@@ -1,9 +1,9 @@
-package prgrms.project.shorturl.controller;
+package prgrms.project.shorturl.global.exception;
 
 import static java.text.MessageFormat.*;
 import static java.util.Objects.*;
 import static java.util.stream.Collectors.*;
-import static prgrms.project.shorturl.controller.ErrorCode.*;
+import static prgrms.project.shorturl.global.exception.ErrorCode.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,8 +17,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import prgrms.project.shorturl.global.exception.EntityNotFoundException;
 
 @RestControllerAdvice(basePackages = "prgrms.project.shorturl.controller")
 public class GlobalExceptionHandler {

@@ -1,4 +1,4 @@
-package prgrms.project.shorturl.controller;
+package prgrms.project.shorturl.domain;
 
 import static org.springframework.http.HttpStatus.*;
 
@@ -13,7 +13,7 @@ import prgrms.project.shorturl.dto.ShortUrlCreateRequest;
 import prgrms.project.shorturl.dto.ShortUrlRedirectResponse;
 import prgrms.project.shorturl.dto.ShortUrlRequest;
 import prgrms.project.shorturl.dto.ShortUrlResponse;
-import prgrms.project.shorturl.service.ShortUrlService;
+import prgrms.project.shorturl.domain.ShortUrlService;
 
 @RestController
 @RequestMapping("/api/v1/short-urls")

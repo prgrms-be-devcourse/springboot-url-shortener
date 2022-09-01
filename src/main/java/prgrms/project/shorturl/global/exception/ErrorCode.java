@@ -1,4 +1,4 @@
-package prgrms.project.shorturl.controller;
+package prgrms.project.shorturl.global.exception;
 
 import static org.springframework.http.HttpStatus.*;
 

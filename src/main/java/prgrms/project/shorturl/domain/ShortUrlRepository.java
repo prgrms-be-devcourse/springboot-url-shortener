@@ -1,4 +1,4 @@
-package prgrms.project.shorturl.repository;
+package prgrms.project.shorturl.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import prgrms.project.shorturl.domain.ShortUrl;

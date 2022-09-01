@@ -1,18 +1,16 @@
-package prgrms.project.shorturl.service;
+package prgrms.project.shorturl.domain;
 
 import static java.text.MessageFormat.*;
-import static prgrms.project.shorturl.global.converter.ShortUrlConverter.*;
+import static prgrms.project.shorturl.global.ShortUrlConverter.*;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import prgrms.project.shorturl.domain.ShortUrl;
 import prgrms.project.shorturl.dto.ShortUrlCreateRequest;
 import prgrms.project.shorturl.dto.ShortUrlRedirectResponse;
 import prgrms.project.shorturl.dto.ShortUrlResponse;
-import prgrms.project.shorturl.global.algorithm.AlgorithmAdapter;
+import prgrms.project.shorturl.global.AlgorithmAdapter;
 import prgrms.project.shorturl.global.exception.EntityNotFoundException;
-import prgrms.project.shorturl.repository.ShortUrlRepository;
 
 @Service
 public class ShortUrlService {

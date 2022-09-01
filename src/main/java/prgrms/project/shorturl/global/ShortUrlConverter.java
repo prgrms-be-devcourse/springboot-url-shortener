@@ -1,4 +1,4 @@
-package prgrms.project.shorturl.global.converter;
+package prgrms.project.shorturl.global;
 
 import prgrms.project.shorturl.domain.ShortUrl;
 import prgrms.project.shorturl.dto.ShortUrlRedirectResponse;
