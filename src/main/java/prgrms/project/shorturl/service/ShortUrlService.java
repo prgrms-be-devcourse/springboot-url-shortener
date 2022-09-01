@@ -28,7 +28,6 @@ public class ShortUrlService {
         var savedShortUrl = shortUrlRepository.save(new ShortUrl(createRequest.originUrl(), INIT_SHORT_URL));
 
         var shortUrl = algorithm.encode(savedShortUrl.getId());
-        savedShortUrl.assignShortUrl(shortUrl);
 
         return shortUrlResponseFrom(savedShortUrl);
     }
@@ -42,7 +41,7 @@ public class ShortUrlService {
                     new EntityNotFoundException(format("해당 shorUrl 을 찾지 못했습니다. [shortUrl: {0}]", shortUrl))
             );
 
-        retrievedShortUrl.increaseRequestCount();
+        retrievedShortUrl.increaseNumberOfRequests();
 
         return shortUrlRedirectResponseFrom(retrievedShortUrl);
     }

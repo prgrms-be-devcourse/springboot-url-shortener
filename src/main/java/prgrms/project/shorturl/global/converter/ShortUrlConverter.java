@@ -11,12 +11,12 @@ public class ShortUrlConverter {
         return ShortUrlResponse
             .builder()
             .originUrl(shortUrl.getOriginUrl())
-            .shortUrl(shortUrl.getShortUrl())
-            .requestCount(shortUrl.getRequestCount())
+            .shortUrl(shortUrl.getShortenUrl())
+            .requestCount(shortUrl.getNumberOfRequests())
             .build();
     }
 
     public static ShortUrlRedirectResponse shortUrlRedirectResponseFrom(ShortUrl shortUrl) {
-        return new ShortUrlRedirectResponse(shortUrl.getOriginUrl(), shortUrl.getRequestCount());
+        return new ShortUrlRedirectResponse(shortUrl.getOriginUrl(), shortUrl.getNumberOfRequests());
     }
 }
