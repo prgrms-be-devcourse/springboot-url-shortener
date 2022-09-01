@@ -1,18 +1,13 @@
 package prgrms.project.shorturl.domain;
 
-import static java.text.MessageFormat.*;
-import static prgrms.project.shorturl.global.ShortUrlConverter.*;
-
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import prgrms.project.shorturl.dto.ShortUrlCreateRequest;
-import prgrms.project.shorturl.dto.ShortUrlRedirectResponse;
-import prgrms.project.shorturl.dto.ShortUrlResponse;
+import prgrms.project.shorturl.domain.ShortUrlDto.CreateDto;
+import prgrms.project.shorturl.domain.ShortUrlDto.ResponseDto;
 import prgrms.project.shorturl.global.algorithm.ShortUrlGenerator;
-import prgrms.project.shorturl.global.exception.EntityNotFoundException;
 
 @Service
 public class ShortUrlService {
@@ -29,24 +24,10 @@ public class ShortUrlService {
 	}
 
 	@Transactional
-	public ShortUrlResponse createShortUrl(ShortUrlCreateRequest createRequest) {
-		var shortUrlGenerator = shortUrlGenerators.get(createRequest.method());
-		var shortUrl = ShortUrl.createShortUrl(createRequest.originUrl(), shortUrlGenerator.generate());
+	public ResponseDto createShortUrl(CreateDto createDto) {
+		var shortUrlGenerator = shortUrlGenerators.get(createDto.method());
+		var shortUrl = ShortUrl.createShortUrl(createDto.originUrl(), shortUrlGenerator.generate());
 
-		return shortUrlResponseFrom(shortUrlRepository.save(shortUrl));
-	}
-
-	@Transactional
-	public ShortUrlRedirectResponse increaseRequestCount(String shortUrl) {
-		var retrievedShortUrl = shortUrlRepository
-			.findByShortenUrl(shortUrl)
-			.orElseThrow(
-				() ->
-					new EntityNotFoundException(format("해당 shorUrl 을 찾지 못했습니다. [shortUrl: {0}]", shortUrl))
-			);
-
-		retrievedShortUrl.increaseNumberOfRequests();
-
-		return shortUrlRedirectResponseFrom(retrievedShortUrl);
+		return ShortUrlConverter.toResponseDto(shortUrlRepository.save(shortUrl));
 	}
 }
