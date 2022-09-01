@@ -9,22 +9,22 @@
 </head>
 <body>
 <div class="wrapper">
-    <h2 class="title">ShortUrlConverter</h2>
+    <h2 class="title">ShortUrlGenerator</h2>
     <form class="content">
         <div class="input-group mb-3">
-            <select id="algorithmSelector">
-                <option name="BASE62">BASE62</option>
-                <option name="FAKE62">FAKE62</option>
+            <select id="method">
+                <option value="base62" name="base62">Base62</option>
+                <option value="nanoId" name="nanoId">NanoId</option>
             </select>
-            <input type="text" class="form-control" placeholder="https://google.com" id="originUrlInput">
-            <button type="button" class="btn btn-primary" id="btn-create">변환</button>
+            <input type="text" class="form-control" placeholder="https://google.com" id="url">
+            <button type="button" class="btn btn-primary" id="btn-create">생성</button>
         </div>
     </form>
 
     <div class="content short-url-info none">
         <div>
             <div>
-                <span id="shortUrl"></span>
+                <span id="shortenUrl"></span>
             </div>
 
             <div class="div-right">
@@ -49,7 +49,7 @@
             </div>
 
             <div class="div-right">
-                <span id="requestCount"></span>
+                <span id="numberOfRequests"></span>
             </div>
         </div>
     </div>

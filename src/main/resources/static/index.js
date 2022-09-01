@@ -1,3 +1,5 @@
+const key = 'shortUrlId';
+
 const main = {
     init : function () {
         const _this = this;
@@ -12,8 +14,8 @@ const main = {
 
     create : function () {
         const data = {
-            originUrl: $('#originUrlInput').val(),
-            algorithm: $('#algorithmSelector').val(),
+            originUrl: $('#url').val(),
+            method: $('#method').val(),
         };
 
         $.ajax({
@@ -24,37 +26,29 @@ const main = {
             data: JSON.stringify(data),
             success: function (response) {
                 const shortUrlInfo = document.getElementsByClassName('short-url-info');
-                const shortUrl = document.getElementById('shortUrl');
+                const shortenUrl = document.getElementById('shortenUrl');
                 const originUrl = document.getElementById('originUrl');
-                const requestCount = document.getElementById('requestCount');
+                const numberOfRequests = document.getElementById('numberOfRequests');
 
                 shortUrlInfo[0].classList.remove('none');
-                shortUrl.innerText = 'http://localhost:8080/' + response.shortUrl;
+                shortenUrl.innerText = 'http://localhost:8080/' + response.shortenUrl;
                 originUrl.innerText = response.originUrl;
-                requestCount.innerText = response.requestCount;
-            },
-            error: function (error){
-                console.log(error.resonseJSON.message);
+                numberOfRequests.innerText = response.numberOfRequests;
+                localStorage.setItem(key, response.shortUrlId);
             }
+        }).fail(function(response) {
+            errorResponse = response.responseJSON;
+            alert(errorResponse.errors[0].cause);
         });
     },
 
     redirect: function () {
-        const arr = $('#shortUrl')[0].innerText.split('/');
-
-        const data = {
-            shortUrl: `${arr[arr.length - 1]}`
-        };
-
         $.ajax({
-            type: 'POST',
-            url: '/api/v1/short-urls/short-url',
-            dataType: 'json',
-            contentType: 'application/json; utf-8',
-            data: JSON.stringify(data),
+            type: 'PUT',
+            url: `/api/v1/short-urls/${localStorage.getItem(key)}`,
             success: function (response) {
                 const originUrl = response.originUrl;
-                const requestCount = document.getElementById('requestCount');
+                const numberOfRequests = document.getElementById('numberOfRequests');
 
                 const anchor = document.createElement('a');
                 anchor.setAttribute('href', `${originUrl}`);
@@ -62,7 +56,7 @@ const main = {
 
                 anchor.click();
 
-                requestCount.innerText = response.requestCount;
+                numberOfRequests.innerText = response.numberOfRequests;
             }
         });
     }

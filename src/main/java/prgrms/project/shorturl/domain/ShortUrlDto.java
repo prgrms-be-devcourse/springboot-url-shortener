@@ -8,8 +8,9 @@ public record ShortUrlDto() {
 
 	public record CreateDto(
 		@URL
+		@NotBlank
 		String originUrl,
-		@NotBlank(message = "ShortUrl 생성 방식을 설정해주세요.")
+		@NotBlank
 		String method
 	) {
 	}
