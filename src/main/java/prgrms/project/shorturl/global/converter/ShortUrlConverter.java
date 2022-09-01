@@ -7,13 +7,7 @@ import prgrms.project.shorturl.dto.ShortUrlResponse;
 public class ShortUrlConverter {
 
     public static ShortUrlResponse shortUrlResponseFrom(ShortUrl shortUrl) {
-
-        return ShortUrlResponse
-            .builder()
-            .originUrl(shortUrl.getOriginUrl())
-            .shortUrl(shortUrl.getShortenUrl())
-            .requestCount(shortUrl.getNumberOfRequests())
-            .build();
+        return new ShortUrlResponse(shortUrl.getOriginUrl(), shortUrl.getShortenUrl(), shortUrl.getNumberOfRequests());
     }
 
     public static ShortUrlRedirectResponse shortUrlRedirectResponseFrom(ShortUrl shortUrl) {

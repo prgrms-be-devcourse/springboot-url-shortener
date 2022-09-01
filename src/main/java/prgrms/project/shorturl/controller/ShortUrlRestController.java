@@ -1,35 +1,41 @@
 package prgrms.project.shorturl.controller;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import static org.springframework.http.HttpStatus.*;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import prgrms.project.shorturl.dto.ShortUrlCreateRequest;
 import prgrms.project.shorturl.dto.ShortUrlRedirectResponse;
 import prgrms.project.shorturl.dto.ShortUrlRequest;
 import prgrms.project.shorturl.dto.ShortUrlResponse;
 import prgrms.project.shorturl.service.ShortUrlService;
 
-import static org.springframework.http.HttpStatus.CREATED;
-
-@Slf4j
 @RestController
 @RequestMapping("/api/v1/short-urls")
-@RequiredArgsConstructor
 public class ShortUrlRestController {
 
-    private final ShortUrlService shortUrlService;
+	private final ShortUrlService shortUrlService;
 
-    @PostMapping
-    public ResponseEntity<ShortUrlResponse> createShortUrl(@RequestBody @Validated ShortUrlCreateRequest createRequest) {
-        return ResponseEntity.status(CREATED).body(shortUrlService.createShortUrl(createRequest));
-    }
+	public ShortUrlRestController(ShortUrlService shortUrlService) {
+		this.shortUrlService = shortUrlService;
+	}
 
-    @PostMapping("/short-url")
-    public ResponseEntity<ShortUrlRedirectResponse> requestToShortUrl(@RequestBody @Validated ShortUrlRequest shortUrlRequest) {
-        var originUrl = shortUrlService.increaseRequestCount(shortUrlRequest.shortUrl());
+	@PostMapping
+	public ResponseEntity<ShortUrlResponse> createShortUrl(
+		@RequestBody @Validated ShortUrlCreateRequest createRequest) {
+		return ResponseEntity.status(CREATED).body(shortUrlService.createShortUrl(createRequest));
+	}
 
-        return ResponseEntity.ok(originUrl);
-    }
+	@PostMapping("/short-url")
+	public ResponseEntity<ShortUrlRedirectResponse> requestToShortUrl(
+		@RequestBody @Validated ShortUrlRequest shortUrlRequest) {
+		var originUrl = shortUrlService.increaseRequestCount(shortUrlRequest.shortUrl());
+
+		return ResponseEntity.ok(originUrl);
+	}
 }

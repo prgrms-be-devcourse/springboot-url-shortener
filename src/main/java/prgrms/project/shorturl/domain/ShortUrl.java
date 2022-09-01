@@ -1,21 +1,13 @@
 package prgrms.project.shorturl.domain;
 
 import static javax.persistence.GenerationType.*;
-import static lombok.AccessLevel.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.apache.commons.lang3.math.NumberUtils;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 @Entity
-@Getter
-@NoArgsConstructor(access = PROTECTED)
 public class ShortUrl extends BaseTimeEntity {
 
 	@Id
@@ -32,13 +24,31 @@ public class ShortUrl extends BaseTimeEntity {
 	@Column(name = "number_of_requests", nullable = false)
 	private int numberOfRequests;
 
+	protected ShortUrl() {
+	}
+
 	public ShortUrl(String originUrl, String shortenUrl) {
 		this.originUrl = originUrl;
 		this.shortenUrl = shortenUrl;
-		this.numberOfRequests = NumberUtils.INTEGER_ZERO;
 	}
 
 	public void increaseNumberOfRequests() {
 		this.numberOfRequests++;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getOriginUrl() {
+		return originUrl;
+	}
+
+	public String getShortenUrl() {
+		return shortenUrl;
+	}
+
+	public int getNumberOfRequests() {
+		return numberOfRequests;
 	}
 }
