@@ -36,7 +36,4 @@ ex) `www.naver.com` , `https://www.google.com` 등 http가 앞에 생략되어�
 
 <br/><br/>
 
-- shortUrl은 Base58을 사용하여 랜덤으로 생성
-
-- 이미 변환한적이 있는 url이 입력되면 변환했던 url로 반환
 
