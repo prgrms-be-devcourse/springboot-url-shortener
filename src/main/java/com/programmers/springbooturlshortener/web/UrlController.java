@@ -1,17 +1,19 @@
 package com.programmers.springbooturlshortener.web;
 
-import com.programmers.springbooturlshortener.domain.url.UrlService;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlCreateDto;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
-import com.programmers.springbooturlshortener.domain.url.util.UrlValidation;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.programmers.springbooturlshortener.domain.url.UrlService;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlCreateDto;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
+import com.programmers.springbooturlshortener.domain.url.util.UrlValidation;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,9 +50,8 @@ public class UrlController {
 	}
 
 	@GetMapping("/{shortUrl}")
-	public String redirectOriginUrl(@PathVariable String shortUrl, RedirectAttributes redirectAttributes) {
+	public String redirectOriginUrl(@PathVariable String shortUrl) {
 		String originUrl = urlService.getOriginUrl(shortUrl).originUrl();
-		redirectAttributes.addAttribute("originUrl", originUrl);
-		return "redirect:https://{originUrl}";
+		return "redirect:https://" + originUrl;
 	}
 }
