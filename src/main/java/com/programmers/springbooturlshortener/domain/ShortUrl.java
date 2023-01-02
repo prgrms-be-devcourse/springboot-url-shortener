@@ -2,13 +2,9 @@ package com.programmers.springbooturlshortener.domain;
 
 import javax.persistence.*;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-
 @Entity
 @Table(
-        name = "url",
+        name = "short_url",
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "uk",
@@ -16,16 +12,14 @@ import lombok.NoArgsConstructor;
                 )
         }
 )
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Url {
+public class ShortUrl {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "algorithm", length = 20)
-    private Algorithm algorithm;
+    private String algorithm;
 
     @Column(name = "origin_url", length = 2000)
     private String originUrl;
@@ -35,16 +29,4 @@ public class Url {
 
     @Column(name = "request_count")
     private Long requestCount;
-
-    @Builder
-    public Url(Algorithm algorithm, String originUrl, String shortUrl, Long requestCount) {
-        this.algorithm = algorithm;
-        this.originUrl = originUrl;
-        this.shortUrl = shortUrl;
-        this.requestCount = requestCount;
-    }
-
-    public void increaseRequestCount() {
-        this.requestCount++;
-    }
 }
