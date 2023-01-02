@@ -1,14 +1,20 @@
 package com.programmers.springbooturlshortener.web;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.programmers.springbooturlshortener.domain.url.UrlService;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlCreateDto;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
 import com.programmers.springbooturlshortener.domain.url.util.UrlValidation;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,9 +33,9 @@ public class UrlController {
 		UrlValidation urlValidation = new UrlValidation();
 
 		if (urlValidation.validate(urlCreateDto.originUrl())) {
-			String removedProtocolUrl = urlCreateDto.removeProtocolFromOriginUrl();
+			urlCreateDto.removeProtocolFromOriginUrl();
 			UrlServiceRequestDto urlServiceRequestDto
-					= new UrlServiceRequestDto(removedProtocolUrl, urlCreateDto.algorithm());
+				= new UrlServiceRequestDto(urlCreateDto.originUrl(), urlCreateDto.algorithm());
 			UrlResponseDto shortUrl = urlService.createShortUrl(urlServiceRequestDto);
 			return "index";
 		}
