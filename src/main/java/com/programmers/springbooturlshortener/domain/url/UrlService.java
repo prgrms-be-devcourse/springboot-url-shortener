@@ -1,13 +1,15 @@
 package com.programmers.springbooturlshortener.domain.url;
 
-import com.programmers.springbooturlshortener.domain.algorithm.Base62Algorithm;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
-import lombok.RequiredArgsConstructor;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import com.programmers.springbooturlshortener.domain.algorithm.Base62Algorithm;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,17 @@ public class UrlService {
 		String shortUrl = base62Algorithm.encode(savedUrl.getId());
 		savedUrl.setShortUrl(shortUrl);
 		return new UrlResponseDto(savedUrl.getOriginUrl(), shortUrl, 1L);
+	}
+
+	@Transactional(readOnly = true)
+	public UrlResponseDto getUrlDetail(String originUrl) {
+
+		Url url = urlRepository.findByOriginUrl(originUrl)
+			.orElseThrow(() -> {
+				throw new IllegalArgumentException();
+			});
+
+		return new UrlResponseDto(url.getOriginUrl(), url.getShortUrl(), url.getRequestCount());
 	}
 
 	@Transactional(readOnly = true)
