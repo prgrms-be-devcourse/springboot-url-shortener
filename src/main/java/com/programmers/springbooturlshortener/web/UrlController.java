@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class UrlController {
 
 	private final UrlService urlService;
-	private static final String URL_PREFIX = "http://localhost:8080/";
+	private static final String URL_PREFIX = "localhost:8080/";
 
 	@GetMapping("/")
 	public String homePage() {
