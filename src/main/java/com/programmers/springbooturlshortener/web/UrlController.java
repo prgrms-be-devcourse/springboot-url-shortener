@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-@RequiredArgsConstructor
 public class UrlController {
-
-	private final UrlService urlService;
 
 	@GetMapping("/")
 	public String homePage() {
