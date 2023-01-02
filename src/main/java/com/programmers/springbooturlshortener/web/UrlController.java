@@ -7,7 +7,10 @@ import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDt
 import com.programmers.springbooturlshortener.domain.url.util.UrlValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -15,32 +18,33 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UrlController {
 
 	private final UrlService urlService;
+	private static final String URL_PREFIX = "http://localhost:8080/";
 
 	@GetMapping("/")
 	public String homePage() {
-
 		return "index";
 	}
 
 	@PostMapping("/shortener")
-	public String getShortUrl(@ModelAttribute UrlCreateDto urlCreateDto) {
+	public String getShortUrl(@ModelAttribute UrlCreateDto urlCreateDto, RedirectAttributes redirectAttributes) {
 		UrlValidation urlValidation = new UrlValidation();
 
 		if (urlValidation.validate(urlCreateDto.originUrl())) {
-			String removedProtocolUrl = urlCreateDto.removeProtocolFromOriginUrl();
-			UrlServiceRequestDto urlServiceRequestDto
-					= new UrlServiceRequestDto(removedProtocolUrl, urlCreateDto.algorithm());
-			UrlResponseDto shortUrl = urlService.createShortUrl(urlServiceRequestDto);
-			return "index";
-		}
+			UrlServiceRequestDto urlServiceRequestDto = urlCreateDto.toUrlServiceRequestDto();
+			UrlResponseDto url = urlService.createShortUrl(urlServiceRequestDto);
 
+			redirectAttributes.addAttribute("originUrl", url.originUrl());
+			redirectAttributes.addAttribute("shortUrl", URL_PREFIX + url.shortUrl());
+			redirectAttributes.addAttribute("requestCount", url.requestCount());
+
+			return "redirect:/shortener?originUrl={originUrl}&shortUrl={shortUrl}&requestCount={requestCount}";
+		}
 		return "index";
 	}
 
 	@GetMapping("/shortener")
-	public String getUrlDetail(@RequestParam String originUrl) {
-		UrlResponseDto shortUrl = urlService.getUrlDetail(originUrl);
-		return "index";
+	public String getUrlDetail(@ModelAttribute(value = "url") UrlResponseDto url) {
+		return "detail";
 	}
 
 	@GetMapping("/{shortUrl}")

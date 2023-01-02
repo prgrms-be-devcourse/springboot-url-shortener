@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Short-url</title>
@@ -9,14 +9,23 @@
         .container {
             max-width: 550px;
         }
+
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            position: absolute;
+            top: 430px;
+            width: 500px;
+        }
     </style>
 </head>
 <body>
-<form class="container">
-    <div class="input-group text-center">
-        <input type="text" class="form-control" placeholder="Write url">
-        <button class="btn btn-outline-secondary" type="button">Algorithm1</button>
-        <button class="btn btn-outline-secondary" type="button">Algorithm2</button>
+<form class="container" method="post" th:action="@{/shortener}">
+    <div class="input-group text-center py-5">
+        <input type="text" class="form-control" placeholder="Write url" id="originUrl" name="originUrl">
+        <input type="hidden" class="form-control" placeholder="Write url" id="algorithm" name="algorithm"
+               value="BASE62">
+        <button class="btn btn-outline-secondary" type="submit">convert</button>
     </div>
 </form>
 </body>
