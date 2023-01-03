@@ -24,7 +24,7 @@ public class Base62Algorithm {
         long result = 0;
         long power = 1;
 
-        for (int i = 0; i < shortUrl.length(); i++) {
+        for (int i = shortUrl.length() - 1; i >= 0; i--) {
             result += new String(base62Char).indexOf(shortUrl.charAt(i)) * power;
             power *= BASE62_LENGTH;
         }
