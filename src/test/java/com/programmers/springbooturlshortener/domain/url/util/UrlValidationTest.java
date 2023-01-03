@@ -23,7 +23,7 @@ class UrlValidationTest {
 		"www.naver.com",
 		"https://github.com/prgrms-be-devcourse/springboot-url-shortener"
 	})
-	@DisplayName("@UrlValid 테스트: 정상적인 URL 이 입력되면 검증을 통과한다.")
+	@DisplayName("Url 검증 테스트: 정상적인 URL 이 입력되면 검증을 통과한다.")
 	void successValid(String url) {
 		// given
 		UrlCreateDto urlCreateDto = new UrlCreateDto(url, "BASE62");
@@ -41,8 +41,8 @@ class UrlValidationTest {
 		"www.naver",
 		"google"
 	})
-	@DisplayName("@UrlValid 테스트: 잘못된 URL 이 입력되면 검증에 실패한다.")
-	void failValid(String url) {
+	@DisplayName("Url 검증 테스트: 잘못된 URL 이 입력되면 @UrlValid 에 의해 검증에 실패한다.")
+	void failValidByUrlValid(String url) {
 		// given
 		UrlCreateDto urlCreateDto = new UrlCreateDto(url, "BASE62");
 
@@ -51,5 +51,23 @@ class UrlValidationTest {
 
 		// then
 		Assertions.assertThat(constraintViolations.size()).isEqualTo(1);
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = {
+		"",
+		" ",
+		"    "
+	})
+	@DisplayName("Url 검증 테스트: blank 나 empty URL 이 입력되면 @NotBlank 와 @UrlValid 에 의해 검증에 실패한다.")
+	void failValidByNotBlank(String url) {
+		// given
+		UrlCreateDto urlCreateDto = new UrlCreateDto(url, "BASE62");
+
+		// when
+		Set<ConstraintViolation<UrlCreateDto>> constraintViolations = validator.validate(urlCreateDto);
+
+		// then
+		Assertions.assertThat(constraintViolations.size()).isEqualTo(2);
 	}
 }
