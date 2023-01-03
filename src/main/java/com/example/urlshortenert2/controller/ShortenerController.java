@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.net.URI;
 
 @RestController
@@ -17,6 +18,11 @@ public class ShortenerController {
 
     public ShortenerController(ShortenerService shortenerService) {
         this.shortenerService = shortenerService;
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> notFoundHandler() {
+        return ResponseEntity.notFound().build();
     }
 
     // TODO: POST shortener 생성

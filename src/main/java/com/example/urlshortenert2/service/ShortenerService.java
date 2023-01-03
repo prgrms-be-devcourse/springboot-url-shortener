@@ -8,11 +8,14 @@ import com.example.urlshortenert2.repository.ShortedUrlRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class ShortenerService {
 
     private final ShortedUrlRepository shortedUrlRepository;
     private final ShorteningKeyMaker shorteningKeyMaker;
+
     public ShortenerService(ShortedUrlRepository shortedUrlRepository, ShorteningKeyMaker shorteningKeyMaker) {
         this.shortedUrlRepository = shortedUrlRepository;
         this.shorteningKeyMaker = shorteningKeyMaker;
@@ -28,12 +31,10 @@ public class ShortenerService {
         return new ShortenerResponseDto(shorteningKey);
     }
 
-
-
-
     public String findById(String randomId) {
-        return null; // 진짜 url 반환
+        ShortedUrl shortedUrl = shortedUrlRepository.findShortedUrlByShorteningKey(randomId)
+                .orElseThrow(EntityNotFoundException::new);
+        return shortedUrl.getOriginUrl();
     }
-
 
 }
