@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
 @Controller
@@ -57,5 +58,10 @@ public class UrlController {
 	@ExceptionHandler(EntityNotFoundException.class)
 	public String handleEntityNotFoundException() {
 		return "error/404";
+	}
+
+	@ExceptionHandler(ConstraintViolationException.class)
+	public String handleConstraintViolationException() {
+		return "error/5xx";
 	}
 }
