@@ -1,8 +1,10 @@
 package com.programmers.springbooturlshortener.web;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,7 +16,6 @@ import com.programmers.springbooturlshortener.domain.url.UrlService;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlCreateDto;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
-import com.programmers.springbooturlshortener.domain.url.util.UrlValidation;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,20 +32,21 @@ public class UrlController {
 	}
 
 	@PostMapping("/shortener")
-	public String getShortUrl(@ModelAttribute UrlCreateDto urlCreateDto, RedirectAttributes redirectAttributes) {
-		UrlValidation urlValidation = new UrlValidation();
+	public String getShortUrl(@ModelAttribute @Valid UrlCreateDto urlCreateDto, BindingResult bindingResult,
+		RedirectAttributes redirectAttributes) {
 
-		if (urlValidation.validate(urlCreateDto.originUrl())) {
-			UrlServiceRequestDto urlServiceRequestDto = urlCreateDto.toUrlServiceRequestDto();
-			UrlResponseDto url = urlService.createShortUrl(urlServiceRequestDto);
-
-			redirectAttributes.addAttribute("originUrl", url.originUrl());
-			redirectAttributes.addAttribute("shortUrl", URL_PREFIX + url.shortUrl());
-			redirectAttributes.addAttribute("requestCount", url.requestCount());
-
-			return "redirect:/shortener?originUrl={originUrl}&shortUrl={shortUrl}&requestCount={requestCount}";
+		if (bindingResult.hasErrors()) {
+			return "index";
 		}
-		return "index";
+
+		UrlServiceRequestDto urlServiceRequestDto = urlCreateDto.toUrlServiceRequestDto();
+		UrlResponseDto url = urlService.createShortUrl(urlServiceRequestDto);
+
+		redirectAttributes.addAttribute("originUrl", url.originUrl());
+		redirectAttributes.addAttribute("shortUrl", URL_PREFIX + url.shortUrl());
+		redirectAttributes.addAttribute("requestCount", url.requestCount());
+
+		return "redirect:/shortener?originUrl={originUrl}&shortUrl={shortUrl}&requestCount={requestCount}";
 	}
 
 	@GetMapping("/shortener")

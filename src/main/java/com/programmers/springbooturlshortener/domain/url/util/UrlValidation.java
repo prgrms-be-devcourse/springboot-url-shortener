@@ -3,24 +3,28 @@ package com.programmers.springbooturlshortener.domain.url.util;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class UrlValidation {
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
 
-    public boolean validate(String originUrl) {
-        try {
-            if (hasNotProtocol(originUrl)) {
-                originUrl = "https://" + originUrl;
-            }
+public class UrlValidation implements ConstraintValidator<UrlValid, String> {
 
-            URL url = new URL(originUrl);
-            URLConnection conn = url.openConnection();
-            conn.connect();
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean isValid(String value, ConstraintValidatorContext context) {
+		try {
+			if (hasNotProtocol(value)) {
+				value = "https://" + value;
+			}
 
-    private boolean hasNotProtocol(String originUrl) {
-        return !(originUrl.startsWith("https://") || originUrl.startsWith("http://"));
-    }
+			URL url = new URL(value);
+			URLConnection conn = url.openConnection();
+			conn.connect();
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
+	}
+
+	private boolean hasNotProtocol(String originUrl) {
+		return !(originUrl.startsWith("https://") || originUrl.startsWith("http://"));
+	}
 }
