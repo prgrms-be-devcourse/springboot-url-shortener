@@ -41,7 +41,7 @@ public class UrlController {
 		redirectAttributes.addAttribute("shortUrl", URL_PREFIX + url.shortUrl());
 		redirectAttributes.addAttribute("requestCount", url.requestCount());
 
-		return "redirect:/shortener?originUrl={originUrl}&shortUrl={shortUrl}&requestCount={requestCount}";
+		return "redirect:/shortener";
 	}
 
 	@GetMapping("/shortener")
