@@ -13,19 +13,35 @@
         .input-group {
             display: flex;
             flex-wrap: wrap;
-            position: absolute;
-            top: 430px;
-            width: 500px;
+        }
+
+        .py-5 {
+            padding-top: 1rem !important;
+            padding-bottom: 3rem !important;
+        }
+
+        .logo {
+            width: 350px;
+            height: auto;
+        }
+
+        .home {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
     </style>
 </head>
 <body>
 <form class="container" method="post" th:action="@{/shortener}">
-    <div class="input-group text-center py-5">
-        <input type="text" class="form-control" placeholder="Write url" id="originUrl" name="originUrl">
-        <input type="hidden" class="form-control" placeholder="Write url" id="algorithm" name="algorithm"
-               value="BASE62">
-        <button class="btn btn-outline-secondary" type="submit">convert</button>
+    <div class="home">
+        <img class="logo" src="/img/logo.png"/>
+        <div class="input-group text-center py-5">
+            <input type="text" class="form-control" placeholder="Write url" id="originUrl" name="originUrl">
+            <input type="hidden" class="form-control" placeholder="Write url" id="algorithm" name="algorithm"
+                   value="BASE62">
+            <button class="btn btn-outline-secondary" type="submit">convert</button>
+        </div>
     </div>
 </form>
 </body>
