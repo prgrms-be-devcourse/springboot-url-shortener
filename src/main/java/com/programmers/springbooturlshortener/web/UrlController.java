@@ -1,6 +1,9 @@
 package com.programmers.springbooturlshortener.web;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,5 +56,10 @@ public class UrlController {
 	public String redirectOriginUrl(@PathVariable String shortUrl) {
 		String originUrl = urlService.getOriginUrl(shortUrl).originUrl();
 		return "redirect:https://" + originUrl;
+	}
+
+	@ExceptionHandler(EntityNotFoundException.class)
+	public String handleEntityNotFoundException() {
+		return "error/404";
 	}
 }

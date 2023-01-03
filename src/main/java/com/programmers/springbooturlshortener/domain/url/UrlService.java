@@ -1,13 +1,17 @@
 package com.programmers.springbooturlshortener.domain.url;
 
-import com.programmers.springbooturlshortener.domain.algorithm.Base62Algorithm;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
-import lombok.RequiredArgsConstructor;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import com.programmers.springbooturlshortener.domain.algorithm.Base62Algorithm;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +44,7 @@ public class UrlService {
 
 		Url url = urlRepository.findByShortUrl(shortUrl)
 			.orElseThrow(() -> {
-				throw new IllegalArgumentException();
+				throw new EntityNotFoundException();
 			});
 
 		return new UrlResponseDto(url.getOriginUrl(), url.getShortUrl(), url.getRequestCount());
