@@ -15,6 +15,11 @@
             flex-wrap: wrap;
         }
 
+        .input-button {
+            display: flex;
+            width: 100%;
+        }
+
         .py-5 {
             padding-top: 1rem !important;
             padding-bottom: 3rem !important;
@@ -30,17 +35,29 @@
             flex-direction: column;
             align-items: center;
         }
+
+        .field-error {
+            color: red;
+            border-color: red;
+        }
+
     </style>
 </head>
 <body>
-<form class="container" method="post" th:action="@{/shortener}">
+<form class="container" method="post" th:action="@{/shortener}" th:object="${urlCreateDto}">
     <div class="home">
         <img class="logo" src="/img/logo.png"/>
         <div class="input-group text-center py-5">
-            <input type="text" class="form-control" placeholder="Write url" id="originUrl" name="originUrl">
-            <input type="hidden" class="form-control" placeholder="Write url" id="algorithm" name="algorithm"
-                   value="BASE62">
-            <button class="btn btn-outline-secondary" type="submit">convert</button>
+            <div class="input-button">
+                <input type="text" class="form-control" placeholder="Write url" id="originUrl" name="originUrl"
+                       th:field="*{originUrl}" th:errorclass="field-error">
+                <input type="hidden" class="form-control" placeholder="Write url" id="algorithm" name="algorithm"
+                       value="BASE62">
+                <button class="btn btn-outline-secondary" type="submit">convert</button>
+            </div>
+            <div class="field-error" th:errors="*{originUrl}">
+                잘못된 URL 입니다.
+            </div>
         </div>
     </div>
 </form>
