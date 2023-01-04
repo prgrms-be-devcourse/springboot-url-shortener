@@ -53,7 +53,7 @@ class ShortenerServiceTest {
         ShortedUrl responseUrl = new ShortedUrl("www.naver.com/dltndud");
         when(repository.findShortedUrlByShorteningKey(anyString())).thenReturn(Optional.of(responseUrl));
         // when
-        String originUrl = shortenerService.findById(anyString());
+        String originUrl = shortenerService.findByShorteningKey(anyString());
         // then
         verify(repository).findShortedUrlByShorteningKey(anyString());
         Assertions.assertThat(originUrl).isEqualTo(responseUrl.getOriginUrl());
