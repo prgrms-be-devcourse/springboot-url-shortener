@@ -10,7 +10,7 @@
         <div class="form-group">
             <label th:for="shortenUrl">단축 URL</label>
             <input class="form-control" id="shortenUrl"
-                   th:value="'localhost:8080/geonwoo/'+${createResponse.shortenUrl}"
+                   th:value="${createResponse.prefix}+${createResponse.shortenUrl}"
                    type="text">
         </div>
     </form>

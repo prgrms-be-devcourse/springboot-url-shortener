@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public class CreateResponse {
 
+	private String prefix = "localhost:8080/geonwoo/";
 	private String shortenUrl;
 
+	public CreateResponse(String shortenUrl) {
+		this.shortenUrl = shortenUrl;
+	}
 }
