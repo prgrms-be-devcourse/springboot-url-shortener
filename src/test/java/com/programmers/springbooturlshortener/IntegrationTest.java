@@ -26,21 +26,21 @@ class IntegrationTest {
     UrlRepository urlRepository;
 
     @Test
-    @DisplayName("새로운 ShortURL 생성 성공")
+    @DisplayName("새로운 ShortURL 생성과 조회에 성공")
     void createNewShortUrlSuccess() {
         // given
         String originUrl = "https//google.com";
         String algorithm = "Base62";
         UrlServiceRequestDto urlServiceRequestDto = new UrlServiceRequestDto(originUrl, algorithm);
 
-        String shortUrl = "AAAAAAB";
-        UrlResponseDto result = new UrlResponseDto(originUrl, shortUrl, 1L);
-
         // when
-        UrlResponseDto urlResponseDto = urlService.createShortUrl(urlServiceRequestDto);
+        UrlResponseDto savedUrl = urlService.createShortUrl(urlServiceRequestDto);
+        Url findUrl = urlRepository.findByOriginUrl(savedUrl.originUrl()).get();
 
         // then
-        assertThat(urlResponseDto).isEqualTo(result);
+        assertThat(findUrl).hasFieldOrPropertyWithValue("originUrl", savedUrl.originUrl())
+            .hasFieldOrPropertyWithValue("shortUrl", savedUrl.shortUrl())
+            .hasFieldOrPropertyWithValue("requestCount", savedUrl.requestCount());
     }
 
     @Test
@@ -51,18 +51,15 @@ class IntegrationTest {
         String algorithm = "Base62";
         UrlServiceRequestDto urlServiceRequestDto = new UrlServiceRequestDto(originUrl, algorithm);
 
-        Url url = new Url(algorithm, originUrl, 1L);
-        String shortUrl = "AAAAAAB";
-        url.setShortUrl(shortUrl);
-        urlRepository.save(url);
-
-        UrlResponseDto result = new UrlResponseDto(originUrl, shortUrl, url.getRequestCount() + 1);
+        UrlResponseDto firstRequestUrl = urlService.createShortUrl(urlServiceRequestDto);
 
         // when
-        UrlResponseDto urlResponseDto = urlService.createShortUrl(urlServiceRequestDto);
+        UrlResponseDto lastRequestDto = urlService.createShortUrl(urlServiceRequestDto);
 
         // then
-        assertThat(urlResponseDto).isEqualTo(result);
+        assertThat(lastRequestDto).hasFieldOrPropertyWithValue("originUrl", firstRequestUrl.originUrl())
+            .hasFieldOrPropertyWithValue("shortUrl", firstRequestUrl.shortUrl())
+            .hasFieldOrPropertyWithValue("requestCount", firstRequestUrl.requestCount() + 1);
     }
 
     @Test
@@ -70,29 +67,25 @@ class IntegrationTest {
     void getOriginUrlSuccess() {
         // given
         String originUrl = "google.com";
-        String shortUrl = "AAAAAAB";
-        Long requestCount = 1L;
-        UrlResponseDto result = new UrlResponseDto(originUrl, shortUrl, requestCount);
-
         String algorithm = "Base62";
-        Url url = new Url(algorithm, originUrl, requestCount);
-        url.setShortUrl(shortUrl);
-        urlRepository.save(url);
+        UrlServiceRequestDto urlServiceRequestDto = new UrlServiceRequestDto(originUrl, algorithm);
+
+        UrlResponseDto savedUrl = urlService.createShortUrl(urlServiceRequestDto);
 
         // when
-        UrlResponseDto urlResponseDto = urlService.getOriginUrl(shortUrl);
+        UrlResponseDto findUrl = urlService.getOriginUrl(savedUrl.shortUrl());
 
         // then
-        assertThat(urlResponseDto).isEqualTo(result);
+        assertThat(findUrl).isEqualTo(savedUrl);
     }
 
     @Test
     @DisplayName("DB 에 존재하지 않는 ShortURL 조회 시 EntityNotFoundException 발생")
     void getOriginUrlWhenNotExistsUrlFail() {
         // given
-        String shortUrl = "AAAAAAB";
+        String notInDbShortURL = "AAAAAAA";
 
         // when, then
-        assertThrows(EntityNotFoundException.class, () -> urlService.getOriginUrl(shortUrl));
+        assertThrows(EntityNotFoundException.class, () -> urlService.getOriginUrl(notInDbShortURL));
     }
 }
