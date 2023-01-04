@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UrlService {
 
+	private static final long FIRST_REQUEST_COUNT = 1L;
 	private final UrlRepository urlRepository;
 	private final Base62Algorithm base62Algorithm;
 
@@ -36,7 +37,7 @@ public class UrlService {
 		Url savedUrl = urlRepository.save(url);
 		String shortUrl = base62Algorithm.encode(savedUrl.getId());
 		savedUrl.setShortUrl(shortUrl);
-		return new UrlResponseDto(savedUrl.getOriginUrl(), shortUrl, 1L);
+		return new UrlResponseDto(savedUrl.getOriginUrl(), shortUrl, FIRST_REQUEST_COUNT);
 	}
 
 	@Transactional(readOnly = true)
