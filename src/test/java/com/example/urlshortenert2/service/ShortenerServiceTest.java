@@ -37,12 +37,12 @@ class ShortenerServiceTest {
         ShortenerRequestDto request = new ShortenerRequestDto("www.naver.com/dltndud");
         ShortedUrl shortedUrl = new ShortedUrl(request.url());
         // when
-        when(repository.save(shortedUrl)).thenReturn(shortedUrl);
+        when(repository.save(any(ShortedUrl.class))).thenReturn(shortedUrl);
         when(maker.makeShorteningKey(shortedUrl.getId())).thenReturn("1");
         ShortenerResponseDto response = shortenerService.createShortener(request);
         // then
-        verify(repository).save(shortedUrl);
-        verify(maker).makeShorteningKey(anyLong());
+        verify(repository).save(any(ShortedUrl.class));
+        verify(maker).makeShorteningKey(shortedUrl.getId());
         Assertions.assertThat(response.shorteningKey()).isEqualTo("1");
     }
 
