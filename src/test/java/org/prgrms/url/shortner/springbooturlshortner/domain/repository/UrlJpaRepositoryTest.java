@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.Optional;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.prgrms.url.shortner.springbooturlshortner.domain.Url;
@@ -23,6 +22,7 @@ class UrlJpaRepositoryTest {
 
 	@Test
 	void findUrlByShortenUrlEqualsTest() {
+		//given
 		String originUrl = "geonwoo.com";
 		Url url = Url.builder()
 			.originUrl(originUrl)
@@ -32,8 +32,10 @@ class UrlJpaRepositoryTest {
 		url.allocateShortenUrl("gAoGVgGL");
 		urlJpaRepository.save(url);
 
+		//when
 		Optional<Url> optionalUrl = urlJpaRepository.findUrlByShortenUrlEquals(url.getShortenUrl());
 
+		//then
 		assertThat(optionalUrl).isPresent();
 		Url findUrl = optionalUrl.get();
 		assertThat(findUrl)
