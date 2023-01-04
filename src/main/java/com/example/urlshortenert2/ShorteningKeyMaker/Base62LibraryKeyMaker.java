@@ -6,8 +6,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@Primary // 이거 찾아봐야할듯
-@Profile(value = "library")
+@Primary
 public class Base62LibraryKeyMaker implements ShorteningKeyMaker{
     @Override
     public String makeShorteningKey(Long id) {

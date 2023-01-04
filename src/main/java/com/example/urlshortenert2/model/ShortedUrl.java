@@ -28,6 +28,11 @@ public class ShortedUrl {
         this.shorteningKey = shorteningKey;
     }
 
+    public ShortedUrl(String shorteningKey, String originUrl) {
+        this.shorteningKey = shorteningKey;
+        this.originUrl = originUrl;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
