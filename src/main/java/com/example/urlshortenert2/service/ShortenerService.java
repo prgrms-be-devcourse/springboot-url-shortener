@@ -31,8 +31,8 @@ public class ShortenerService {
         return new ShortenerResponseDto(shorteningKey);
     }
 
-    public String findById(String randomId) {
-        ShortedUrl shortedUrl = shortedUrlRepository.findShortedUrlByShorteningKey(randomId)
+    public String findByShorteningKey(String shorteningKey) {
+        ShortedUrl shortedUrl = shortedUrlRepository.findShortedUrlByShorteningKey(shorteningKey)
                 .orElseThrow(EntityNotFoundException::new);
         return shortedUrl.getOriginUrl();
     }
