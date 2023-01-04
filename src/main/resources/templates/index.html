@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <form th:action="@{/api/v1/urls}" method="post">
+                <div class="form-group">
+                    <label th:for="originUrl">원본 URL</label>
+                    <input type="text" id="originUrl" name="originUrl" class="form-control" placeholder="URL을 입력하세요">
+                </div>
+                <div class="form-group">
+                    <label th:for="shortUrlAlgorithm">단축 알고리즘 선택</label>
+                    <select id="shortUrlAlgorithm" class="form-select" name="shortUrlAlgorithm">
+                        <option selected>==단축 알고리즘==</option>
+                        <option value="sha256Algorithm">해싱 알고리즘</option>
+                        <option value="randomAlgorithm">랜덤 알고리즘</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">생성</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

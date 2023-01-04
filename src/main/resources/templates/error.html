@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div>
+        <td th:text="${errorResponse.statusCode}"></td>
+    </div>
+
+    <div>
+        <td th:text="${errorResponse.message}"></td>
+    </div>
+
+    <a th:href="@{/}">메인 페이지로 이동</a>
+
+</div>
+</body>
+</html>

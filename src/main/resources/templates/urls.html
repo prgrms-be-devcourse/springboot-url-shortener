@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <form th:object="${createResponse}">
+        <div class="form-group">
+            <label th:for="shortenUrl">단축 URL</label>
+            <input class="form-control" id="shortenUrl"
+                   th:value="'localhost:8080/geonwoo/'+${createResponse.shortenUrl}"
+                   type="text">
+        </div>
+    </form>
+
+    <a th:href="@{/}">메인 페이지로 이동</a>
+</div>
+</body>
+</html>
