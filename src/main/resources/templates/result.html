@@ -8,21 +8,10 @@
           integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" rel="stylesheet">
 </head>
 <body class="container-fluid">
-<h2>Short URL Create Form</h2>
+<h2>Short URL Result Form</h2>
 <script crossorigin="anonymous" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
-<div class="mb-3">
-    <label class="form-label" for="originUrl">Oring URL을 입력하세요!!</label>
-    <input class="form-control" id="originUrl" name="originUrl" type="text">
-    <button class="btn btn-primary" onclick="onCreateShortUrl()" type="button">Submit</button>
-</div>
-
-<div class="mb-3 invisible">
-    <label class="form-label" for="shortedUrl">결과 url</label>
-    <input class="form-control disable" id="shortedUrl" name="shortedUrl" type="text" disabled>
-    <button class="btn btn-primary" type="button"  onclick="onClickCopy()">copy</button>
-</div>
+    result 페이지 입니다.
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
@@ -37,20 +26,11 @@
             }
         })
             .then(function a(response) {
-                //여서기 /result
-                console.log(response);
-                const shortedUrl = location.origin +"/" + response.data.shorteningKey;
-                document.getElementById("shortedUrl").value = shortedUrl;
-                document.querySelector(".invisible").classList.remove("invisible");
+                console.log(response)
             })
             .catch(function (error) {
                 console.log(error);
             });
-    }
-    function onClickCopy(){
-        const shortedUrl = document.getElementById("shortedUrl").value;
-        window.navigator.clipboard.writeText(shortedUrl);
-        alert("클립보드로 복사되었습니다.");
     }
 </script>
 </html>
