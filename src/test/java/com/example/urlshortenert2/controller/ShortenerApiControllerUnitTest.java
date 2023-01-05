@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest
 @AutoConfigureMockMvc
-class ShortenerControllerUnitTest {
+class ShortenerApiControllerUnitTest {
     @Autowired
     ObjectMapper objectMapper;
     @Autowired
