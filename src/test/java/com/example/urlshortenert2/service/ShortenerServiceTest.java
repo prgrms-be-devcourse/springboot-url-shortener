@@ -34,7 +34,7 @@ class ShortenerServiceTest {
     @DisplayName("짧은 url을 생성할 수 있다.")
     void short_url_생성테스트() {
         // given
-        ShortenerRequestDto request = new ShortenerRequestDto("www.naver.com/dltndud");
+        ShortenerRequestDto request = new ShortenerRequestDto("https://www.naver.com");
         ShortedUrl shortedUrl = new ShortedUrl(request.url());
         // when
         when(repository.save(any(ShortedUrl.class))).thenReturn(shortedUrl);
@@ -50,7 +50,7 @@ class ShortenerServiceTest {
     @DisplayName("shortening key를 이용해서 특정 기존 진짜 URL을 찾을 수 있다.")
     void shortening_key_조회테스트() {
         // given
-        ShortedUrl responseUrl = new ShortedUrl("www.naver.com/dltndud");
+        ShortedUrl responseUrl = new ShortedUrl("https://www.naver.com");
         when(repository.findShortedUrlByShorteningKey(anyString())).thenReturn(Optional.of(responseUrl));
         // when
         String originUrl = shortenerService.findByShorteningKey(anyString());
