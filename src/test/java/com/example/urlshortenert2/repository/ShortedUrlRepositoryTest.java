@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +18,7 @@ class ShortedUrlRepositoryTest {
     private ShortedUrlRepository repository;
 
     private final String shorteningKey = "1";
-    private final String originUrl = "naver.com";
+    private final String originUrl = "https://www.naver.com";
 
     @BeforeEach
     void setUp() {
