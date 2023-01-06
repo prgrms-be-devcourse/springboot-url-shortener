@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@Primary
-public class Base62LibraryKeyMaker implements ShorteningKeyMaker{
+public class Base62LibraryKeyMaker implements ShorteningKeyMaker {
+
     @Override
     public String makeShorteningKey(Long id) {
         //TODO: 여기 로직을 라이브러리 써서 하는게 생각해봐야 할 듯 => 키가 너무 짧다.
