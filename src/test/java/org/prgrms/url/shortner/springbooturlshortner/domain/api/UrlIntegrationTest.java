@@ -37,6 +37,7 @@ public class UrlIntegrationTest {
 				.content(content))
 			.andExpect(status().isOk())
 			.andExpect(model().attributeExists("createResponse"))
+			.andExpect(view().name("urls"))
 			.andDo(print());
 	}
 
