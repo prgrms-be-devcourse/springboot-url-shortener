@@ -34,7 +34,7 @@ class ShortenerApiControllerUnitTest {
     @DisplayName("쇼트너 url 생성 테스트")
     void createShortener() throws Exception {
         //given
-        ShortenerRequestDto testRequestDto = new ShortenerRequestDto("naver.com");
+        ShortenerRequestDto testRequestDto = new ShortenerRequestDto("https://www.naver.com");
         ShortenerResponseDto testResponseDto = new ShortenerResponseDto("1");
         when(shortenerService.createShortener(testRequestDto)).thenReturn(testResponseDto);
         String requestBody = objectMapper.writeValueAsString(testRequestDto);
@@ -57,7 +57,7 @@ class ShortenerApiControllerUnitTest {
     void getOriginURL() throws Exception {
         //given
         String shortedkey = "1";
-        String originUrl = "naver.com";
+        String originUrl = "https://www.naver.com";
         when(shortenerService.findByShorteningKey(shortedkey))
                 .thenReturn(originUrl);
         //when
@@ -67,5 +67,59 @@ class ShortenerApiControllerUnitTest {
                 .andDo(print());
         //then
         verify(shortenerService).findByShorteningKey(shortedkey);
+    }
+
+    @Test
+    @DisplayName("프로토콜 형식이 없는 URL 요청 시 BAD_REQUEST를 반환한다.")
+    void illegalURLTest() throws Exception {
+        // given
+        String shortedKey = "1";
+        String orgingUrl = "www.naver.com";
+        ShortenerRequestDto testRequestDto = new ShortenerRequestDto(orgingUrl);
+        ShortenerResponseDto testResponseDto = new ShortenerResponseDto(shortedKey);
+        String requestBody = objectMapper.writeValueAsString(testRequestDto);
+        // when, then
+        mockMvc.perform(post("/api/v1/shortener")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("접속할 수 없는 URL 요청 시 BAD_REQUEST를 반환한다.")
+    void notConnectionTest() throws Exception {
+        // given
+        String shortedKey = "1";
+        String orgingUrl = "https://www.naver.com/dltndud";
+        ShortenerRequestDto testRequestDto = new ShortenerRequestDto(orgingUrl);
+        ShortenerResponseDto testResponseDto = new ShortenerResponseDto(shortedKey);
+        String requestBody = objectMapper.writeValueAsString(testRequestDto);
+        // when, then
+        mockMvc.perform(post("/api/v1/shortener")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 도메인을 가진 URL 요청 시 BAD_REQUEST를 반환한다.")
+    void notPresentDomainURLTest() throws Exception {
+        // given
+        String shortedKey = "1";
+        String orgingUrl = "https://eisljzeijdk/fdjseis";
+        ShortenerRequestDto testRequestDto = new ShortenerRequestDto(orgingUrl);
+        ShortenerResponseDto testResponseDto = new ShortenerResponseDto(shortedKey);
+        String requestBody = objectMapper.writeValueAsString(testRequestDto);
+        // when, then
+        mockMvc.perform(post("/api/v1/shortener")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
     }
 }

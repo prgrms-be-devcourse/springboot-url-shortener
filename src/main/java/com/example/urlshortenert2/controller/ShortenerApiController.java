@@ -9,7 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import java.net.URI;
+import java.io.IOException;
+import java.net.*;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -26,16 +27,42 @@ public class ShortenerApiController {
         return ResponseEntity.notFound().build();
     }
 
+    @ExceptionHandler(MalformedURLException.class)
+    public ResponseEntity<Object> illegalUrlHandler() {
+        return ResponseEntity.badRequest()
+                .body("잘못된 URL 형식입니다.(http://, https:// 를 반드시 넣어 주어야 합니다.)");
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> notConnectionUrlHandler(IllegalArgumentException exception) {
+        return ResponseEntity.badRequest()
+                .body(exception.getMessage());
+    }
+
+    @ExceptionHandler(UnknownHostException.class)
+    public ResponseEntity<Object> notPresentDomainUrlHandler() {
+        return ResponseEntity.badRequest()
+                .body("존재하지 않는 도메인의 URL 입니다.");
+    }
+
     @PostMapping("/api/v1/shortener")
-    public ResponseEntity<ShortenerResponseDto> createShortener(@RequestBody ShortenerRequestDto dto) {
-        // TODO: 2023-01-05 이거를 return 하는걸 우리 서비스 도메인을 붙여야하는건 아닐지 생각할 것 -> 여기서 붙이는 방법이랑 리다이렉트 할때 붙여서 Location에 담는 방법
+    public ResponseEntity<ShortenerResponseDto> createShortener(@RequestBody ShortenerRequestDto dto) throws IOException {
+        urlValidate(dto.url());
         ShortenerResponseDto shortenerUrl = shortenerService.createShortener(dto);
         return ResponseEntity.ok().body(shortenerUrl);
     }
 
+    private void urlValidate(String address) throws IOException {
+        URL url = new URL(address);
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        int responseCode = urlConnection.getResponseCode();
+        if (200 > responseCode || responseCode >= 400) {
+            throw new IllegalArgumentException("접속할 수 없는 URL 입니다.");
+        }
+    }
+
     @GetMapping("/{shorteningKey}")
     public ResponseEntity<Object> getOriginURL(@PathVariable String shorteningKey) {
-        // TODO: 2023-01-05 API 형태로 만들면 서버 간 정보를 주고 받는 건데 301을 던지는게 맞을까? => 300대 던지면 웹 브라우저가 Location으로 자동으로 리다이렉션 하는 건데 200대가 맞지 않을까?
         String originUrl = shortenerService.findByShorteningKey(shorteningKey);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create(originUrl));

@@ -44,6 +44,7 @@
                 document.querySelector(".invisible").classList.remove("invisible");
             })
             .catch(function (error) {
+                alert(error.response.data);
                 console.log(error);
             });
     }
