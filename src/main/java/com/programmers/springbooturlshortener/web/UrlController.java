@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.programmers.springbooturlshortener.domain.url.UrlService;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceResponseDto;
 import com.programmers.springbooturlshortener.web.dto.UrlCreateDto;
+import com.programmers.springbooturlshortener.web.dto.UrlResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,11 +42,10 @@ public class UrlController {
 		}
 
 		UrlServiceRequestDto urlServiceRequestDto = urlCreateDto.toUrlServiceRequestDto();
-		UrlResponseDto url = urlService.createShortUrl(urlServiceRequestDto);
+		UrlServiceResponseDto urlServiceResponseDto = urlService.createShortUrl(urlServiceRequestDto);
+		UrlResponseDto url = UrlResponseDto.toUrlResponseDto(urlServiceResponseDto);
 
-		redirectAttributes.addAttribute("originUrl", url.originUrl());
-		redirectAttributes.addAttribute("shortUrl", URL_PREFIX + url.shortUrl());
-		redirectAttributes.addAttribute("requestCount", url.requestCount());
+		redirectAttributes.addAttribute("url", url);
 
 		return "redirect:/shortener";
 	}
