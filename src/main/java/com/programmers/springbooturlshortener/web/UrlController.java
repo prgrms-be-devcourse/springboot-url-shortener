@@ -45,7 +45,7 @@ public class UrlController {
 		UrlServiceResponseDto urlServiceResponseDto = urlService.createShortUrl(urlServiceRequestDto);
 		UrlResponseDto url = UrlResponseDto.toUrlResponseDto(urlServiceResponseDto);
 
-		redirectAttributes.addAttribute("url", url);
+		redirectAttributes.addFlashAttribute("url", url);
 
 		return "redirect:/shortener";
 	}

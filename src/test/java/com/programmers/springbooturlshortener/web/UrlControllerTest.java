@@ -1,9 +1,9 @@
 package com.programmers.springbooturlshortener.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.programmers.springbooturlshortener.domain.url.UrlService;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,11 +13,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.programmers.springbooturlshortener.domain.url.UrlService;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceResponseDto;
+import com.programmers.springbooturlshortener.web.dto.UrlResponseDto;
 
 @WebMvcTest
 class UrlControllerTest {
@@ -52,24 +52,22 @@ class UrlControllerTest {
         String originUrl = "https://google.com";
         String algorithm = "Base62";
         String shortUrl = "AAAAAAB";
-        String responseShortUrl = "localhost:8080/AAAAAAB";
         long requestCount = 1L;
-        UrlResponseDto urlResponseDto = new UrlResponseDto(originUrl, shortUrl, requestCount);
+        UrlServiceResponseDto urlServiceResponseDto = new UrlServiceResponseDto(originUrl, shortUrl, requestCount);
+        UrlResponseDto urlResponseDto = UrlResponseDto.toUrlResponseDto(urlServiceResponseDto);
 
         when(urlService.createShortUrl(any(UrlServiceRequestDto.class)))
-                .thenReturn(urlResponseDto);
+            .thenReturn(urlServiceResponseDto);
 
         // when
         ResultActions resultActions = mockMvc.perform(post("/shortener")
-                .param("originUrl", originUrl)
-                .param("algorithm", algorithm)
+            .param("originUrl", originUrl)
+            .param("algorithm", algorithm)
         );
 
         // then
         resultActions.andExpect(status().isFound())
-                .andExpect(model().attribute("originUrl", originUrl))
-                .andExpect(model().attribute("shortUrl", responseShortUrl))
-                .andExpect(model().attribute("requestCount", String.valueOf(requestCount)))
+            .andExpect(flash().attribute("url", urlResponseDto))
                 .andExpect(redirectedUrlPattern("/shortener*"));
     }
 
@@ -99,19 +97,18 @@ class UrlControllerTest {
         String originUrl = "https://google.com";
         String shortUrl = "AAAAAAB";
         Long requestCount = 1L;
-        UrlResponseDto urlResponseDto = new UrlResponseDto(originUrl, shortUrl, requestCount);
+        UrlServiceResponseDto urlServiceResponseDto = new UrlServiceResponseDto(originUrl, shortUrl, requestCount);
+        UrlResponseDto urlResponseDto = UrlResponseDto.toUrlResponseDto(urlServiceResponseDto);
 
         // when
         ResultActions resultActions = mockMvc.perform(get("/shortener")
-                .param("originUrl", originUrl)
-                .param("shortUrl", shortUrl)
-                .param("requestCount", String.valueOf(requestCount))
+            .flashAttr("url", urlResponseDto)
         );
 
         // then
         resultActions.andExpect(status().isOk())
-                .andExpect(model().attribute("url", urlResponseDto))
-                .andExpect(view().name("detail"));
+            .andExpect(model().attribute("url", urlResponseDto))
+            .andExpect(view().name("detail"));
     }
 
     @Test
@@ -120,10 +117,10 @@ class UrlControllerTest {
         // given
         String shortUrl = "AAAAAAB";
         String originUrl = "google.com";
-        UrlResponseDto urlResponseDto = new UrlResponseDto(originUrl, shortUrl, 1L);
+        UrlServiceResponseDto urlServiceResponseDto = new UrlServiceResponseDto(originUrl, shortUrl, 1L);
 
         when(urlService.getOriginUrl(shortUrl))
-                .thenReturn(urlResponseDto);
+            .thenReturn(urlServiceResponseDto);
 
         // when
         ResultActions resultActions = mockMvc.perform(get("/{shortUrl}", shortUrl));
