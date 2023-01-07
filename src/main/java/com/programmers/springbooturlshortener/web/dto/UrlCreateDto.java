@@ -1,8 +1,9 @@
-package com.programmers.springbooturlshortener.domain.url.dto;
+package com.programmers.springbooturlshortener.web.dto;
 
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
+import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
 import com.programmers.springbooturlshortener.domain.url.util.UrlValid;
 
 public record UrlCreateDto(@NotBlank @UrlValid @Column(nullable = false) String originUrl,

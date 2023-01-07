@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import com.programmers.springbooturlshortener.domain.url.dto.UrlCreateDto;
+import com.programmers.springbooturlshortener.web.dto.UrlCreateDto;
 
 class UrlValidationTest {
 
