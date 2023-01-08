@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.programmers.springbooturlshortener.domain.url.UrlService;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceResponseDto;
 import com.programmers.springbooturlshortener.web.dto.UrlResponseDto;
 
 @WebMvcTest
@@ -53,11 +52,10 @@ class UrlControllerTest {
         String algorithm = "Base62";
         String shortUrl = "AAAAAAB";
         long requestCount = 1L;
-        UrlServiceResponseDto urlServiceResponseDto = new UrlServiceResponseDto(originUrl, shortUrl, requestCount);
-        UrlResponseDto urlResponseDto = UrlResponseDto.toUrlResponseDto(urlServiceResponseDto);
+        UrlResponseDto urlResponseDto = new UrlResponseDto(originUrl, shortUrl, requestCount);
 
         when(urlService.createShortUrl(any(UrlServiceRequestDto.class)))
-            .thenReturn(urlServiceResponseDto);
+            .thenReturn(urlResponseDto);
 
         // when
         ResultActions resultActions = mockMvc.perform(post("/shortener")
@@ -97,8 +95,7 @@ class UrlControllerTest {
         String originUrl = "https://google.com";
         String shortUrl = "AAAAAAB";
         Long requestCount = 1L;
-        UrlServiceResponseDto urlServiceResponseDto = new UrlServiceResponseDto(originUrl, shortUrl, requestCount);
-        UrlResponseDto urlResponseDto = UrlResponseDto.toUrlResponseDto(urlServiceResponseDto);
+        UrlResponseDto urlResponseDto = new UrlResponseDto(originUrl, shortUrl, requestCount);
 
         // when
         ResultActions resultActions = mockMvc.perform(get("/shortener")
@@ -117,10 +114,10 @@ class UrlControllerTest {
         // given
         String shortUrl = "AAAAAAB";
         String originUrl = "google.com";
-        UrlServiceResponseDto urlServiceResponseDto = new UrlServiceResponseDto(originUrl, shortUrl, 1L);
+        UrlResponseDto urlResponseDto = new UrlResponseDto(originUrl, shortUrl, 1L);
 
         when(urlService.getOriginUrl(shortUrl))
-            .thenReturn(urlServiceResponseDto);
+            .thenReturn(urlResponseDto);
 
         // when
         ResultActions resultActions = mockMvc.perform(get("/{shortUrl}", shortUrl));

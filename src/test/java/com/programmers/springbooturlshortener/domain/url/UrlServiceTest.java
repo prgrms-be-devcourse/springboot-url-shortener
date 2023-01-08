@@ -16,7 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.programmers.springbooturlshortener.domain.algorithm.Base62Algorithm;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceResponseDto;
+import com.programmers.springbooturlshortener.web.dto.UrlResponseDto;
 
 @ExtendWith(MockitoExtension.class)
 public class UrlServiceTest {
@@ -49,16 +49,16 @@ public class UrlServiceTest {
 		when(savedUrl.getRequestCount()).thenReturn(1L);
 
 		// when
-		UrlServiceResponseDto urlServiceResponseDto = urlService.createShortUrl(urlServiceRequestDto);
+		UrlResponseDto urlResponseDto = urlService.createShortUrl(urlServiceRequestDto);
 
 		// then
-		verify(urlRepository).findByOriginUrl(urlServiceRequestDto.originUrl());
+		verify(urlRepository).findByOriginUrl(urlResponseDto.originUrl());
 		verify(urlRepository).save(any(Url.class));
 		verify(savedUrl).getId();
 		verify(base62Algorithm).encode(savedUrl.getId());
 		verify(savedUrl).getOriginUrl();
 		verify(savedUrl).getRequestCount();
-		assertThat(urlServiceResponseDto).hasFieldOrPropertyWithValue("originUrl", urlServiceRequestDto.originUrl())
+		assertThat(urlResponseDto).hasFieldOrPropertyWithValue("originUrl", urlServiceRequestDto.originUrl())
 			.hasFieldOrPropertyWithValue("shortUrl", shortUrl)
 			.hasFieldOrPropertyWithValue("requestCount", 1L);
 	}
@@ -74,14 +74,14 @@ public class UrlServiceTest {
 		when(savedUrl.getRequestCount()).thenReturn(requestCount);
 
 		// when
-		UrlServiceResponseDto urlServiceResponseDto = urlService.getOriginUrl(shortUrl);
+		UrlResponseDto urlResponseDto = urlService.getOriginUrl(shortUrl);
 
 		// then
 		verify(urlRepository).findByShortUrl(shortUrl);
 		verify(savedUrl).getOriginUrl();
 		verify(savedUrl).getShortUrl();
 		verify(savedUrl).getRequestCount();
-		assertThat(urlServiceResponseDto).hasFieldOrPropertyWithValue("originUrl", urlServiceRequestDto.originUrl())
+		assertThat(urlResponseDto).hasFieldOrPropertyWithValue("originUrl", urlServiceRequestDto.originUrl())
 			.hasFieldOrPropertyWithValue("shortUrl", shortUrl)
 			.hasFieldOrPropertyWithValue("requestCount", requestCount);
 	}

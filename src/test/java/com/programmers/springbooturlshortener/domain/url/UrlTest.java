@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
+import com.programmers.springbooturlshortener.web.dto.UrlCreateDto;
+
 class UrlTest {
 
 	private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
@@ -65,5 +68,26 @@ class UrlTest {
 
 		// then
 		assertThat(constraintViolations.size()).isEqualTo(1);
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = {"https://www.naver.com", "http://www.google.com"})
+	@DisplayName("Url 테스트: 입력 받는 origin URL 에서 프로토콜 값을 제거하고 Url 이 생성한다.")
+	void successToRemoveProtocol(String originUrl) {
+		// given
+		UrlCreateDto urlCreateDto = new UrlCreateDto(originUrl, "BASE62");
+		UrlServiceRequestDto urlServiceRequestDto = urlCreateDto.toUrlServiceRequestDto();
+		String protocolRemovedUrl =
+			originUrl.startsWith("https://") ?
+				originUrl.replace("https://", "") : originUrl.replace("http://", "");
+
+		// when
+		Url url = urlServiceRequestDto.toEntity();
+
+		// then
+		assertThat(url.getOriginUrl().startsWith("https://")).isFalse();
+		assertThat(url.getOriginUrl().startsWith("http://")).isFalse();
+		assertThat(url).hasFieldOrPropertyWithValue("originUrl", protocolRemovedUrl)
+			.hasFieldOrPropertyWithValue("algorithm", urlCreateDto.algorithm());
 	}
 }

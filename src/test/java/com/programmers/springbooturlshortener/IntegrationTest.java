@@ -14,7 +14,7 @@ import com.programmers.springbooturlshortener.domain.url.Url;
 import com.programmers.springbooturlshortener.domain.url.UrlRepository;
 import com.programmers.springbooturlshortener.domain.url.UrlService;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceResponseDto;
+import com.programmers.springbooturlshortener.web.dto.UrlResponseDto;
 
 @SpringBootTest
 class IntegrationTest {
@@ -34,7 +34,7 @@ class IntegrationTest {
         UrlServiceRequestDto urlServiceRequestDto = new UrlServiceRequestDto(originUrl, algorithm);
 
         // when
-        UrlServiceResponseDto savedUrl = urlService.createShortUrl(urlServiceRequestDto);
+        UrlResponseDto savedUrl = urlService.createShortUrl(urlServiceRequestDto);
         Url findUrl = urlRepository.findByOriginUrl(savedUrl.originUrl()).get();
 
         // then
@@ -51,10 +51,10 @@ class IntegrationTest {
         String algorithm = "Base62";
         UrlServiceRequestDto urlServiceRequestDto = new UrlServiceRequestDto(originUrl, algorithm);
 
-        UrlServiceResponseDto firstRequestUrl = urlService.createShortUrl(urlServiceRequestDto);
+        UrlResponseDto firstRequestUrl = urlService.createShortUrl(urlServiceRequestDto);
 
         // when
-        UrlServiceResponseDto lastRequestDto = urlService.createShortUrl(urlServiceRequestDto);
+        UrlResponseDto lastRequestDto = urlService.createShortUrl(urlServiceRequestDto);
 
         // then
         assertThat(lastRequestDto).hasFieldOrPropertyWithValue("originUrl", firstRequestUrl.originUrl())
@@ -70,10 +70,10 @@ class IntegrationTest {
         String algorithm = "Base62";
         UrlServiceRequestDto urlServiceRequestDto = new UrlServiceRequestDto(originUrl, algorithm);
 
-        UrlServiceResponseDto savedUrl = urlService.createShortUrl(urlServiceRequestDto);
+        UrlResponseDto savedUrl = urlService.createShortUrl(urlServiceRequestDto);
 
         // when
-        UrlServiceResponseDto findUrl = urlService.getOriginUrl(savedUrl.shortUrl());
+        UrlResponseDto findUrl = urlService.getOriginUrl(savedUrl.shortUrl());
 
         // then
         assertThat(findUrl).isEqualTo(savedUrl);

@@ -28,8 +28,8 @@
     </div>
     <div>
         <label>Short URL</label>
-        <input type="text" class="form-control url-pointer" th:value="${url.shortUrl}" readonly
-               th:onclick="|location.href='@{http://{shortUrl}(shortUrl=${url.shortUrl})}'|">
+        <input type="text" class="form-control url-pointer" th:value="|localhost:8080/${url.shortUrl}|" readonly
+               th:onclick="|location.href='@{http://localhost:8080/{shortUrl}(shortUrl=${url.shortUrl})}'|">
     </div>
     <div>
         <label>Request Count</label>

@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.programmers.springbooturlshortener.domain.url.UrlService;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceResponseDto;
 import com.programmers.springbooturlshortener.web.dto.UrlCreateDto;
 import com.programmers.springbooturlshortener.web.dto.UrlResponseDto;
 
@@ -26,7 +25,6 @@ import lombok.RequiredArgsConstructor;
 public class UrlController {
 
 	private final UrlService urlService;
-	private static final String URL_PREFIX = "localhost:8080/";
 
 	@GetMapping("/")
 	public String homePage(@ModelAttribute UrlCreateDto urlCreateDto) {
@@ -42,10 +40,9 @@ public class UrlController {
 		}
 
 		UrlServiceRequestDto urlServiceRequestDto = urlCreateDto.toUrlServiceRequestDto();
-		UrlServiceResponseDto urlServiceResponseDto = urlService.createShortUrl(urlServiceRequestDto);
-		UrlResponseDto url = UrlResponseDto.toUrlResponseDto(urlServiceResponseDto);
+		UrlResponseDto urlResponseDto = urlService.createShortUrl(urlServiceRequestDto);
 
-		redirectAttributes.addFlashAttribute("url", url);
+		redirectAttributes.addFlashAttribute("url", urlResponseDto);
 
 		return "redirect:/shortener";
 	}

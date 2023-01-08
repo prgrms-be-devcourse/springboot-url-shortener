@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.springbooturlshortener.domain.algorithm.Base62Algorithm;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
-import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceResponseDto;
+import com.programmers.springbooturlshortener.web.dto.UrlResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,33 +21,33 @@ public class UrlService {
 	private final Base62Algorithm base62Algorithm;
 
 	@Transactional
-	public UrlServiceResponseDto createShortUrl(UrlServiceRequestDto urlRequestDto) {
-
-		Optional<Url> optionalUrl = urlRepository.findByOriginUrl(urlRequestDto.originUrl());
-
-		if (optionalUrl.isPresent()) {
-			Url url = optionalUrl.get();
-			optionalUrl.get().increaseRequestCount();
-
-			return new UrlServiceResponseDto(url.getOriginUrl(), url.getShortUrl(), url.getRequestCount());
-		}
+	public UrlResponseDto createShortUrl(UrlServiceRequestDto urlRequestDto) {
 
 		Url url = urlRequestDto.toEntity();
+		Optional<Url> optionalUrl = urlRepository.findByOriginUrl(url.getOriginUrl());
+
+		if (optionalUrl.isPresent()) {
+			Url savedUrl = optionalUrl.get();
+			savedUrl.increaseRequestCount();
+
+			return new UrlResponseDto(savedUrl.getOriginUrl(), savedUrl.getShortUrl(), savedUrl.getRequestCount());
+		}
+
 		Url savedUrl = urlRepository.save(url);
 		String shortUrl = base62Algorithm.encode(savedUrl.getId());
 		savedUrl.setShortUrl(shortUrl);
-		return new UrlServiceResponseDto(savedUrl.getOriginUrl(), shortUrl, savedUrl.getRequestCount());
+		return new UrlResponseDto(savedUrl.getOriginUrl(), shortUrl, savedUrl.getRequestCount());
 	}
 
 	@Transactional(readOnly = true)
-	public UrlServiceResponseDto getOriginUrl(String shortUrl) {
+	public UrlResponseDto getOriginUrl(String shortUrl) {
 
 		Url url = urlRepository.findByShortUrl(shortUrl)
 			.orElseThrow(() -> {
 				throw new EntityNotFoundException();
 			});
 
-		return new UrlServiceResponseDto(url.getOriginUrl(), url.getShortUrl(), url.getRequestCount());
+		return new UrlResponseDto(url.getOriginUrl(), url.getShortUrl(), url.getRequestCount());
 	}
 }
 

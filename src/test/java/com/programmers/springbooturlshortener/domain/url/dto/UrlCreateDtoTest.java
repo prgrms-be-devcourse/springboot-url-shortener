@@ -16,18 +16,12 @@ class UrlCreateDtoTest {
 	void toUrlServiceRequestDtoTest(String url) {
 		// given
 		UrlCreateDto urlCreateDto = new UrlCreateDto(url, "BASE62");
-		String originUrl = urlCreateDto.originUrl();
-		String protocolRemovedUrl =
-			originUrl.startsWith("https://") ?
-				originUrl.replace("https://", "") : originUrl.replace("http://", "");
 
 		// when
 		UrlServiceRequestDto urlServiceRequestDto = urlCreateDto.toUrlServiceRequestDto();
 
 		// then
-		assertThat(urlServiceRequestDto.originUrl().startsWith("https://")).isFalse();
-		assertThat(urlServiceRequestDto.originUrl().startsWith("http://")).isFalse();
-		assertThat(urlServiceRequestDto).hasFieldOrPropertyWithValue("originUrl", protocolRemovedUrl);
-		assertThat(urlServiceRequestDto).hasFieldOrPropertyWithValue("algorithm", urlCreateDto.algorithm());
+		assertThat(urlServiceRequestDto).hasFieldOrPropertyWithValue("originUrl", urlCreateDto.originUrl())
+			.hasFieldOrPropertyWithValue("algorithm", urlCreateDto.algorithm());
 	}
 }

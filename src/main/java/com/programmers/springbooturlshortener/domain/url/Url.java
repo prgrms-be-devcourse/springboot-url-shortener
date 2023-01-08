@@ -20,15 +20,18 @@ import lombok.NoArgsConstructor;
 @Table(
         name = "url",
         uniqueConstraints = {
-                @UniqueConstraint(
-                        name = "uk",
-                        columnNames = {"algorithm", "origin_url"}
-                )
+            @UniqueConstraint(
+                name = "uk",
+                columnNames = {"algorithm", "origin_url"}
+            )
         }
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Url {
+
+    private static final String HTTPS_PROTOCOL = "https://";
+    private static final String HTTP_PROTOCOL = "http://";
 
     @Id
     @GeneratedValue
@@ -52,7 +55,7 @@ public class Url {
     @Builder
     public Url(String algorithm, String originUrl) {
         this.algorithm = algorithm;
-        this.originUrl = originUrl;
+        this.originUrl = removeProtocolFromOriginUrl(originUrl);
         this.requestCount = 1L;
     }
 
@@ -62,5 +65,18 @@ public class Url {
 
     public void setShortUrl(String shortUrl) {
         this.shortUrl = shortUrl;
+    }
+
+    private String removeProtocolFromOriginUrl(String originUrl) {
+
+        if (originUrl.startsWith(HTTPS_PROTOCOL)) {
+            return originUrl.replace(HTTPS_PROTOCOL, "");
+        }
+
+        if (originUrl.startsWith(HTTP_PROTOCOL)) {
+            return originUrl.replace(HTTP_PROTOCOL, "");
+        }
+
+        return originUrl;
     }
 }
