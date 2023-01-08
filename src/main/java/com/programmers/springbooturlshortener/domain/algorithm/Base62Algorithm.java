@@ -3,13 +3,14 @@ package com.programmers.springbooturlshortener.domain.algorithm;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Base62Algorithm {
+public class Base62Algorithm implements Algorithm {
 
     private static final char[] TOKENS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
     private static final int BASE62_LENGTH = 62;
     private static final int SHORT_URL_LENGTH = 7;
     private static final String PADDING_TOKEN = "A";
 
+    @Override
     public String encode(Long id) {
 
         StringBuilder encodedTokenAppender = new StringBuilder();
@@ -22,6 +23,7 @@ public class Base62Algorithm {
         return padding(encodedTokenAppender.toString());
     }
 
+    @Override
     public Long decode(String shortUrl) {
         long result = 0;
         long power = 1;
