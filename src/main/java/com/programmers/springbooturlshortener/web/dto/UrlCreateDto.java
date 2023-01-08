@@ -9,17 +9,22 @@ import com.programmers.springbooturlshortener.domain.url.util.UrlValid;
 public record UrlCreateDto(@NotBlank @UrlValid @Column(nullable = false) String originUrl,
 						   @NotBlank @Column(nullable = false) String algorithm) {
 
+	private static final String HTTPS_PROTOCOL = "https://";
+	private static final String HTTP_PROTOCOL = "http://";
+
 	public UrlServiceRequestDto toUrlServiceRequestDto() {
 		String removedProtocolUrl = this.removeProtocolFromOriginUrl();
 		return new UrlServiceRequestDto(removedProtocolUrl, this.algorithm());
 	}
 
 	private String removeProtocolFromOriginUrl() {
-		if (this.originUrl.startsWith("https://")) {
-			return this.originUrl.replace("https://", "");
+
+		if (this.originUrl.startsWith(HTTPS_PROTOCOL)) {
+			return this.originUrl.replace(HTTPS_PROTOCOL, "");
 		}
-		if (this.originUrl.startsWith("http://")) {
-			return this.originUrl.replace("http://", "");
+
+		if (this.originUrl.startsWith(HTTP_PROTOCOL)) {
+			return this.originUrl.replace(HTTP_PROTOCOL, "");
 		}
 
 		return this.originUrl;

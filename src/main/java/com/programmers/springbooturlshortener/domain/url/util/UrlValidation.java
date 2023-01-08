@@ -8,11 +8,14 @@ import javax.validation.ConstraintValidatorContext;
 
 public class UrlValidation implements ConstraintValidator<UrlValid, String> {
 
+	private static final String HTTPS_PROTOCOL = "https://";
+	private static final String HTTP_PROTOCOL = "http://";
+
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
 		try {
 			if (hasNotProtocol(value)) {
-				value = "https://" + value;
+				value = HTTPS_PROTOCOL + value;
 			}
 
 			URL url = new URL(value);
@@ -25,6 +28,6 @@ public class UrlValidation implements ConstraintValidator<UrlValid, String> {
 	}
 
 	private boolean hasNotProtocol(String originUrl) {
-		return !(originUrl.startsWith("https://") || originUrl.startsWith("http://"));
+		return !(originUrl.startsWith(HTTPS_PROTOCOL) || originUrl.startsWith(HTTP_PROTOCOL));
 	}
 }

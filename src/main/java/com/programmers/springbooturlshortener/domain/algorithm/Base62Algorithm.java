@@ -5,19 +5,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class Base62Algorithm {
 
-    private static final char[] base62Char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
+    private static final char[] TOKENS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
     private static final int BASE62_LENGTH = 62;
     private static final int SHORT_URL_LENGTH = 7;
+    private static final String PADDING_TOKEN = "A";
 
     public String encode(Long id) {
-        StringBuilder sb = new StringBuilder();
+
+        StringBuilder encodedTokenAppender = new StringBuilder();
 
         while (id > 0) {
-            sb.append(base62Char[(int) (id % BASE62_LENGTH)]);
+            encodedTokenAppender.append(TOKENS[(int)(id % BASE62_LENGTH)]);
             id /= BASE62_LENGTH;
         }
 
-        return padding(sb.toString());
+        return padding(encodedTokenAppender.toString());
     }
 
     public Long decode(String shortUrl) {
@@ -25,7 +27,7 @@ public class Base62Algorithm {
         long power = 1;
 
         for (int i = shortUrl.length() - 1; i >= 0; i--) {
-            result += new String(base62Char).indexOf(shortUrl.charAt(i)) * power;
+            result += new String(TOKENS).indexOf(shortUrl.charAt(i)) * power;
             power *= BASE62_LENGTH;
         }
 
@@ -33,16 +35,16 @@ public class Base62Algorithm {
     }
 
     private String padding(String shortUrl) {
-        StringBuilder sb = new StringBuilder();
+        StringBuilder paddingTokenAppender = new StringBuilder();
 
         if (shortUrl.length() < SHORT_URL_LENGTH) {
             int paddingCount = SHORT_URL_LENGTH - shortUrl.length();
 
             for (int i = 0; i < paddingCount; i++) {
-                sb.append("A");
+                paddingTokenAppender.append(PADDING_TOKEN);
             }
 
-            shortUrl = sb.append(shortUrl).toString();
+            shortUrl = paddingTokenAppender.append(shortUrl).toString();
         }
 
         return shortUrl;
