@@ -59,7 +59,7 @@ class UrlValidationTest {
 		" ",
 		"    "
 	})
-	@DisplayName("Url 검증 테스트: blank 나 empty URL 이 입력되면 @NotBlank 와 @UrlValid 에 의해 검증에 실패한다.")
+	@DisplayName("Url 검증 테스트: blank 나 empty URL 이 입력되면 @UrlValid 에 의해 검증에 실패한다.")
 	void failValidByNotBlank(String url) {
 		// given
 		UrlCreateDto urlCreateDto = new UrlCreateDto(url, "BASE62");
@@ -68,6 +68,6 @@ class UrlValidationTest {
 		Set<ConstraintViolation<UrlCreateDto>> constraintViolations = validator.validate(urlCreateDto);
 
 		// then
-		Assertions.assertThat(constraintViolations.size()).isEqualTo(2);
+		Assertions.assertThat(constraintViolations.size()).isEqualTo(1);
 	}
 }

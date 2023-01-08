@@ -1,13 +1,11 @@
 package com.programmers.springbooturlshortener.web.dto;
 
-import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
 import com.programmers.springbooturlshortener.domain.url.util.UrlValid;
 
-public record UrlCreateDto(@NotBlank @UrlValid @Column(nullable = false) String originUrl,
-						   @NotBlank @Column(nullable = false) String algorithm) {
+public record UrlCreateDto(@UrlValid String originUrl, @NotBlank String algorithm) {
 
 	private static final String HTTPS_PROTOCOL = "https://";
 	private static final String HTTP_PROTOCOL = "http://";
