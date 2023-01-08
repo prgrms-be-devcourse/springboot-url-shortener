@@ -46,6 +46,7 @@ public class UrlServiceTest {
 		when(savedUrl.getId()).thenReturn(savedUrlId);
 		when(base62Algorithm.encode(savedUrlId)).thenReturn(shortUrl);
 		when(savedUrl.getOriginUrl()).thenReturn(urlServiceRequestDto.originUrl());
+		when(savedUrl.getRequestCount()).thenReturn(1L);
 
 		// when
 		UrlServiceResponseDto urlServiceResponseDto = urlService.createShortUrl(urlServiceRequestDto);
@@ -56,6 +57,7 @@ public class UrlServiceTest {
 		verify(savedUrl).getId();
 		verify(base62Algorithm).encode(savedUrl.getId());
 		verify(savedUrl).getOriginUrl();
+		verify(savedUrl).getRequestCount();
 		assertThat(urlServiceResponseDto).hasFieldOrPropertyWithValue("originUrl", urlServiceRequestDto.originUrl())
 			.hasFieldOrPropertyWithValue("shortUrl", shortUrl)
 			.hasFieldOrPropertyWithValue("requestCount", 1L);
