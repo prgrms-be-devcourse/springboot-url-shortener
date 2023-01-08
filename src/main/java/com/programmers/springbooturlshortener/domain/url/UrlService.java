@@ -24,7 +24,7 @@ public class UrlService {
 	public UrlResponseDto createShortUrl(UrlServiceRequestDto urlRequestDto) {
 
 		Url url = urlRequestDto.toEntity();
-		Optional<Url> optionalUrl = urlRepository.findByOriginUrl(url.getOriginUrl());
+		Optional<Url> optionalUrl = urlRepository.findByOriginUrlWithLock(url.getOriginUrl());
 
 		if (optionalUrl.isPresent()) {
 			Url savedUrl = optionalUrl.get();

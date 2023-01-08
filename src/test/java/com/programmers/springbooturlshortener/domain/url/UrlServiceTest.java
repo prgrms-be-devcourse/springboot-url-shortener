@@ -41,7 +41,7 @@ public class UrlServiceTest {
 	@DisplayName("UrlService 테스트: originUrl 의 첫 요청일 때, shortUrl 생성에 성공한다.")
 	void createShortUrlWhenFirstRequestTest() {
 		// given
-		when(urlRepository.findByOriginUrl(urlServiceRequestDto.originUrl())).thenReturn(Optional.empty());
+		when(urlRepository.findByOriginUrlWithLock(urlServiceRequestDto.originUrl())).thenReturn(Optional.empty());
 		when(urlRepository.save(any(Url.class))).thenReturn(savedUrl);
 		when(savedUrl.getId()).thenReturn(savedUrlId);
 		when(base62Algorithm.encode(savedUrlId)).thenReturn(shortUrl);
@@ -52,7 +52,7 @@ public class UrlServiceTest {
 		UrlResponseDto urlResponseDto = urlService.createShortUrl(urlServiceRequestDto);
 
 		// then
-		verify(urlRepository).findByOriginUrl(urlResponseDto.originUrl());
+		verify(urlRepository).findByOriginUrlWithLock(urlResponseDto.originUrl());
 		verify(urlRepository).save(any(Url.class));
 		verify(savedUrl).getId();
 		verify(base62Algorithm).encode(savedUrl.getId());

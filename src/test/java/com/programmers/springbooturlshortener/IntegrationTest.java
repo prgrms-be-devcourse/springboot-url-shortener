@@ -3,8 +3,13 @@ package com.programmers.springbooturlshortener;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.persistence.EntityNotFoundException;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.programmers.springbooturlshortener.domain.url.Url;
 import com.programmers.springbooturlshortener.domain.url.UrlRepository;
 import com.programmers.springbooturlshortener.domain.url.UrlService;
+import com.programmers.springbooturlshortener.domain.url.UrlServiceFacade;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
 
@@ -21,6 +27,9 @@ class IntegrationTest {
 
     @Autowired
     UrlService urlService;
+
+    @Autowired
+    UrlServiceFacade urlServiceFacade;
 
     @Autowired
     UrlRepository urlRepository;
@@ -87,5 +96,39 @@ class IntegrationTest {
 
         // when, then
         assertThrows(EntityNotFoundException.class, () -> urlService.getOriginUrl(notInDbShortURL));
+    }
+
+    @Test
+    @DisplayName("50명의 사용자가 동시에 같은 URL을 요청할 경우 확인")
+    void createUrlWhenFiftyUsersRequestSameUrlAtSameTimeSuccess() throws InterruptedException {
+        // given
+        String savedOriginUrl = "google.com";
+        String originUrl = "https://google.com";
+        String algorithm = "Base62";
+        UrlServiceRequestDto urlServiceRequestDto = new UrlServiceRequestDto(originUrl, algorithm);
+
+        int threadCount = 50;
+        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+
+        // when
+        for (int i = 0; i < threadCount; i++) {
+            executorService.submit(() -> {
+                try {
+                    urlServiceFacade.createShortUrl(urlServiceRequestDto);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+
+        Url url = urlRepository.findByOriginUrl(savedOriginUrl).get();
+
+        // then
+        Assertions.assertThat(url.getRequestCount()).isEqualTo(50);
     }
 }

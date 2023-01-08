@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.programmers.springbooturlshortener.domain.url.UrlService;
+import com.programmers.springbooturlshortener.domain.url.UrlServiceFacade;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
 
@@ -26,6 +27,9 @@ class UrlControllerTest {
 
     @MockBean
     UrlService urlService;
+
+    @MockBean
+    UrlServiceFacade urlServiceFacade;
 
     @Autowired
     MockMvc mockMvc;
@@ -54,7 +58,7 @@ class UrlControllerTest {
         long requestCount = 1L;
         UrlResponseDto urlResponseDto = new UrlResponseDto(originUrl, shortUrl, requestCount);
 
-        when(urlService.createShortUrl(any(UrlServiceRequestDto.class)))
+        when(urlServiceFacade.createShortUrl(any(UrlServiceRequestDto.class)))
             .thenReturn(urlResponseDto);
 
         // when

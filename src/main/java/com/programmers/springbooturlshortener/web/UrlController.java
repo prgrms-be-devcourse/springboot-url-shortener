@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.programmers.springbooturlshortener.domain.url.UrlService;
+import com.programmers.springbooturlshortener.domain.url.UrlServiceFacade;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
 import com.programmers.springbooturlshortener.web.dto.UrlCreateDto;
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class UrlController {
 
 	private final UrlService urlService;
+	private final UrlServiceFacade urlServiceFacade;
 
 	@GetMapping("/")
 	public String homePage(@ModelAttribute UrlCreateDto urlCreateDto) {
@@ -40,7 +42,7 @@ public class UrlController {
 		}
 
 		UrlServiceRequestDto urlServiceRequestDto = urlCreateDto.toUrlServiceRequestDto();
-		UrlResponseDto urlResponseDto = urlService.createShortUrl(urlServiceRequestDto);
+		UrlResponseDto urlResponseDto = urlServiceFacade.createShortUrl(urlServiceRequestDto);
 
 		redirectAttributes.addFlashAttribute("url", urlResponseDto);
 
