@@ -15,8 +15,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.programmers.springbooturlshortener.domain.algorithm.Base62Algorithm;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
-import com.programmers.springbooturlshortener.web.dto.UrlResponseDto;
 
 @ExtendWith(MockitoExtension.class)
 public class UrlServiceTest {

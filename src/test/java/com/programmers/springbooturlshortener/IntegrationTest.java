@@ -13,8 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.programmers.springbooturlshortener.domain.url.Url;
 import com.programmers.springbooturlshortener.domain.url.UrlRepository;
 import com.programmers.springbooturlshortener.domain.url.UrlService;
+import com.programmers.springbooturlshortener.domain.url.dto.UrlResponseDto;
 import com.programmers.springbooturlshortener.domain.url.dto.UrlServiceRequestDto;
-import com.programmers.springbooturlshortener.web.dto.UrlResponseDto;
 
 @SpringBootTest
 class IntegrationTest {
