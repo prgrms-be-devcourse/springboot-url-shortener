@@ -24,7 +24,6 @@ class UrlTest {
 		Url url = Url.builder()
 			.originUrl("www.naver.com")
 			.algorithm("BASE62")
-			.requestCount(1L)
 			.build();
 		Long beforeRequestCount = url.getRequestCount();
 
@@ -42,7 +41,6 @@ class UrlTest {
 		Url url = Url.builder()
 			.originUrl("www.naver.com")
 			.algorithm(null)
-			.requestCount(1L)
 			.build();
 
 		// when
@@ -60,7 +58,6 @@ class UrlTest {
 		Url url = Url.builder()
 			.originUrl(originUrl)
 			.algorithm("BASE62")
-			.requestCount(1L)
 			.build();
 
 		// when

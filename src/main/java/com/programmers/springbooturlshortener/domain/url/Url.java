@@ -1,14 +1,20 @@
 package com.programmers.springbooturlshortener.domain.url;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.lang.Nullable;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(
@@ -44,10 +50,10 @@ public class Url {
     private Long requestCount;
 
     @Builder
-    public Url(String algorithm, String originUrl, Long requestCount) {
+    public Url(String algorithm, String originUrl) {
         this.algorithm = algorithm;
         this.originUrl = originUrl;
-        this.requestCount = requestCount;
+        this.requestCount = 1L;
     }
 
     public void increaseRequestCount() {

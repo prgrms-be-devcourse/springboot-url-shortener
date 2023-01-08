@@ -14,7 +14,6 @@ public record UrlServiceRequestDto(@NotBlank @URL @Column(nullable = false) Stri
 		return Url.builder()
 			.originUrl(originUrl)
 			.algorithm(algorithm)
-			.requestCount(1L)
 			.build();
 	}
 }
