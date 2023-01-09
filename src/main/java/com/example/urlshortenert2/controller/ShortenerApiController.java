@@ -33,7 +33,7 @@ public class ShortenerApiController {
         URL url = new URL(address);
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         int responseCode = urlConnection.getResponseCode();
-        if (200 > responseCode || responseCode >= 400) {
+        if (HttpStatus.OK.value() > responseCode || responseCode >= HttpStatus.BAD_REQUEST.value()) {
             throw new IllegalArgumentException("접속할 수 없는 URL 입니다.");
         }
     }
