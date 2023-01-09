@@ -35,13 +35,14 @@ class ShortedUrlRepositoryTest {
     }
 
     @Test
-    @DisplayName("null 중복 처리 확인 태스트")
-    void duplicated_unique_null_test() {
+    @DisplayName("unique로 설정한 컬럼에 null이 중복으로 들어갈 수 있다.")
+    void unique_column_null_duplicate_test() {
         ShortedUrl naverUrl = new ShortedUrl("https://www.naver.com");
         ShortedUrl googleUrl = new ShortedUrl("https://www.google.com");
+
         ShortedUrl savedNaverUrl = repository.save(naverUrl);
         ShortedUrl savedGoogleUrl = repository.save(googleUrl);
-        System.out.println("key of naver - " + savedNaverUrl.getShorteningKey());
-        System.out.println("key of google - " + savedGoogleUrl.getShorteningKey());
+
+        assertThat(savedNaverUrl.getShorteningKey()).isEqualTo(savedGoogleUrl.getShorteningKey());
     }
 }
