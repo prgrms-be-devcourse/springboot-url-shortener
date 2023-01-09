@@ -26,7 +26,7 @@ public class ShortedUrl {
     }
 
     public ShortedUrl(String originUrl) {
-        this.originUrl = originUrl;
+        this(null, originUrl);
     }
 
     public void setShorteningKey(String shorteningKey) {

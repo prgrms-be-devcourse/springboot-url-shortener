@@ -34,4 +34,14 @@ class ShortedUrlRepositoryTest {
         assertThat(shortedUrl.get().getOriginUrl()).isEqualTo(originUrl);
     }
 
+    @Test
+    @DisplayName("null 중복 처리 확인 태스트")
+    void duplicated_unique_null_test() {
+        ShortedUrl naverUrl = new ShortedUrl("https://www.naver.com");
+        ShortedUrl googleUrl = new ShortedUrl("https://www.google.com");
+        ShortedUrl savedNaverUrl = repository.save(naverUrl);
+        ShortedUrl savedGoogleUrl = repository.save(googleUrl);
+        System.out.println("key of naver - " + savedNaverUrl.getShorteningKey());
+        System.out.println("key of google - " + savedGoogleUrl.getShorteningKey());
+    }
 }
