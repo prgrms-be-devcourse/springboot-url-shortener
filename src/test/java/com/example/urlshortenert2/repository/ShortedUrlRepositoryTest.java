@@ -34,4 +34,23 @@ class ShortedUrlRepositoryTest {
         assertThat(shortedUrl.get().getOriginUrl()).isEqualTo(originUrl);
     }
 
+    @Test
+    @DisplayName("orginUrl를 이용하여 Shortening Url 정보를 찾을 수 있다.")
+    void findShorteningKeyByOringUrl() {
+        Optional<ShortedUrl> originShortedUrl = repository.findShortedUrlByOriginUrl(originUrl);
+        assertThat(originShortedUrl.isEmpty()).isEqualTo(false);
+        assertThat(originShortedUrl.get().getShorteningKey()).isEqualTo(shorteningKey);
+    }
+
+    @Test
+    @DisplayName("unique로 설정한 컬럼에 null이 중복으로 들어갈 수 있다.")
+    void unique_column_null_duplicate_test() {
+        ShortedUrl naverUrl = new ShortedUrl("https://www.naver.com");
+        ShortedUrl googleUrl = new ShortedUrl("https://www.google.com");
+
+        ShortedUrl savedNaverUrl = repository.save(naverUrl);
+        ShortedUrl savedGoogleUrl = repository.save(googleUrl);
+
+        assertThat(savedNaverUrl.getShorteningKey()).isEqualTo(savedGoogleUrl.getShorteningKey());
+    }
 }

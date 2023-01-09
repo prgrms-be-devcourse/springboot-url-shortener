@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 @Service
 public class ShortenerService {
@@ -23,6 +24,11 @@ public class ShortenerService {
 
     @Transactional
     public ShortenerResponseDto createShortener(ShortenerRequestDto dto) {
+        Optional<ShortedUrl> foundShortedUrl = shortedUrlRepository.findShortedUrlByOriginUrl(dto.url());
+        if (foundShortedUrl.isPresent()) {
+            return new ShortenerResponseDto(foundShortedUrl.get().getShorteningKey());
+        }
+
         String originUrl = dto.url();
         ShortedUrl shortedUrl = new ShortedUrl(originUrl);
         shortedUrlRepository.save(shortedUrl);
