@@ -20,17 +20,17 @@ public class ShortedUrl {
     @Column(nullable = false)
     private String originUrl;
 
+    public ShortedUrl(String shorteningKey, String originUrl) {
+        this.shorteningKey = shorteningKey;
+        this.originUrl = originUrl;
+    }
+
     public ShortedUrl(String originUrl) {
         this.originUrl = originUrl;
     }
 
     public void setShorteningKey(String shorteningKey) {
         this.shorteningKey = shorteningKey;
-    }
-
-    public ShortedUrl(String shorteningKey, String originUrl) {
-        this.shorteningKey = shorteningKey;
-        this.originUrl = originUrl;
     }
 
     @Override
