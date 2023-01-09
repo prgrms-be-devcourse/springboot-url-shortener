@@ -14,22 +14,22 @@ public class MyShorteningKeyMaker implements ShorteningKeyMaker {
 
     @Override
     public String makeShorteningKey(Long id) {
-        StringBuilder sb = new StringBuilder();
-        while(id > 0) {
-            int idx = (int)(id % BASE_62_LENGTH);
-            sb.append(BASE_62_CHAR_ARRAY[idx]);
+        StringBuilder stringBuilder = new StringBuilder();
+        while (id > 0) {
+            int idx = (int) (id % BASE_62_LENGTH);
+            stringBuilder.append(BASE_62_CHAR_ARRAY[idx]);
             id /= BASE_62_LENGTH;
         }
-        return padding(sb);
+        return padding(stringBuilder);
     }
 
-    private String padding(StringBuilder sb) {
-        if (sb.length() >= SHORT_URL_LENGTH) {
-            return sb.toString();
+    private String padding(StringBuilder stringBuilder) {
+        if (stringBuilder.length() >= SHORT_URL_LENGTH) {
+            return stringBuilder.toString();
         }
-        while (sb.length() < SHORT_URL_LENGTH) {
-            sb.append(PADDING_CHARACTER);
+        while (stringBuilder.length() < SHORT_URL_LENGTH) {
+            stringBuilder.append(PADDING_CHARACTER);
         }
-        return sb.toString();
+        return stringBuilder.toString();
     }
 }
