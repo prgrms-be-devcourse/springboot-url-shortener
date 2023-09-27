@@ -2,7 +2,6 @@ package com.urlMaker.shortUrl;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.stereotype.Service;
 
 @Entity
 @Table(name = "urls")

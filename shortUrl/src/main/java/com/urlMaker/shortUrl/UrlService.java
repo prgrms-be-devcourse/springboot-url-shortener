@@ -23,10 +23,12 @@ public class UrlService {
         Optional<Url> retrievedURL = urlRepository.findByOriginUrl(url.getOriginUrl());
 
         if(retrievedURL.isPresent()){
-            retrievedURL.get().increaseRequestCount();
+            Url savedUrl = retrievedURL.get();
+            savedUrl.increaseRequestCount();
 
             return UrlCreateResponseDTO.builder()
-                    .shortenUrl(algorithm.encode(url.getUrlId()))
+                    .shortenUrl(algorithm.encode(savedUrl.getUrlId()))
+                    .requestCount(savedUrl.getRequestCount())
                     .build();
         }
 
