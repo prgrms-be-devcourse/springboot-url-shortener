@@ -1,0 +1,46 @@
+package org.prgrms.urlshortener.domain;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Table(name = "urls")
+public class Url {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long id;
+
+	@Column(name = "origin_url", updatable = false, nullable = false)
+	private String originUrl;
+
+	@Column(name = "short_url")
+	private String shortUrl;
+
+	@Column(name = "hit_count")
+	private int hitCount;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "algorithm")
+	private Algorithm algorithm;
+
+	public Url(String originUrl, Algorithm algorithm) {
+		this.originUrl = originUrl;
+		this.algorithm = algorithm;
+	}
+
+	public void enrollShortUrl(String shortUrl) {
+		this.shortUrl = shortUrl;
+	}
+}
