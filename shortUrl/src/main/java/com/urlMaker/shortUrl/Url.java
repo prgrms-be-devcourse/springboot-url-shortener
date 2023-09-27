@@ -1,9 +1,8 @@
 package com.urlMaker.shortUrl;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.stereotype.Service;
 
 @Entity
 @Table(name = "urls")
@@ -13,16 +12,26 @@ public class Url {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private Long urlId;
 
-    @Column(name = "origin_url")
+    @Column(nullable = false)
     private String originUrl;
 
-    @Column(name="shorten_url")
-    private String shortenUrl;
+    @Column(nullable = false)
+    private String algorithm;
 
-    @Column(name="request_count")
-    private Long requestCount;
+    @Column(name = "request_count")
+    private Integer requestCount;
 
+    @Builder
+    public Url(String originUrl, String algorithm) {
+        this.originUrl = originUrl;
+        this.algorithm = algorithm;
+        this.requestCount = 0;
+    }
+
+    public void increaseRequestCount() {
+        this.requestCount += 1;
+    }
 
 }
