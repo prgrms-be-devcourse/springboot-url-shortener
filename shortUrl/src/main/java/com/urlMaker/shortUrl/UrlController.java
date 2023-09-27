@@ -1,5 +1,6 @@
 package com.urlMaker.shortUrl;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ public class UrlController {
     private final UrlService urlService;
 
     @GetMapping("/")
-    public String mainPage(@ModelAttribute UrlCreateRequestDTO urlCreateRequestDTO){
+    public String mainPage(@ModelAttribute @Valid UrlCreateRequestDTO urlCreateRequestDTO){
 
         return "index";
     }
@@ -26,6 +27,7 @@ public class UrlController {
             BindingResult bindingResult
     ){
         if(bindingResult.hasErrors()){
+            log.error("error");
 
             return "index";
         }
