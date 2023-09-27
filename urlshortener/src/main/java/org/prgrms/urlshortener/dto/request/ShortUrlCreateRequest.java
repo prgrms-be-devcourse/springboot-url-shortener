@@ -18,4 +18,5 @@ public record ShortUrlCreateRequest(
 	public Url toEntity() {
 		return new Url(originUrl, algorithm);
 	}
+
 }
