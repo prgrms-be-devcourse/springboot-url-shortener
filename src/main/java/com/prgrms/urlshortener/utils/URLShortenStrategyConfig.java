@@ -10,7 +10,8 @@ import java.util.Map;
 public class URLShortenStrategyConfig {
 
     @Bean
-    public Map<String, URLShorteningStrategy> strategies(RandomStrategy randomStrategy, HashStrategy hashStrategy) {
+    public Map<String, URLShorteningStrategy> strategies(RandomStrategy randomStrategy,
+                                                         HashStrategy hashStrategy) {
         Map<String, URLShorteningStrategy> strategies = new HashMap<>();
         strategies.put("random", randomStrategy);
         strategies.put("hash", hashStrategy);
