@@ -116,7 +116,8 @@
                     },
 
                     error: function (error) {
-                        alert('오류 발생: ' + error.responseText);
+                        const parsedError = JSON.parse(error.responseText);
+                        alert('오류 발생: ' + parsedError.message);
                     }
                 });
             });

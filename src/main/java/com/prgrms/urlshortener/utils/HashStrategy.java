@@ -15,7 +15,8 @@ public class HashStrategy implements URLShorteningStrategy {
     }
 
     public String shortenURL(String originalURL) {
-        String hash = generateHash(originalURL);
+        String salt = String.valueOf(System.currentTimeMillis());
+        String hash = generateHash(originalURL + salt);
 
         return hash.substring(0, 7);
     }
