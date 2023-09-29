@@ -2,7 +2,6 @@ package com.urlMaker.shortUrl;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.aot.generate.GeneratedTypeReference;
 
 @Entity
 @Table(name = "urls")
@@ -11,6 +10,17 @@ import org.springframework.aot.generate.GeneratedTypeReference;
 public class Url {
 
     @Id
+    @SequenceGenerator(
+            name = "seq_generator",
+            sequenceName = "url_seq",
+            initialValue = 100000000,
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "seq_generator"
+    )
+    @Column(name = "url_id")
     private Long urlId;
 
     @Column(
@@ -44,9 +54,4 @@ public class Url {
     public void increaseRequestCount() {
         this.requestCount += 1;
     }
-//
-//    public void setUrlId(Long urlId) {
-//        this.urlId = urlId
-//    }
-
 }
