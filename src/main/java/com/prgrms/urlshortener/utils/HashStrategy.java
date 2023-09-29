@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-@Component
+@Component("hash")
 public class HashStrategy implements URLShorteningStrategy {
 
     private final String BASE62;

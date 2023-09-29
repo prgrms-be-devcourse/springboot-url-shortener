@@ -6,6 +6,7 @@ import com.prgrms.urlshortener.utils.URLShorteningStrategy;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -39,5 +40,19 @@ public class UrlServiceImpl implements UrlService {
                 .orElseThrow(() -> new RuntimeException("최대 시도 횟수 초과:" + MAX_RETRIES));
     }
 
+    @Override
+    public String getOriginalUrl(String shortenUrl) {
+        return urlRepository.findByShortenUrl(shortenUrl)
+                .map(Urls::getOriginUrl)
+                .map(this::ensureUrlHasProtocol)
+                .orElseThrow(() -> new NoSuchElementException("URL not found for: " + shortenUrl));
+    }
+
+    private String ensureUrlHasProtocol(String originalUrl) {
+        if (!originalUrl.startsWith("http://") && !originalUrl.startsWith("https://")) {
+            return "https://" + originalUrl;
+        }
+        return originalUrl;
+    }
 
 }

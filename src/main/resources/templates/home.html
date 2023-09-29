@@ -31,7 +31,7 @@
             border: none;
             border-radius: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
-                        inset 0 1px 2px rgba(0, 0, 0, 0.1); /* 내부 그림자 */
+            inset 0 1px 2px rgba(0, 0, 0, 0.1); /* 내부 그림자 */
             font-size: 1.2em;
             outline: none;
 
@@ -68,6 +68,28 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 텍스트 그림자 */
             font-weight: bold;
         }
+        #shortenedUrl {
+            display: none;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
+            inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            font-size: 1.2em;
+            outline: none;
+        }
+
+        .sub-title {
+            font-size: 2em;
+            color: blue;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            display: none;
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -76,28 +98,45 @@
                 e.preventDefault();
 
                 var urlValue = $('#url').val();
+                var strategyValue = $('#strategy').val();
 
                 $.ajax({
                     type: "POST",
                     url: "/v1/urls",
-                    data: JSON.stringify({"url": urlValue}),
+                    data: JSON.stringify({"originUrl": urlValue, "strategy": strategyValue}),
                     contentType: "application/json",
                     success: function (response) {
                         alert('URL이 성공적으로 전송되었습니다.');
+                        var fullUrl = response.startsWith('http://') || response.startsWith('https://') ? response : window.location.protocol + '//' + response;
+
+                        $('#shortenedUrl').attr('href', fullUrl);
+                        $('#shortenedUrl').text(fullUrl);
+                        $('#shortenedUrl').css('display', 'block');
+                        $('#shortenedTitle').css('display', 'block');
                     },
+
                     error: function (error) {
                         alert('오류 발생: ' + error.responseText);
                     }
                 });
             });
         });
+
     </script>
 </head>
 <body>
 <div class="container">
-    <div class="title">Short URL</div>
+    <div class="title">Shorten URL</div>
     <input type="url" id="url" name="url" placeholder="URL을 입력해 주세요" required>
-    <button type="button">Submit</button>
+    <select id="strategy">
+        <option value="" selected disabled>단축할 전략 선택</option>
+        <option th:each="strategy : ${strategies}" th:value="${strategy.type}" th:text="${strategy}">Random</option>
+    </select>
+    <button type="button">단축하기</button>
+    <div class="sub-title" id="shortenedTitle">Shortened URL</div>
+    <a href="#" id="shortenedUrl" target="_blank">Shortened URL will appear here</a>
+
+    <!--    <input type="url" id="shortenedUrl" placeholder="Shortened URL will appear here" readonly>-->
 </div>
 </body>
 </html>

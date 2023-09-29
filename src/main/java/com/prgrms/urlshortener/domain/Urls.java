@@ -29,7 +29,12 @@ public class Urls {
         return count.get();
     }
 
-    public void addCount() {
+    private void addCount() {
         this.count.incrementAndGet();
+    }
+
+    public String getOriginUrl() {
+        addCount();
+        return originUrl;
     }
 }

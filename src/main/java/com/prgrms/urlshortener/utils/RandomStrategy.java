@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
 
-@Component
+@Component("random")
 public class RandomStrategy implements URLShorteningStrategy {
 
     private final String BASE62;
