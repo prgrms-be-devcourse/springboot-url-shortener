@@ -1,10 +1,9 @@
 package com.prgrms.urlshortener.service;
 
-import com.prgrms.urlshortener.dao.UrlRepository;
 import com.prgrms.urlshortener.domain.Urls;
-import com.prgrms.urlshortener.utils.HashStrategy;
 import com.prgrms.urlshortener.utils.URLShorteningStrategy;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.*;
 class UrlServiceImplTest {
 
     @Mock
-    private UrlRepository urlRepository;
+    private UrlServiceHelper urlServiceHelper;
 
     @Mock
     private Map<String, URLShorteningStrategy> strategies;
@@ -28,20 +27,34 @@ class UrlServiceImplTest {
     @InjectMocks
     private UrlServiceImpl urlService;
 
-    private final String BASE62 = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
+    @DisplayName("단축 url을 생성할 수 있다.")
     @Test
     void createShortenUrl_ShouldReturnValidShortenUrl() {
-        //given
-        HashStrategy strategy = new HashStrategy(BASE62);
-        when(urlRepository.findByShortenUrl(anyString())).thenReturn(Optional.empty());
-        when(strategies.get(any(String.class))).thenReturn(strategy);
+        // Given
+        URLShorteningStrategy mockStrategy = mock(URLShorteningStrategy.class);
+        when(strategies.get(anyString())).thenReturn(mockStrategy);
+        when(urlServiceHelper.generateUniqueShortenUrl(any(), anyString(), anyInt())).thenReturn("shortenUrl");
 
-        //when
+        // When
         String result = urlService.createShortenUrl("https://www.example.com", "mockStrategy");
 
-        //then
-        Assertions.assertThat(result.length()).isEqualTo(7);
-        verify(urlRepository, times(1)).save(any(Urls.class));
+        // Then
+        Assertions.assertThat(result).isEqualTo("shortenUrl");
+        verify(urlServiceHelper, times(1)).saveShortenedUrl("https://www.example.com", "shortenUrl");
+    }
+
+    @DisplayName("단축 url을 originUrl을 입력받아 반환할 수 있다.")
+    @Test
+    void getOriginalUrl_ShouldReturnOriginalUrl() {
+        // Given
+        Urls mockUrls = new Urls("https://www.example.com", "shortenUrl");
+        when(urlServiceHelper.findUrlByShortenUrl("shortenUrl")).thenReturn(mockUrls);
+        when(urlServiceHelper.ensureUrlHasProtocol("https://www.example.com")).thenReturn("https://www.example.com");
+
+        // When
+        String result = urlService.getOriginalUrl("shortenUrl");
+
+        // Then
+        Assertions.assertThat(result).isEqualTo("https://www.example.com");
     }
 }

@@ -1,23 +1,20 @@
 package com.prgrms.urlshortener.service;
 
-import com.prgrms.urlshortener.dao.UrlRepository;
 import com.prgrms.urlshortener.domain.Urls;
 import com.prgrms.urlshortener.utils.URLShorteningStrategy;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 public class UrlServiceImpl implements UrlService {
 
-    private final UrlRepository urlRepository;
+    private final UrlServiceHelper urlServiceHelper;
     private final Map<String, URLShorteningStrategy> strategies;
 
-    public UrlServiceImpl(UrlRepository urlRepository, Map<String, URLShorteningStrategy> strategies) {
-        this.urlRepository = urlRepository;
+    public UrlServiceImpl(UrlServiceHelper urlServiceHelper, Map<String, URLShorteningStrategy> strategies) {
+        this.urlServiceHelper = urlServiceHelper;
         this.strategies = strategies;
 
     }
@@ -28,31 +25,14 @@ public class UrlServiceImpl implements UrlService {
                 .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 단축 전략"));
 
         final int MAX_RETRIES = 5;
-
-        return Stream.generate(() -> strategy.shortenURL(originUrl))
-                .limit(MAX_RETRIES)
-                .filter(shortenUrl -> urlRepository.findByShortenUrl(shortenUrl).isEmpty())
-                .findFirst()
-                .map(shortenUrl -> {
-                    urlRepository.save(new Urls(originUrl, shortenUrl));
-                    return shortenUrl;
-                })
-                .orElseThrow(() -> new RuntimeException("최대 시도 횟수 초과:" + MAX_RETRIES));
+        String shortenUrl = urlServiceHelper.generateUniqueShortenUrl(strategy, originUrl, MAX_RETRIES);
+        urlServiceHelper.saveShortenedUrl(originUrl, shortenUrl);
+        return shortenUrl;
     }
 
     @Override
     public String getOriginalUrl(String shortenUrl) {
-        return urlRepository.findByShortenUrl(shortenUrl)
-                .map(Urls::getOriginUrl)
-                .map(this::ensureUrlHasProtocol)
-                .orElseThrow(() -> new NoSuchElementException("URL not found for: " + shortenUrl));
+         Urls url = urlServiceHelper.findUrlByShortenUrl(shortenUrl);
+         return urlServiceHelper.ensureUrlHasProtocol(url.getOriginUrl());
     }
-
-    private String ensureUrlHasProtocol(String originalUrl) {
-        if (!originalUrl.startsWith("http://") && !originalUrl.startsWith("https://")) {
-            return "https://" + originalUrl;
-        }
-        return originalUrl;
-    }
-
 }
