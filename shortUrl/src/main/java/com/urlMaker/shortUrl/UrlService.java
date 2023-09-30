@@ -1,5 +1,8 @@
 package com.urlMaker.shortUrl;
 
+import com.urlMaker.dto.UrlCreateRequestDTO;
+import com.urlMaker.dto.UrlCreateResponseDTO;
+import com.urlMaker.dto.UrlResponseDTO;
 import com.urlMaker.shortUrl.algorithm.Algorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +25,7 @@ public class UrlService {
 
         Optional<Url> retrievedURL = urlRepository.findByOriginUrl(url.getOriginUrl());
 
-        if(retrievedURL.isPresent()){
+        if (retrievedURL.isPresent()) {
             Url savedUrl = retrievedURL.get();
             savedUrl.increaseRequestCount();
 
@@ -42,12 +45,14 @@ public class UrlService {
     }
 
     @Transactional(readOnly = true)
-    public UrlResponseDTO getOriginUrl(String shortenUrl){
+    public UrlResponseDTO getOriginUrl(String shortenUrl) {
 
         Long urlId = algorithm.decode(shortenUrl);
 
         Url originUrl = urlRepository.findById(urlId)
                 .orElseThrow(() -> {
+                    log.warn("no url");
+
                     throw new IllegalArgumentException("no url");
                 });
 
