@@ -1,9 +1,9 @@
-package com.urlMaker.shortUrl;
+package com.urlmaker.url;
 
-import com.urlMaker.dto.UrlCreateRequestDTO;
-import com.urlMaker.dto.UrlCreateResponseDTO;
-import com.urlMaker.dto.UrlResponseDTO;
-import com.urlMaker.shortUrl.algorithm.Algorithm;
+import com.urlmaker.dto.UrlCreateRequestDTO;
+import com.urlmaker.dto.UrlCreateResponseDTO;
+import com.urlmaker.dto.UrlGetResponseDTO;
+import com.urlmaker.algorithm.Algorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -45,7 +45,7 @@ public class UrlService {
     }
 
     @Transactional(readOnly = true)
-    public UrlResponseDTO getOriginUrl(String shortenUrl) {
+    public UrlGetResponseDTO getOriginUrl(String shortenUrl) {
 
         Long urlId = algorithm.decode(shortenUrl);
 
@@ -56,7 +56,7 @@ public class UrlService {
                     throw new IllegalArgumentException("no url");
                 });
 
-        return UrlResponseDTO.builder()
+        return UrlGetResponseDTO.builder()
                 .originUrl(originUrl.getOriginUrl())
                 .requestCount(originUrl.getRequestCount())
                 .build();

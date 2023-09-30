@@ -1,4 +1,4 @@
-package com.urlMaker.shortUrl;
+package com.urlmaker.url;
 
 import jakarta.persistence.*;
 import lombok.*;

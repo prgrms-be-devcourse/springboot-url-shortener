@@ -1,9 +1,9 @@
-package com.urlMaker.dto;
+package com.urlmaker.dto;
 
 import lombok.Builder;
 
 @Builder
-public record UrlResponseDTO(
+public record UrlGetResponseDTO(
         String originUrl,
         Integer requestCount
 ) {

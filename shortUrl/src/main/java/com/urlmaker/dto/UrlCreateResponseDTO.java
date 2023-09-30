@@ -1,4 +1,4 @@
-package com.urlMaker.dto;
+package com.urlmaker.dto;
 
 import lombok.Builder;
 

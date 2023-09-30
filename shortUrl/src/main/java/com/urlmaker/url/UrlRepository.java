@@ -1,4 +1,4 @@
-package com.urlMaker.shortUrl;
+package com.urlmaker.url;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

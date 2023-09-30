@@ -1,4 +1,4 @@
-package com.urlMaker.shortUrl.algorithm;
+package com.urlmaker.algorithm;
 
 public interface Algorithm {
 

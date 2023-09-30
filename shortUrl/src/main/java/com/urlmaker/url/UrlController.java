@@ -1,7 +1,8 @@
-package com.urlMaker.shortUrl;
+package com.urlmaker.url;
 
-import com.urlMaker.dto.UrlCreateRequestDTO;
-import com.urlMaker.dto.UrlCreateResponseDTO;
+import com.urlmaker.url.UrlService;
+import com.urlmaker.dto.UrlCreateRequestDTO;
+import com.urlmaker.dto.UrlCreateResponseDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,7 @@ public class UrlController {
     @GetMapping("/")
     public String mainPage(@ModelAttribute @Valid UrlCreateRequestDTO urlCreateRequestDTO) {
 
-        return "index";
+        return "url/index";
     }
 
     @PostMapping("/shortenUrl")
@@ -32,7 +33,7 @@ public class UrlController {
         if (bindingResult.hasErrors()) {
             log.error("error");
 
-            return "index";
+            return "url/index";
         }
 
         UrlCreateResponseDTO urlCreateResponseDTO = urlService.createShortenUrl(urlCreateRequestDTO);
@@ -46,7 +47,7 @@ public class UrlController {
             @ModelAttribute("url") UrlCreateResponseDTO urlCreateResponseDTO
     ) {
 
-        return "result";
+        return "url/result";
     }
 
     @GetMapping("/{shortenUrl}")
