@@ -1,4 +1,4 @@
-package com.urlMaker.shortUrl;
+package com.urlMaker.dto;
 
 import lombok.Builder;
 
