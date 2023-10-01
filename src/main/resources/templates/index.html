@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+</head>
+<body>
+<div class="container">
+    <form class="container" method="post" th:action="@{/shorten-url}" th:object="${urlCreateRequestDTO}">
+        <div class="home">
+            <div class="input-group text-center py-5">
+                <div class="input-button">
+                    <label for="originUrl">원본 URL을 입력하세요.</label>
+                    <input type="text" class="form-control" placeholder="Write url" id="originUrl" name="originUrl">
+                    <div class="col-md-4">
+                        <label class="col-form-label">알고리즘 타입을 선택하세요.</label>
+                        <select class="form-control" th:name="algorithmType">
+                            <option
+                                    th:each="algorithmType : ${T(com.prgrms.shorturl.algorithm.AlgorithmType).values()}"
+                                    th:value="${algorithmType}"
+                                    th:text="${algorithmType}">
+                            </option>
+                        </select>
+                    </div>
+                    <button class="btn btn-outline-secondary" type="submit">Make Short URL</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
