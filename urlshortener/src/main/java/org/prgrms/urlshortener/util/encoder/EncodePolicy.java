@@ -6,4 +6,5 @@ import org.springframework.stereotype.Component;
 public interface EncodePolicy {
 
 	String encode(String originUrl);
+
 }

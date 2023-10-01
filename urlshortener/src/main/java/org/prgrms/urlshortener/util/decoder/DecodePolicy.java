@@ -5,5 +5,6 @@ import org.springframework.stereotype.Component;
 @Component
 public interface DecodePolicy {
 
-	String decode(String toDecodeUrl);
+	String decode(String encodedurl);
+
 }

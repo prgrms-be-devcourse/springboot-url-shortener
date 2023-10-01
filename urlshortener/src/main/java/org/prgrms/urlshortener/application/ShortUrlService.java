@@ -1,10 +1,11 @@
 package org.prgrms.urlshortener.application;
 
+import org.prgrms.urlshortener.domain.Algorithm;
 import org.prgrms.urlshortener.domain.Url;
 import org.prgrms.urlshortener.dto.request.OriginUrlRequest;
 import org.prgrms.urlshortener.dto.request.ShortUrlCreateRequest;
 import org.prgrms.urlshortener.dto.response.OriginUrlResponse;
-import org.prgrms.urlshortener.dto.response.UrlResponse;
+import org.prgrms.urlshortener.dto.response.ShortUrlCreateResponse;
 import org.prgrms.urlshortener.respository.UrlRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,11 +20,13 @@ public class ShortUrlService {
 
 	private final Encoder encoder;
 
+	private final Decoder decoder;
+
 	private final UrlRepository urlRepository;
 
 	@Transactional
-	public UrlResponse encodeUrl(ShortUrlCreateRequest request) {
-		checkDuplicate(request);
+	public ShortUrlCreateResponse encodeUrl(ShortUrlCreateRequest request) {
+		checkDuplicateUrl(request);
 
 		Url url = request.toEntity();
 		Url savedUrl = urlRepository.save(url);
@@ -33,15 +36,16 @@ public class ShortUrlService {
 
 		savedUrl.enrollEncodedUrl(shortUrl);
 
-		UrlResponse response = UrlResponse.from(savedUrl);
+		ShortUrlCreateResponse response = ShortUrlCreateResponse.from(savedUrl);
 
 		return response;
 	}
 
 	@Transactional(readOnly = true)
 	public OriginUrlResponse getOriginUrl(OriginUrlRequest request) {
-		Url url = urlRepository.findByEncodedUrl(request.shortUrl())
-			.orElseThrow(() -> new RuntimeException("존재하지 않는 shortUrl입니다."));
+		String originUrl = decoder.decode(request.shortUrl(), request.algorithm());
+		Url url = urlRepository.findByOriginUrl(originUrl)
+			.orElseThrow(() -> new RuntimeException("존재하지 않는 originUrl입니다."));
 
 		OriginUrlResponse response = OriginUrlResponse.from(url);
 
@@ -49,11 +53,14 @@ public class ShortUrlService {
 	}
 
 	@Transactional
-	public OriginUrlResponse getOriginUrl(String baseUrl, String encodedUrl) {
+	public OriginUrlResponse getOriginUrl(String baseUrl, String encodedUrl, Algorithm algorithm) {
 		checkBaseUrl(baseUrl);
 		String shortUrl = makeShortUrl(encodedUrl);
-		Url url = urlRepository.findByEncodedUrl(shortUrl)
-			.orElseThrow(() -> new RuntimeException("존재하지 않는 shortUrl입니다."));
+		String originUrl = decoder.decode(shortUrl, algorithm);
+
+		Url url = urlRepository.findByOriginUrl(originUrl)
+			.orElseThrow(() -> new RuntimeException("존재하지 않는 originUrl입니다."));
+
 		url.plusHitCount();
 
 		OriginUrlResponse response = OriginUrlResponse.from(url);
@@ -61,7 +68,7 @@ public class ShortUrlService {
 		return response;
 	}
 
-	private void checkDuplicate(ShortUrlCreateRequest request) {
+	private void checkDuplicateUrl(ShortUrlCreateRequest request) {
 		if(urlRepository.existsByAlgorithmAndOriginUrl(request.algorithm(), request.originUrl())) {
 			throw new RuntimeException("이미 존재하는 url과 알고리즘의 조합입니다.");
 		}
