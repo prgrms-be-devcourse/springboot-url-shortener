@@ -6,15 +6,15 @@ import org.prgrms.urlshortener.domain.Url;
 import lombok.Builder;
 
 @Builder
-public record ShortUrlCreateResponse(
+public record EncodedUrlCreateResponse(
 	String originUrl,
 	String encodedUrl,
 	Algorithm algorithm,
 	int hitCount
 ) {
 
-	public static ShortUrlCreateResponse from(Url url) {
-		return ShortUrlCreateResponse.builder()
+	public static EncodedUrlCreateResponse from(Url url) {
+		return EncodedUrlCreateResponse.builder()
 			.originUrl(url.getOriginUrl())
 			.encodedUrl(url.getEncodedUrl())
 			.algorithm(url.getAlgorithm())

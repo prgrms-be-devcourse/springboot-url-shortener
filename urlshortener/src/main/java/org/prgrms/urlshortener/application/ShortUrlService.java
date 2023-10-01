@@ -3,9 +3,9 @@ package org.prgrms.urlshortener.application;
 import org.prgrms.urlshortener.domain.Algorithm;
 import org.prgrms.urlshortener.domain.Url;
 import org.prgrms.urlshortener.dto.request.OriginUrlRequest;
-import org.prgrms.urlshortener.dto.request.ShortUrlCreateRequest;
+import org.prgrms.urlshortener.dto.request.EncodedUrlCreateRequest;
 import org.prgrms.urlshortener.dto.response.OriginUrlResponse;
-import org.prgrms.urlshortener.dto.response.ShortUrlCreateResponse;
+import org.prgrms.urlshortener.dto.response.EncodedUrlCreateResponse;
 import org.prgrms.urlshortener.respository.UrlRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,7 @@ public class ShortUrlService {
 	private final UrlRepository urlRepository;
 
 	@Transactional
-	public ShortUrlCreateResponse encodeUrl(ShortUrlCreateRequest request) {
+	public EncodedUrlCreateResponse encodeUrl(EncodedUrlCreateRequest request) {
 		checkDuplicateUrl(request);
 
 		Url url = request.toEntity();
@@ -36,7 +36,7 @@ public class ShortUrlService {
 
 		savedUrl.enrollEncodedUrl(shortUrl);
 
-		ShortUrlCreateResponse response = ShortUrlCreateResponse.from(savedUrl);
+		EncodedUrlCreateResponse response = EncodedUrlCreateResponse.from(savedUrl);
 
 		return response;
 	}
@@ -68,7 +68,7 @@ public class ShortUrlService {
 		return response;
 	}
 
-	private void checkDuplicateUrl(ShortUrlCreateRequest request) {
+	private void checkDuplicateUrl(EncodedUrlCreateRequest request) {
 		if(urlRepository.existsByAlgorithmAndOriginUrl(request.algorithm(), request.originUrl())) {
 			throw new RuntimeException("이미 존재하는 url과 알고리즘의 조합입니다.");
 		}

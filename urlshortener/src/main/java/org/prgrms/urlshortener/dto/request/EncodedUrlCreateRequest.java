@@ -6,7 +6,7 @@ import org.prgrms.urlshortener.domain.Url;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record ShortUrlCreateRequest(
+public record EncodedUrlCreateRequest(
 	@NotBlank(message = "인코딩할 url은 비어있으면 안됩니다.")
 	String originUrl,
 
