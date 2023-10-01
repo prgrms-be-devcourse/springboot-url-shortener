@@ -14,9 +14,9 @@ public class ShortUrlViewController {
 
 	private final ShortUrlService shortUrlService;
 
-	@GetMapping("/{shortUrl}")
-	public String redirectToOriginUrl(@PathVariable String shortUrl) {
-		OriginUrlResponse response = shortUrlService.getOriginUrl(shortUrl);
+	@GetMapping("/{baseUrl}/{encodedUrl}")
+	public String redirectToOriginUrl(@PathVariable String baseUrl, @PathVariable String encodedUrl) {
+		OriginUrlResponse response = shortUrlService.getOriginUrl(baseUrl, encodedUrl);
 		String originUrl = response.originUrl();
 
 		return "redirect:https://" + originUrl;

@@ -43,4 +43,8 @@ public class Url {
 	public void enrollEncodedUrl(String encodedUrl) {
 		this.encodedUrl = encodedUrl;
 	}
+
+	public void plusHitCount() {
+		this.hitCount++;
+	}
 }
