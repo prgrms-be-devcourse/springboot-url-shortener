@@ -34,9 +34,6 @@ class UrlServiceTest {
     @Mock
     UrlRepository urlRepository;
 
-    @Mock
-    Base62 base62Algorithm;
-
     private Url url;
 
     private final Long savedUrlId = 1L;
