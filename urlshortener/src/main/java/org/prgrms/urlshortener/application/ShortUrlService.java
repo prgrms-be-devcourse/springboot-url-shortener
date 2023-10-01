@@ -15,9 +15,9 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class ShortUrlService {
 
-	private static final String BASE_URL = "/bent.ly/";
+	private static final String BASE_URL = "bent.ly/";
 
-	private final AlgorithmInjector injector;
+	private final Encoder encoder;
 
 	private final UrlRepository urlRepository;
 
@@ -26,18 +26,29 @@ public class ShortUrlService {
 		Url url = request.toEntity();
 		Url savedUrl = urlRepository.save(url);
 
-		String shortUrl = injector.encode(savedUrl.getOriginUrl(), savedUrl.getId(), request.algorithm());
-		shortUrl = BASE_URL + shortUrl;
-		savedUrl.enrollShortUrl(shortUrl);
+		String encodedUrl = encoder.encode(request);
+		String shortUrl = BASE_URL + encodedUrl;
+
+		savedUrl.enrollEncodedUrl(shortUrl);
 
 		UrlResponse response = UrlResponse.from(savedUrl);
 
-		return UrlResponse.from(savedUrl);
+		return response;
 	}
 
 	@Transactional(readOnly = true)
 	public OriginUrlResponse getOriginUrl(OriginUrlRequest request) {
-		Url url = urlRepository.findByShortUrl(request.shortUrl())
+		Url url = urlRepository.findByEncodedUrl(request.shortUrl())
+			.orElseThrow(() -> new RuntimeException("존재하지 않는 shortUrl입니다."));
+
+		OriginUrlResponse response = OriginUrlResponse.from(url);
+
+		return response;
+	}
+
+	@Transactional(readOnly = true)
+	public OriginUrlResponse getOriginUrl(String shortUrl) {
+		Url url = urlRepository.findByEncodedUrl(shortUrl)
 			.orElseThrow(() -> new RuntimeException("존재하지 않는 shortUrl입니다."));
 
 		OriginUrlResponse response = OriginUrlResponse.from(url);

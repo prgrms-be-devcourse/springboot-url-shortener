@@ -25,8 +25,8 @@ public class Url {
 	@Column(name = "origin_url", updatable = false, nullable = false)
 	private String originUrl;
 
-	@Column(name = "short_url")
-	private String shortUrl;
+	@Column(name = "encoded_url")
+	private String encodedUrl;
 
 	@Column(name = "hit_count")
 	private int hitCount;
@@ -40,7 +40,7 @@ public class Url {
 		this.algorithm = algorithm;
 	}
 
-	public void enrollShortUrl(String shortUrl) {
-		this.shortUrl = shortUrl;
+	public void enrollEncodedUrl(String encodedUrl) {
+		this.encodedUrl = encodedUrl;
 	}
 }

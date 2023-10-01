@@ -8,7 +8,7 @@ import lombok.Builder;
 @Builder
 public record UrlResponse(
 	String originUrl,
-	String shortUrl,
+	String encodedUrl,
 	Algorithm algorithm,
 	int hitCount
 ) {
@@ -16,7 +16,7 @@ public record UrlResponse(
 	public static UrlResponse from(Url url) {
 		return UrlResponse.builder()
 			.originUrl(url.getOriginUrl())
-			.shortUrl(url.getShortUrl())
+			.encodedUrl(url.getEncodedUrl())
 			.algorithm(url.getAlgorithm())
 			.hitCount(url.getHitCount())
 			.build();
