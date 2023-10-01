@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>URLshortener</title>
+    <link href="/templates/css/common.css" rel="stylesheet" type="text/css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+<div class="body-container">
+    <header>
+        <div>URLshortener</div>
+    </header>
+    <section>
+        <form id="form" action="/" method="post">
+            <div class="input-header">단축 할 URL</div>
+            <label for="url">
+                <input type="text" name="url" id="url" placeholder="http(s)://www.example.com"/>
+            </label>
+            <div class="input-header">알고리즘</div>
+            <label for="algorithm">
+                <select name="algorithm" id="algorithm">
+                    <option value="base62">base62</option>
+                </select>
+            </label>
+            <input type="button" value="입력" onclick="clickSubmit()"/>
+        </form>
+    </section>
+</div>
+<script>
+    // 입력 폼 제출
+    const clickSubmit = () => {
+        const form = document.getElementById("form");
+        const inputUrl = document.getElementById("url").value;
+
+        if (!validateInputUrl(inputUrl)) {
+            alert("입력하신 url은 20글자를 초과해야만 합니다.");
+            return;
+        }
+
+        if (!confirm("URL 단축시 사용자의 IP가 수집됩니다. 동의하시면 확인 동의하지 않으시면 취소를 눌러주세요.")) {
+            alert("취소 되었습니다.");
+        }
+
+        form.submit();
+    }
+
+    // 입력 URL 길이 검증
+    const validateInputUrl = (url) => {
+        return url.length >= 20;
+    }
+</script>
+</body>
+</html>
