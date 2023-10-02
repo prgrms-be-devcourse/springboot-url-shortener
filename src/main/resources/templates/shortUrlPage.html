@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Short-url</title>
+</head>
+<body>
+<div class="container">
+  <div class="py-5 text-center">
+    <h2></h2>
+  </div>
+
+  <div>
+    <label>Origin URL : </label>
+    <input type="text" class="form-control" th:value="${url?.originUrl}" readonly>
+  </div>
+  <br>
+  <div>
+    <label>Short URL : </label>
+    <input type="text" class="form-control url-pointer" th:value="|localhost:8080/${url.shortUrl}|" readonly
+           th:onclick="|location.href='@{http://localhost:8080/{shortUrl}(shortUrl=${url.shortUrl})}'|">
+  </div>
+  <br>
+  <div>
+    <label>Request Count : </label>
+    <input type="text" class="form-control" th:value="${url.requestCount}" readonly>
+  </div>
+
+  <hr class="my-4">
+
+  <div class="col my-5">
+    <button class="w-100 btn btn-secondary btn-lg"
+            onclick="location.href='index.html'"
+            th:onclick="|location.href='@{/}'|"
+            type="button">Home
+    </button>
+  </div>
+</div>
+</body>
+</html>
