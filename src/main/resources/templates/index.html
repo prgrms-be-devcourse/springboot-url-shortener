@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <style>
+        .center-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* vh = viewport height */
+        }
+
+        .form-container {
+            width: 50%; /* adjust as needed */
+        }
+
+        .form-container h1 {
+            margin-bottom: 20px; /* adjust as needed */
+        }
+    </style>
+
+    <title>URL-SHORTENER</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class='center-screen'>
+    <div class='form-container'>
+        <h1>Shortener URL</h1>
+        <form id="url-form">
+            <div>
+                <select class="form-select" name="encodingType" aria-label="Default select example" >
+                    <option value="BASE_62">Base62 Encoding</option>
+                </select>
+            </div>
+            <div>
+                <label for="originUrl">Original URL:</label>
+                <input type="text" id="originUrl" name="originUrl">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </form>
+        <div id='result'></div>
+    </div>
+</div>
+<!--<form id="url-form">-->
+<!--    <label for="originUrl">Original URL:</label><br>-->
+<!--    <input type="text" id="originUrl" name="originUrl"><br>-->
+
+<!--    &lt;!&ndash; Assuming EncodingType is a string &ndash;&gt;-->
+<!--    <label for="encodingType">Encoding Type:</label><br>-->
+<!--    <input type="text" id="encodingType" name="encodingType"><br>-->
+
+<!--    <input type='submit' value='Shorten URL'>-->
+<!--</form>-->
+
+<script>
+    $(document).ready(function() {
+        $("#url-form").on('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting via the browser
+
+            var originUrl = $('#originUrl').val();
+            var encodingType = $('select[name="encodingType"]').val();
+
+            $.ajax({
+                url: '/api/urls',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ "originUrl": originUrl, "encodingType": encodingType }),
+                success: function(data) {
+                    // On successful post, reload data to get the added one as well
+                    console.log(data);
+                    $('#result').html('<p>Shortened URL is : ' + data.encodedUrl + '</p>');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
