@@ -3,6 +3,7 @@ package com.youngurl.shortenerurl.application;
 import com.youngurl.shortenerurl.application.dto.UrlCreateRequest;
 import com.youngurl.shortenerurl.infrastructures.UrlRepository;
 import com.youngurl.shortenerurl.model.Url;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,9 @@ public class UrlService {
     }
 
     public String findOriginUrl(String encodedUrl) {
+        Url url = urlRepository.findByEncodedUrl(encodedUrl)
+                .orElseThrow(() -> new EntityNotFoundException("해당 encodedUrl를 가진 url을 찾을 수 없습니다."));
 
-
+        return url.getOriginUrl();
     }
 }

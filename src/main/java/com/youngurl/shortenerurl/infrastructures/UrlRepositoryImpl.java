@@ -3,6 +3,8 @@ package com.youngurl.shortenerurl.infrastructures;
 import com.youngurl.shortenerurl.model.Url;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class UrlRepositoryImpl implements UrlRepository{
 
@@ -15,6 +17,11 @@ public class UrlRepositoryImpl implements UrlRepository{
     @Override
     public Url save(Url url) {
         return urlJpaRepository.save(url);
+    }
+
+    @Override
+    public Optional<Url> findByEncodedUrl(String encodedUrl) {
+        return urlJpaRepository.findByEncodedUrl(encodedUrl);
     }
 
 }

@@ -4,6 +4,7 @@ import com.youngurl.shortenerurl.application.UrlService;
 import com.youngurl.shortenerurl.presentation.dto.UrlCreateApiRequest;
 import com.youngurl.shortenerurl.presentation.dto.UrlCreateApiResponse;
 import com.youngurl.shortenerurl.presentation.mapper.UrlApiMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +42,10 @@ public class UrlRestController {
     @GetMapping("/{encodedUrl}")
     public ResponseEntity<Void> redirectUrl(@PathVariable String encodedUrl){
         String originUrl = urlService.findOriginUrl(encodedUrl);
+
+        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
+                .location(URI.create(originUrl))
+                .build();
     }
 
     private URI createURI(String url) {
