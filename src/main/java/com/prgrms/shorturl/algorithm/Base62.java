@@ -40,7 +40,7 @@ public class Base62 implements Algorithm {
     }
 
     /**
-     * 인코딩 된 url 길이가 7 미만일 경우 -> 길이 통일화
+     * 인코딩 된 url 길이가 8 미만일 경우 -> 길이 통일화
      */
     public String padding(String shortUrl) {
         StringBuilder unificateTokenBuilder = new StringBuilder();
