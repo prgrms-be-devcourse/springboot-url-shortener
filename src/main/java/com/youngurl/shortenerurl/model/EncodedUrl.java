@@ -23,4 +23,5 @@ public class EncodedUrl {
 
         this.encodedUrl = encodedUrl;
     }
+
 }

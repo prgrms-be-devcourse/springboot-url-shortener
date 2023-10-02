@@ -5,6 +5,7 @@ import com.youngurl.shortenerurl.infrastructures.UrlJpaRepository;
 import com.youngurl.shortenerurl.model.EncodingType;
 import com.youngurl.shortenerurl.model.Url;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,15 @@ class UrlServiceTest {
     @Autowired
     private UrlJpaRepository urlJpaRepository;
 
+    private Url setupUrl;
+
+    @BeforeEach
+    void setup(){
+        Url url = new Url("setup-url1", EncodingType.BASE_62);
+        setupUrl = urlJpaRepository.save(url);
+        setupUrl.encode();
+    }
+
     @Test
     @DisplayName("originUrl과 EncodingType을 통해 인코딩된 url을 생성할 수 있다.")
     void createUrl() {
@@ -40,10 +50,17 @@ class UrlServiceTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("인코딩된 단축 URL을 통해 원본 URL을 조회할 수 있다.")
     void findOriginUrl() {
         //given
+        String savedEncodedUrl = setupUrl.getEncodedUrl();
+        String savedOriginUrl = setupUrl.getOriginUrl();
 
+        //when
+        String originUrl = urlService.findOriginUrl(savedEncodedUrl);
+
+        //then
+        assertThat(originUrl).isEqualTo(savedOriginUrl);
     }
 
 }
