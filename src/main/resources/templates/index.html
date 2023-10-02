@@ -76,7 +76,7 @@
                 success: function(data) {
                     // On successful post, reload data to get the added one as well
                     console.log(data);
-                    $('#result').html('<p>Shortened URL is : ' + data.encodedUrl + '</p>');
+                    $('#result').html('<p>Shortened URL is : <a href="' + data.encodedUrl + '" target="_blank">' + data.encodedUrl + '</a></p>');
                 }
             });
         });
