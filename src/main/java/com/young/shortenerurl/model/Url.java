@@ -50,7 +50,9 @@ public class Url {
     }
 
     public String encode(){
-        Assert.notNull(this.id, "인코딩은 id값이 null이 아니여야 가능합니다. save를 먼저 하여 id값을 생성해주세요.");
+        if (id == null){
+            throw new NoSuchElementException("인코딩할 id값이 초기화 되어있지 않습니다. save를 먼저 하여 id값을 생성해주세요.");
+        }
 
         String encoded = encoder.encode(this.id);
         this.encodedUrl = new EncodedUrl(encoded);
