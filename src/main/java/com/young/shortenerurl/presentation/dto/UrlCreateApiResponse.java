@@ -1,4 +1,4 @@
-package com.youngurl.shortenerurl.presentation.dto;
+package com.young.shortenerurl.presentation.dto;
 
 public record UrlCreateApiResponse(String encodedUrl) {
 

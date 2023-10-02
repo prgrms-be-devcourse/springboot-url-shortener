@@ -1,4 +1,4 @@
-package com.youngurl.shortenerurl.model;
+package com.young.shortenerurl.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

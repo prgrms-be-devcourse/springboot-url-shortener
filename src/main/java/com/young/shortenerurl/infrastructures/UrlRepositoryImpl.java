@@ -1,6 +1,6 @@
-package com.youngurl.shortenerurl.infrastructures;
+package com.young.shortenerurl.infrastructures;
 
-import com.youngurl.shortenerurl.model.Url;
+import com.young.shortenerurl.model.Url;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

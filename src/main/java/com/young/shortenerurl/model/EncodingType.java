@@ -1,4 +1,4 @@
-package com.youngurl.shortenerurl.model;
+package com.young.shortenerurl.model;
 
 import java.util.function.Supplier;
 

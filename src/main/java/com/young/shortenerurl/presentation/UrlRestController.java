@@ -1,9 +1,9 @@
-package com.youngurl.shortenerurl.presentation;
+package com.young.shortenerurl.presentation;
 
-import com.youngurl.shortenerurl.application.UrlService;
-import com.youngurl.shortenerurl.presentation.dto.UrlCreateApiRequest;
-import com.youngurl.shortenerurl.presentation.dto.UrlCreateApiResponse;
-import com.youngurl.shortenerurl.presentation.mapper.UrlApiMapper;
+import com.young.shortenerurl.application.UrlService;
+import com.young.shortenerurl.presentation.dto.UrlCreateApiRequest;
+import com.young.shortenerurl.presentation.dto.UrlCreateApiResponse;
+import com.young.shortenerurl.presentation.mapper.UrlApiMapper;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

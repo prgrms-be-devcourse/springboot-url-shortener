@@ -1,6 +1,6 @@
-package com.youngurl.shortenerurl.presentation.dto;
+package com.young.shortenerurl.presentation.dto;
 
-import com.youngurl.shortenerurl.model.EncodingType;
+import com.young.shortenerurl.model.EncodingType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

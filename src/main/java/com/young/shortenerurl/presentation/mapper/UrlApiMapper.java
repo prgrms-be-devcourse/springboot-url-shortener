@@ -1,7 +1,7 @@
-package com.youngurl.shortenerurl.presentation.mapper;
+package com.young.shortenerurl.presentation.mapper;
 
-import com.youngurl.shortenerurl.application.dto.UrlCreateRequest;
-import com.youngurl.shortenerurl.presentation.dto.UrlCreateApiRequest;
+import com.young.shortenerurl.application.dto.UrlCreateRequest;
+import com.young.shortenerurl.presentation.dto.UrlCreateApiRequest;
 import org.springframework.stereotype.Component;
 
 @Component

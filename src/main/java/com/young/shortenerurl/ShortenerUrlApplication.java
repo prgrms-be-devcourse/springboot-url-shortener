@@ -1,4 +1,4 @@
-package com.youngurl.shortenerurl;
+package com.young.shortenerurl;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

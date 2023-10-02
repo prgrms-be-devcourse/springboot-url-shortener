@@ -1,6 +1,5 @@
-package com.youngurl.shortenerurl.model;
+package com.young.shortenerurl.model;
 
-import com.youngurl.shortenerurl.model.Encoder;
 import org.springframework.stereotype.Component;
 
 @Component

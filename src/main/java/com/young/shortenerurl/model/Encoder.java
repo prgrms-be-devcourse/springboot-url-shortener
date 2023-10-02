@@ -1,4 +1,4 @@
-package com.youngurl.shortenerurl.model;
+package com.young.shortenerurl.model;
 
 public interface Encoder {
     String encode(long index);

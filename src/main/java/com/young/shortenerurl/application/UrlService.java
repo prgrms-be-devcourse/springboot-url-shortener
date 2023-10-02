@@ -1,8 +1,8 @@
-package com.youngurl.shortenerurl.application;
+package com.young.shortenerurl.application;
 
-import com.youngurl.shortenerurl.application.dto.UrlCreateRequest;
-import com.youngurl.shortenerurl.infrastructures.UrlRepository;
-import com.youngurl.shortenerurl.model.Url;
+import com.young.shortenerurl.application.dto.UrlCreateRequest;
+import com.young.shortenerurl.infrastructures.UrlRepository;
+import com.young.shortenerurl.model.Url;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

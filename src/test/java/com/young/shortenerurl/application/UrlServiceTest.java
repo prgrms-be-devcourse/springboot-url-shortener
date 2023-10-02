@@ -1,10 +1,9 @@
-package com.youngurl.shortenerurl.application;
+package com.young.shortenerurl.application;
 
-import com.youngurl.shortenerurl.application.dto.UrlCreateRequest;
-import com.youngurl.shortenerurl.infrastructures.UrlJpaRepository;
-import com.youngurl.shortenerurl.model.EncodingType;
-import com.youngurl.shortenerurl.model.Url;
-import org.assertj.core.api.Assertions;
+import com.young.shortenerurl.application.dto.UrlCreateRequest;
+import com.young.shortenerurl.infrastructures.UrlJpaRepository;
+import com.young.shortenerurl.model.EncodingType;
+import com.young.shortenerurl.model.Url;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

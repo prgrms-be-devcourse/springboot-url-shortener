@@ -1,6 +1,6 @@
-package com.youngurl.shortenerurl.infrastructures;
+package com.young.shortenerurl.infrastructures;
 
-import com.youngurl.shortenerurl.model.Url;
+import com.young.shortenerurl.model.Url;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,4 +1,4 @@
-package com.youngurl.shortenerurl.model;
+package com.young.shortenerurl.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -14,6 +14,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.Assert;
+
+import java.util.NoSuchElementException;
 
 @Entity
 @Table(name = "urls")
@@ -57,6 +59,10 @@ public class Url {
     }
 
     public String getEncodedUrl() {
+        if (encodedUrl == null){
+            throw new NoSuchElementException("encodedUrl이 초기화 되어있지 않습니다.");
+        }
+
         return encodedUrl.getEncodedUrl();
     }
 
