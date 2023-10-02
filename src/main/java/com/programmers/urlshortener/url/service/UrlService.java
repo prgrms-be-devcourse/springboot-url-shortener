@@ -2,13 +2,33 @@ package com.programmers.urlshortener.url.service;
 
 import org.springframework.stereotype.Service;
 
+import com.programmers.urlshortener.algorithm.Algorithm;
 import com.programmers.urlshortener.url.dto.UrlShortenRequest;
 import com.programmers.urlshortener.url.dto.UrlShortenResponse;
+import com.programmers.urlshortener.url.entity.Url;
+import com.programmers.urlshortener.url.repository.UrlRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class UrlService {
 
+	public static final String BASE_URL = "http://localhost:8080/";
+
+	private final UrlRepository urlRepository;
+
+	private final Algorithm<Long, String> algorithm;
+
 	public UrlShortenResponse shortenUrl(UrlShortenRequest request) {
-		return null;
+		Url url = new Url(request.originalUrl());
+		Url savedUrl = urlRepository.save(url);
+		String encodedKey = algorithm.encode(savedUrl.getId());
+		url.addShorteningKey(encodedKey);
+		return UrlShortenResponse.of(savedUrl.getOriginalUrl(), getShortenedUrl(encodedKey));
+	}
+
+	private String getShortenedUrl(String encodedKey) {
+		return BASE_URL + encodedKey;
 	}
 }
