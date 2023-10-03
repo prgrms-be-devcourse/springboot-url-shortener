@@ -27,11 +27,18 @@ public class Url {
 	@Column(name = "original_url", nullable = false)
 	private String originalUrl;
 
+	@Column(name = "total_clicks")
+	private int totalClicks;
+
 	public Url(String originalUrl) {
 		this.originalUrl = originalUrl;
 	}
 
 	public void addShorteningKey(String shorteningKey) {
 		this.shorteningKey = shorteningKey;
+	}
+
+	public void increaseTotalClicks() {
+		this.totalClicks += 1;
 	}
 }
