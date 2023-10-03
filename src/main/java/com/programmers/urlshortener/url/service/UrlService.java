@@ -25,10 +25,17 @@ public class UrlService {
 		Url savedUrl = urlRepository.save(url);
 		String encodedKey = algorithm.encode(savedUrl.getId());
 		url.addShorteningKey(encodedKey);
-		return UrlShortenResponse.of(savedUrl.getOriginalUrl(), getShortenedUrl(encodedKey));
+		return UrlShortenResponse.of(savedUrl.getOriginalUrl(), getShortenedUrl(encodedKey), encodedKey);
 	}
 
 	private String getShortenedUrl(String encodedKey) {
 		return BASE_URL + encodedKey;
+	}
+
+	public String getOriginalUrl(String shorteningKey) {
+		Long decodedId = algorithm.decode(shorteningKey);
+		Url url = urlRepository.findById(decodedId)
+			.orElseThrow(() -> new RuntimeException("잘못된 URL 요청입니다."));
+		return url.getOriginalUrl();
 	}
 }

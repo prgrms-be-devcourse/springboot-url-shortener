@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <button class="w-100 btn btn-primary btn-lg" onclick="copyUrl()">
+                    <button class="w-100 btn btn-primary btn-lg" type="button" th:onclick="|location.href='@{/{shorteningKey}(shorteningKey=${response.shorteningKey})}'|">
                         Go to shortened URL
                     </button>
                 </div>
