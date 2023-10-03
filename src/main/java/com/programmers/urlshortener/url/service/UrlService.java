@@ -1,6 +1,7 @@
 package com.programmers.urlshortener.url.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.urlshortener.algorithm.Algorithm;
 import com.programmers.urlshortener.url.dto.UrlShortenRequest;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UrlService {
 
 	public static final String BASE_URL = "http://localhost:8080/";
@@ -20,6 +22,7 @@ public class UrlService {
 
 	private final Algorithm<Long, String> algorithm;
 
+	@Transactional
 	public UrlShortenResponse shortenUrl(UrlShortenRequest request) {
 		Url url = new Url(request.originalUrl());
 		Url savedUrl = urlRepository.save(url);
@@ -32,6 +35,7 @@ public class UrlService {
 		return BASE_URL + encodedKey;
 	}
 
+	@Transactional
 	public String getOriginalUrl(String shorteningKey) {
 		Long decodedId = algorithm.decode(shorteningKey);
 		Url url = urlRepository.findById(decodedId)
