@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS url;
+
+CREATE TABLE url (
+    id BIGINT NOT NULL AUTO_INCREMENT(100000, 1) PRIMARY KEY,
+    algorithm VARCHAR(255) CHECK (algorithm IN ('BASE62')),
+    original_url VARCHAR(255) NOT NULL,
+    short_url VARCHAR(255) UNIQUE,
+    ip VARCHAR(255) NOT NULL,
+    count BIGINT DEFAULT 0,
+    created_at TIMESTAMP NOT NULL
+);
