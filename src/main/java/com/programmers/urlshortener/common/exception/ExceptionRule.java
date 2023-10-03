@@ -13,6 +13,7 @@ public enum ExceptionRule {
     NOT_FOUND(HttpStatus.NOT_FOUND, "요청하신 URL은 없는 URL입니다."),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다. 입력 값을 다시 확인해주세요."),
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버에서 알 수 없는 오류가 발생했습니다. 관리자에게 문의해주세요."),
+    URL_NOT_SAVED(HttpStatus.INTERNAL_SERVER_ERROR, "해당 URL은 데이터베이스에 저장된 URL이 아닙니다."),
     ;
 
     private final HttpStatus status;

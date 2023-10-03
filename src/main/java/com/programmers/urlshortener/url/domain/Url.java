@@ -1,5 +1,6 @@
 package com.programmers.urlshortener.url.domain;
 
+import static com.programmers.urlshortener.common.exception.ExceptionRule.*;
 import static com.programmers.urlshortener.common.validator.UrlValidator.*;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.programmers.urlshortener.common.converter.Base62Converter;
+import com.programmers.urlshortener.common.exception.UrlException;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,6 +61,10 @@ public class Url {
     }
 
     public void convertToShortUrl() {
+        if (id == null) {
+            throw new UrlException(URL_NOT_SAVED);
+        }
+
         this.shortUrl = switch (algorithm) {
             case BASE62 -> Base62Converter.encode(id.intValue());
         };
