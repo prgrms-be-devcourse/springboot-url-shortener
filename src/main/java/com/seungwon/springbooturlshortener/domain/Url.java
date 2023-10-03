@@ -20,11 +20,17 @@ public class Url {
 
 	private String shortUrlKey;
 
+	private static final int KEY_MAX_LENGTH = 7;
+
 	public Url(String originalUrl) {
 		this.originalUrl = originalUrl;
 	}
 
-	public void saveShortUrlKey(String shortUrlKey){
+	public void saveShortUrlKey(String shortUrlKey) {
+		if (shortUrlKey.length() > KEY_MAX_LENGTH) {
+			shortUrlKey = shortUrlKey.substring(0, KEY_MAX_LENGTH);
+		}
+
 		this.shortUrlKey = shortUrlKey;
 	}
 
