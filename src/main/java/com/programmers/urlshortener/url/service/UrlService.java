@@ -28,6 +28,7 @@ public class UrlService {
 		Url savedUrl = urlRepository.save(url);
 		String encodedKey = algorithm.encode(savedUrl.getId());
 		url.addShorteningKey(encodedKey);
+
 		return UrlShortenResponse.of(savedUrl.getOriginalUrl(), getShortenedUrl(encodedKey), encodedKey);
 	}
 
@@ -37,17 +38,22 @@ public class UrlService {
 
 	@Transactional
 	public String getOriginalUrl(String shorteningKey) {
-		Long decodedId = algorithm.decode(shorteningKey);
-		Url url = urlRepository.findById(decodedId)
-			.orElseThrow(() -> new RuntimeException("잘못된 URL 요청입니다."));
+		Url url = getUrl(shorteningKey);
 		url.increaseTotalClicks();
+
 		return url.getOriginalUrl();
 	}
 
 	public int countTotalClicks(String shorteningKey) {
-		Long decodedId = algorithm.decode(shorteningKey);
-		Url url = urlRepository.findById(decodedId)
-			.orElseThrow(() -> new RuntimeException("잘못된 URL 요청입니다."));
+		Url url = getUrl(shorteningKey);
+
 		return url.getTotalClicks();
+	}
+
+	private Url getUrl(String shorteningKey) {
+		Long decodedId = algorithm.decode(shorteningKey);
+
+		return urlRepository.findById(decodedId)
+			.orElseThrow(() -> new RuntimeException("잘못된 URL 요청입니다."));
 	}
 }
