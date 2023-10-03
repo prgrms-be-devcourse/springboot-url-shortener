@@ -23,11 +23,24 @@ public class ShortCut {
 	@Column(name = "original_url", nullable = false)
 	String originalURL;
 
-	@Column(name = "new_url", nullable = false)
-	String newURL;
+	@Column(name = "encoded_id")
+	String encodedId;
 
-	public ShortCut(String originalURL, String newURL) {
+	public ShortCut(String originalURL) {
+
+		if (originalURL == null) {
+			throw new RuntimeException("originalURL 값이 null 입니다.");
+		}
+
 		this.originalURL = originalURL;
-		this.newURL = newURL;
+	}
+
+	public void updateEncodedId(String encodedId) {
+
+		if (encodedId == null) {
+			throw new RuntimeException("encodedId 값이 null 입니다.");
+		}
+
+		this.encodedId = encodedId;
 	}
 }
