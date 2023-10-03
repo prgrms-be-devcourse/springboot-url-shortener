@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th>단축 url</th>
+                <th>원본 url</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${urlResponseDTO.url()}"></td>
+                <td th:text="${urlResponseDTO.orgUrl()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
+</body>
+</html>
