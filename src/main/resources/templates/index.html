@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>URLshortener</title>
+    <!-- semantic-ui 설정 -->
+    <link rel="stylesheet" type="text/css" href="/semantic/dist/semantic.min.css">
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="/semantic/dist/semantic.min.js"></script>
+
+    <!-- 기본 CSS 설정 -->
+    <link href="/css/index.css" rel="stylesheet" type="text/css"/>
+    <script src="/js/index.js"></script>
+</head>
+<body>
+<div class="body-container">
+    <div class="header">
+        <div>URL shortener</div>
+    </div>
+    <div class="header-sub">
+        <div>원하시는 URL을</div>
+        <div>단축시켜드립니다.</div>
+    </div>
+    <div class="section">
+        <div class="ui action input">
+            <input id="url-shortener" type="text" placeholder="http(s)://www.example.com">
+            <select id="url-algorithm" class="ui compact selection dropdown">
+                <option value="BASE62">BASE62</option>
+                <option value="MD5">MD5</option>
+            </select>
+            <button class="ui button" onclick="shortenUrl()">단축</button>
+        </div>
+        <div>
+            <div id="result-shortUrl" class="result-shortUrl">
+                <div class="result-shortUrl-header">단축된 URL</div>
+                <a id="result-shortUrl-a" href="#">
+                    <img src="/image/img.png"/>
+                    <div class="inputDataContainer"><span id="inputData"></span></div>
+                    <div class="detail"><span>바로가기</span></div>
+                </a>
+            </div>
+        </div>
+        <div class="url-info-header">단축된 URL 정보 보기</div>
+        <div class="url-info-content">
+            <div class="ui action input info">
+                <input id="shortener-url" type="text" placeholder="단축된 Key값만 입력해주세요.">
+                <button class="ui button" onclick="getShortenUrlInfo()">보기</button>
+            </div>
+            <div id="url-info-action" class="url-info-action">
+                <div class="url-info-action-header">기존 URL</div>
+                <div class="url-info-action-content" id="original-url"></div>
+                <hr>
+                <div class="url-info-action-header">조회수</div>
+                <div class="url-info-action-content" id="count"></div>
+                <hr>
+                <div class="url-info-action-header">알고리즘</div>
+                <div class="url-info-action-content" id="algorithm"></div>
+                <hr>
+                <div class="url-info-action-header">생성일자</div>
+                <div class="url-info-action-content" id="created-at"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

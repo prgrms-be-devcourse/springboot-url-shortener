@@ -1,0 +1,191 @@
+@font-face {
+    font-family: 'naver-font';
+    src: url("../font/naver-font.ttf");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "naver-font", serif;
+}
+
+
+.body-container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header {
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+}
+
+.header > div {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.header-sub {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-sub > div {
+    font-size: 35px;
+    margin: 10px 0px;
+    font-weight: bold;
+}
+
+.section {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.section > div {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui.action.input > .button, .ui.action.input > .buttons {
+    max-width: 70px;
+    height: 38px;
+    width: 100%;
+    background-color: #a95e13;
+    font-size: 16px;
+    color: white;
+    font-family: "naver-font", serif;
+    font-weight: bold;
+}
+
+.ui.action.input.info {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.ui.action.input.info > .button, .ui.action.input.info > .buttons {
+
+}
+
+.ui.input > input {
+    max-width: 400px;
+    width: 100%;
+}
+
+.ui.action.input.info > input {
+    max-width: 200px;
+}
+
+.url-info-header {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 10px 0px;
+    margin-top: 50px;
+}
+
+.url-info-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+
+.url-info-action {
+    display: none;
+    margin-top: 10px;
+    border-radius: 10px;
+    background-color: white;
+    color: black;
+    width: 270px;
+    padding: 10px;
+    font-size: 18px;
+    justify-content: center;
+    align-items: start;
+    flex-direction: column;
+}
+
+.url-info-action-content {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.url-info-action-header {
+    font-size: 23px;
+    font-weight: bold;
+    margin: 10px 0px;
+    color: #a95e13;
+}
+
+hr {
+    margin: 10px 0px;
+    width: 100%;
+}
+
+.result-shortUrl {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+.result-shortUrl-header {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#result-shortUrl-a {
+    border-radius: 10px;
+    height: 40px;
+    max-width: 400px;
+    width: 100%;
+    background-color: #a95e13;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 10px;
+}
+
+#result-shortUrl-a > img {
+    width: 40px;
+    height: 40px;
+}
+
+.inputDataContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#inputData {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.detail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
