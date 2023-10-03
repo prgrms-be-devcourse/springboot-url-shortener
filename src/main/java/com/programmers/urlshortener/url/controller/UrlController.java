@@ -12,6 +12,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.programmers.urlshortener.url.dto.UrlShortenRequest;
 import com.programmers.urlshortener.url.dto.UrlShortenResponse;
+import com.programmers.urlshortener.url.dto.UrlTotalClicksResponse;
 import com.programmers.urlshortener.url.service.UrlService;
 
 import lombok.RequiredArgsConstructor;
@@ -49,8 +50,8 @@ public class UrlController {
 	@GetMapping("/total-url-clicks/{shorteningKey}")
 	public String countTotalClicks(@PathVariable String shorteningKey, Model model) {
 		log.info("shorteningKey={}", shorteningKey);
-		int totalClicks = urlService.countTotalClicks(shorteningKey);
-		model.addAttribute("totalClicks", totalClicks);
+		UrlTotalClicksResponse response = urlService.countTotalClicks(shorteningKey);
+		model.addAttribute("response", response);
 
 		return "totalUrlClicks";
 	}

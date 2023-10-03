@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.programmers.urlshortener.algorithm.Algorithm;
 import com.programmers.urlshortener.url.dto.UrlShortenRequest;
 import com.programmers.urlshortener.url.dto.UrlShortenResponse;
+import com.programmers.urlshortener.url.dto.UrlTotalClicksResponse;
 import com.programmers.urlshortener.url.entity.Url;
 import com.programmers.urlshortener.url.repository.UrlRepository;
 
@@ -44,10 +45,12 @@ public class UrlService {
 		return url.getOriginalUrl();
 	}
 
-	public int countTotalClicks(String shorteningKey) {
+	public UrlTotalClicksResponse countTotalClicks(String shorteningKey) {
 		Url url = getUrl(shorteningKey);
+		int totalClicks = url.getTotalClicks();
+		String shortenedUrl = getShortenedUrl(url.getShorteningKey());
 
-		return url.getTotalClicks();
+		return new UrlTotalClicksResponse(shortenedUrl, totalClicks);
 	}
 
 	private Url getUrl(String shorteningKey) {

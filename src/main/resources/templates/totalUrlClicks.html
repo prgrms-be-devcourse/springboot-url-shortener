@@ -12,12 +12,19 @@
     <div class="py-5 text-center">
         <h2>URL Shortener</h2>
     </div>
+    <h4 class="mb-3">Shortened URL</h4>
+    <form>
+        <div class="mb-3">
+            <input type="url" id="shortenedUrl" name="shortenedUrl" class="form-control"
+                   th:value="${response.shortenedUrl}" readonly>
+        </div>
+    </form>
     <h4 class="mb-3">Total URL Clicks
     </h4>
     <form>
         <div class="mb-3">
             <input type="number" id="totalClicks" name="totalClicks" class="form-control"
-                   th:value="${totalClicks}" readonly>
+                   th:value="${response.totalClicks}" readonly>
         </div>
         <div class="row">
             <div class="col">
