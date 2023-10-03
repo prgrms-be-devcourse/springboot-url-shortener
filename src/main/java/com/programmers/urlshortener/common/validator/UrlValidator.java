@@ -1,8 +1,9 @@
 package com.programmers.urlshortener.common.validator;
 
+import static com.programmers.urlshortener.common.exception.ExceptionRule.*;
+
 import java.util.regex.Pattern;
 
-import com.programmers.urlshortener.common.exception.ExceptionRule;
 import com.programmers.urlshortener.common.exception.UrlException;
 
 import lombok.AccessLevel;
@@ -16,7 +17,7 @@ public class UrlValidator {
 
     public static void validateUrlPattern(String url) {
         if (!URL_PATTERN.matcher(url).matches()) {
-            throw new UrlException(ExceptionRule.BAD_REQUEST);
+            throw new UrlException(BAD_REQUEST);
         }
     }
 }
