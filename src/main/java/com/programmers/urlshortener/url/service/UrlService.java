@@ -1,7 +1,6 @@
 package com.programmers.urlshortener.url.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.urlshortener.algorithm.Algorithm;
 import com.programmers.urlshortener.url.dto.UrlShortenRequest;
@@ -39,5 +38,12 @@ public class UrlService {
 			.orElseThrow(() -> new RuntimeException("잘못된 URL 요청입니다."));
 		url.increaseTotalClicks();
 		return url.getOriginalUrl();
+	}
+
+	public int countTotalClicks(String shorteningKey) {
+		Long decodedId = algorithm.decode(shorteningKey);
+		Url url = urlRepository.findById(decodedId)
+			.orElseThrow(() -> new RuntimeException("잘못된 URL 요청입니다."));
+		return url.getTotalClicks();
 	}
 }

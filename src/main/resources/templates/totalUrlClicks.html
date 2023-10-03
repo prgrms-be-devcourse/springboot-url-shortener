@@ -12,31 +12,25 @@
     <div class="py-5 text-center">
         <h2>URL Shortener</h2>
     </div>
-    <h4 class="mb-3">Original URL
+    <h4 class="mb-3">Total URL Clicks
     </h4>
     <form>
         <div class="mb-3">
-            <input type="url" id="originalUrl" name="originalUrl" class="form-control"
-                   th:value="${response.originalUrl}" readonly>
-        </div>
-    </form>
-    <h4 class="mb-3">Your shortened URL</h4>
-    <form th:action method="post">
-        <div class="mb-3">
-            <input type="url" id="shortenedUrl" name="shortenedUrl" class="form-control" th:value="${response.shortenedUrl}">
+            <input type="number" id="totalClicks" name="totalClicks" class="form-control"
+                   th:value="${totalClicks}" readonly>
         </div>
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <button class="w-100 btn btn-primary btn-lg" type="button" th:onclick="|location.href='@{/{shorteningKey}(shorteningKey=${response.shorteningKey})}'|">
-                        Go to shortened URL
+                    <button class="w-100 btn btn-primary btn-lg" type="button" th:onclick="|location.href='@{/}'|">
+                        Track clicks from another shortened URL
                     </button>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
-                    <button class="w-100 btn btn-primary btn-lg" type="button" th:onclick="|location.href='@{/total-url-clicks/{shorteningKey}(shorteningKey=${response.shorteningKey})}'|">
-                        Total of clicks
+                    <button class="w-100 btn btn-primary btn-lg" type="button" th:onclick="|location.href='@{/}'|">
+                        Shorten another URL
                     </button>
                 </div>
             </div>

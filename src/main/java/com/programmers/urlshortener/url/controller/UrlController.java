@@ -43,4 +43,13 @@ public class UrlController {
 
 		return new RedirectView(originalUrl);
 	}
+
+	@GetMapping("/total-url-clicks/{shorteningKey}")
+	public String countTotalClicks(@PathVariable String shorteningKey, Model model) {
+		log.info("shorteningKey={}", shorteningKey);
+		int totalClicks = urlService.countTotalClicks(shorteningKey);
+		model.addAttribute("totalClicks", totalClicks);
+
+		return "totalUrlClicks";
+	}
 }
