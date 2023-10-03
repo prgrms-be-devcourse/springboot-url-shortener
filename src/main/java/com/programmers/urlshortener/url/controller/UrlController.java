@@ -39,5 +39,4 @@ public class UrlController {
 
         return ResponseEntity.ok(urlResponse);
     }
-
 }

@@ -23,7 +23,6 @@ public class ShortUrlCreateRequest {
 
     @NotNull(message = "알고리즘의 값은 빈 값일 수 없습니다.")
     private Algorithm algorithm;
-
     private String ip;
 
     @Builder

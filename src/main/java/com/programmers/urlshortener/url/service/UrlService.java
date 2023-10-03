@@ -32,7 +32,6 @@ public class UrlService {
     public String findOriginalUrlByShortUrl(String shortUrl) {
         Url url = urlRepository.findWithPessimisticLockByShortUrl(shortUrl)
             .orElseThrow(() -> new UrlException(SHORTENURL_NOT_EXIST));
-
         url.increaseCount();
 
         return url.getOriginalUrl();
