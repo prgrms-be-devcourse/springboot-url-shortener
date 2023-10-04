@@ -19,7 +19,7 @@ public class UrlService {
     @Transactional
     public String createUrl(UrlCreateRequest request) {
         Url url = urlRepository.save(
-                new Url(request.originUrl(), request.encodingType())
+                new Url(request.originUrl(), request.encodingType(), 0L)
         );
 
         url.encode();

@@ -33,6 +33,9 @@ public class Url {
     @Embedded
     private EncodedUrl encodedUrl;
 
+    @Column(nullable = false)
+    private Long visitCount;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EncodingType encodingType;
@@ -40,13 +43,15 @@ public class Url {
     @Transient
     private Encoder encoder;
 
-    public Url(String originUrl, EncodingType encodingType) {
+    public Url(String originUrl, EncodingType encodingType, Long visitCount) {
         Assert.notNull(originUrl, "originUrl은 null값이 들어올 수 없습니다.");
         Assert.notNull(encodingType, "encodingType은 null값이 들어올 수 없습니다.");
+        Assert.notNull(visitCount, "visitCount는 null값이 들어올 수 없습니다.");
 
         this.originUrl = originUrl;
         this.encodingType = encodingType;
         this.encoder = encodingType.getEncoder();
+        this.visitCount = visitCount;
     }
 
     public String encode(){

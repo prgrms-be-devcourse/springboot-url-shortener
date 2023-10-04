@@ -29,7 +29,7 @@ class UrlServiceTest {
 
     @BeforeEach
     void setup(){
-        Url url = new Url("setup-url1", EncodingType.BASE_62);
+        Url url = new Url("setup-url1", EncodingType.BASE_62, 0L);
         setupUrl = urlJpaRepository.save(url);
         setupUrl.encode();
     }
