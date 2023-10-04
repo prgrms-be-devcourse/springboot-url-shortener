@@ -23,7 +23,7 @@
     <h4 class="mb-3">Your shortened URL</h4>
     <form th:action method="post">
         <div class="mb-3">
-            <input type="url" id="shortenedUrl" name="shortenedUrl" class="form-control" th:value="${response.shortenedUrl}">
+            <input type="url" id="shortenedUrl" name="shortenedUrl" class="form-control" th:value="${response.shortenedUrl}" readonly>
         </div>
         <div class="row">
             <div class="col">
