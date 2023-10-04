@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.programmers.urlshortener.algorithm.Algorithm;
+import com.programmers.urlshortener.error.exception.BaseException;
+import com.programmers.urlshortener.error.exception.ErrorCode;
 import com.programmers.urlshortener.url.dto.UrlShortenRequest;
 import com.programmers.urlshortener.url.dto.UrlShortenResponse;
 import com.programmers.urlshortener.url.dto.UrlTotalClicksResponse;
@@ -57,6 +59,6 @@ public class UrlService {
 		Long decodedId = algorithm.decode(shorteningKey);
 
 		return urlRepository.findById(decodedId)
-			.orElseThrow(() -> new RuntimeException("잘못된 URL 요청입니다."));
+			.orElseThrow(() -> new BaseException(ErrorCode.URL_NOT_FOUND));
 	}
 }
