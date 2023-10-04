@@ -13,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.co.programmers.shortcut.application.ShortCutService;
 import kr.co.programmers.shortcut.dto.ShortCutCreateRequest;
 import kr.co.programmers.shortcut.dto.ShortCutResponse;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Controller

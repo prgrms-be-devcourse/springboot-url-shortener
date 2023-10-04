@@ -2,7 +2,7 @@ package kr.co.programmers.shortcut.dto;
 
 import kr.co.programmers.shortcut.domain.ShortCut;
 
-public record ShortCutResponse (
+public record ShortCutResponse(
 	String originalURL,
 	String newURL
 ) {

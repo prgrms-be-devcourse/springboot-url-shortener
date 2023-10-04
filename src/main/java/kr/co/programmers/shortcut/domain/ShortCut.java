@@ -15,16 +15,14 @@ import lombok.NoArgsConstructor;
 @Table(name = "shortcuts")
 public class ShortCut {
 
+	@Column(name = "original_url", nullable = false)
+	String originalURL;
+	@Column(name = "encoded_id")
+	String encodedId;
 	@Id
 	@GeneratedValue()
 	@Column(name = "id")
 	private Long id;
-
-	@Column(name = "original_url", nullable = false)
-	String originalURL;
-
-	@Column(name = "encoded_id")
-	String encodedId;
 
 	public ShortCut(String originalURL) {
 
