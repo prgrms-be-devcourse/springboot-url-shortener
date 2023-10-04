@@ -38,9 +38,9 @@ public class ShortCutService {
 		return ShortCutResponse.from(savedShortCut, shortCutURL);
 	}
 
-	public ShortCutResponse getShortCutByEncodedId(String encodedId, String shortCutURL) {
+	public String getOriginalURL(String encodedId) {
 		Long decodedId = base62.decodeKey(encodedId);
 		ShortCut findedShortCut = shortCutRepository.getReferenceById(decodedId);
-		return ShortCutResponse.from(findedShortCut, shortCutURL);
+		return findedShortCut.getOriginalURL();
 	}
 }
