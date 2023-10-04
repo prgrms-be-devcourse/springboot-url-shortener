@@ -52,7 +52,7 @@ public class Base62 {
 		lookup = new int[256];
 
 		for (int i = 0; i < charSet.length; i++) {
-			int idx = charSet[i] - '0';
+			int idx = charSet[i];
 			lookup[idx] = i;
 		}
 	}
