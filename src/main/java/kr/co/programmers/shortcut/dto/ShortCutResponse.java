@@ -7,10 +7,10 @@ public record ShortCutResponse (
 	String newURL
 ) {
 
-	public static ShortCutResponse from(ShortCut shortCut) {
+	public static ShortCutResponse from(ShortCut shortCut, String shortCutURL) {
 		return new ShortCutResponse(
 			shortCut.getOriginalURL(),
-			shortCut.getNewURL()
+			shortCutURL
 		);
 	}
 }
