@@ -27,7 +27,7 @@ public class Base62 {
 	public String encodeNumber(long originalNumber) {
 		StringBuffer encodedNumberBuffer = new StringBuffer();
 		while (originalNumber > 0) {
-			encodedNumberBuffer.append(charSet[(int)originalNumber%LENGTH]);
+			encodedNumberBuffer.append((char)charSet[(int)originalNumber%LENGTH]);
 			originalNumber = originalNumber/LENGTH;
 		}
 		return encodedNumberBuffer.toString();
