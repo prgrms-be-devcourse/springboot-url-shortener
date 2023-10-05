@@ -4,8 +4,8 @@ SprintBoot URL Shortener 구현 미션 Repository 입니다.
 ## 요구사항
 각 요구사항을 모두 충족할 수 있도록 노력해봅시다.
 - [ ] URL 입력폼 제공 및 결과 출력
-- [ ] URL Shortening Key는 8 Character 이내로 생성
-- [ ] 단축된 URL 요청시 원래 URL로 리다이렉트
+- [x] URL Shortening Key는 8 Character 이내로 생성 <br> >> base62 방식으로 인코딩 완료
+- [x] 단축된 URL 요청시 원래 URL로 리다이렉트 <br> >> 상태코드 301(MOVE_PERMANENTLY)
 - [ ] 단축된 URL에 대한 요청 수 정보저장 (optional)
 - [ ] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional) 
 
