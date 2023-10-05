@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Transactional(readOnly = true)
 @Service
 @RequiredArgsConstructor
@@ -18,7 +20,15 @@ public class ShortUrlService {
 
     @Transactional
     public UrlResponse generateUrl(UrlRequest urlRequest) {
-        ShortUrl shortUrl = urlRequest.toEntity();
+        Optional<ShortUrl> optionalShortUrl = shortUrlRepository.findByOriginUrl(urlRequest.url());
+
+        if (optionalShortUrl.isPresent()) {
+            ShortUrl shortUrl = optionalShortUrl.get();
+            shortUrl.updateView();
+            return UrlResponse.from(shortUrl);
+        }
+
+        ShortUrl shortUrl =urlRequest.toEntity();
         shortUrlRepository.save(shortUrl);
 
         String encodeUrl = urlGenerationService.parseBase62(shortUrl.getShortId());
