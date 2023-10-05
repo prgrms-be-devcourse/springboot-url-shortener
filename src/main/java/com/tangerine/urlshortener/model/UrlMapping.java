@@ -1,5 +1,9 @@
-package com.tangerine.urlshortener;
+package com.tangerine.urlshortener.model;
 
+import com.tangerine.urlshortener.model.vo.Algorithm;
+import com.tangerine.urlshortener.model.vo.OriginUrl;
+import com.tangerine.urlshortener.model.vo.RequestCount;
+import com.tangerine.urlshortener.model.vo.ShortUrl;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,8 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "urls")
-public class Url {
+@Table(name = "url_mappings")
+public class UrlMapping {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,14 +31,14 @@ public class Url {
     @Embedded
     private RequestCount requestCount;
 
-    public Url(OriginUrl originUrl, ShortUrl shortUrl, Algorithm algorithm, RequestCount requestCount) {
+    public UrlMapping(OriginUrl originUrl, ShortUrl shortUrl, Algorithm algorithm, RequestCount requestCount) {
         this.originUrl = originUrl;
         this.shortUrl = shortUrl;
         this.algorithm = algorithm;
         this.requestCount = requestCount;
     }
 
-    protected Url() {
+    protected UrlMapping() {
     }
 
     public Long getId() {
@@ -61,8 +65,16 @@ public class Url {
         return algorithm;
     }
 
+    public String getAlgorithmText() {
+        return algorithm.getAlgorithm();
+    }
+
     public RequestCount getRequestCount() {
         return requestCount;
+    }
+
+    public long getRequestCountValue() {
+        return requestCount.getRequestCount();
     }
 
 }

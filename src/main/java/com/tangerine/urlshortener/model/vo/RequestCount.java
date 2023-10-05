@@ -1,4 +1,4 @@
-package com.tangerine.urlshortener;
+package com.tangerine.urlshortener.model.vo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

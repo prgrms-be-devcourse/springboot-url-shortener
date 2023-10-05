@@ -1,4 +1,4 @@
-package com.tangerine.urlshortener;
+package com.tangerine.urlshortener.model.vo;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;

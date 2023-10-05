@@ -1,12 +1,17 @@
-package com.tangerine.urlshortener;
+package com.tangerine.urlshortener.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchException;
 
+import com.tangerine.urlshortener.model.vo.Algorithm;
+import com.tangerine.urlshortener.model.vo.OriginUrl;
+import com.tangerine.urlshortener.model.vo.RequestCount;
+import com.tangerine.urlshortener.model.vo.ShortUrl;
+import com.tangerine.urlshortener.model.UrlMapping;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class UrlTest {
+class UrlMappingTest {
 
     @Test
     @DisplayName("올바른 정보로 생성한다.")
@@ -16,7 +21,7 @@ class UrlTest {
         String shortUrlText = "short";
 
         // When
-        Url url = new Url(
+        UrlMapping urlMapping = new UrlMapping(
                 new OriginUrl(originUrlText),
                 new ShortUrl(shortUrlText),
                 new Algorithm("알고리즘"),
@@ -24,8 +29,8 @@ class UrlTest {
         );
 
         // Then
-        assertThat(url.getOriginUrlText()).isEqualTo(originUrlText);
-        assertThat(url.getShortUrlText()).isEqualTo(shortUrlText);
+        assertThat(urlMapping.getOriginUrlText()).isEqualTo(originUrlText);
+        assertThat(urlMapping.getShortUrlText()).isEqualTo(shortUrlText);
     }
 
     @Test
@@ -37,7 +42,7 @@ class UrlTest {
 
         // When
         Exception exception = catchException(() ->
-                new Url(
+                new UrlMapping(
                         new OriginUrl(originUrlText),
                         new ShortUrl(shortUrlText),
                         new Algorithm(""),

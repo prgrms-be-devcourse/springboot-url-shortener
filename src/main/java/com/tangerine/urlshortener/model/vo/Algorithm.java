@@ -1,4 +1,4 @@
-package com.tangerine.urlshortener;
+package com.tangerine.urlshortener.model.vo;
 
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.Column;
@@ -14,7 +14,7 @@ public class Algorithm {
     private String algorithm;
 
     public Algorithm(String algorithm) {
-        Assert.isTrue(StringUtils.isNotBlank(algorithm), "단축 Url 알고리즘은 반드시 주어져야 합니다.");
+        Assert.isTrue(StringUtils.isNotBlank(algorithm), "단축 UrlMapping 알고리즘은 반드시 주어져야 합니다.");
         this.algorithm = algorithm;
     }
 
