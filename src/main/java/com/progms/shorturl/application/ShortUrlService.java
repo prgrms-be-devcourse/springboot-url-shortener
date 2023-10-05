@@ -31,6 +31,7 @@ public class ShortUrlService {
         ShortUrl urlData = shortUrlRepository.findByShortUrl(shortUrl)
                 .orElseThrow(()->new IllegalArgumentException("Error"));
 
+        urlData.updateView();
         return urlData.getOriginUrl();
     }
 }

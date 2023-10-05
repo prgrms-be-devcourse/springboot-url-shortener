@@ -38,4 +38,8 @@ public class ShortUrl {
     public void updateShortUrl(String shortenUrl) {
         this.shortUrl = requireNonNull(shortenUrl);
     }
+
+    public void updateView() {
+        views++;
+    }
 }
