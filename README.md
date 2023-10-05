@@ -1,20 +1,68 @@
-# springboot-url-shortener
+# springboot-urlMapping-shortener
 
 SprintBoot URL Shortener 구현 미션 Repository 입니다.
 
-## 요구사항
+# 요구사항
 
-- [ ] URL 입력폼 제공 및 결과 출력
-- [ ] URL Shortening Key는 8 Character 이내로 생성
-- [ ] 단축된 URL 요청시 원래 URL로 리다이렉트
-- [ ] 단축된 URL에 대한 요청 수 정보저장 (optional)
-- [ ] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional)
+- [ ]  URL 입력폼 제공 및 결과 출력
+- [ ]  URL Shortening Key는 8 Character 이내로 생성
+- [ ]  단축된 URL 요청 시 원래 URL로 리다이렉트
+- [ ]  단축된 URL에 대한 요청 수 정보 저장 `optional`
+- [ ]  Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 `optional`
 
-## API 명세
+# API 명세
 
-## DataBase 테이블
+### URL 입력 폼
 
-## 동작화면
+| Method | URI |
+| --- | --- |
+| GET | / |
+
+### 원본 URL을 단축 URL로 매핑
+
+| Method | URI |
+| --- | --- |
+| POST | /shortener |
+
+| Request Parameter | Type | Description |
+| --- | --- | --- |
+| originUrl | String | 원본 URL |
+
+| Response Parameter | Type | Description |
+| --- | --- | --- |
+| originUrl | String | 원본 URL |
+| shortUrl | String | 원본 URL에 대한 단축 URL |
+| requestCount | long | 단축 URL 호출횟수 |
+
+### 단축 URL에 대한 원본 URL로 리다이렉션
+
+| Method | URI |
+| --- | --- |
+| GET | /{shortUrl} |
+
+| Path Variable | Type | Description |
+| --- | --- | --- |
+| shortUrl | String | 단축 URL |
+
+### 원본 URL로 URL 매핑 정보 조회
+
+| Method | URI |
+| --- | --- |
+| GET | /shortener |
+
+| Request Parameter | Type | Description |
+| --- | --- | --- |
+| originUrl | String | 원본 URL |
+
+| Response Parameter | Type | Description |
+| --- | --- | --- |
+| originUrl | String | 원본 URL |
+| shortUrl | String | 원본 URL에 대한 단축 URL |
+| requestCount | long | 단축 URL 호출횟수 |
+
+# DataBase 테이블
+
+# 동작화면
 
 ## Short URL Service
 
@@ -46,4 +94,4 @@ SprintBoot URL Shortener 구현 미션 Repository 입니다.
 
 ### 예시 사이트
 
-[https://url.kr/](https://url.kr/)
+[https://urlMapping.kr/](https://urlMapping.kr/)
