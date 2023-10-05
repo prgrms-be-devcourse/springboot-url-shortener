@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:bs="http://www.w3schools.com/bootstrap">
+<head>
+  <meta charset="UTF-8">
+  <title>매핑된 객체 정보</title>
+  <!-- Bootstrap CSS 링크 추가 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h2>Origin URL: <span th:text="${originUrl}"></span></h2>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Origin URL</th>
+      <th>Shorten URL</th>
+      <th>Request Count</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="${mapping}">
+      <td th:text="${mapping.originUrl()}"></td>
+      <td th:text="${mapping.shortUrl()}"></td>
+      <td th:text="${mapping.requestCount()}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>
