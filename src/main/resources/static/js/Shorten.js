@@ -1,9 +1,14 @@
 function shorten() {
     const inputUrl = $('#url').val()
+    const encodeMode = 'BASE_62'
 
-    const requestURL = 'http://localhost:8080/api/v1/shorten'
+    const requestURL = '/api/v1/shorten'
 
-    $.post(requestURL, {url: inputUrl})
+    $.post(requestURL,
+        {
+            url: inputUrl,
+            encodeMode: encodeMode
+        })
         .done(function (data) {
             $('#shortenedUrl').val(data)
         })
