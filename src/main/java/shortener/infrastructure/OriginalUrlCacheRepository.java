@@ -2,6 +2,8 @@ package shortener.infrastructure;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
@@ -12,12 +14,12 @@ import shortener.domain.ShortUrlCacheRepository;
 
 @Slf4j
 @Repository
-public class ShortUrlCacheRedisRepository implements ShortUrlCacheRepository {
+public class OriginalUrlCacheRepository implements ShortUrlCacheRepository {
 
 	private final ValueOperations<String, String> valueOperations;
 
-	public ShortUrlCacheRedisRepository(StringRedisTemplate redisTemplate) {
-		this.valueOperations = redisTemplate.opsForValue();
+	public OriginalUrlCacheRepository(RedisTemplate<String, String> redisTemplateForOriginalUrl) {
+		this.valueOperations = redisTemplateForOriginalUrl.opsForValue();
 	}
 
 	@Override

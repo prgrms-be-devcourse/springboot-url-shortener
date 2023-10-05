@@ -9,20 +9,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
-import shortener.application.dto.response.ShortUrlCreateResponse;
 import shortener.application.ShortenerService;
-import shortener.domain.ShortUrlCacheRepository;
+import shortener.application.dto.response.ShortUrlCreateResponse;
 
 @Slf4j
 @RestController
 public class ShortenerController {
 
 	private final ShortenerService shortenerService;
-	private final ShortUrlCacheRepository shortUrlCacheRepository;
 
-	public ShortenerController(ShortenerService shortenerService, ShortUrlCacheRepository shortUrlCacheRepository) {
+	public ShortenerController(ShortenerService shortenerService) {
 		this.shortenerService = shortenerService;
-		this.shortUrlCacheRepository = shortUrlCacheRepository;
 	}
 
 	@PostMapping("/v1/util/short-url")
@@ -38,8 +35,7 @@ public class ShortenerController {
 
 	@GetMapping("/{encodedUrl}")
 	public ResponseEntity<Void> getOriginalUrl(@PathVariable String encodedUrl) {
-		String originalUrl = shortUrlCacheRepository.findOriginalUrlByEncodedUrl(encodedUrl)
-			.orElseGet(() -> shortenerService.findOriginalUrl(encodedUrl));
+		String originalUrl = shortenerService.findOriginalUrl(encodedUrl);
 
 		HttpHeaders headers = createRedirectionHeader(originalUrl);
 
@@ -65,13 +61,14 @@ public class ShortenerController {
 	// @GetMapping("/{encodedUrl}/clicks")
 	// public ResponseEntity<Void> getClicks(@PathVariable String encodedUrl) {
 	// }
-
 	private HttpHeaders createRedirectionHeader(String originalUrl) {
+		log.info("Create redirection Http headers...");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.HOST, "http://yosongsong.shortener.co.kr");
 		headers.add(HttpHeaders.SERVER, "Tomcat");
 		headers.add(HttpHeaders.LOCATION, originalUrl);
 		headers.add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, max-age=0");
+		log.info("Success to create headers");
 
 		return headers;
 	}

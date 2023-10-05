@@ -1,5 +1,8 @@
 package shortener.application;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,15 +22,20 @@ public class ShortenerService {
 
 	private final ShortUrlJpaRepository shortUrlRepository;
 	private final ShortUrlCacheRepository shortUrlCacheRepository;
+	private final ShortUrlCacheRepository clicksCacheRepository;
 	private final UrlEncoder urlEncoder;
 
 	public ShortenerService(
 		ShortUrlJpaRepository shortUrlRepository,
-		ShortUrlCacheRepository shortUrlCacheRepository,
+		@Qualifier("originalUrlCacheRepository")
+		ShortUrlCacheRepository originalUrlCacheRepository,
+		@Qualifier("clicksCacheRepository")
+		ShortUrlCacheRepository clicksCacheRepository,
 		UrlEncoder urlEncoder
 	) {
 		this.shortUrlRepository = shortUrlRepository;
-		this.shortUrlCacheRepository = shortUrlCacheRepository;
+		this.shortUrlCacheRepository = originalUrlCacheRepository;
+		this.clicksCacheRepository = clicksCacheRepository;
 		this.urlEncoder = urlEncoder;
 	}
 
@@ -48,6 +56,22 @@ public class ShortenerService {
 	}
 
 	public String findOriginalUrl(String encodedUrl) {
+		// // 1. 캐시 저장소에서 먼저 조회 처리
+		// Optional<String> cachedOriginalUrl = shortUrlCacheRepository.findOriginalUrlByEncodedUrl(encodedUrl);
+		// if (cachedOriginalUrl.isPresent()) {
+		//
+		// 	return ;
+		// }
+		//
+		// // 2. 캐시 저장소에서 처리할 수 없다면 RDB에서 처리
+		// // 이때는 레디스 서버가 불량이기 때문에 fallback으로 temporary_clicks에 조회수를 카운트
+		//
+		// shortenerService.findOriginalUrl(encodedUrl);
+
+		return null;
+	}
+
+	private String findOriginalUrlByNoCache(String encodedUrl) {
 		log.info("Trying to find originalUrl by encodedUrl({})...", encodedUrl);
 		ShortUrl foundShortUrl = shortUrlRepository.findShortUrlByEncodedUrl(encodedUrl)
 			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_MAPPED_URL));

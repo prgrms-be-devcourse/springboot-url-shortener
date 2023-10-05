@@ -10,8 +10,8 @@ import org.springframework.data.redis.repository.configuration.EnableRedisReposi
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-@EnableRedisRepositories
-public class RedisConfig {
+@EnableRedisRepositories(redisTemplateRef = "redisTemplateForClicks")
+public class ClicksCacheRedisConfig {
 
 	@Value("${spring.data.redis.host}")
 	private String redisHost;
@@ -20,14 +20,17 @@ public class RedisConfig {
 	private int redisPort;
 
 	@Bean
-	public RedisConnectionFactory redisConnectionFactory() {
-		return new LettuceConnectionFactory(redisHost, redisPort);
+	public RedisConnectionFactory clicksCacheRedisConnectionFactory() {
+		LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisHost, redisPort);
+		lettuceConnectionFactory.setDatabase(1);
+
+		return lettuceConnectionFactory;
 	}
 
 	@Bean
-	public RedisTemplate<?, ?> redisTemplate() {
+	public RedisTemplate<?, ?> redisTemplateForClicks() {
 		RedisTemplate<byte[], byte[]> redisTemplate = new RedisTemplate<>();
-		redisTemplate.setConnectionFactory(redisConnectionFactory());
+		redisTemplate.setConnectionFactory(clicksCacheRedisConnectionFactory());
 		redisTemplate.setKeySerializer(new StringRedisSerializer());
 
 		return redisTemplate;
