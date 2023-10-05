@@ -10,7 +10,7 @@ public record UrlResponse(
 
     public static UrlResponse from(ShortUrl shortUrl) {
         return UrlResponse.builder()
-                .shortUrl(shortUrl.getShortenUrl())
+                .shortUrl(shortUrl.getShortUrl())
                 .build();
     }
 }

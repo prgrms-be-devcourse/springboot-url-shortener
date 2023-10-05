@@ -2,11 +2,8 @@ package com.progms.shorturl.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.Objects;
 
 import static java.util.Objects.requireNonNull;
 
@@ -23,8 +20,8 @@ public class ShortUrl {
     @Column(name = "origin_url")
     private String originUrl;
 
-    @Column(name = "shorten_url")
-    private String shortenUrl;
+    @Column(name = "short_url")
+    private String shortUrl;
 
     @Column(name = "views")
     private long views;
@@ -39,6 +36,6 @@ public class ShortUrl {
     }
 
     public void updateShortUrl(String shortenUrl) {
-        this.shortenUrl = requireNonNull(shortenUrl);
+        this.shortUrl = requireNonNull(shortenUrl);
     }
 }

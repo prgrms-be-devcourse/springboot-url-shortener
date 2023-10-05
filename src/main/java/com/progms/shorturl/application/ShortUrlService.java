@@ -26,4 +26,11 @@ public class ShortUrlService {
 
         return UrlResponse.from(shortUrl);
     }
+
+    public String regenerateUrl(String shortUrl) {
+        ShortUrl urlData = shortUrlRepository.findByShortUrl(shortUrl)
+                .orElseThrow(()->new IllegalArgumentException("Error"));
+
+        return urlData.getOriginUrl();
+    }
 }
