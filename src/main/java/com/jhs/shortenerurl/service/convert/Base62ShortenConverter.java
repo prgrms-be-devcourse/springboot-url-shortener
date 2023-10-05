@@ -1,8 +1,5 @@
 package com.jhs.shortenerurl.service.convert;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Base62ShortenConverter implements ShortenConverter {
 
     private static final char[] BASE62_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
