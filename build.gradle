@@ -33,6 +33,9 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	// Thymleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 	// test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
