@@ -1,5 +1,5 @@
 package com.jhs.shortenerurl.controller.dto;
 
-public record UrlRequest(String url, String encodeMode) {
+public record UrlRequest(String url, String shortenMode) {
 
 }

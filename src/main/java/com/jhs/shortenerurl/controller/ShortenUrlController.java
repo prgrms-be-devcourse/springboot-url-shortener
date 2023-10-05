@@ -18,7 +18,7 @@ public class ShortenUrlController {
 
     @PostMapping("/api/v1/shorten")
     public String shorten(@RequestBody UrlRequest request) {
-        return urlService.shorten(request.url(), Mode.valueOf(request.encodeMode().toUpperCase()));
+        return urlService.shorten(request.url(), Mode.valueOf(request.shortenMode().toUpperCase()));
     }
 
 }
