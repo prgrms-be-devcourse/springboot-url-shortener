@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>홍도산의 단축 URL</title>
+
+    <!-- Bootstrap CSS 설정 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+          crossorigin="anonymous">
+
+    <!-- Axios 라이브러리 추가 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div class="container py-5">
+
+    <!-- 웹 페이지 제목 -->
+    <div class="text-center mb-5">
+        <h2>홍도산의 단축 URL</h2>
+    </div>
+
+    <!-- URL 단축 입력 및 버튼 영역 -->
+    <div class="mb-3">
+        <h4>URL 단축하기</h4>
+
+        <input id="url-shortener"
+               type="text"
+               placeholder="http(s)://hongdosan.tistory.com"
+               value="https://hongdosan.tistory.com"
+               class='form-control'>
+        <button onclick='shortenUrl()'
+                class='btn btn-primary mt-3'>단축
+        </button>
+    </div>
+
+    <!-- 단축된 URL 정보 조회 영역 -->
+    <div class='my-5'>
+        <h4>단축된 URL 정보 보기</h4>
+
+        <input id='shortener-url'
+               type='text'
+               placeholder='단축된 Key값만 입력해주세요.'
+               class='form-control mt-3'>
+        <button onclick='getShortenUrlInfo()'
+                class='btn btn-primary mt-3'>보기
+        </button>
+
+        <!-- 결과 출력 영역 (기본적으로 숨김 상태)-->
+        <div id='result-container' class="card mt-4" style='display: none;'>
+            <div class="card-header">
+                <h5>결과</h5>
+            </div>
+            <div class="card-body">
+                <h6 class="card-title">단축 URL:</h6>
+                <p class="card-text"><a id='result-link'></a></p>
+                <h6 class="card-title">원래 URL:</h6>
+                <p class="card-text"><span id='original-url'></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 웹 페이지가 로드된 후 실행될 자바스크립트 파일을 연결 -->
+<script>
+    // 이 주소는 후에 Axios를 통해 HTTP 요청을 보낼 때 사용
+    const url = "http://localhost:8080";
+
+    const shortenUrl = () => {
+
+        const originalUrl = document.getElementById("url-shortener").value;
+
+        // UrlInfoReq를 객체 이름으로 사용하는 경우
+        const data = {
+            originUrl: originalUrl
+        };
+
+        axios.post(`${url}/urls`, data, {
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }).then(response => {
+            if (response.status === 201) {  // HTTP 상태 코드 변경: 'CREATED' -> 201
+                inputValueInTag(response.data);  // .data 프로퍼티 접근
+
+                const resultContainer = document.getElementById("result-container");
+                const resultLink = document.getElementById("result-link");
+
+                resultLink.href = `${url}/${response.data.shortUrl}`;  // .data 프로퍼티 접근
+                resultLink.innerText = `${url}/${response.data.shortUrl}`;  // .data 프로퍼티 접근
+
+                resultContainer.style.display = "block";
+            } else {
+                alert(`[에러코드]:${response.data.code}, [메시지]: ${response.data.message}`);
+                initForm();
+            }
+        }).catch(error => {  // catch() 메서드 추가
+            alert('Error :' + error.response.data.message);
+            initForm();
+            console.error('Error:', error.response.data);
+        });
+    }
+
+    // 단축키 정보 조회 버튼 클릭시 동작 로직
+    const getShortenUrlInfo = () => {
+        const shortenerUrl = document.getElementById("shortener-url").value;
+
+        axios.get(`${url}/urls/${shortenerUrl}`).then(response => {
+            if (response.status === 200) {
+                inputValueInTag(response.data);
+            } else {
+                alert(`[에러코드]:${response.data.code}, [메시지]: ${response.data.message}`);
+                initForm();
+            }
+        }).catch(error => {  // catch() 메서드 추가
+            alert('Error :' + error.response.data.message);
+            initForm();
+            console.error('Error:', error.response.data);
+        });
+    }
+
+    // 결과 값 초기화
+    const initForm = () => {
+        // 받아온 값으로 HTML 태그안에 데이터 삽입
+        const resultContainer = document.getElementById("result-container");
+        resultContainer.style.display = "none";
+
+        const shortenerUrl = document.getElementById("shortener-url");
+        const resultOriginalUrl = document.getElementById("original-url");
+
+        shortenerUrl.value = "";
+        resultOriginalUrl.innerText = "";
+    }
+
+    const inputValueInTag = (responseData) => {
+        // 받아온 값으로 HTML 태그안에 데이터 삽입
+        const resultContainer = document.getElementById("result-container");
+        const shortenerUrl = document.getElementById("shortener-url");
+        const resultOriginalUrl = document.getElementById("original-url");
+
+        shortenerUrl.value = responseData.shortUrl;
+        resultOriginalUrl.innerText = responseData.originalUrl;
+
+        resultContainer.style.display = "flex";
+    }
+</script>
+</body>
+</html>
