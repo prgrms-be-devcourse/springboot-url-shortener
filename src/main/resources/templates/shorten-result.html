@@ -78,13 +78,13 @@
 </head>
 <body>
 
-<h1 style="text-align: center">김앵맹의 단축된 URL!</h1>
+<h1 style="text-align: center">⭐️김앵맹의 단축된 URL!!!⭐️</h1>
 
 <section id="urlbox">
     <br>
     <br>
     <div id="formurl">
-        <input id="shortenurl" type="text">
+        <input id="shortenurl" type="text" th:field="${shortenUrlResponse.shortUrl}">
         <div id="formbutton">
             <input type="button" value="Copy URL">
         </div>
@@ -92,7 +92,7 @@
     <div>
         <br>
         <br>
-        원본 URL: <a></a>
+        원본 URL: <a th:text="${shortenUrlResponse.originalUrl}"></a>
         <br>
         <br>
         <a href="/" id="backbutton">뒤로 가기</a>
@@ -102,7 +102,6 @@
 </body>
 
 <script>
-
     const text = document.getElementById("shortenurl");
 
     document.getElementById("formbutton").onclick = () => {

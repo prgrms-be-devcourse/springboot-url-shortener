@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 public abstract class Base62Util {
 
 	private static final int BASE62 = 62;
-	private static final String BASE62_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	private static final String BASE62_CHAR = "aZbYc0XdWeV1fUgTh2SiRjQ3kPlOm4NnMoL5pKqJr6IsHtG7uFvEw8DxCyB9zA";
 	private static final String PREFIX = "localhost:8080/";
 
 	public static String encode(Long value) {
