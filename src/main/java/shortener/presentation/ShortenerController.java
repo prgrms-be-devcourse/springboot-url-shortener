@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
 import shortener.application.ShortenerService;
+import shortener.application.dto.response.ClicksResponse;
 import shortener.application.dto.response.ShortUrlCreateResponse;
 
 @Slf4j
@@ -59,8 +60,10 @@ public class ShortenerController {
 	 * <br>
 	 */
 	// @GetMapping("/{encodedUrl}/clicks")
-	// public ResponseEntity<Void> getClicks(@PathVariable String encodedUrl) {
+	// public ResponseEntity<ClicksResponse> getClicks(@PathVariable String encodedUrl) {
+	// 	ClicksResponse response = shortenerService.findClicks(encodedUrl);
 	// }
+
 	private HttpHeaders createRedirectionHeader(String originalUrl) {
 		log.info("Create redirection Http headers...");
 		HttpHeaders headers = new HttpHeaders();

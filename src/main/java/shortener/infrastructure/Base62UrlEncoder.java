@@ -23,7 +23,7 @@ public class Base62UrlEncoder implements UrlEncoder {
 		StringBuilder encodedUrlBuilder = new StringBuilder();
 		int index = shortUrl.getId().intValue();
 
-		log.info("Start encoding ShortUrl(id: {})", index);
+		log.info("Start encoding shortUrl by id({})", index);
 		do {
 			encodedUrlBuilder.append(base62CryptoWords[index % 62]);
 			index /= 62;

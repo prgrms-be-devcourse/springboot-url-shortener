@@ -18,7 +18,7 @@ spring:
       ddl-auto: create
       naming:
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true

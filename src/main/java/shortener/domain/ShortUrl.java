@@ -25,8 +25,6 @@ public class ShortUrl {
 	String encodedUrl;
 	@Column(name = "original_url", nullable = false)
 	String originalUrl;
-	@Column(name = "temporary_clicks", nullable = false)
-	long temporaryClicks = 0L;
 	@Column(name = "clicks", nullable = false)
 	long clicks = 0L;
 
@@ -39,21 +37,17 @@ public class ShortUrl {
 	}
 
 	public void updateEncodedUrl(String encodedUrl) {
-		log.info("Update ShortUrl({}) to Entity(id: {})", encodedUrl, this.id);
+		log.info("Update shortUrl({}) to Entity(id({}))", encodedUrl, this.id);
 		this.encodedUrl = encodedUrl;
 	}
 
-	public void updateClicksByScheduler(int clicks) {
+	public void updateClicksByScheduler(long clicks) {
 		log.info("Update Clicks(count: {}) to Entity(id: {})", clicks, this.id);
 		if (clicks < 0) {
 			log.warn("Fail to update clicks to Entity(id: {})", this.id);
 			throw new BusinessException(ErrorCode.INVALID_REQUEST_NUMBERS);
 		}
 		this.clicks += clicks;
-	}
-
-	public void updateTemporaryClicks(int clicks) {
-
 	}
 
 	public Long getId() {
