@@ -1,10 +1,10 @@
 package com.young.shortenerurl.presentation;
 
 import com.young.shortenerurl.application.UrlService;
-import com.young.shortenerurl.application.dto.UrlVisitCountFindResponse;
+import com.young.shortenerurl.application.dto.UrlInfoFindResponse;
 import com.young.shortenerurl.presentation.dto.UrlCreateApiRequest;
 import com.young.shortenerurl.presentation.dto.UrlCreateApiResponse;
-import com.young.shortenerurl.presentation.dto.UrlVisitCountFindApiResponse;
+import com.young.shortenerurl.presentation.dto.UrlInfoFindApiResponse;
 import com.young.shortenerurl.presentation.mapper.UrlApiMapper;
 
 import jakarta.validation.Valid;
@@ -51,10 +51,10 @@ public class UrlRestController {
     @GetMapping(
             value = "/visitCount/{encodedUrl}",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UrlVisitCountFindApiResponse> findUrlVisitCount(@PathVariable String encodedUrl) {
-        UrlVisitCountFindResponse response = urlService.findUrlVisitCount(encodedUrl);
+    public ResponseEntity<UrlInfoFindApiResponse> findUrlInfo(@PathVariable String encodedUrl) {
+        UrlInfoFindResponse response = urlService.findUrlInfo(encodedUrl);
 
-        UrlVisitCountFindApiResponse apiResponse = UrlVisitCountFindApiResponse.of(response, URL_PRE_FIX);
+        UrlInfoFindApiResponse apiResponse = UrlInfoFindApiResponse.of(response, URL_PRE_FIX);
 
         return ResponseEntity.ok(apiResponse);
     }

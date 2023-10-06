@@ -1,7 +1,7 @@
 package com.young.shortenerurl.application;
 
 import com.young.shortenerurl.application.dto.UrlCreateRequest;
-import com.young.shortenerurl.application.dto.UrlVisitCountFindResponse;
+import com.young.shortenerurl.application.dto.UrlInfoFindResponse;
 import com.young.shortenerurl.infrastructures.UrlJpaRepository;
 import com.young.shortenerurl.model.EncodingType;
 import com.young.shortenerurl.model.Url;
@@ -88,7 +88,7 @@ class UrlServiceTest {
         urlService.findOriginUrl(setupUrl.getEncodedUrl());
 
         //when
-        UrlVisitCountFindResponse response = urlService.findUrlVisitCount(setupUrl.getEncodedUrl());
+        UrlInfoFindResponse response = urlService.findUrlInfo(setupUrl.getEncodedUrl());
 
         //then
         assertThat(response.originUrl()).isEqualTo(setupUrl.getOriginUrl());
