@@ -59,10 +59,15 @@ public class ShortenerController {
 	 * 2) 인코딩된 url의 총 click 수를 빠르게 저장하고 조회하기 위해<br>
 	 * <br>
 	 */
-	// @GetMapping("/{encodedUrl}/clicks")
-	// public ResponseEntity<ClicksResponse> getClicks(@PathVariable String encodedUrl) {
-	// 	ClicksResponse response = shortenerService.findClicks(encodedUrl);
-	// }
+	@GetMapping("/{encodedUrl}/clicks")
+	public ResponseEntity<ClicksResponse> getClicks(@PathVariable String encodedUrl) {
+		log.info("Receive request to get clicks for encodedUrl({})...", encodedUrl);
+		ClicksResponse response = shortenerService.findClicks(encodedUrl);
+		log.info("Success to get clicks({}) for encodedUrl({})",
+			response.clicks(), response.encodedUrl());
+
+		return ResponseEntity.ok(response);
+	}
 
 	private HttpHeaders createRedirectionHeader(String originalUrl) {
 		log.info("Create redirection Http headers...");

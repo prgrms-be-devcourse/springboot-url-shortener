@@ -84,9 +84,26 @@ public class ShortenerService {
 	}
 
 	public ClicksResponse findClicks(String encodedUrl) {
-		log.info("Trying to find originalUrl from cache...");
+		log.info("Trying to find clicks for encodedUrl({}) from cache...", encodedUrl);
+		Optional<Long> clicksFromCache = clicksCacheRepository.findClicksByEncodedUrl(encodedUrl);
+		if (clicksFromCache.isPresent()) {
+			Long clicks = clicksFromCache.get();
+			log.info("Success to find clicks(encodedUrl({}), clicks({})) from cache.", encodedUrl, clicks);
 
-		return null;
+			return ClicksResponse.of(encodedUrl, clicks);
+		}
+		log.warn("Fail to find clicks from cache!!!");
+
+		log.info("Switch to master database system");
+		log.info("Trying to find clicks for encodedUrl({}) from master database...", encodedUrl);
+		ShortUrl shortUrl = shortUrlRepository.findShortUrlByEncodedUrl(encodedUrl)
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.NOT_FOUND_MAPPED_URL));
+		long clicks = shortUrl.getClicks();
+		log.info("Success to find clicks(encodedUrl({}), clicks({})) from master database.", encodedUrl, clicks);
+
+		saveOriginalUrlAndClicksInCache(shortUrl);
+
+		return ClicksResponse.of(encodedUrl, clicks);
 	}
 
 	private void saveOriginalUrlAndClicksInCache(ShortUrl shortUrl) {
