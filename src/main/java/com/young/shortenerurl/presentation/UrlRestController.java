@@ -1,12 +1,13 @@
 package com.young.shortenerurl.presentation;
 
 import com.young.shortenerurl.application.UrlService;
+import com.young.shortenerurl.application.dto.UrlVisitCountFindResponse;
 import com.young.shortenerurl.presentation.dto.UrlCreateApiRequest;
 import com.young.shortenerurl.presentation.dto.UrlCreateApiResponse;
+import com.young.shortenerurl.presentation.dto.UrlVisitCountFindApiResponse;
 import com.young.shortenerurl.presentation.mapper.UrlApiMapper;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,7 +19,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/api/urls")
 public class UrlRestController {
-    private final String URL_PRE_FIX = "http://localhost:8080/api/urls/";
+    private static final String URL_PRE_FIX = "http://localhost:8080/api/urls/";
 
     private final UrlService urlService;
     private final UrlApiMapper mapper;
@@ -38,13 +39,24 @@ public class UrlRestController {
                 .body(apiResponse);
     }
 
-    @GetMapping("/{encodedUrl}")
+    @GetMapping(value = "/{encodedUrl}")
     public ResponseEntity<Void> redirectUrl(@PathVariable String encodedUrl) {
         String originUrl = urlService.findOriginUrl(encodedUrl);
 
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
                 .location(URI.create(originUrl))
                 .build();
+    }
+
+    @GetMapping(
+            value = "/visitCount/{encodedUrl}",
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UrlVisitCountFindApiResponse> findUrlVisitCount(@PathVariable String encodedUrl) {
+        UrlVisitCountFindResponse response = urlService.findUrlVisitCount(encodedUrl);
+
+        UrlVisitCountFindApiResponse apiResponse = UrlVisitCountFindApiResponse.of(response, URL_PRE_FIX);
+
+        return ResponseEntity.ok(apiResponse);
     }
 
 }

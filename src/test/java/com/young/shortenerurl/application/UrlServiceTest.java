@@ -1,6 +1,7 @@
 package com.young.shortenerurl.application;
 
 import com.young.shortenerurl.application.dto.UrlCreateRequest;
+import com.young.shortenerurl.application.dto.UrlVisitCountFindResponse;
 import com.young.shortenerurl.infrastructures.UrlJpaRepository;
 import com.young.shortenerurl.model.EncodingType;
 import com.young.shortenerurl.model.Url;
@@ -77,6 +78,22 @@ class UrlServiceTest {
 
         assertThat(originUrl).isEqualTo(savedOriginUrl);
         assertThat(url.getVisitCount()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("인코딩된 단축 URL을 통해 해당 URL의 방문 수를 확인할 수 있다.")
+    void findUrlVisitCount(){
+        //given
+        urlService.findOriginUrl(setupUrl.getEncodedUrl());
+        urlService.findOriginUrl(setupUrl.getEncodedUrl());
+
+        //when
+        UrlVisitCountFindResponse response = urlService.findUrlVisitCount(setupUrl.getEncodedUrl());
+
+        //then
+        assertThat(response.originUrl()).isEqualTo(setupUrl.getOriginUrl());
+        assertThat(response.encodedUrl()).isEqualTo(setupUrl.getEncodedUrl());
+        assertThat(response.visitCount()).isEqualTo(2);
     }
 
 }

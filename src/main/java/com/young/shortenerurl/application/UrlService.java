@@ -1,6 +1,7 @@
 package com.young.shortenerurl.application;
 
 import com.young.shortenerurl.application.dto.UrlCreateRequest;
+import com.young.shortenerurl.application.dto.UrlVisitCountFindResponse;
 import com.young.shortenerurl.infrastructures.UrlRepository;
 import com.young.shortenerurl.model.Url;
 import jakarta.persistence.EntityNotFoundException;
@@ -28,11 +29,17 @@ public class UrlService {
 
     @Transactional
     public String findOriginUrl(String encodedUrl) {
-        Url url = urlRepository.findByEncodedUrl(encodedUrl)
-                .orElseThrow(() -> new EntityNotFoundException("해당 encodedUrl를 가진 url을 찾을 수 없습니다."));
+        Url url = urlRepository.getByEncodedUrl(encodedUrl);
 
         url.increaseVisitCount();
 
         return url.getOriginUrl();
+    }
+
+    @Transactional(readOnly = true)
+    public UrlVisitCountFindResponse findUrlVisitCount(String encodedUrl) {
+        Url findUrl = urlRepository.getByEncodedUrl(encodedUrl);
+
+        return UrlVisitCountFindResponse.from(findUrl);
     }
 }
