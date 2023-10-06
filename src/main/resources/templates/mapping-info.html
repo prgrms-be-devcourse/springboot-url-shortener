@@ -1,35 +1,59 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>매핑된 객체 정보</title>
-  <!-- Bootstrap CSS 링크 추가 -->
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
+<head th:insert="~{fragments/head::headFragment}"></head>
+<title>URL Mapping Info</title>
 <body>
-<div class="container">
-  <h2>Origin URL: <span th:text="${mapping.originUrl()}"></span></h2>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Id</th>
-      <th>Origin URL</th>
-      <th>Short Token</th>
-      <th>Algorithm</th>
-      <th>Request Count</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="mapping: ${mapping}">
-      <td th:text="${mapping.id()}"></td>
-      <td th:text="${mapping.originUrl()}"></td>
-      <td th:text="${mapping.shortUrl()}"></td>
-      <td th:text="${mapping.algorithm()}"></td>
-      <td th:text="${mapping.requestCount()}"></td>
-    </tr>
-    </tbody>
-  </table>
+<div class="d-grid gap-2 justify-content-md-center">
+  <br/>
+  <h1>단축 URL 상세 페이지</h1>
+
+  <form>
+    <fieldset disabled>
+
+      <div class="mb-3">
+        <label class="form-label" for="disabledTextInput1">ID</label>
+        <input class="form-control" id="disabledTextInput1" placeholder="Id"
+               th:placeholder="${mapping.id()}"
+               type="text">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="disabledSelect">ALGORITHM</label>
+        <select class="form-select" id="disabledSelect">
+          <option th:text="${mapping.algorithm()}">NORMAL</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="originUrl">ORIGIN URL</label>
+        <input class="form-control" id="originUrl" placeholder="Amount"
+               th:placeholder="${mapping.originUrl()}"
+               type="text">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="shortUrl">SHORT URI</label>
+        <input class="form-control" id="shortUrl" placeholder="Amount"
+               th:placeholder="${mapping.shortUrl()}"
+               type="text">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="requestNum">REQUEST COUNT</label>
+        <input class="form-control" id="requestNum" placeholder="CreatedAt"
+               th:placeholder="${mapping.requestCount()}"
+               type="text">
+      </div>
+    </fieldset>
+  </form>
+  <div>
+    <a class="btn btn-outline-primary btn-lg"
+       th:href="@{http://localhost:8080/{param1}(param1=${mapping.shortUrl()})}" type="button">
+      🚀 URL 바로가기 🚀
+    </a>
+    <a class="btn btn-outline-primary btn-lg" href="/" type="button">🏠 홈으로 🏠</a>
+  </div>
+
+
 </div>
 </body>
 </html>

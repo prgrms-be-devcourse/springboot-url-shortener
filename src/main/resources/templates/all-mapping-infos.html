@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>매핑된 객체 정보</title>
-  <!-- Bootstrap CSS 링크 추가 -->
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
+<head th:replace="~{fragments/head::headFragment}"></head>
 <body>
-<div class="container">
-  <h2>All Mapping Infos</h2>
+<div class="d-grid gap-2 justify-content-md-center">
+  <br/>
+  <h1>모든 URL 매핑 정보 조회</h1>
+  <br/><br/>
   <table class="table table-striped">
     <thead>
     <tr>
       <th>Id</th>
       <th>Origin URL</th>
-      <th>Short Token</th>
+      <th>Short URI</th>
       <th>Algorithm</th>
       <th>Request Count</th>
     </tr>
@@ -24,27 +20,40 @@
     <tr th:each="mapping: ${mappings.results()}">
       <td th:text="${mapping.id}"></td>
       <td th:text="${mapping.originUrl}"></td>
-      <td th:text="${mapping.shortUrl}"></td>
+      <td>
+        <a th:href="${mapping.shortUrl()}" th:text="${mapping.shortUrl()}" target="_blank"></a>
+      </td>
       <td th:text="${mapping.algorithm}"></td>
       <td th:text="${mapping.requestCount}"></td>
     </tr>
     </tbody>
   </table>
-  <nav aria-label="Page navigation">
-    <ul class="pagination">
-      <li th:if="${pageInfo.hasPreviousPage()}">
-        <a th:href="@{'?page=' + ${pageInfo.pageNumber() - 1}}" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li th:text="${pageInfo.pageNumber}"></li>
-      <li th:if="${pageInfo.hasNextPage()}">
-        <a th:href="@{'?page=' + ${pageInfo.pageNumber() + 1}}" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <div class="d-flex justify-content-between">
+    <a class="btn btn-outline-primary btn-lg" href="/" type="button">🏠 홈으로 🏠</a>
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" th:if="${pageInfo.hasPreviousPage()}">
+          <a class="page-link" th:href="@{'?page=' + ${pageInfo.pageNumber() - 1}}"
+             aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" th:href="@{'?page=' + ${pageInfo.pageNumber()}}"
+             th:text="${pageInfo.pageNumber()}"></a>
+        </li>
+        <li class="page-item" th:if="${pageInfo.hasNextPage()}">
+          <a class="page-link" th:href="@{'?page=' + ${pageInfo.pageNumber() + 1}}"
+             aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
 </div>
 </body>
 </html>

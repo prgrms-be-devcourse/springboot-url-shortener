@@ -1,33 +1,42 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>폼 예제</title>
-  <!-- Bootstrap CSS 추가 -->
-  <link rel="stylesheet"
-        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/head::headFragment"></head>
+
 <body>
-<div class="container">
-  <h2>URL Shortener</h2>
-  <form th:action="@{/shortener}" method="post">
+<div class="d-grid gap-2 justify-content-md-center">
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <h1>URL SHORTENER</h1>
 
-    <div class="form-group">
-      <label for="originUrl">원본 URL:</label>
-      <input type="text" class="form-control" id="originUrl" name="originUrl" required>
+  <form action="/urls/short" method="post" th:action="@{/shortener}" th:method="post">
+
+    <div class="mb-3">
+      <input class="form-control" id="originUrl" name="originUrl"
+             placeholder="input your origin url" type="text">
     </div>
 
-    <div class="form-group">
-      <label for="algorithm">목록 선택:</label>
-      <select class="form-control" id="algorithm" name="algorithm" required>
-        <option value="BASE62">Base62</option>
-        <option value="BASE64">Base64</option>
+    <div class="form-floating">
+      <select class="form-select" id="urlType" name="algorithm">
+        <option selected value="BASE62">BASE62</option>
+        <option value="BASE64">BASE64</option>
       </select>
+      <label for="urlType">SHORTEN ALGORITHM</label>
     </div>
 
-    <button type="submit" class="btn btn-primary">단축하기</button>
+    <br/>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+      <button class="btn btn-outline-primary btn-lg" type="submit">✂️ 단축하기 ✂️</button>
+    </div>
 
   </form>
+
+  <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+    <a class="btn btn-outline-primary btn-lg" th:href="@{/mappings}" type="button">🗂️모든 매핑 조회🗂️</a>
+  </div>
+
 </div>
 </body>
 </html>
