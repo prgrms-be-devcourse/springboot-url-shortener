@@ -68,17 +68,25 @@ public class UrlController {
         return "redirect:" + originUrl.getOriginUrlText();
     }
 
+    /**
+     * 모든 매핑 정보 조회
      *
      * @param model
+     * @param pageable
      * @return "mapping-info"
      */
-    @GetMapping(path = "/shortener")
-    public String mappingInfo(
-            @RequestParam String originUrl,
-            Model model
+    @GetMapping(path = "/mappings")
+    public String mappingInfos(
+            Model model,
+            Pageable pageable
     ) {
-        UrlMappingResult mapping = urlService.findMapping(new OriginUrl(originUrl));
-        model.addAttribute("mapping", mapping);
-        return "mapping-info";
+        UrlMappingResults allMappings = urlService.findAllMappings(pageable);
+        UrlMappingResponses mappings = UrlMappingResponses.of(allMappings);
+        PageInfo pageInfo = PageInfo.from(
+                mappings.results().getPageable(),
+                mappings.results().getTotalPages());
+        model.addAttribute("mappings", mappings);
+        model.addAttribute("pageInfo", pageInfo);
+        return "all-mapping-infos";
     }
 }

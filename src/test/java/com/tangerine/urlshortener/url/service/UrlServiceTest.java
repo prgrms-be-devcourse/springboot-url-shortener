@@ -97,23 +97,14 @@ class UrlServiceTest {
         );
 
         // When
-        UrlMappingResult result = urlService.findMapping(originUrl);
+        UrlMappingResults mappingResults = urlService.findAllMappings(pageable);
 
         // Then
-        assertThat(result.shortUrl()).isEqualTo(urlMapping.getShortUrl());
-    }
+        assertThat(mappingResults.results()).isNotEmpty();
 
-    @Test
-    @DisplayName("매핑 정보가 없는 원본 URL로 매핑 정보 조회 시 실패한다.")
-    void findMapping_Fail() {
-        // Given
-        OriginUrl originUrl = new OriginUrl("http://tangerine.com/tangerine-test");
+        List<UrlMappingResult> content = mappingResults.results().getContent();
 
-        // When
-        Exception exception = catchException(() -> urlService.findMapping(originUrl));
-
-        // Then
-        assertThat(exception).isInstanceOf(RuntimeException.class);
+        assertThat(content.get(0).shortUrl()).isEqualTo(urlMapping.getShortUrl());
     }
 
 }
