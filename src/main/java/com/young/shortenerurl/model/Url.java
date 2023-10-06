@@ -1,5 +1,6 @@
 package com.young.shortenerurl.model;
 
+import com.young.shortenerurl.model.encoder.Encoder;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

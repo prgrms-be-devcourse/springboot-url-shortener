@@ -17,6 +17,7 @@ public class EncodedUrl {
 
     public EncodedUrl(String encodedUrl) {
         Assert.notNull(encodedUrl, "변환된 url은 null이 될 수 없습니다.");
+
         if (encodedUrl.length() > MAX_URL_LENGTH){
             throw new IllegalArgumentException("변환된 url의 길이는 8이상 될 수 없습니다.");
         }

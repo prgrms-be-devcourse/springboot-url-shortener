@@ -11,17 +11,14 @@ import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
 @RestController
+@RequestMapping("/api/urls")
 public class UrlRestController {
-    private final String URL_PRE_FIX = "http://localhost:8080/";
+    private final String URL_PRE_FIX = "http://localhost:8080/api/urls/";
 
     private final UrlService urlService;
     private final UrlApiMapper mapper;
@@ -31,8 +28,7 @@ public class UrlRestController {
         this.mapper = mapper;
     }
 
-    @PostMapping(value = "/api/urls",
-            consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UrlCreateApiResponse> createUrl(@RequestBody @Valid UrlCreateApiRequest request) {
         String encodedUrl = urlService.createUrl(mapper.toUrlCreateRequest(request));
         UrlCreateApiResponse apiResponse = UrlCreateApiResponse.from(URL_PRE_FIX + encodedUrl);
