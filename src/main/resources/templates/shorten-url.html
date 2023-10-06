@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Base64 또는 Base62 선택</title>
+  <!-- Bootstrap CSS 링크 추가 -->
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+  <h2>Base64 또는 Base62 선택</h2>
+  <form th:action="@{/shortener}" method="post">
+    <div class="form-group">
+      <label for="inputText">텍스트 입력:</label>
+      <input type="text" class="form-control" id="inputText" name="inputText"
+             placeholder="인코딩할 텍스트 입력" required>
+    </div>
+    <div class="form-group">
+      <label>인코딩 선택:</label>
+      <div class="form-check">
+        <input type="radio" class="form-check-input" id="base64" name="encodingType" value="base64"
+               checked>
+        <label class="form-check-label" for="base64">Base64</label>
+      </div>
+      <div class="form-check">
+        <input type="radio" class="form-check-input" id="base62" name="encodingType" value="base62">
+        <label class="form-check-label" for="base62">Base62</label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">인코딩</button>
+  </form>
+</div>
+</body>
+</html>

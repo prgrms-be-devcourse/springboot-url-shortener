@@ -1,7 +1,8 @@
-package com.tangerine.urlshortener.repository;
+package com.tangerine.urlshortener.url.repository;
 
-import com.tangerine.urlshortener.model.UrlMapping;
-import com.tangerine.urlshortener.model.vo.OriginUrl;
+
+import com.tangerine.urlshortener.url.model.UrlMapping;
+import com.tangerine.urlshortener.url.model.vo.OriginUrl;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

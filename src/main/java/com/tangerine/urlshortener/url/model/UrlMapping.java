@@ -1,11 +1,13 @@
-package com.tangerine.urlshortener.model;
+package com.tangerine.urlshortener.url.model;
 
-import com.tangerine.urlshortener.model.vo.Algorithm;
-import com.tangerine.urlshortener.model.vo.OriginUrl;
-import com.tangerine.urlshortener.model.vo.RequestCount;
-import com.tangerine.urlshortener.model.vo.ShortUrl;
+import com.tangerine.urlshortener.url.model.vo.Algorithm;
+import com.tangerine.urlshortener.url.model.vo.OriginUrl;
+import com.tangerine.urlshortener.url.model.vo.RequestCount;
+import com.tangerine.urlshortener.url.model.vo.ShortUrl;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,7 +27,7 @@ public class UrlMapping {
     @Embedded
     private ShortUrl shortUrl;
 
-    @Embedded
+    @Enumerated(value = EnumType.STRING)
     private Algorithm algorithm;
 
     @Embedded
@@ -49,32 +51,24 @@ public class UrlMapping {
         return originUrl;
     }
 
-    public String getOriginUrlText() {
-        return originUrl.getOriginUrlText();
-    }
-
     public ShortUrl getShortUrl() {
         return shortUrl;
     }
 
-    public String getShortUrlText() {
-        return shortUrl.getShortUrlText();
-    }
-
-    public Algorithm getAlgorithm() {
+    public Algorithm getAlgorithmName() {
         return algorithm;
-    }
-
-    public String getAlgorithmText() {
-        return algorithm.getAlgorithm();
     }
 
     public RequestCount getRequestCount() {
         return requestCount;
     }
 
-    public long getRequestCountValue() {
-        return requestCount.getRequestCount();
+    public void setShortUrl(ShortUrl shortUrl) {
+        this.shortUrl = shortUrl;
     }
 
+    public UrlMapping addRequestCount() {
+        this.requestCount = RequestCount.addCount(requestCount);
+        return this;
+    }
 }

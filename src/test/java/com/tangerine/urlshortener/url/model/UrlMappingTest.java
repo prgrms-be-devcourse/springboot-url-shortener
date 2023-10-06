@@ -1,13 +1,12 @@
-package com.tangerine.urlshortener.model;
+package com.tangerine.urlshortener.url.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchException;
 
-import com.tangerine.urlshortener.model.vo.Algorithm;
-import com.tangerine.urlshortener.model.vo.OriginUrl;
-import com.tangerine.urlshortener.model.vo.RequestCount;
-import com.tangerine.urlshortener.model.vo.ShortUrl;
-import com.tangerine.urlshortener.model.UrlMapping;
+import com.tangerine.urlshortener.url.model.vo.Algorithm;
+import com.tangerine.urlshortener.url.model.vo.OriginUrl;
+import com.tangerine.urlshortener.url.model.vo.RequestCount;
+import com.tangerine.urlshortener.url.model.vo.ShortUrl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,13 +23,13 @@ class UrlMappingTest {
         UrlMapping urlMapping = new UrlMapping(
                 new OriginUrl(originUrlText),
                 new ShortUrl(shortUrlText),
-                new Algorithm("알고리즘"),
+                Algorithm.BASE62,
                 new RequestCount(0)
         );
 
         // Then
-        assertThat(urlMapping.getOriginUrlText()).isEqualTo(originUrlText);
-        assertThat(urlMapping.getShortUrlText()).isEqualTo(shortUrlText);
+        assertThat(urlMapping.getOriginUrl()).isEqualTo(new OriginUrl(originUrlText));
+        assertThat(urlMapping.getShortUrl()).isEqualTo(new ShortUrl(shortUrlText));
     }
 
     @Test
@@ -45,7 +44,7 @@ class UrlMappingTest {
                 new UrlMapping(
                         new OriginUrl(originUrlText),
                         new ShortUrl(shortUrlText),
-                        new Algorithm(""),
+                        Algorithm.BASE62,
                         new RequestCount(-1)
                 ));
 
