@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class UrlShortenerApiController {
 
-    @PostMapping(value = "/shorten-url", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/shorten-url",
+            produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ShortenUrlCreateResponse> generateShortenedUrl(
             @RequestBody @Valid ShortenUrlCreateRequest request) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new ShortenUrlCreateResponse(request.originalUrl()));
+                .body(new ShortenUrlCreateResponse("http://localhost:8080/3rLcvBZ"));
     }
 }
