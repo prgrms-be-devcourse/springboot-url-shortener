@@ -40,6 +40,10 @@ dependencies {
 
     // Spring Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Bean Validator
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
 }
 
 tasks.named('test') {
