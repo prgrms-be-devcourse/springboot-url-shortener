@@ -50,8 +50,21 @@
         <div id='result'>
             <p>Shortened URL is : <a id="short-url" href="#" target="_blank"></a></p>
             <button id="copy-button" class="btn btn-secondary">Copy URL</button>
+
+            <div class="mt-5">
+                <h2>Find Shortened URL INFO</h2>
+            </div>
+            <div class='mt-3'>
+                <label for="encodedUrl">Encoded URL:</label>
+                <input type="text" id="encodedUrl" name="encodedUrl">
+                <button id="visit-count-button" class="btn btn-secondary">Submit</button>
+            </div>
+            <p>Original URL is : <span id="original-url"></span></p>
+            <p>Encoded URL is : <a id="display-encoded-url" href="#" target="_blank"></a></p>
+            <p>Visit count is : <span id="visit-count"></span></p>
         </div>
     </div>
+
 </div>
 
 <script>
@@ -94,6 +107,23 @@
 
             alert("Copied the text: " + copyText.textContent);
         });
+
+        $("#visit-count-button").on('click', function(event) {
+            var fullUrl = $('#encodedUrl').val();
+            var encodedUrl = fullUrl.split('/').pop();
+
+            $.ajax({
+                url: '/api/urls/visitCount/' + encodedUrl,
+                type: 'GET',
+                success: function(data) {
+                    console.log(data);
+                    $('#original-url').text(data.originUrl);
+                    $('#display-encoded-url').attr('href', data.encodedUrl).text(data.encodedUrl);
+                    $('#visit-count').text(data.visitCount);
+                }
+            });
+        });
+
     });
 </script>
 
