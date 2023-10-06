@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shrot Url Service</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body id="Main-body">
+        <div id="url-body">
+            <h1>밥세공기 Short Url Service</h1>
+            <div class="input-container">
+                <form id="form-shorturl">
+                    <input
+                            type="text"
+                            id="url"
+                            placeholder="URL"
+                            required
+                    />
+                    <button type="submit">
+                        변환하기
+                    </button>
+                </form>
+            </div>
+
+
+            <div class="input-container">
+                <input type="text" id="result" />
+                <button type="button" id="shortUrl-copy">복사하기</button>
+                <p id="copy-message"></p>
+            </div>
+            <div>
+                <p>바로 가기 => <a id="url-result" target="_blank"></a></p>
+            </div>
+            <p>&copy; 2023</p>
+
+            <script type="text/javascript" src="/js/short-url.js"></script>
+        </div>
+
+</body>
+</html>
