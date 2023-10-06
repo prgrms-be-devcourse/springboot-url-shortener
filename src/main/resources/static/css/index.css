@@ -5,6 +5,16 @@
     margin-top: 13rem;
 }
 
+.input {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+    margin: 15px 0;
+    border-radius: 9px;
+}
+
 #url-body {
     display: flex;
     flex-direction: column;
@@ -21,29 +31,19 @@
     align-items: center;
 }
 
-.input {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-    margin: 15px 0;
-    border-radius: 9px;
+
+
+.input-container {
+    margin-bottom: 10px;
 }
 
-#form-url {
-    width: 100%;
-    max-width: 80%;
-    padding: 15px;
-    margin: auto;
-    text-align: center;
+button {
+    background: #3498db;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 99px;
+    height: 34px;
 }
 
-#form-url {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-}
 

@@ -24,7 +24,7 @@ public class ApiShortUrlController {
         return urlResponse;
     }
 
-    @GetMapping("/api/url/{shortUrl}")
+    @GetMapping("/url/{shortUrl}")
     public void redirectUrl(@PathVariable(name = "shortUrl") String shortUrl, HttpServletResponse response) throws IOException {
         String originUrl = shortUrlService.regenerateUrl(shortUrl);
         response.sendRedirect(originUrl);

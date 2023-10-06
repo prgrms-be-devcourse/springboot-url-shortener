@@ -1,5 +1,5 @@
 const DOMAIN = "http://localhost:8080/"
-const URL_API = "api/url/"
+const URL_API = "url/"
 document.getElementById('form-shorturl').addEventListener('submit',
     async function (e) {
         e.preventDefault();
@@ -20,7 +20,11 @@ document.getElementById('form-shorturl').addEventListener('submit',
             if (response.ok) {
                 const result = await response.json();
                 console.log(result)
-                document.getElementById('result').value = DOMAIN + URL_API+ result.shortUrl;
+                const url = DOMAIN + URL_API+ result.shortUrl
+                document.getElementById('result').value = url;
+                const urlElement = document.getElementById('url-result');
+                urlElement.href = url;
+                urlElement.textContent = url;
             } else {
                 console.log("error")
             }
