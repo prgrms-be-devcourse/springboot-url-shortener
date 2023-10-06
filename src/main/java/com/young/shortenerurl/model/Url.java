@@ -74,4 +74,8 @@ public class Url {
         return encodedUrl.getEncodedUrl();
     }
 
+    public void increaseVisitCount(){
+        visitCount++;
+    }
+
 }

@@ -13,15 +13,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* vh = viewport height */
+            height: 100vh;
         }
 
         .form-container {
-            width: 50%; /* adjust as needed */
+            width: 50%;
         }
 
         .form-container h1 {
-            margin-bottom: 20px; /* adjust as needed */
+            margin-bottom: 20px;
         }
     </style>
 
@@ -37,6 +37,7 @@
             <div>
                 <select class="form-select" name="encodingType" aria-label="Default select example" >
                     <option value="BASE_62">Base62 Encoding</option>
+                    <option value="URL_SAFE_BASE_64">Url Safe Base64 Encoding</option>
                 </select>
             </div>
             <div>
@@ -46,19 +47,12 @@
             </div>
 
         </form>
-        <div id='result'></div>
+        <div id='result'>
+            <p>Shortened URL is : <a id="short-url" href="#" target="_blank"></a></p>
+            <button id="copy-button" class="btn btn-secondary">Copy URL</button>
+        </div>
     </div>
 </div>
-<!--<form id="url-form">-->
-<!--    <label for="originUrl">Original URL:</label><br>-->
-<!--    <input type="text" id="originUrl" name="originUrl"><br>-->
-
-<!--    &lt;!&ndash; Assuming EncodingType is a string &ndash;&gt;-->
-<!--    <label for="encodingType">Encoding Type:</label><br>-->
-<!--    <input type="text" id="encodingType" name="encodingType"><br>-->
-
-<!--    <input type='submit' value='Shorten URL'>-->
-<!--</form>-->
 
 <script>
     $(document).ready(function() {
@@ -76,9 +70,29 @@
                 success: function(data) {
                     // On successful post, reload data to get the added one as well
                     console.log(data);
-                    $('#result').html('<p>Shortened URL is : <a href="' + data.encodedUrl + '" target="_blank">' + data.encodedUrl + '</a></p>');
+                    $('#short-url').attr('href', data.encodedUrl).text(data.encodedUrl);
                 }
             });
+        });
+
+        $("#copy-button").on('click', function(event) {
+            var copyText = document.getElementById("short-url");
+
+            // Create a temporary input to be able to use the execCommand method
+            var tempInput = document.createElement("input");
+            tempInput.value = copyText.textContent;
+
+            document.body.appendChild(tempInput);
+
+            tempInput.select();
+
+            // This will copy the text of the input (the short url)
+            document.execCommand("copy");
+
+            // Cleanup (remove the temporary input)
+            document.body.removeChild(tempInput);
+
+            alert("Copied the text: " + copyText.textContent);
         });
     });
 </script>

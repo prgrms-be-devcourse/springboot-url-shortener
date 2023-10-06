@@ -35,8 +35,8 @@ class UrlServiceTest {
     }
 
     @Test
-    @DisplayName("originUrl과 EncodingType을 통해 인코딩된 url을 생성할 수 있다.")
-    void createUrl() {
+    @DisplayName("originUrl과 Base62을 통해 인코딩된 url을 생성할 수 있다.")
+    void createUrl_Base62() {
         //given
         UrlCreateRequest request = new UrlCreateRequest("test-orgin-url", EncodingType.BASE_62);
 
@@ -49,7 +49,21 @@ class UrlServiceTest {
     }
 
     @Test
-    @DisplayName("인코딩된 단축 URL을 통해 원본 URL을 조회할 수 있다.")
+    @DisplayName("originUrl과 UrlSafeBase64을 통해 인코딩된 url을 생성할 수 있다.")
+    void createUrl_Base64() {
+        //given
+        UrlCreateRequest request = new UrlCreateRequest("test-orgin-url", EncodingType.URL_SAFE_BASE_64);
+
+        //when
+        String encodedUrl = urlService.createUrl(request);
+
+        //then
+        Url url = urlJpaRepository.findByEncodedUrl(encodedUrl).get();
+        assertThat(url.getOriginUrl()).isEqualTo("test-orgin-url");
+    }
+
+    @Test
+    @DisplayName("인코딩된 단축 URL을 통해 원본 URL을 조회할 수 있으며 조회수는 1씩 증가한다.")
     void findOriginUrl() {
         //given
         String savedEncodedUrl = setupUrl.getEncodedUrl();
@@ -59,7 +73,10 @@ class UrlServiceTest {
         String originUrl = urlService.findOriginUrl(savedEncodedUrl);
 
         //then
+        Url url = urlJpaRepository.findByEncodedUrl(savedEncodedUrl).get();
+
         assertThat(originUrl).isEqualTo(savedOriginUrl);
+        assertThat(url.getVisitCount()).isEqualTo(1);
     }
 
 }

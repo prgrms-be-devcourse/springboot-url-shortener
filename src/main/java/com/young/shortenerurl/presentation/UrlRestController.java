@@ -39,7 +39,7 @@ public class UrlRestController {
     }
 
     @GetMapping("/{encodedUrl}")
-    public ResponseEntity<Void> redirectUrl(@PathVariable @NotBlank String encodedUrl) {
+    public ResponseEntity<Void> redirectUrl(@PathVariable String encodedUrl) {
         String originUrl = urlService.findOriginUrl(encodedUrl);
 
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)

@@ -26,9 +26,12 @@ public class UrlService {
         return url.getEncodedUrl();
     }
 
+    @Transactional
     public String findOriginUrl(String encodedUrl) {
         Url url = urlRepository.findByEncodedUrl(encodedUrl)
                 .orElseThrow(() -> new EntityNotFoundException("해당 encodedUrl를 가진 url을 찾을 수 없습니다."));
+
+        url.increaseVisitCount();
 
         return url.getOriginUrl();
     }
