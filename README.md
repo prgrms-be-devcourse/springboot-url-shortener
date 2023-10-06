@@ -15,50 +15,50 @@ SprintBoot URL Shortener 구현 미션 Repository 입니다.
 ### URL 입력 폼
 
 | Method | URI |
-| --- | --- |
-| GET | / |
+|--------|-----|
+| GET    | /   |
 
 ### 원본 URL을 단축 URL로 매핑
 
-| Method | URI |
-| --- | --- |
-| POST | /shortener |
+| Method | URI        |
+|--------|------------|
+| POST   | /shortener |
 
-| Request Parameter | Type | Description |
-| --- | --- | --- |
-| originUrl | String | 원본 URL |
+| Request Parameter | Type   | Description |
+|-------------------|--------|-------------|
+| originUrl         | String | 원본 URL      |
 
-| Response Parameter | Type | Description |
-| --- | --- | --- |
-| originUrl | String | 원본 URL |
-| shortUrl | String | 원본 URL에 대한 단축 URL |
-| requestCount | long | 단축 URL 호출횟수 |
+| Response Parameter | Type   | Description       |
+|--------------------|--------|-------------------|
+| originUrl          | String | 원본 URL            |
+| shortUrl           | String | 원본 URL에 대한 단축 URL |
+| requestCount       | long   | 단축 URL 호출횟수       |
 
 ### 단축 URL에 대한 원본 URL로 리다이렉션
 
-| Method | URI |
-| --- | --- |
-| GET | /{shortUrl} |
+| Method | URI         |
+|--------|-------------|
+| GET    | /{shortUrl} |
 
-| Path Variable | Type | Description |
-| --- | --- | --- |
-| shortUrl | String | 단축 URL |
+| Path Variable | Type   | Description |
+|---------------|--------|-------------|
+| shortUrl      | String | 단축 URL      |
 
 ### 원본 URL로 URL 매핑 정보 조회
 
-| Method | URI |
-| --- | --- |
-| GET | /shortener |
+| Method | URI        |
+|--------|------------|
+| GET    | /shortener |
 
-| Request Parameter | Type | Description |
-| --- | --- | --- |
-| originUrl | String | 원본 URL |
+| Request Parameter | Type   | Description |
+|-------------------|--------|-------------|
+| originUrl         | String | 원본 URL      |
 
-| Response Parameter | Type | Description |
-| --- | --- | --- |
-| originUrl | String | 원본 URL |
-| shortUrl | String | 원본 URL에 대한 단축 URL |
-| requestCount | long | 단축 URL 호출횟수 |
+| Response Parameter | Type   | Description       |
+|--------------------|--------|-------------------|
+| originUrl          | String | 원본 URL            |
+| shortUrl           | String | 원본 URL에 대한 단축 URL |
+| requestCount       | long   | 단축 URL 호출횟수       |
 
 # DataBase 테이블
 
