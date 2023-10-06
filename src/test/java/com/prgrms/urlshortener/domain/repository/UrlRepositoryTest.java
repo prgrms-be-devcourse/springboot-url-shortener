@@ -16,8 +16,8 @@ class UrlRepositoryTest {
 	UrlRepository repository;
 
 	@Test
-	@DisplayName("데이터베이스의 sequence 초기값 10000 확인")
-	void check_sequence_initial_of_10000() {
+	@DisplayName("Database sequence 초기값 123456 확인")
+	void sequence_initial_of_123456_test() {
 	    // given
 		UrlInfo urlInfo = new UrlInfo("www.google.com");
 
@@ -25,6 +25,6 @@ class UrlRepositoryTest {
 		UrlInfo savedUrlInfo = repository.save(urlInfo);
 
 		// then
-		assertThat(savedUrlInfo.getId()).isEqualTo(10000);
+		assertThat(savedUrlInfo.getId()).isEqualTo(123456);
 	}
 }

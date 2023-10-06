@@ -17,10 +17,13 @@ import lombok.NoArgsConstructor;
 @SequenceGenerator(
 	name = "url_info_seq_generator",
 	sequenceName = "url_info_seq",
-	initialValue = 10000
+	initialValue = 123456
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UrlInfo {
+
+	private static final String HTTPS = "https://";
+	private static final String HTTP = "http://";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "url_info_seq_generator")
@@ -31,6 +34,18 @@ public class UrlInfo {
 	private String originalUrl;
 
 	public UrlInfo(String originalUrl) {
-		this.originalUrl = originalUrl;
+		this.originalUrl = removeProtocol(originalUrl);
+	}
+
+	private String removeProtocol(String originalUrl) {
+		if (originalUrl.startsWith(HTTPS)) {
+			return originalUrl.replace(HTTPS, "");
+		}
+
+		if (originalUrl.startsWith(HTTP)) {
+			return originalUrl.replace(HTTP, "");
+		}
+
+		return originalUrl;
 	}
 }
