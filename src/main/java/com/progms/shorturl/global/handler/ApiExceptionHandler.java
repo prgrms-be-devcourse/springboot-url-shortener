@@ -1,12 +1,16 @@
 package com.progms.shorturl.global.handler;
 
 import com.progms.shorturl.global.model.ErrorResponse;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.List;
@@ -15,17 +19,17 @@ import java.util.List;
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({
-            IllegalArgumentException.class,
-    })
-    public ErrorResponse handleException(RuntimeException runtimeException) {
-        return handleExceptionInternal(runtimeException.getMessage());
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ErrorResponse handleException(IllegalArgumentException illegalArgumentException) {
+        return handleExceptionInternal(illegalArgumentException.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ErrorResponse handlerException(MethodArgumentNotValidException validException) {
-        return handleExceptionInternal(validException.getMessage(), validException.getFieldErrors());
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(handleExceptionInternal(ex.getMessage(), ex.getFieldErrors()));
     }
 
     private ErrorResponse handleExceptionInternal(String message) {
