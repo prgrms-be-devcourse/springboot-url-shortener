@@ -7,6 +7,9 @@ import com.tangerine.urlshortener.url.model.vo.ShortUrl;
 import com.tangerine.urlshortener.url.repository.UrlMappingJpaRepository;
 import com.tangerine.urlshortener.url.service.dto.ShortenParam;
 import com.tangerine.urlshortener.url.service.dto.UrlMappingResult;
+import com.tangerine.urlshortener.url.service.dto.UrlMappingResults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,15 +36,22 @@ public class UrlService {
                 ));
         if (urlMapping.getShortUrl().isEmptyShortUrl()) {
             String encoded = shortenParam.algorithm().encode(urlMapping.getId());
-            urlMapping.setShortUrl(new ShortUrl(encoded));   
+            urlMapping.setShortUrl(new ShortUrl(encoded));
         }
         return UrlMappingResult.of(urlMapping);
     }
 
-    public UrlMappingResult findMapping(OriginUrl originUrl) {
-        UrlMapping urlMapping = urlMappingJpaRepository.findByOriginUrl(originUrl)
+    @Transactional
+    public OriginUrl findOriginUrl(ShortUrl shortUrl) {
+        UrlMapping urlMapping = urlMappingJpaRepository.findByShortUrl(shortUrl)
                 .orElseThrow(() -> new RuntimeException("해당 URL은 매핑되지 않았습니다."));
-        return UrlMappingResult.of(urlMapping);
+        urlMapping.addRequestCount();
+        return urlMapping.getOriginUrl();
+    }
+
+    public UrlMappingResults findAllMappings(Pageable pageable) {
+        Page<UrlMapping> mappings = urlMappingJpaRepository.findAll(pageable);
+        return UrlMappingResults.of(mappings);
     }
 
 }

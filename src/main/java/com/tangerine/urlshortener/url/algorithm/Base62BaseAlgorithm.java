@@ -21,7 +21,7 @@ public class Base62BaseAlgorithm implements BaseAlgorithm {
     public long decode(String shortUrl) {
         long decodedId = 0L;
         long factor = 1L;
-        for (int i = 0; i < URL_LENGTH_BOUND; i ++) {
+        for (int i = 0; i < URL_LENGTH_BOUND; i++) {
             decodedId += String.valueOf(tokens).indexOf(shortUrl.charAt(i)) * factor;
             factor *= TOKEN_LENGTH_BOUND;
         }
@@ -32,7 +32,7 @@ public class Base62BaseAlgorithm implements BaseAlgorithm {
         int length = sb.length();
         while (length < URL_LENGTH_BOUND) {
             sb.append(PADDING_TOKEN);
-            length ++;
+            length++;
         }
         return sb.toString();
     }

@@ -1,8 +1,8 @@
 package com.tangerine.urlshortener.url.model.vo;
 
 import com.tangerine.urlshortener.url.algorithm.Base62BaseAlgorithm;
-import com.tangerine.urlshortener.url.algorithm.BaseAlgorithm;
 import com.tangerine.urlshortener.url.algorithm.Base64BaseAlgorithm;
+import com.tangerine.urlshortener.url.algorithm.BaseAlgorithm;
 import jakarta.persistence.Column;
 
 public enum Algorithm {
