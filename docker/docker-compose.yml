@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  vacation-db:
+    container_name: "springboot-url-shortener"
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "url_shortener"
+      MYSQL_USER: "localhost"
+      MYSQL_PASSWORD: "root"
+      TZ: Asia/Seoul
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./mysql-init.d:/docker-entrypoint-initdb.d
+      - ./database/datadir/:/var/lib/mysql
+    platform: linux/arm64/v8
+    ports:
+      - 3306:3306
