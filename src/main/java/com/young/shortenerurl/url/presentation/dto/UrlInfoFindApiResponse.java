@@ -1,6 +1,6 @@
-package com.young.shortenerurl.presentation.dto;
+package com.young.shortenerurl.url.presentation.dto;
 
-import com.young.shortenerurl.application.dto.UrlInfoFindResponse;
+import com.young.shortenerurl.url.application.dto.UrlInfoFindResponse;
 
 public record UrlInfoFindApiResponse(
         String originUrl,

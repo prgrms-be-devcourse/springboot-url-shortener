@@ -1,4 +1,4 @@
-package com.young.shortenerurl.model.encoder;
+package com.young.shortenerurl.url.util;
 
 public abstract class Encoder {
     protected final Integer MAX_LENGTH = 8;

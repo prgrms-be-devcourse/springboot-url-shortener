@@ -1,10 +1,13 @@
 package com.young.shortenerurl.application;
 
-import com.young.shortenerurl.application.dto.UrlCreateRequest;
-import com.young.shortenerurl.application.dto.UrlInfoFindResponse;
-import com.young.shortenerurl.infrastructures.UrlJpaRepository;
-import com.young.shortenerurl.model.EncodingType;
-import com.young.shortenerurl.model.Url;
+import com.young.shortenerurl.url.application.UrlService;
+import com.young.shortenerurl.url.application.dto.UrlCreateRequest;
+import com.young.shortenerurl.url.application.dto.UrlInfoFindResponse;
+import com.young.shortenerurl.url.infrastructures.UrlJpaRepository;
+import com.young.shortenerurl.url.model.EncodedUrl;
+import com.young.shortenerurl.url.model.EncodingType;
+import com.young.shortenerurl.url.model.Url;
+import com.young.shortenerurl.url.util.Encoder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,16 +33,22 @@ class UrlServiceTest {
 
     @BeforeEach
     void setup(){
-        Url url = new Url("setup-url1", EncodingType.BASE_62, 0L);
+        Encoder encoder = EncodingType.BASE_62_V2.getEncoder();
+        String originUrl = "setup-url1";
+
+        Url url = new Url(
+                originUrl,
+                new EncodedUrl(encoder.encode(5), EncodingType.BASE_62_V2)
+        );
+
         setupUrl = urlJpaRepository.save(url);
-        setupUrl.encode();
     }
 
     @Test
     @DisplayName("originUrl과 Base62을 통해 인코딩된 url을 생성할 수 있다.")
     void createUrl_Base62() {
         //given
-        UrlCreateRequest request = new UrlCreateRequest("test-orgin-url", EncodingType.BASE_62);
+        UrlCreateRequest request = new UrlCreateRequest("test-orgin-url", EncodingType.BASE_62_V2);
 
         //when
         String encodedUrl = urlService.createUrl(request);
@@ -53,7 +62,7 @@ class UrlServiceTest {
     @DisplayName("originUrl과 UrlSafeBase64을 통해 인코딩된 url을 생성할 수 있다.")
     void createUrl_Base64() {
         //given
-        UrlCreateRequest request = new UrlCreateRequest("test-orgin-url", EncodingType.URL_SAFE_BASE_64);
+        UrlCreateRequest request = new UrlCreateRequest("test-orgin-url", EncodingType.BASE_64_V1);
 
         //when
         String encodedUrl = urlService.createUrl(request);

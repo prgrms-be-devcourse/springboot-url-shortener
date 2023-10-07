@@ -1,6 +1,6 @@
-package com.young.shortenerurl.infrastructures;
+package com.young.shortenerurl.url.infrastructures;
 
-import com.young.shortenerurl.model.Url;
+import com.young.shortenerurl.url.model.Url;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -22,6 +22,11 @@ public class UrlRepositoryImpl implements UrlRepository{
     @Override
     public Optional<Url> findByEncodedUrl(String encodedUrl) {
         return urlJpaRepository.findByEncodedUrl(encodedUrl);
+    }
+
+    @Override
+    public Optional<Url> findByOriginUrl(String originUrl) {
+        return urlJpaRepository.findUrlByOriginUrl(originUrl);
     }
 
 }

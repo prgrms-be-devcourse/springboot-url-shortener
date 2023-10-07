@@ -1,4 +1,4 @@
-package com.young.shortenerurl.presentation;
+package com.young.shortenerurl.url.presentation;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

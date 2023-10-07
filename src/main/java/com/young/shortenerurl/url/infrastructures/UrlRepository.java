@@ -1,6 +1,6 @@
-package com.young.shortenerurl.infrastructures;
+package com.young.shortenerurl.url.infrastructures;
 
-import com.young.shortenerurl.model.Url;
+import com.young.shortenerurl.url.model.Url;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.Optional;
@@ -14,4 +14,6 @@ public interface UrlRepository {
         return findByEncodedUrl(encodedUrl)
                 .orElseThrow(() -> new EntityNotFoundException("해당 encodedUrl를 가진 url을 찾을 수 없습니다."));
     }
+
+    Optional<Url> findByOriginUrl(String originUrl);
 }

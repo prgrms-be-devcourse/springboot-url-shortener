@@ -1,18 +1,18 @@
-package com.young.shortenerurl.model.encoder;
+package com.young.shortenerurl.url.util;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class Base62Encoder extends Encoder {
-    private static final int BASE62 = 62;
-    private static final String BASE62_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+public class Base64EncoderV1 extends Encoder{
+    private static final int BASE64 = 64;
+    private static final String BASE64_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-";
 
     @Override
     public String encode(long index) {
         StringBuilder sb = new StringBuilder();
         while(index > 0) {
-            sb.append(BASE62_CHAR.charAt((int) (index % BASE62)));
-            index /= BASE62;
+            sb.append(BASE64_CHAR.charAt((int) (index % BASE64)));
+            index /= BASE64;
         }
 
         if (sb.length() > MAX_LENGTH){
@@ -20,5 +20,4 @@ public class Base62Encoder extends Encoder {
         }
         return sb.toString();
     }
-
 }
