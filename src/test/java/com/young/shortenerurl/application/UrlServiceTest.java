@@ -45,8 +45,8 @@ class UrlServiceTest {
     }
 
     @Test
-    @DisplayName("originUrl과 Base62을 통해 인코딩된 url을 생성할 수 있다.")
-    void createUrl_Base62() {
+    @DisplayName("originUrl과 Base64V2을 통해 인코딩된 url을 생성할 수 있다.")
+    void createUrl_Base64V2() {
         //given
         UrlCreateRequest request = new UrlCreateRequest("test-orgin-url", EncodingType.BASE_62_V2);
 
@@ -59,8 +59,8 @@ class UrlServiceTest {
     }
 
     @Test
-    @DisplayName("originUrl과 UrlSafeBase64을 통해 인코딩된 url을 생성할 수 있다.")
-    void createUrl_Base64() {
+    @DisplayName("originUrl과 Base64V1을 통해 인코딩된 url을 생성할 수 있다.")
+    void createUrl_Base64V1() {
         //given
         UrlCreateRequest request = new UrlCreateRequest("test-orgin-url", EncodingType.BASE_64_V1);
 
@@ -70,6 +70,19 @@ class UrlServiceTest {
         //then
         Url url = urlJpaRepository.findByEncodedUrl(encodedUrl).get();
         assertThat(url.getOriginUrl()).isEqualTo("test-orgin-url");
+    }
+
+    @Test
+    @DisplayName("url 저장 시 동일한 originUrl이 이미 존재한다면 존재하는 Url의 인코딩 url을 반환한다.")
+    void createUrl_alreadyExistUrl(){
+        //given
+        UrlCreateRequest request = new UrlCreateRequest("setup-url1", EncodingType.BASE_62_V2);
+
+        //when
+        String encodedUrl = urlService.createUrl(request);
+
+        //then
+        assertThat(encodedUrl).isEqualTo(setupUrl.getEncodedUrl());
     }
 
     @Test
