@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.seungwon.springbooturlshortener.application.UrlService;
-import com.seungwon.springbooturlshortener.application.UrlShortenService;
 import com.seungwon.springbooturlshortener.application.dto.UrlCreateRequest;
 import com.seungwon.springbooturlshortener.application.dto.UrlCreateResponse;
 

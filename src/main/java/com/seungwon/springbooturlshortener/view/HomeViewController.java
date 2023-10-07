@@ -19,17 +19,8 @@ public class HomeViewController {
 	private final UrlService urlService;
 
 	@GetMapping
+	@PostMapping
 	public String home() {
 		return "home";
-	}
-
-	@PostMapping
-	public String shorten(@ModelAttribute UrlCreateRequest urlCreateRequest, Model model) {
-		UrlCreateResponse urlCreateResponse = urlService.saveUrl(urlCreateRequest);
-
-		model.addAttribute("originalUrl", urlCreateRequest.originalUrl());
-		model.addAttribute("urlKey", urlCreateResponse.urlKey());
-
-		return "short-url";
 	}
 }

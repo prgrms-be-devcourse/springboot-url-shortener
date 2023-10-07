@@ -1,5 +1,5 @@
 window.onload = () => {
-    loadResult();
+    // loadStrategy();
 }
 
 function copy() {
@@ -9,7 +9,26 @@ function copy() {
     Swal.fire('복사', '단축 URL을 복사했어요!', 'success');
 }
 
-function loadResult() {
-    document.getElementById('short-url-result').text
-        = window.location.href + document.getElementById('short-url-result').text;
+
+function shortUrl() {
+    const originalUrl = document.getElementById('originalUrl').value;
+    $("#url-result").text();
+
+    $.ajax({
+        type: 'POST',
+        url: '/api/urls',
+        data: JSON.stringify({
+            originalUrl: originalUrl
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        success: function (data) {
+            $("#url-result").text( window.location.href + data.urlKey);
+            $("#url-result").attr("href", window.location.href + data.urlKey);
+        },
+        error: function (xhr, status, error) {
+            alert("https:// 단축 할 긴 주소를 입력하세요");
+        }
+    });
 }

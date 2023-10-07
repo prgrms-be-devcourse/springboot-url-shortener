@@ -5,22 +5,38 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>URL Shortener</title>
+    <script src="/js/url.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="app-body">
     URL SHORTENER
-    <form action="" method="post" >
+    <form>
         <div class="url-form">
             <label for="originalUrl">
-                <input type="text" placeholder="Shorten your link" id="originalUrl" name="originalUrl">
+                <input type="text" placeholder="https:// 단축 할 긴 주소를 입력하세요"
+                       id="originalUrl" name="originalUrl">
             </label>
-            <button type="submit" id="shorten-button">Shorten</button>
+
+            <select class="form-select" aria-label="Default select example">
+                <option selected>링크 단축 방식을 선택하세요</option>
+                <option value="1"> Base 62 </option>
+                <option value="2"> Base 62 </option>
+            </select>
+            <button type="button" id="shorten-button" onclick="shortUrl()" >Shorten</button>
         </div>
     </form>
 </div>
 
 <div class="result">
-
+    <div id="short-url" class="short-url">
+        <a href="" id="url-result">
+        </a>
+    </div>
 </div>
 </body>
