@@ -1,6 +1,5 @@
 package com.young.shortenerurl.url.application;
 
-import com.young.shortenerurl.url.application.UrlService;
 import com.young.shortenerurl.url.application.dto.UrlCreateRequest;
 import com.young.shortenerurl.url.application.dto.UrlInfoFindResponse;
 import com.young.shortenerurl.url.infrastructures.UrlJpaRepository;
@@ -33,12 +32,12 @@ class UrlServiceTest {
 
     @BeforeEach
     void setup(){
-        Encoder encoder = EncodingType.BASE_62_V2.getEncoder();
+        Encoder encoder = EncodingType.BASE_64_V2.getEncoder();
         String originUrl = "setup-url1";
 
         Url url = new Url(
                 originUrl,
-                new EncodedUrl(encoder.encode(5), EncodingType.BASE_62_V2)
+                new EncodedUrl(encoder.encode(5), EncodingType.BASE_64_V2)
         );
 
         setupUrl = urlJpaRepository.save(url);
@@ -48,7 +47,7 @@ class UrlServiceTest {
     @DisplayName("originUrl과 Base64V2을 통해 인코딩된 url을 생성할 수 있다.")
     void createUrl_Base64V2() {
         //given
-        UrlCreateRequest request = new UrlCreateRequest("test-orgin-url", EncodingType.BASE_62_V2);
+        UrlCreateRequest request = new UrlCreateRequest("test-orgin-url", EncodingType.BASE_64_V2);
 
         //when
         String encodedUrl = urlService.createUrl(request);
@@ -76,7 +75,7 @@ class UrlServiceTest {
     @DisplayName("url 저장 시 동일한 originUrl이 이미 존재한다면 존재하는 Url의 인코딩 url을 반환한다.")
     void createUrl_alreadyExistUrl(){
         //given
-        UrlCreateRequest request = new UrlCreateRequest("setup-url1", EncodingType.BASE_62_V2);
+        UrlCreateRequest request = new UrlCreateRequest("setup-url1", EncodingType.BASE_64_V2);
 
         //when
         String encodedUrl = urlService.createUrl(request);

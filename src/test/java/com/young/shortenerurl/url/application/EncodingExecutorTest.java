@@ -41,7 +41,7 @@ class EncodingExecutorTest {
         given(uniqueKeyGenerator.generateKey()).willReturn(63L);
 
         //when
-        String encodedUrl = encodingExecutor.encode(EncodingType.BASE_62_V2);
+        String encodedUrl = encodingExecutor.encode(EncodingType.BASE_64_V2);
 
         //then
         assertThat(encodedUrl).isEqualTo("~");

@@ -8,7 +8,7 @@ import java.util.function.Supplier;
 
 public enum EncodingType {
     BASE_64_V1(Base64EncoderV1::new),
-    BASE_62_V2(Base64EncoderV2::new);
+    BASE_64_V2(Base64EncoderV2::new);
 
     private final Supplier<Encoder> supplier;
 
