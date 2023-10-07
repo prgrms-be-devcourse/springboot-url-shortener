@@ -1,4 +1,4 @@
-package com.young.shortenerurl.application;
+package com.young.shortenerurl.url.application;
 
 import com.young.shortenerurl.url.application.UrlService;
 import com.young.shortenerurl.url.application.dto.UrlCreateRequest;
