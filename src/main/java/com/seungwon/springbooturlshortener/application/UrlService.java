@@ -1,11 +1,8 @@
 package com.seungwon.springbooturlshortener.application;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.seungwon.springbooturlshortener.application.dto.UrlCountRequest;
 import com.seungwon.springbooturlshortener.application.dto.UrlCreateRequest;
 import com.seungwon.springbooturlshortener.application.dto.UrlCreateResponse;
 import com.seungwon.springbooturlshortener.domain.Url;

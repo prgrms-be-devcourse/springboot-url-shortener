@@ -1,7 +1,8 @@
 package com.seungwon.springbooturlshortener.application;
 
-import org.springframework.stereotype.Service;
 import org.apache.commons.codec.binary.Base64;
+import org.springframework.stereotype.Service;
+
 import com.seungwon.springbooturlshortener.domain.Url;
 
 @Service

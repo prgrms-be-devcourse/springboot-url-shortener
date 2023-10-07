@@ -4,8 +4,6 @@ import com.seungwon.springbooturlshortener.domain.Url;
 
 public interface UrlShortenService {
 
-	String shorten(Url original);
-
 	public static UrlShortenService from(String strategy) {
 		switch (strategy) {
 			case "random" -> {
@@ -16,4 +14,6 @@ public interface UrlShortenService {
 			}
 		}
 	}
+
+	String shorten(Url original);
 }
