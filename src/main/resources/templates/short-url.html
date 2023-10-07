@@ -15,8 +15,11 @@
 <div id="original-url">
     <a th:href='${originalUrl.contains("://") ? originalUrl : "//"+originalUrl }' th:text="${originalUrl}"></a>
 </div>
-<div id="short-url">
-    <a th:href='${urlKey}' th:text="${urlKey}" onclick="redirect('${urlKey}')" id="short-url-result"></a>
+<div id="short-url" class="short-url" onload=loadResult('${urlKey}')>
+    <a th:href='${urlKey.contains("https://") ? urlKey : "https://"+originalUrl}'
+       th:text='${urlKey.contains("https://") ? urlKey.replace("https://","") : urlKey}'
+       id="short-url-result"
+       ></a>
 </div>
 </body>
 </html>

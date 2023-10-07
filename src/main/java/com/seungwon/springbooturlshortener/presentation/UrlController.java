@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.seungwon.springbooturlshortener.application.UrlService;
+import com.seungwon.springbooturlshortener.application.UrlShortenService;
 import com.seungwon.springbooturlshortener.application.dto.UrlCreateRequest;
 import com.seungwon.springbooturlshortener.application.dto.UrlCreateResponse;
 
@@ -26,7 +27,8 @@ public class UrlController {
 
 	private final UrlService urlService;
 
-	@PostMapping("/api/urls/{key}")
+	//TODO : exception handler
+	@PostMapping("/api/urls")
 	public ResponseEntity<UrlCreateResponse> urlSave(@Validated @RequestBody UrlCreateRequest urlCreateRequest) {
 		UrlCreateResponse urlCreateResponse = urlService.saveUrl(urlCreateRequest);
 
@@ -45,8 +47,8 @@ public class UrlController {
 		String originalUrl = urlService.loadUrl(key);
 
 		HttpHeaders httpHeader = new HttpHeaders();
-		httpHeader.setLocation(URI.create("https://" + originalUrl));
+		httpHeader.setLocation(URI.create(originalUrl)); //TODO
 
-		return new ResponseEntity<>(httpHeader, MOVED_PERMANENTLY);
+		return new ResponseEntity<>(httpHeader, MOVED_PERMANENTLY); // TODO : status 301,302,303
 	}
 }

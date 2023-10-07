@@ -1,5 +1,6 @@
 package com.seungwon.springbooturlshortener.application;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -8,6 +9,7 @@ import com.seungwon.springbooturlshortener.application.dto.UrlCreateResponse;
 import com.seungwon.springbooturlshortener.domain.Url;
 import com.seungwon.springbooturlshortener.infrastructure.UrlJpaRepository;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 //TODO: 약 1~100000개 -> 개수 많아지는 경우 처리?
@@ -21,10 +23,8 @@ public class UrlService {
 
 	private final UrlJpaRepository urlJpaRepository;
 
-	private final UrlShortenService urlShortenService;
-
 	public UrlCreateResponse saveUrl(UrlCreateRequest urlCreateRequest) {
-
+		UrlShortenService urlShortenService = UrlShortenService.from(urlCreateRequest.strategy());
 		Url url = UrlCreateRequest.from(urlCreateRequest);
 		urlJpaRepository.save(url);
 
