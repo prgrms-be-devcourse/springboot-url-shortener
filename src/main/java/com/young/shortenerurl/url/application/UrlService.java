@@ -2,11 +2,9 @@ package com.young.shortenerurl.url.application;
 
 import com.young.shortenerurl.url.application.dto.UrlCreateRequest;
 import com.young.shortenerurl.url.application.dto.UrlInfoFindResponse;
-import com.young.shortenerurl.global.generator.UniqueKeyGenerator;
 import com.young.shortenerurl.url.infrastructures.UrlRepository;
 import com.young.shortenerurl.url.model.EncodedUrl;
 import com.young.shortenerurl.url.model.Url;
-import com.young.shortenerurl.url.util.Encoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,17 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class UrlService {
 
     private final UrlRepository urlRepository;
-    private final UniqueKeyGenerator uniqueKeyGenerator;
+    private final EncodingExecutor encodingExecutor;
 
-    public UrlService(UrlRepository urlRepository, UniqueKeyGenerator uniqueKeyGenerator) {
+    public UrlService(UrlRepository urlRepository, EncodingExecutor encodingExecutor) {
         this.urlRepository = urlRepository;
-        this.uniqueKeyGenerator = uniqueKeyGenerator;
+        this.encodingExecutor = encodingExecutor;
     }
 
     @Transactional
     public String createUrl(UrlCreateRequest request) {
-        Encoder encoder = request.encodingType().getEncoder();
-        String encodedUrl = encoder.encode(uniqueKeyGenerator.generateKey());
+        String encodedUrl = encodingExecutor.encode(request.encodingType());
 
         Url savedUrl = urlRepository.findByOriginUrl(request.originUrl()).orElseGet(() -> {
             Url url = new Url(

@@ -11,8 +11,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.NoSuchElementException;
-
 @RestControllerAdvice
 @Slf4j
 public class GlobalApiExceptionHandler {
@@ -37,13 +35,6 @@ public class GlobalApiExceptionHandler {
         ErrorResponse errorResponse = ErrorResponse.of(e.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-    }
-
-    @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<Void> handleNoSuchElementException(HttpServletRequest request, NoSuchElementException e){
-        log.error("Sever Exception Request URI {}: ", request.getRequestURI(), e);
-
-        return ResponseEntity.internalServerError().build();
     }
 
     @ExceptionHandler(Exception.class)
