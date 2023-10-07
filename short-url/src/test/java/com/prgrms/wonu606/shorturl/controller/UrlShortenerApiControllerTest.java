@@ -18,10 +18,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class UrlShortenerApiControllerTest {
+
+    private static final String API_URL = "/api/shorten-url";
+    private static final String SHORTEN_URL_PATTERN = "^http(s*):\\/\\/.+\\/\\w{1,8}$";
 
     @Autowired
     MockMvc mockMvc;
@@ -35,45 +39,43 @@ class UrlShortenerApiControllerTest {
         @ParameterizedTest
         @MethodSource("provideValidUrls")
         void whenUrlIsValid_thenShouldReturnShortenedUrl(ShortenUrlCreateRequest request) throws Exception {
-            // Given
-            String requestBody = objectMapper.writeValueAsString(request);
-
             // When & Then
-            mockMvc.perform(post("/api/shorten-url")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .content(requestBody))
+            mockMvc.perform(performPostRequest(request))
                     .andExpect(status().isCreated())
                     .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                    .andExpect(jsonPath("$.shortenUrl").value(matchesPattern("^http(s*):\\/\\/.+\\/\\w{1,8}$")));
+                    .andExpect(jsonPath("$.shortenUrl").value(matchesPattern(SHORTEN_URL_PATTERN)));
         }
 
         @ParameterizedTest
         @MethodSource("provideInvalidUrls")
         void whenUrlIsInvalid_thenShouldReturnBadRequest(ShortenUrlCreateRequest request) throws Exception {
-            // Given
+            // When & Then
+            mockMvc.perform(performPostRequest(request))
+                    .andExpect(status().isBadRequest());
+        }
+
+        private RequestBuilder performPostRequest(ShortenUrlCreateRequest request) throws Exception {
             String requestBody = objectMapper.writeValueAsString(request);
 
-            // When & Then
-            mockMvc.perform(post("/api/shorten-url")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE)
-                            .content(requestBody))
-                    .andExpect(status().isBadRequest());
+            return post(API_URL)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .content(requestBody);
         }
 
 
         static Stream<Arguments> provideValidUrls() {
             return Stream.of(
-                    Arguments.arguments(new ShortenUrlCreateRequest("https://url.kr")),
-                    Arguments.arguments(new ShortenUrlCreateRequest("https://www.stackoverflow.com")),
-                    Arguments.arguments(new ShortenUrlCreateRequest("https://comic.naver.com/index")),
-                    Arguments.arguments(new ShortenUrlCreateRequest("https://www.youtube.com/watch?v=Yc56NpYW1DM")),
-                    Arguments.arguments(new ShortenUrlCreateRequest("https://www.youtube.com/@devbadak"))
+                    Arguments.of(new ShortenUrlCreateRequest("https://url.kr")),
+                    Arguments.of(new ShortenUrlCreateRequest("https://www.stackoverflow.com")),
+                    Arguments.of(new ShortenUrlCreateRequest("https://comic.naver.com/index")),
+                    Arguments.of(new ShortenUrlCreateRequest("https://www.youtube.com/watch?v=Yc56NpYW1DM")),
+                    Arguments.of(new ShortenUrlCreateRequest("https://www.youtube.com/@devbadak"))
             );
         }
 
         static Stream<Arguments> provideInvalidUrls() {
             return Stream.of(
-                    Arguments.arguments(new ShortenUrlCreateRequest(null))
+                    Arguments.of(new ShortenUrlCreateRequest(null))
             );
         }
     }
