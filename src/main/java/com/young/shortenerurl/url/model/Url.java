@@ -44,7 +44,7 @@ public class Url {
         return encodedUrl.getEncodedUrl();
     }
 
-    public void increaseVisitCount(){
+    public void increaseVisitCount() {
         visitCount++;
     }
 

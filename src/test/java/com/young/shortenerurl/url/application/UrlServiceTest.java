@@ -31,7 +31,7 @@ class UrlServiceTest {
     private Url setupUrl;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         Encoder encoder = EncodingType.BASE_64_V2.getEncoder();
         String originUrl = "setup-url1";
 
@@ -73,7 +73,7 @@ class UrlServiceTest {
 
     @Test
     @DisplayName("url 저장 시 동일한 originUrl이 이미 존재한다면 존재하는 Url의 인코딩 url을 반환한다.")
-    void createUrl_alreadyExistUrl(){
+    void createUrl_alreadyExistUrl() {
         //given
         UrlCreateRequest request = new UrlCreateRequest("setup-url1", EncodingType.BASE_64_V2);
 
@@ -103,7 +103,7 @@ class UrlServiceTest {
 
     @Test
     @DisplayName("인코딩된 단축 URL을 통해 해당 URL의 방문 수를 확인할 수 있다.")
-    void findUrlVisitCount(){
+    void findUrlVisitCount() {
         //given
         urlService.findOriginUrl(setupUrl.getEncodedUrl());
         urlService.findOriginUrl(setupUrl.getEncodedUrl());

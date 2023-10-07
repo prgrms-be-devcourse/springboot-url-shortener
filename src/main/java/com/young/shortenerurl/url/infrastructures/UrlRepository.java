@@ -10,7 +10,7 @@ public interface UrlRepository {
 
     Optional<Url> findByEncodedUrl(String encodedUrl);
 
-    default Url getByEncodedUrl(String encodedUrl){
+    default Url getByEncodedUrl(String encodedUrl) {
         return findByEncodedUrl(encodedUrl)
                 .orElseThrow(() -> new EntityNotFoundException("해당 encodedUrl를 가진 url을 찾을 수 없습니다."));
     }

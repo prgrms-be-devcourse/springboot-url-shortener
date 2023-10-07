@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class UrlRepositoryImpl implements UrlRepository{
+public class UrlRepositoryImpl implements UrlRepository {
 
     private final UrlJpaRepository urlJpaRepository;
 

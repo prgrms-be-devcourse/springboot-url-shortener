@@ -24,21 +24,21 @@ public class GlobalApiExceptionHandler {
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException e){
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(HttpServletRequest request, IllegalArgumentException e) {
         ErrorResponse errorResponse = ErrorResponse.of(e.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(HttpServletRequest request, EntityNotFoundException e){
+    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(HttpServletRequest request, EntityNotFoundException e) {
         ErrorResponse errorResponse = ErrorResponse.of(e.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Void> handleException(HttpServletRequest request, Exception e){
+    public ResponseEntity<Void> handleException(HttpServletRequest request, Exception e) {
         log.error("Sever Exception Request URI {}: ", request.getRequestURI(), e);
 
         return ResponseEntity.internalServerError().build();

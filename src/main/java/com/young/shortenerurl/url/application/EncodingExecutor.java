@@ -23,7 +23,7 @@ public class EncodingExecutor {
         this.uniqueKeyGenerator = uniqueKeyGenerator;
     }
 
-    public String encode(EncodingType encodingType){
+    public String encode(EncodingType encodingType) {
         Assert.notNull(encodingType, "encodingType은 null이 들어오면 안됩니다.");
 
         Encoder encoder = encoders.get(encodingType.name());

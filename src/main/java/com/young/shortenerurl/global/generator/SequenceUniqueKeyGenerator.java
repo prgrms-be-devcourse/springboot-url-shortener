@@ -3,7 +3,7 @@ package com.young.shortenerurl.global.generator;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SequenceUniqueKeyGenerator implements UniqueKeyGenerator{
+public class SequenceUniqueKeyGenerator implements UniqueKeyGenerator {
 
     private final SequenceRepository sequenceRepository;
 

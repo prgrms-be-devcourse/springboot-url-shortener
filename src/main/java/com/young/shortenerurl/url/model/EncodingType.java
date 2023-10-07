@@ -16,7 +16,7 @@ public enum EncodingType {
         this.supplier = supplier;
     }
 
-    public Encoder getEncoder(){
+    public Encoder getEncoder() {
         return supplier.get();
     }
 

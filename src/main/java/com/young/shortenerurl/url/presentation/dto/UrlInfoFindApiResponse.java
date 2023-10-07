@@ -12,4 +12,5 @@ public record UrlInfoFindApiResponse(
                 urlPreFix + response.encodedUrl(),
                 response.visitCount());
     }
+
 }
