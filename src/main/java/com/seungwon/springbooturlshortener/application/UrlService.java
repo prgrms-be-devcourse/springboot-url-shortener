@@ -3,6 +3,7 @@ package com.seungwon.springbooturlshortener.application;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.seungwon.springbooturlshortener.ShortenServiceGenerator;
 import com.seungwon.springbooturlshortener.application.dto.UrlCreateRequest;
 import com.seungwon.springbooturlshortener.application.dto.UrlCreateResponse;
 import com.seungwon.springbooturlshortener.domain.Url;
@@ -18,7 +19,7 @@ public class UrlService {
 	private final UrlJpaRepository urlJpaRepository;
 
 	public UrlCreateResponse saveUrl(UrlCreateRequest urlCreateRequest) {
-		UrlShortenService urlShortenService = UrlShortenService.from(urlCreateRequest.strategy());
+		UrlShortenService urlShortenService = ShortenServiceGenerator.from(urlCreateRequest.strategy());
 
 		Url url = UrlCreateRequest.from(urlCreateRequest);
 		urlJpaRepository.save(url);
