@@ -74,8 +74,10 @@ class UrlShortenerApiControllerTest {
         }
 
         static Stream<Arguments> provideInvalidUrls() {
+            String overLengthUrl = "https://".concat("a".repeat(2000));
             return Stream.of(
-                    Arguments.of(new ShortenUrlCreateRequest(null))
+                    Arguments.of(new ShortenUrlCreateRequest(null)),
+                    Arguments.of(new ShortenUrlCreateRequest(overLengthUrl))
             );
         }
     }
