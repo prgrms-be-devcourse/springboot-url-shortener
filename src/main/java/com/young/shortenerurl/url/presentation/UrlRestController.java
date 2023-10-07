@@ -49,10 +49,10 @@ public class UrlRestController {
     }
 
     @GetMapping(
-            value = "/visitCount/{encodedUrl}",
+            value = "/encodedUrl/{encodedUrl}",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UrlInfoFindApiResponse> findUrlInfo(@PathVariable String encodedUrl) {
-        UrlInfoFindResponse response = urlService.findUrlInfo(encodedUrl);
+        UrlInfoFindResponse response = urlService.findUrlInfoByEncodedUrl(encodedUrl);
 
         UrlInfoFindApiResponse apiResponse = UrlInfoFindApiResponse.of(response, URL_PRE_FIX);
 

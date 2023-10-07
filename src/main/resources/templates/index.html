@@ -113,7 +113,7 @@
             var encodedUrl = fullUrl.split('/').pop();
 
             $.ajax({
-                url: '/api/urls/visitCount/' + encodedUrl,
+                url: '/api/urls/encodedUrl/' + encodedUrl,
                 type: 'GET',
                 success: function(data) {
                     console.log(data);

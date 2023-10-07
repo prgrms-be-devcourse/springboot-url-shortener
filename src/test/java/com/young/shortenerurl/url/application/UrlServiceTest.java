@@ -109,7 +109,7 @@ class UrlServiceTest {
         urlService.findOriginUrl(setupUrl.getEncodedUrl());
 
         //when
-        UrlInfoFindResponse response = urlService.findUrlInfo(setupUrl.getEncodedUrl());
+        UrlInfoFindResponse response = urlService.findUrlInfoByEncodedUrl(setupUrl.getEncodedUrl());
 
         //then
         assertThat(response.originUrl()).isEqualTo(setupUrl.getOriginUrl());

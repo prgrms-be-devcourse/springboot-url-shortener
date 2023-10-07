@@ -45,7 +45,7 @@ public class UrlService {
     }
 
     @Transactional(readOnly = true)
-    public UrlInfoFindResponse findUrlInfo(String encodedUrl) {
+    public UrlInfoFindResponse findUrlInfoByEncodedUrl(String encodedUrl) {
         Url findUrl = urlRepository.getByEncodedUrl(encodedUrl);
 
         return UrlInfoFindResponse.from(findUrl);
