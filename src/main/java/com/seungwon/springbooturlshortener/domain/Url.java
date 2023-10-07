@@ -1,5 +1,10 @@
 package com.seungwon.springbooturlshortener.domain;
 
+import org.apache.commons.validator.routines.UrlValidator;
+
+import com.seungwon.springbooturlshortener.exception.InvalidUrlException;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,21 +23,29 @@ public class Url {
 
 	private String originalUrl;
 
+	@Column(unique = true)
 	private String shortUrlKey;
 
 	private static final int KEY_MAX_LENGTH = 7;
 
 	public Url(String originalUrl) {
+		if (!isValid(originalUrl)) {
+			throw new InvalidUrlException();
+		}
+
 		this.originalUrl = originalUrl;
+	}
+
+	public boolean isValid(String url) {
+		UrlValidator validator = new UrlValidator();
+
+		return validator.isValid(url);
 	}
 
 	public void saveShortUrlKey(String shortUrlKey) {
 		if (shortUrlKey.length() > KEY_MAX_LENGTH) {
 			shortUrlKey = shortUrlKey.substring(0, KEY_MAX_LENGTH);
 		}
-
 		this.shortUrlKey = shortUrlKey;
 	}
-
-	//TODO : 필터링할 링크(https만 할지, 차단할 도메인 있을지)
 }

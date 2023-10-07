@@ -7,15 +7,13 @@ import com.seungwon.springbooturlshortener.domain.Url;
 import jakarta.validation.constraints.NotBlank;
 import lombok.NonNull;
 
-public record UrlCreateRequest(
+public record UrlCountRequest (
 	@NonNull
 	@NotBlank
 	@URL(message = "유효한 URL이 아닙니다.")
-	String originalUrl,
-
-	String strategy
-) {
-	public static Url from(UrlCreateRequest urlCreateRequest) {
-		return new Url(urlCreateRequest.originalUrl);
+	String originalUrl
+){
+	public static Url from(UrlCountRequest urlCountRequest) {
+		return new Url(urlCountRequest.originalUrl);
 	}
 }

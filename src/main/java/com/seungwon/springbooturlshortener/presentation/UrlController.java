@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -26,7 +27,6 @@ public class UrlController {
 
 	private final UrlService urlService;
 
-	//TODO : exception handler
 	@PostMapping("/api/urls")
 	public ResponseEntity<UrlCreateResponse> urlSave(@Validated @RequestBody UrlCreateRequest urlCreateRequest) {
 		UrlCreateResponse urlCreateResponse = urlService.saveUrl(urlCreateRequest);
@@ -46,8 +46,15 @@ public class UrlController {
 		String originalUrl = urlService.loadUrl(key);
 
 		HttpHeaders httpHeader = new HttpHeaders();
-		httpHeader.setLocation(URI.create(originalUrl)); //TODO
+		httpHeader.setLocation(URI.create(originalUrl));
 
-		return new ResponseEntity<>(httpHeader, MOVED_PERMANENTLY); // TODO : status 301,302,303
+		return new ResponseEntity<>(httpHeader, MOVED_PERMANENTLY);
+	}
+
+	@GetMapping("/api/counts")
+	public ResponseEntity<Integer> urlCount(@RequestParam String url) {
+		Integer count = urlService.countUrl(url);
+
+		return ResponseEntity.ok(count);
 	}
 }

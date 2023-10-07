@@ -31,6 +31,8 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'commons-codec:commons-codec:1.9'
+	implementation 'commons-validator:commons-validator:1.7'
 }
 
 tasks.named('test') {

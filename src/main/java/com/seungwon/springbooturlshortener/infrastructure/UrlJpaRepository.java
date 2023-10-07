@@ -8,4 +8,6 @@ import com.seungwon.springbooturlshortener.domain.Url;
 public interface UrlJpaRepository extends JpaRepository<Url, Long> {
 
 	Url findByShortUrlKey(@Param("shortUrlKey") String shortUrlKey);
+
+	int countByOriginalUrl(@Param("originalUrl") String originalUrl);
 }
