@@ -13,10 +13,10 @@ public record UrlMappingResponse(
     public static UrlMappingResponse of(UrlMappingResult result) {
         return new UrlMappingResponse(
                 result.id(),
-                result.originUrl().getOriginUrlText(),
-                result.shortUrl().getShortUrlText(),
-                result.algorithm().name(),
-                result.requestCount().getRequestCount()
+                result.originUrlText(),
+                result.shortUrlText(),
+                result.algorithmName(),
+                result.requestCountValue()
         );
     }
 

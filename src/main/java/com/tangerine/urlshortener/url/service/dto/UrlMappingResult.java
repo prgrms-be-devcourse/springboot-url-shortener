@@ -24,4 +24,19 @@ public record UrlMappingResult(
         );
     }
 
+    public String originUrlText() {
+        return originUrl.getOriginUrlText();
+    }
+
+    public String shortUrlText() {
+        return shortUrl.getShortUrlText();
+    }
+
+    public String algorithmName() {
+        return algorithm.name();
+    }
+
+    public long requestCountValue() {
+        return requestCount.getRequestCount();
+    }
 }
