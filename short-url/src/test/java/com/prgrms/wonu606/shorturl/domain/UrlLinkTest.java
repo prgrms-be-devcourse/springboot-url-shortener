@@ -80,15 +80,15 @@ class UrlLinkTest {
             return Stream.of(
                     Arguments.of(new UrlLink(
                             new Url("https://example.com"),
-                            new HashedShortUrl("12345678")
+                            new UrlHash("12345678")
                     )),
                     Arguments.of(new UrlLink(
                             new Url("https://www.example.com"),
-                            new HashedShortUrl("123abcd")
+                            new UrlHash("123abcd")
                     )),
                     Arguments.of(new UrlLink(
                             new Url("https://www.example.com/index"),
-                            new HashedShortUrl("ABC12ab")
+                            new UrlHash("ABC12ab")
                     ))
             );
         }

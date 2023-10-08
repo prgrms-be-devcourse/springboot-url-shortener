@@ -7,7 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class HashedShortUrlTest {
+class UrlHashTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
@@ -21,7 +21,7 @@ class HashedShortUrlTest {
     }
     )
     void givenValidHashedUrl_CreatingHashedShortUrl(String validHash) {
-        assertThatCode(() -> new HashedShortUrl(validHash))
+        assertThatCode(() -> new UrlHash(validHash))
                 .doesNotThrowAnyException();
     }
 
@@ -34,7 +34,7 @@ class HashedShortUrlTest {
             "1a2b3c4d5"
     })
     void givenInvalidHashedUrl_throwException(String invalidHash) {
-        assertThatThrownBy(() -> new HashedShortUrl(invalidHash))
+        assertThatThrownBy(() -> new UrlHash(invalidHash))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

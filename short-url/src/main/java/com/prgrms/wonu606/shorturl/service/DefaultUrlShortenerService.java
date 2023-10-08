@@ -1,32 +1,31 @@
 package com.prgrms.wonu606.shorturl.service;
 
-import com.prgrms.wonu606.shorturl.domain.HashedShortUrl;
-import com.prgrms.wonu606.shorturl.domain.ShortenUrlRepository;
+import com.prgrms.wonu606.shorturl.domain.UrlHash;
 import com.prgrms.wonu606.shorturl.domain.Url;
 import com.prgrms.wonu606.shorturl.domain.UrlLink;
 import com.prgrms.wonu606.shorturl.service.dto.ShortenUrlCreateParam;
 import com.prgrms.wonu606.shorturl.service.dto.ShortenUrlCreateResult;
-import com.prgrms.wonu606.shorturl.service.shorturlhashgenerator.UniqueShortUrlHashGenerator;
+import com.prgrms.wonu606.shorturl.service.shorturlhashgenerator.UniqueUrlHashCreator;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DefaultUrlShortenerService implements UrlShortenerService {
 
     private final ShortenUrlRepository shortenUrlRepository;
-    private final UniqueShortUrlHashGenerator uniqueShortUrlHashGenerator;
+    private final UniqueUrlHashCreator uniqueUrlHashCreator;
 
     public DefaultUrlShortenerService(ShortenUrlRepository shortenUrlRepository,
-            UniqueShortUrlHashGenerator uniqueShortUrlHashGenerator) {
+            UniqueUrlHashCreator uniqueUrlHashCreator) {
         this.shortenUrlRepository = shortenUrlRepository;
-        this.uniqueShortUrlHashGenerator = uniqueShortUrlHashGenerator;
+        this.uniqueUrlHashCreator = uniqueUrlHashCreator;
     }
 
     @Override
     public ShortenUrlCreateResult createShortenUrlHash(ShortenUrlCreateParam param) {
         Url originalUrl = new Url(param.originalUrl());
-        HashedShortUrl uniqueHashedShortUrlHash = uniqueShortUrlHashGenerator.generateUniqueShortUrlHash(originalUrl);
+        UrlHash uniqueUrlHashHash = uniqueUrlHashCreator.create(originalUrl);
 
-        UrlLink createdUrlLink = new UrlLink(originalUrl, uniqueHashedShortUrlHash);
+        UrlLink createdUrlLink = new UrlLink(originalUrl, uniqueUrlHashHash);
         shortenUrlRepository.save(createdUrlLink);
 
         return new ShortenUrlCreateResult(createdUrlLink.getHashedShortUrl().value());

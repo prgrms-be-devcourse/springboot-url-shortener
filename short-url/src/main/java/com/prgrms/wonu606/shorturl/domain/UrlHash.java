@@ -2,13 +2,13 @@ package com.prgrms.wonu606.shorturl.domain;
 
 import org.apache.commons.lang3.StringUtils;
 
-public record HashedShortUrl(
+public record UrlHash(
         String value
 ) {
 
     private static final int MAX_LENGTH = 8;
 
-    public HashedShortUrl {
+    public UrlHash {
         validate(value);
     }
 

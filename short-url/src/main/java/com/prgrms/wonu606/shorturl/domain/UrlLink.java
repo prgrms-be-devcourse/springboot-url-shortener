@@ -4,11 +4,11 @@ public class UrlLink {
 
     private Long id;
     private final Url originalUrl;
-    private final HashedShortUrl hashedShortUrl;
+    private final UrlHash urlHash;
 
-    public UrlLink(Url originalUrl, HashedShortUrl hashedShortUrl) {
+    public UrlLink(Url originalUrl, UrlHash urlHash) {
         this.originalUrl = originalUrl;
-        this.hashedShortUrl = hashedShortUrl;
+        this.urlHash = urlHash;
     }
 
     public void initializeId(Long newId) {
@@ -21,8 +21,8 @@ public class UrlLink {
         this.id = newId;
     }
 
-    public HashedShortUrl getHashedShortUrl() {
-        return hashedShortUrl;
+    public UrlHash getHashedShortUrl() {
+        return urlHash;
     }
 
     public long getId() {
