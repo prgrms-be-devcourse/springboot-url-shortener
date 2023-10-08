@@ -12,14 +12,11 @@ import shortener.application.dto.response.ShortUrlCreateResponse;
 import shortener.domain.ClicksCacheRepository;
 import shortener.domain.OriginalUrlCacheRepository;
 import shortener.domain.ShortUrl;
-import shortener.domain.UrlEncoder;
 import shortener.global.error.ErrorCode;
 import shortener.global.error.exception.EntityNotFoundException;
 import shortener.infrastructure.ShortUrlJpaRepository;
+import shortener.infrastructure.urlencoder.UrlEncoder;
 
-// todo: 해결하지 못한 점 : 레디스 연결 자체에 문제가 생길 경우 예외처리를 하는 방법..? -> 컨트롤러에서 잡아라..!
-// todo: 왜 스케줄러 업데이트가 안되는지..? -> 1순위
-// todo: 왜 리다이렉션 이후에 favicon.ico도 요청으로 들어오는지? -> 2순위
 @Slf4j
 @Transactional
 @Service
@@ -28,38 +25,24 @@ public class ShortenerService {
 	private final ShortUrlJpaRepository shortUrlRepository;
 	private final OriginalUrlCacheRepository originalUrlCacheRepository;
 	private final ClicksCacheRepository clicksCacheRepository;
-	private final UrlEncoder urlEncoder;
 
 	public ShortenerService(
 		ShortUrlJpaRepository shortUrlRepository,
 		@Qualifier("originalUrlRedisCacheRepository")
 		OriginalUrlCacheRepository originalUrlCacheRepository,
 		@Qualifier("clicksRedisCacheRepository")
-		ClicksCacheRepository clicksCacheRepository,
-		UrlEncoder urlEncoder
+		ClicksCacheRepository clicksCacheRepository
 	) {
 		this.shortUrlRepository = shortUrlRepository;
 		this.originalUrlCacheRepository = originalUrlCacheRepository;
 		this.clicksCacheRepository = clicksCacheRepository;
-		this.urlEncoder = urlEncoder;
 	}
 
-	public ShortUrlCreateResponse createShortUrl(String originalUrl) {
-		log.info("Start creating new shortUrl Entity...");
-		ShortUrl newShortUrl = new ShortUrl(originalUrl);
-		ShortUrl savedShortUrl = shortUrlRepository.save(newShortUrl);
-		log.info("Success to create new Entity(id({}))", savedShortUrl.getId());
-
-		log.info("Start encoding new shortUrl...");
-		String encodedUrl = urlEncoder.encode(savedShortUrl, originalUrl);
-
-		log.info("Start saving new shortUrl({}) in master database...", encodedUrl);
-		savedShortUrl.updateEncodedUrl(encodedUrl);
-		log.info("Success to save new shortUrl");
-
+	public ShortUrlCreateResponse saveNewShortUrl(String originalUrl, int algorithmId) {
+		ShortUrl newShortUrl = saveShortUrlInMaster(originalUrl, algorithmId);
 		saveOriginalUrlAndClicksInCache(newShortUrl);
 
-		return ShortUrlCreateResponse.of(savedShortUrl);
+		return ShortUrlCreateResponse.of(newShortUrl);
 	}
 
 	public String findOriginalUrl(String encodedUrl) {
@@ -107,6 +90,22 @@ public class ShortenerService {
 		saveOriginalUrlAndClicksInCache(shortUrl);
 
 		return ClicksResponse.of(encodedUrl, clicks);
+	}
+
+	private ShortUrl saveShortUrlInMaster(String originalUrl, int algorithmId) {
+		log.info("Start creating new shortUrl Entity...");
+		ShortUrl newShortUrl = new ShortUrl(originalUrl);
+		ShortUrl savedShortUrl = shortUrlRepository.save(newShortUrl);
+		log.info("Success to create new Entity(id({}))", savedShortUrl.getId());
+
+		log.info("Start encoding new shortUrl...");
+		String encodedUrl = UrlEncoder.getShortUrl(savedShortUrl, algorithmId);
+
+		log.info("Start saving new shortUrl({}) in master database...", encodedUrl);
+		savedShortUrl.updateEncodedUrl(encodedUrl);
+		log.info("Success to save new shortUrl");
+
+		return savedShortUrl;
 	}
 
 	private void saveOriginalUrlAndClicksInCache(ShortUrl shortUrl) {
