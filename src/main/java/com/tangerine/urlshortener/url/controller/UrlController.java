@@ -9,6 +9,7 @@ import com.tangerine.urlshortener.url.model.vo.ShortUrl;
 import com.tangerine.urlshortener.url.service.UrlService;
 import com.tangerine.urlshortener.url.service.dto.UrlMappingResult;
 import com.tangerine.urlshortener.url.service.dto.UrlMappingResults;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UrlController {
+
+    private static final int DEFAULT_PAGE_SIZE = 10;
 
     private final UrlService urlService;
 
@@ -72,15 +76,16 @@ public class UrlController {
      * 모든 매핑 정보 조회
      *
      * @param model
-     * @param pageable
+     * @param page
      * @return "mapping-info"
      */
     @GetMapping(path = "/mappings")
     public String mappingInfos(
             Model model,
-            Pageable pageable
+            @RequestParam(defaultValue = "0") int page
     ) {
-        UrlMappingResults allMappings = urlService.findAllMappings(pageable);
+        PageRequest pageRequest = PageRequest.of(page, DEFAULT_PAGE_SIZE);
+        UrlMappingResults allMappings = urlService.findAllMappings(pageRequest);
         UrlMappingResponses mappings = UrlMappingResponses.of(allMappings);
         PageInfo pageInfo = PageInfo.from(
                 mappings.results().getPageable(),
