@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.RequestBuilder;
 
 @WebMvcTest(UrlShortenerApiController.class)
 @Import({UrlShortenerApiParamMapperImpl.class, UrlShortenerApiResponseMapperImpl.class})
-@TestPropertySource(locations = "/application.properties")
+@TestPropertySource(locations = "/application.yaml")
 public class UrlShortenerApiControllerMockTest {
 
     private static final String API_URL = "/api/shorten-url";
@@ -46,7 +46,7 @@ public class UrlShortenerApiControllerMockTest {
     UrlShortenerService urlShortenerService;
 
     @Nested
-    class GenerateShortenedUrlTest {
+    class GenerateShortenedUrlMethodTests {
 
         @ParameterizedTest
         @MethodSource("provideValidUrls")

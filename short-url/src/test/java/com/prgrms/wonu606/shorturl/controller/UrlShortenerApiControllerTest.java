@@ -34,7 +34,7 @@ class UrlShortenerApiControllerTest {
     ObjectMapper objectMapper;
 
     @Nested
-    class GenerateShortenedUrlTest {
+    class GenerateShortenedUrlMethodTests {
 
         @ParameterizedTest
         @MethodSource("provideValidUrls")

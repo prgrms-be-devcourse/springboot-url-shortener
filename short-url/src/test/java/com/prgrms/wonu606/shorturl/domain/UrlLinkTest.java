@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 class UrlLinkTest {
 
     @Nested
-    class InitializeId {
+    class InitializeIdMethodTests {
 
         @ParameterizedTest
         @MethodSource("provideUrlLinkAndValidIdArguments")
