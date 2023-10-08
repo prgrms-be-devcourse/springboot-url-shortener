@@ -9,8 +9,8 @@ import lombok.NonNull;
 
 public record UrlCreateRequest(
 	@NonNull
-	@NotBlank
-	@URL(message = "유효한 URL이 아닙니다.")
+	@NotBlank(message = "단축하고자 하는 URL을 입력하세요.")
+	@URL(message = "유효하지 않은 url 입니다.")
 	String originalUrl,
 
 	String strategy

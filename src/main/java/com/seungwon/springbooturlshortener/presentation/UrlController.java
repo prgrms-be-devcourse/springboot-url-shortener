@@ -1,16 +1,13 @@
 package com.seungwon.springbooturlshortener.presentation;
 
-import static org.springframework.http.HttpStatus.MOVED_PERMANENTLY;
-
 import java.net.URI;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,11 +20,12 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/urls")
 public class UrlController {
 
 	private final UrlService urlService;
 
-	@PostMapping("/api/urls")
+	@PostMapping
 	public ResponseEntity<UrlCreateResponse> urlSave(@Validated @RequestBody UrlCreateRequest urlCreateRequest) {
 		UrlCreateResponse urlCreateResponse = urlService.saveUrl(urlCreateRequest);
 
@@ -41,17 +39,7 @@ public class UrlController {
 			.body(urlCreateResponse);
 	}
 
-	@GetMapping("/{key}")
-	public ResponseEntity<Object> urlLoad(@PathVariable String key) {
-		String originalUrl = urlService.loadUrl(key);
-
-		HttpHeaders httpHeader = new HttpHeaders();
-		httpHeader.setLocation(URI.create(originalUrl));
-
-		return new ResponseEntity<>(httpHeader, MOVED_PERMANENTLY);
-	}
-
-	@GetMapping("/api/counts")
+	@GetMapping("/counts")
 	public ResponseEntity<Integer> urlCount(@RequestParam String url) {
 		Integer count = urlService.countUrl(url);
 

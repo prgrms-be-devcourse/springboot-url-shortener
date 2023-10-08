@@ -1,0 +1,22 @@
+.content {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.title {
+    text-align: center;
+}
+
+.buttonGroup {
+    align-content: center;
+    justify-content: center;
+    margin: 5px;
+}
+
+.result {
+    text-align: center;
+    font-weight: bolder;
+    margin: 5px;
+}

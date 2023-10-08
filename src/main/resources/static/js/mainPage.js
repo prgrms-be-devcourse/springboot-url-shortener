@@ -2,6 +2,7 @@ function loadShortUrl() {
     $("#t3-div-btn").remove();
     $("#info-button").remove();
     $("#statistics").text("");
+    $(".shortUrl").text("");
 
     const originalUrl = document.getElementById('originalUrl').value;
     const strategy = document.getElementById('strategy').value;
@@ -18,14 +19,12 @@ function loadShortUrl() {
         },
         success: function (data) {
             $("#t3-div").text(window.location.href + data.urlKey);
-            const container = document.getElementById('button-group');
+            const container = document.getElementById('buttonGroup');
             makeButton("t3-div-btn", "btn btn-secondary", "복사", container, () => copy("t3-div-btn"))
             makeButton("info-button", "btn btn-secondary", "통계", container, () => loadInfo());
         },
-        error: function () {
-            location.reload();
-            $("#result").remove();
-            alert("유효하지 않은 url 입니다. 다시 입력해주세요.");
+        error: function (xhr, status, errorThrown) {
+            alert(xhr.responseText);
         }
     });
 
@@ -35,7 +34,7 @@ function loadShortUrl() {
 
         $.ajax({
             type: 'GET',
-            url: '/api/counts?url='  + originalUrl,
+            url: '/api/urls/counts?url=' + originalUrl,
 
             success: function (data) {
                 $("#statistics").text("해당 사이트에 대한 요청 횟수 : " + data);
