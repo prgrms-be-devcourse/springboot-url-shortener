@@ -1,5 +1,8 @@
 package com.prgrms.wonu606.shorturl.domain;
 
+import lombok.Getter;
+
+@Getter
 public class UrlLink {
 
     private Long id;
@@ -19,13 +22,5 @@ public class UrlLink {
             throw new IllegalStateException("ID가 이미 할당되어 있습니다. Current ID: " + newId);
         }
         this.id = newId;
-    }
-
-    public UrlHash getHashedShortUrl() {
-        return urlHash;
-    }
-
-    public long getId() {
-        return id;
     }
 }

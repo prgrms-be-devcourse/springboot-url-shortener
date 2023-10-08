@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class DefaultUrlShortenerService implements UrlShortenerService {
 
-    private final ShortenUrlRepository shortenUrlRepository;
+    private final UrlLinkRepository urlLinkRepository;
     private final UniqueUrlHashCreator uniqueUrlHashCreator;
 
-    public DefaultUrlShortenerService(ShortenUrlRepository shortenUrlRepository,
+    public DefaultUrlShortenerService(UrlLinkRepository urlLinkRepository,
             UniqueUrlHashCreator uniqueUrlHashCreator) {
-        this.shortenUrlRepository = shortenUrlRepository;
+        this.urlLinkRepository = urlLinkRepository;
         this.uniqueUrlHashCreator = uniqueUrlHashCreator;
     }
 
@@ -26,8 +26,8 @@ public class DefaultUrlShortenerService implements UrlShortenerService {
         UrlHash uniqueUrlHashHash = uniqueUrlHashCreator.create(originalUrl);
 
         UrlLink createdUrlLink = new UrlLink(originalUrl, uniqueUrlHashHash);
-        shortenUrlRepository.save(createdUrlLink);
+        urlLinkRepository.save(createdUrlLink);
 
-        return new ShortenUrlCreateResult(createdUrlLink.getHashedShortUrl().value());
+        return new ShortenUrlCreateResult(createdUrlLink.getUrlHash().value());
     }
 }
