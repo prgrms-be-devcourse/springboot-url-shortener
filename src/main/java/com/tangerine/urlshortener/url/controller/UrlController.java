@@ -1,5 +1,8 @@
 package com.tangerine.urlshortener.url.controller;
 
+import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
+import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
+
 import com.tangerine.urlshortener.url.controller.dto.PageInfo;
 import com.tangerine.urlshortener.url.controller.dto.ShortenRequest;
 import com.tangerine.urlshortener.url.controller.dto.UrlMappingResponse;
@@ -10,15 +13,19 @@ import com.tangerine.urlshortener.url.service.UrlService;
 import com.tangerine.urlshortener.url.service.dto.UrlMappingResult;
 import com.tangerine.urlshortener.url.service.dto.UrlMappingResults;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping(produces = TEXT_HTML_VALUE)
 public class UrlController {
 
     private static final int DEFAULT_PAGE_SIZE = 10;
@@ -46,7 +53,7 @@ public class UrlController {
      * @param model
      * @return "mapping-info"
      */
-    @PostMapping(path = "/shortener")
+    @PostMapping(path = "/shortener", consumes = APPLICATION_FORM_URLENCODED_VALUE)
     public String shortenOriginUrl(
             @ModelAttribute ShortenRequest shortenRequest,
             Model model
