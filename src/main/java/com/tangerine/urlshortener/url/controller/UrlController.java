@@ -74,8 +74,8 @@ public class UrlController {
     public String redirectToOriginUrl(
             @PathVariable String shortUrl
     ) {
-        OriginUrl originUrl = urlService.findOriginUrl(new ShortUrl(shortUrl));
-        return "redirect:" + originUrl.getOriginUrlText();
+        return urlService.findOriginUrl(new ShortUrl(shortUrl))
+                .redirect();
     }
 
     /**

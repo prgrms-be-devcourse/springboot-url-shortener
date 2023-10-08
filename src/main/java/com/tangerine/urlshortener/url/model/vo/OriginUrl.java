@@ -42,4 +42,8 @@ public class OriginUrl {
     public int hashCode() {
         return Objects.hash(originUrlText);
     }
+
+    public String redirect() {
+        return "redirect:%s".formatted(getOriginUrlText());
+    }
 }
