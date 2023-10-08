@@ -1,5 +1,6 @@
 package com.tangerine.urlshortener.url.service;
 
+import com.tangerine.urlshortener.global.ExistMappingException;
 import com.tangerine.urlshortener.url.model.UrlMapping;
 import com.tangerine.urlshortener.url.model.vo.OriginUrl;
 import com.tangerine.urlshortener.url.model.vo.RequestCount;
@@ -25,19 +26,17 @@ public class UrlService {
 
     @Transactional
     public UrlMappingResult createShortUrl(ShortenParam shortenParam) {
-        UrlMapping urlMapping = urlMappingJpaRepository.findByOriginUrl(shortenParam.originUrl())
-                .orElseGet(() -> urlMappingJpaRepository.save(
-                        new UrlMapping(
-                                shortenParam.originUrl(),
-                                new ShortUrl(),
-                                shortenParam.algorithm(),
-                                new RequestCount(0)
-                        )
-                ));
-        if (urlMapping.getShortUrl().isEmptyShortUrl()) {
-            String encoded = shortenParam.algorithm().encode(urlMapping.getId());
-            urlMapping.setShortUrl(new ShortUrl(encoded));
+        boolean isMappingExists = urlMappingJpaRepository.existsByOriginUrl(shortenParam.originUrl());
+
+        if (isMappingExists) {
+            throw new ExistMappingException("원본 URL에 대한 매핑이 이미 존재합니다.");
         }
+
+        UrlMapping urlMapping = urlMappingJpaRepository.save(
+                new UrlMapping(shortenParam.originUrl(), new ShortUrl(), shortenParam.algorithm(),
+                        new RequestCount(0)));
+        String encoded = shortenParam.algorithm().encode(urlMapping.getId());
+        urlMapping.setShortUrl(new ShortUrl(encoded));
         return UrlMappingResult.of(urlMapping);
     }
 

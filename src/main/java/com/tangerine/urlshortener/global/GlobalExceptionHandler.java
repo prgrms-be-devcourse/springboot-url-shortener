@@ -28,4 +28,11 @@ public class GlobalExceptionHandler {
         return "error/not-found";
     }
 
+    @ResponseStatus(BAD_REQUEST)
+    @ExceptionHandler(ExistMappingException.class)
+    public String existMappingExceptionHandler(ExistMappingException e) {
+        logger.warn("{} - {}", getClass().getSimpleName(), e);
+        return "error/bad-request";
+    }
+
 }
