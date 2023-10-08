@@ -1,7 +1,12 @@
 package shortener.infrastructure;
 
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.hibernate.exception.DataException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
@@ -52,5 +57,26 @@ public class ClicksRedisCacheRepository implements ClicksCacheRepository {
 		Long clicks = valueOperations.get(encodedUrl);
 
 		return Optional.ofNullable(clicks);
+	}
+
+	@Override
+	public Map<Long, Long> findAll(List<ShortUrl> shortUrls) {
+		log.info("Trying to map shortUrl id to clicks from cache...");
+		return shortUrls.stream()
+			.collect(Collectors.toConcurrentMap(shortUrl -> {
+				Long id = shortUrl.getId();
+				log.info("key(id): {}", id);
+
+				return id;
+			}, shortUrl -> {
+				String encodedUrl = shortUrl.getEncodedUrl();
+				Long clicks = Optional.ofNullable(valueOperations.get(encodedUrl))
+					.orElseThrow(() -> new RuntimeException(
+						MessageFormat.format("Can not find clicks for key({0})", encodedUrl)
+					));
+				log.info("value(clicks): {}", clicks);
+
+				return clicks;
+			}));
 	}
 }

@@ -10,13 +10,16 @@ import lombok.extern.slf4j.Slf4j;
 import shortener.application.dto.response.ClicksResponse;
 import shortener.application.dto.response.ShortUrlCreateResponse;
 import shortener.domain.ClicksCacheRepository;
-import shortener.domain.ShortUrl;
 import shortener.domain.OriginalUrlCacheRepository;
+import shortener.domain.ShortUrl;
 import shortener.domain.UrlEncoder;
 import shortener.global.error.ErrorCode;
 import shortener.global.error.exception.EntityNotFoundException;
 import shortener.infrastructure.ShortUrlJpaRepository;
 
+// todo: 해결하지 못한 점 : 레디스 연결 자체에 문제가 생길 경우 예외처리를 하는 방법..? -> 컨트롤러에서 잡아라..!
+// todo: 왜 스케줄러 업데이트가 안되는지..? -> 1순위
+// todo: 왜 리다이렉션 이후에 favicon.ico도 요청으로 들어오는지? -> 2순위
 @Slf4j
 @Transactional
 @Service
@@ -128,6 +131,4 @@ public class ShortenerService {
 		clicksCacheRepository.updateClicks(encodedUrl);
 		log.info("Success to update clicks in cache.");
 	}
-
-	// todo: 레디스 clicks 관련 스케줄링 필요
 }
