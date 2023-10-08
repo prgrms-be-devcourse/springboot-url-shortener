@@ -32,10 +32,12 @@ public class UrlRestController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UrlCreateApiResponse> createUrl(@RequestBody @Valid UrlCreateApiRequest request) {
         String encodedUrl = urlService.createUrl(mapper.toUrlCreateRequest(request));
-        UrlCreateApiResponse apiResponse = UrlCreateApiResponse.from(URL_PRE_FIX + encodedUrl);
+        String apiResponseUrl = URL_PRE_FIX + encodedUrl;
+
+        UrlCreateApiResponse apiResponse = UrlCreateApiResponse.from(apiResponseUrl);
 
         return ResponseEntity
-                .created(URI.create(URL_PRE_FIX + encodedUrl))
+                .created(URI.create(apiResponseUrl))
                 .body(apiResponse);
     }
 

@@ -22,7 +22,7 @@ public class Url {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 1000, nullable = false, updatable = false)
+    @Column(length = 2083, nullable = false, updatable = false)
     private String originUrl;
 
     @Embedded
