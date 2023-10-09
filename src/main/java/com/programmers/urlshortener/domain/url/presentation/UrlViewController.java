@@ -28,6 +28,12 @@ public class UrlViewController {
 		return "url/index";
 	}
 
+	@GetMapping("/shorts/forms")
+	public String searchShortUrlInformation() {
+
+		return "url/information-form";
+	}
+
 	@GetMapping("/shorts/{shortUrl}")
 	public String result(@PathVariable String shortUrl, Model model) {
 		String originalUrl = urlService.findOriginalUrlByShortUrl(shortUrl);
