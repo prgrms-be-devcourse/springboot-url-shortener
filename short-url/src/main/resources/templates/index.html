@@ -17,7 +17,10 @@
     </div>
     <button type="submit" class="btn btn-primary">Shorten</button>
   </form>
-  <div id="result" class="mt-4" style="display:none;"></div>
+  <div id="result" class="mt-4" style="display:none;">
+    <p id="shortenUrlText">Shortened URL: </p>
+    <button id="copyButton" class="btn btn-secondary">Copy to Clipboard</button>
+  </div>
 </main>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -25,6 +28,9 @@
     $("#shortenForm").submit(function (event) {
       event.preventDefault();
       submitUrl();
+    });
+    $("#copyButton").click(function () {
+      copyToClipboard();
     });
   });
 
@@ -48,7 +54,16 @@
   }
 
   function displayResult(shortenUrl) {
-    $("#result").text("Shortened URL: " + shortenUrl).show();
+    $("#shortenUrlText").text("Shortened URL: " + shortenUrl);
+    $("#result").show();
+  }
+
+  function copyToClipboard() {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val($("#shortenUrlText").text().replace("Shortened URL: ", "")).select();
+    document.execCommand("copy");
+    $temp.remove();
   }
 </script>
 </body>
