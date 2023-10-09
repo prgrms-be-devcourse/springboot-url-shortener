@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class UrlMappingTest {
 
     @Test
-    @DisplayName("올바른 정보로 생성한다.")
+    @DisplayName("유효한 값 객체 정보로 엔티티 생성한다.")
     void instance_Success() {
         // Given
         String originUrlText = "origin";
@@ -30,7 +30,7 @@ class UrlMappingTest {
     }
 
     @Test
-    @DisplayName("올바르지 않은 정보로 생성 실패한다.")
+    @DisplayName("유효하지 않은 값 객체 정보로 엔티티 생성 실패한다.")
     void instance_fail() {
         // Given
         String originUrlText = "";
