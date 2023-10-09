@@ -17,13 +17,16 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class Url {
 
-	private static final int KEY_MAX_LENGTH = 7;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String originalUrl;
+
 	@Column(unique = true)
 	private String shortUrlKey;
+
+	private static final int KEY_MAX_LENGTH = 7;
 
 	public Url(String originalUrl) {
 		if (!isValid(originalUrl)) {
