@@ -39,8 +39,8 @@ public class DefaultUrlShortenerService implements UrlShortenerService {
         UrlHash findUrlHash = new UrlHash(shortUrl);
 
         return urlLinkRepository.findByUrlHash(findUrlHash)
-                .map(UrlLink::getUrlHash)
-                .map(UrlHash::value)
+                .map(UrlLink::getOriginalUrl)
+                .map(Url::value)
                 .orElseThrow(() -> new UrlNotFoundException("존재 하지 않는 Short URL입니다. Current Short Url: " + shortUrl));
     }
 
