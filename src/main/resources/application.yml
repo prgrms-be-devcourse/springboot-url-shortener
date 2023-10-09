@@ -1,10 +1,4 @@
 spring:
-  datasource:
-    url: jdbc:h2:tcp://localhost/~/urlShortener
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-
   jpa:
     hibernate:
       ddl-auto: create
@@ -12,6 +6,10 @@ spring:
       hibernate:
 #        show_sql: true
         format_sql: true
+
+  profiles:
+    active: db
+
 logging.level:
   org.hibernate.SQL: debug
 # org.hibernate.type: trace
