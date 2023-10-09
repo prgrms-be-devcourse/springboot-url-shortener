@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{fragments/head::headFragment}"></head>
+<title>URL Mapping Info</title>
+<body>
+<div class="d-grid gap-2 justify-content-md-center">
+  <br/>
+  <h1>단축 URL 상세 페이지</h1>
+
+  <form>
+    <fieldset disabled>
+
+      <div class="mb-3">
+        <label class="form-label" for="disabledTextInput1">ID</label>
+        <input class="form-control" id="disabledTextInput1" placeholder="Id"
+               th:placeholder="${mapping.id()}"
+               type="text">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="disabledSelect">ALGORITHM</label>
+        <select class="form-select" id="disabledSelect">
+          <option th:text="${mapping.algorithm()}">NORMAL</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="originUrl">ORIGIN URL</label>
+        <input class="form-control" id="originUrl" placeholder="Amount"
+               th:placeholder="${mapping.originUrl()}"
+               type="text">
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="shortUrl">SHORT URI</label>
+        <input class="form-control" id="shortUrl" placeholder="Amount"
+               th:placeholder="${mapping.shortUrl()}"
+               type="text">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="requestNum">REQUEST COUNT</label>
+        <input class="form-control" id="requestNum" placeholder="CreatedAt"
+               th:placeholder="${mapping.requestCount()}"
+               type="text">
+      </div>
+    </fieldset>
+  </form>
+  <div>
+    <a class="btn btn-outline-primary btn-lg"
+       th:href="@{http://localhost:8080/{param1}(param1=${mapping.shortUrl()})}" type="button">
+      🚀 URL 바로가기 🚀
+    </a>
+    <a class="btn btn-outline-primary btn-lg" href="/" type="button">🏠 홈으로 🏠</a>
+  </div>
+
+
+</div>
+</body>
+</html>
