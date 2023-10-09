@@ -1,6 +1,5 @@
 package com.programmers.urlshortener.domain.url.application;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
@@ -42,5 +41,12 @@ public class UrlService {
 			.orElseThrow(() -> new RuntimeException());
 
 		return ShortUrlResponse.from(url);
+	}
+
+	public void deleteByShortUrl(String shortUrl) {
+		Url url = urlRepository.findByShortUrl(shortUrl)
+			.orElseThrow(() -> new RuntimeException());
+
+		urlRepository.delete(url);
 	}
 }

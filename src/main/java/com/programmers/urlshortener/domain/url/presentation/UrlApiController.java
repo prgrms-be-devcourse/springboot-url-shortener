@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,5 +33,12 @@ public class UrlApiController {
 		ShortUrlResponse shortUrlResponse = urlService.findByShortUrl(shortUrl);
 
 		return ResponseEntity.ok(shortUrlResponse);
+	}
+
+	@DeleteMapping("/api/{shortUrl}")
+	public ResponseEntity<Void> deleteByShortUrl(@PathVariable String shortUrl) {
+		urlService.deleteByShortUrl(shortUrl);
+
+		return ResponseEntity.ok(null);
 	}
 }
