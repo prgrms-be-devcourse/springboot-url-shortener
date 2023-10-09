@@ -12,6 +12,8 @@ import com.programmers.urlshortener.domain.url.application.dto.request.ShortUrlC
 import com.programmers.urlshortener.domain.url.application.dto.response.ShortUrlResponse;
 import com.programmers.urlshortener.domain.url.domain.Url;
 import com.programmers.urlshortener.domain.url.domain.UrlRepository;
+import com.programmers.urlshortener.global.error.ErrorCode;
+import com.programmers.urlshortener.global.error.exception.EntityNotFoundException;
 
 @Transactional
 @RequiredArgsConstructor
@@ -38,7 +40,7 @@ public class UrlService {
 	@Transactional(readOnly = true)
 	public ShortUrlResponse findByShortUrl(String shortUrl) {
 		Url url = urlRepository.findByShortUrl(shortUrl)
-			.orElseThrow(() -> new RuntimeException());
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.URL_NOT_FOUND));
 
 		return ShortUrlResponse.from(url);
 	}
@@ -46,14 +48,14 @@ public class UrlService {
 	@Transactional(readOnly = true)
 	public String findOriginalUrlByShortUrl(String shortUrl) {
 		Url url = urlRepository.findByShortUrl(shortUrl)
-			.orElseThrow(() -> new RuntimeException());
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.URL_NOT_FOUND));
 
 		return url.getOriginalUrl();
 	}
 
 	public ShortUrlResponse updateRequestCount(String shortUrl) {
 		Url url = urlRepository.findByShortUrl(shortUrl)
-			.orElseThrow(() -> new RuntimeException());
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.URL_NOT_FOUND));
 
 		url.addRequestCount();
 
@@ -63,7 +65,7 @@ public class UrlService {
 
 	public void deleteByShortUrl(String shortUrl) {
 		Url url = urlRepository.findByShortUrl(shortUrl)
-			.orElseThrow(() -> new RuntimeException());
+			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.URL_NOT_FOUND));
 
 		urlRepository.delete(url);
 	}

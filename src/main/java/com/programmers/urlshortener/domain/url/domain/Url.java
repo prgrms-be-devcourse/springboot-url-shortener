@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
 
 import com.programmers.urlshortener.domain.BaseEntity;
 import com.programmers.urlshortener.domain.encoder.domain.EncoderType;
+import com.programmers.urlshortener.global.error.ErrorCode;
+import com.programmers.urlshortener.global.error.exception.InvalidValueException;
 
 @Getter
 @Entity
@@ -58,7 +60,7 @@ public class Url extends BaseEntity {
 
 	public void validateUrlFormat(String url) {
 		if (url == null || url.isEmpty() || !Pattern.matches(URL_REGEX, url)) {
-			throw new RuntimeException();
+			throw new InvalidValueException(ErrorCode.INVALID_URL_VALUE);
 		}
 	}
 
