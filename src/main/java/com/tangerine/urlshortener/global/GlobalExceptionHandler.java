@@ -3,6 +3,8 @@ package com.tangerine.urlshortener.global;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import com.tangerine.urlshortener.global.exception.ExistMappingException;
+import com.tangerine.urlshortener.global.exception.NotFoundMappingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;

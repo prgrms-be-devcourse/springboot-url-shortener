@@ -18,7 +18,8 @@ public class RequestCount {
         this.requestCount = requestCount;
     }
 
-    protected RequestCount() {
+    public RequestCount() {
+        this.requestCount = 0;
     }
 
     public static RequestCount addCount(RequestCount requestCount) {

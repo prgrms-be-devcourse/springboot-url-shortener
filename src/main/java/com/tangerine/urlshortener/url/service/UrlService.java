@@ -1,9 +1,8 @@
 package com.tangerine.urlshortener.url.service;
 
-import com.tangerine.urlshortener.global.ExistMappingException;
+import com.tangerine.urlshortener.global.exception.ExistMappingException;
 import com.tangerine.urlshortener.url.model.UrlMapping;
 import com.tangerine.urlshortener.url.model.vo.OriginUrl;
-import com.tangerine.urlshortener.url.model.vo.RequestCount;
 import com.tangerine.urlshortener.url.model.vo.ShortUrl;
 import com.tangerine.urlshortener.url.repository.UrlMappingJpaRepository;
 import com.tangerine.urlshortener.url.service.dto.ShortenParam;
@@ -33,8 +32,9 @@ public class UrlService {
         }
 
         UrlMapping urlMapping = urlMappingJpaRepository.save(
-                new UrlMapping(shortenParam.originUrl(), new ShortUrl(), shortenParam.algorithm(),
-                        new RequestCount(0)));
+                new UrlMapping(
+                        shortenParam.originUrl(),
+                        shortenParam.algorithm()));
         String encoded = shortenParam.algorithm().encode(urlMapping.getId());
         urlMapping.setShortUrl(new ShortUrl(encoded));
         return UrlMappingResult.of(urlMapping);

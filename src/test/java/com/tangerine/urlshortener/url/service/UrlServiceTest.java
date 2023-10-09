@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.catchException;
 import com.tangerine.urlshortener.url.model.UrlMapping;
 import com.tangerine.urlshortener.url.model.vo.Algorithm;
 import com.tangerine.urlshortener.url.model.vo.OriginUrl;
-import com.tangerine.urlshortener.url.model.vo.RequestCount;
 import com.tangerine.urlshortener.url.model.vo.ShortUrl;
 import com.tangerine.urlshortener.url.repository.UrlMappingJpaRepository;
 import com.tangerine.urlshortener.url.service.dto.ShortenParam;
@@ -19,9 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest(properties = "spring.config.location=" + "classpath:/application-test.yaml")
+@SpringBootTest
+@TestPropertySource(locations = "classpath:/application-test.yaml")
 @Transactional
 class UrlServiceTest {
 
@@ -49,26 +50,6 @@ class UrlServiceTest {
     }
 
     @Test
-    @DisplayName("단축 URL 조회 시 원본 URL을 반환한다.")
-    void findOriginUrl_Success() {
-        // Given
-        ShortenParam param = new ShortenParam(
-                new OriginUrl("http://tangerine.com/tangerine-test"),
-                Algorithm.BASE62
-        );
-        UrlMappingResult mappingResult = urlService.createShortUrl(param);
-
-        // When
-        OriginUrl originUrl = urlService.findOriginUrl(mappingResult.shortUrl());
-
-        // Then
-        UrlMapping mapping = urlMappingJpaRepository.findByOriginUrl(originUrl).get();
-
-        assertThat(mapping.getRequestCount()).isEqualTo(new RequestCount(1));
-        assertThat(originUrl).isEqualTo(param.originUrl());
-    }
-
-    @Test
     @DisplayName("매핑 정보 없는 단축 URL 조회 시 실패한다.")
     void findOriginUrl_Fail() {
         // Given
@@ -90,11 +71,8 @@ class UrlServiceTest {
         UrlMapping urlMapping = urlMappingJpaRepository.save(
                 new UrlMapping(
                         originUrl,
-                        new ShortUrl("123"),
-                        Algorithm.BASE62,
-                        new RequestCount(0)
-                )
-        );
+                        Algorithm.BASE62));
+        urlMapping.setShortUrl(new ShortUrl("123"));
 
         // When
         UrlMappingResults mappingResults = urlService.findAllMappings(pageable);

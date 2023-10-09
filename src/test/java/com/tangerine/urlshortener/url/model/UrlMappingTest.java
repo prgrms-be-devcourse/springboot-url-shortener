@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.catchException;
 
 import com.tangerine.urlshortener.url.model.vo.Algorithm;
 import com.tangerine.urlshortener.url.model.vo.OriginUrl;
-import com.tangerine.urlshortener.url.model.vo.RequestCount;
 import com.tangerine.urlshortener.url.model.vo.ShortUrl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,9 +22,7 @@ class UrlMappingTest {
         UrlMapping urlMapping = new UrlMapping(
                 new OriginUrl(originUrlText),
                 new ShortUrl(shortUrlText),
-                Algorithm.BASE62,
-                new RequestCount(0)
-        );
+                Algorithm.BASE62);
 
         // Then
         assertThat(urlMapping.getOriginUrl()).isEqualTo(new OriginUrl(originUrlText));
@@ -37,16 +34,12 @@ class UrlMappingTest {
     void instance_fail() {
         // Given
         String originUrlText = "";
-        String shortUrlText = "short";
 
         // When
         Exception exception = catchException(() ->
                 new UrlMapping(
                         new OriginUrl(originUrlText),
-                        new ShortUrl(shortUrlText),
-                        Algorithm.BASE62,
-                        new RequestCount(-1)
-                ));
+                        Algorithm.BASE62));
 
         // Then
         assertThat(exception).isInstanceOf(IllegalArgumentException.class);

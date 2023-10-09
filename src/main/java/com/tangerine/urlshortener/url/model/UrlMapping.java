@@ -35,11 +35,17 @@ public class UrlMapping {
     @Embedded
     private RequestCount requestCount;
 
-    public UrlMapping(OriginUrl originUrl, ShortUrl shortUrl, Algorithm algorithm, RequestCount requestCount) {
+    public UrlMapping(OriginUrl originUrl, Algorithm algorithm) {
+        this.originUrl = originUrl;
+        this.shortUrl = new ShortUrl();
+        this.algorithm = algorithm;
+        this.requestCount = new RequestCount();
+    }
+
+    public UrlMapping(OriginUrl originUrl, ShortUrl shortUrl, Algorithm algorithm) {
         this.originUrl = originUrl;
         this.shortUrl = shortUrl;
         this.algorithm = algorithm;
-        this.requestCount = requestCount;
     }
 
     protected UrlMapping() {

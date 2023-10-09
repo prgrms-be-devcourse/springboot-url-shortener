@@ -1,4 +1,4 @@
-package com.tangerine.urlshortener.global;
+package com.tangerine.urlshortener.global.exception;
 
 public class ExistMappingException extends RuntimeException {
 
