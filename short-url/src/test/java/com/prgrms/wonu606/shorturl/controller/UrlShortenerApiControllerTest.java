@@ -34,7 +34,7 @@ class UrlShortenerApiControllerTest {
     ObjectMapper objectMapper;
 
     @Nested
-    class GenerateShortenedUrlMethodTests {
+    class GetOrCreateShortenedUrlMethodTests {
 
         @ParameterizedTest
         @MethodSource("provideValidUrls")
@@ -52,6 +52,17 @@ class UrlShortenerApiControllerTest {
             // When & Then
             mockMvc.perform(performPostRequest(request))
                     .andExpect(status().isBadRequest());
+        }
+
+        @ParameterizedTest
+        @MethodSource("provideValidUrls")
+        void whenUrlExists_thenHttpStatusIsOk(ShortenUrlCreateRequest request) throws Exception {
+            // When
+            mockMvc.perform(performPostRequest(request));
+
+            // When & Then
+            mockMvc.perform(performPostRequest(request))
+                    .andExpect(status().isOk());
         }
 
         private RequestBuilder performPostRequest(ShortenUrlCreateRequest request) throws Exception {
