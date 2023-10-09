@@ -22,7 +22,7 @@ public class DefaultUrlShortenerService implements UrlShortenerService {
     }
 
     @Override
-    public ShortenUrlCreateResult getOrCreateShortenUrlHash(ShortenUrlCreateParam param) {
+    public ShortenUrlCreateResult findOrCreateShortenUrlHash(ShortenUrlCreateParam param) {
         Url originalUrl = new Url(param.originalUrl());
         Optional<UrlLink> urlLinkOptional = urlLinkRepository.findByOriginal(originalUrl);
         if (urlLinkOptional.isPresent()) {

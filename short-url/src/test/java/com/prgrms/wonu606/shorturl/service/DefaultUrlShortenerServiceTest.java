@@ -23,13 +23,13 @@ class DefaultUrlShortenerServiceTest {
     private UrlLinkRepository urlLinkRepository;
 
     @Nested
-    class getOrCreateShortenUrlHashMethodTests {
+    class findOrCreateShortenUrlHashMethodTests {
 
         @ParameterizedTest
         @MethodSource("provideValidUrls")
         void givenValidParam_thenCreatingUrlLink(ShortenUrlCreateParam param) {
             // When
-            ShortenUrlCreateResult result = defaultUrlShortenerService.getOrCreateShortenUrlHash(param);
+            ShortenUrlCreateResult result = defaultUrlShortenerService.findOrCreateShortenUrlHash(param);
             UrlHash createdUrlHash = new UrlHash(result.hashedShortUrl());
 
             // Then
@@ -40,8 +40,8 @@ class DefaultUrlShortenerServiceTest {
         @MethodSource("provideValidUrls")
         void whenUrlExists_thenReturnExistingHash(ShortenUrlCreateParam param) {
             // When
-            defaultUrlShortenerService.getOrCreateShortenUrlHash(param);
-            ShortenUrlCreateResult result = defaultUrlShortenerService.getOrCreateShortenUrlHash(param);
+            defaultUrlShortenerService.findOrCreateShortenUrlHash(param);
+            ShortenUrlCreateResult result = defaultUrlShortenerService.findOrCreateShortenUrlHash(param);
 
             // Then
             assertThat(result.isNew()).isFalse();

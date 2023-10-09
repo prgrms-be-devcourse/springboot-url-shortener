@@ -5,5 +5,5 @@ import com.prgrms.wonu606.shorturl.service.dto.ShortenUrlCreateResult;
 
 public interface UrlShortenerService {
 
-    ShortenUrlCreateResult getOrCreateShortenUrlHash(ShortenUrlCreateParam param);
+    ShortenUrlCreateResult findOrCreateShortenUrlHash(ShortenUrlCreateParam param);
 }
