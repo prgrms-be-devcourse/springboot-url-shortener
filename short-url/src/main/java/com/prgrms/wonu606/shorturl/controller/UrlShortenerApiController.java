@@ -41,7 +41,7 @@ public class UrlShortenerApiController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<ShortenUrlCreateResponse> generateShortenedUrl(
+    public ResponseEntity<ShortenUrlCreateResponse> createShortenedUrl(
             @RequestBody @Valid ShortenUrlCreateRequest request) {
         ShortenUrlCreateParam param = paramMapper.toShortenUrlCreateParam(request);
 
