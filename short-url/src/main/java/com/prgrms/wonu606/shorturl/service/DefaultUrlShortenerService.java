@@ -6,6 +6,7 @@ import com.prgrms.wonu606.shorturl.domain.UrlLink;
 import com.prgrms.wonu606.shorturl.service.dto.ShortenUrlCreateParam;
 import com.prgrms.wonu606.shorturl.service.dto.ShortenUrlCreateResult;
 import com.prgrms.wonu606.shorturl.service.shorturlhashgenerator.UniqueUrlHashCreator;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,13 +22,23 @@ public class DefaultUrlShortenerService implements UrlShortenerService {
     }
 
     @Override
-    public ShortenUrlCreateResult createShortenUrlHash(ShortenUrlCreateParam param) {
+    public ShortenUrlCreateResult getOrCreateShortenUrlHash(ShortenUrlCreateParam param) {
         Url originalUrl = new Url(param.originalUrl());
+        Optional<UrlLink> urlLinkOptional = urlLinkRepository.findByOriginal(originalUrl);
+        if (urlLinkOptional.isPresent()) {
+            UrlLink foundUrlLink = urlLinkOptional.get();
+            return new ShortenUrlCreateResult(foundUrlLink.getUrlHash().value(), false);
+        }
+
+        return createUrlHash(originalUrl);
+    }
+
+    private ShortenUrlCreateResult createUrlHash(Url originalUrl) {
         UrlHash uniqueUrlHashHash = uniqueUrlHashCreator.create(originalUrl);
 
         UrlLink createdUrlLink = new UrlLink(originalUrl, uniqueUrlHashHash);
         urlLinkRepository.save(createdUrlLink);
 
-        return new ShortenUrlCreateResult(createdUrlLink.getUrlHash().value());
+        return new ShortenUrlCreateResult(createdUrlLink.getUrlHash().value(), true);
     }
 }

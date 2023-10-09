@@ -41,14 +41,18 @@ public class UrlShortenerApiController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<ShortenUrlCreateResponse> createShortenedUrl(
+    public ResponseEntity<ShortenUrlCreateResponse> getOrCreateShortenedUrl(
             @RequestBody @Valid ShortenUrlCreateRequest request) {
         ShortenUrlCreateParam param = paramMapper.toShortenUrlCreateParam(request);
 
-        ShortenUrlCreateResult result = urlShortenerService.createShortenUrlHash(param);
+        ShortenUrlCreateResult result = urlShortenerService.getOrCreateShortenUrlHash(param);
+        HttpStatus httpStatus = HttpStatus.CREATED;
+        if (!result.isNew()) {
+            httpStatus = HttpStatus.OK;
+        }
 
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(httpStatus)
                 .body(responseMapper.toShortenUrlCreateResponse(result, baseUrl));
     }
 }

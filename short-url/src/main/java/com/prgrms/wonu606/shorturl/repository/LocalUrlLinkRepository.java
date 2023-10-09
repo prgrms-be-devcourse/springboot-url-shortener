@@ -1,9 +1,12 @@
 package com.prgrms.wonu606.shorturl.repository;
 
+import com.prgrms.wonu606.shorturl.domain.Url;
 import com.prgrms.wonu606.shorturl.domain.UrlHash;
 import com.prgrms.wonu606.shorturl.domain.UrlLink;
 import com.prgrms.wonu606.shorturl.service.UrlLinkRepository;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.stereotype.Component;
@@ -39,6 +42,13 @@ public class LocalUrlLinkRepository implements UrlLinkRepository {
     @Override
     public boolean existByUrlHash(UrlHash urlHash) {
         return hashedUrlIndex.containsKey(urlHash);
+    }
+
+    @Override
+    public Optional<UrlLink> findByOriginal(Url originalUrl) {
+        return storage.values().stream()
+                .filter(urlLink -> Objects.equals(urlLink.getOriginalUrl(), originalUrl))
+                .findAny();
     }
 
     private long generateNewId() {
