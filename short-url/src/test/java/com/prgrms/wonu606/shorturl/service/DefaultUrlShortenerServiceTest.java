@@ -17,17 +17,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 class DefaultUrlShortenerServiceTest {
 
     @Autowired
-    DefaultUrlShortenerService defaultUrlShortenerService;
+    private DefaultUrlShortenerService defaultUrlShortenerService;
 
     @Autowired
-    UrlLinkRepository urlLinkRepository;
+    private UrlLinkRepository urlLinkRepository;
 
     @Nested
     class getOrCreateShortenUrlHashMethodTests {
 
         @ParameterizedTest
         @MethodSource("provideValidUrls")
-        void givenValidParam_CreatingUrlLink(ShortenUrlCreateParam param) {
+        void givenValidParam_thenCreatingUrlLink(ShortenUrlCreateParam param) {
             // When
             ShortenUrlCreateResult result = defaultUrlShortenerService.getOrCreateShortenUrlHash(param);
             UrlHash createdUrlHash = new UrlHash(result.hashedShortUrl());

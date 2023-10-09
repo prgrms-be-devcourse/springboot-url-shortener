@@ -20,7 +20,7 @@ class UrlHashTest {
             "A123"
     }
     )
-    void givenValidHashedUrl_CreatingHashedShortUrl(String validHash) {
+    void givenValidHashedUrl_thenCreatingHashedShortUrl(String validHash) {
         assertThatCode(() -> new UrlHash(validHash))
                 .doesNotThrowAnyException();
     }
@@ -33,7 +33,7 @@ class UrlHashTest {
             "a1b2c3d4e",
             "1a2b3c4d5"
     })
-    void givenInvalidHashedUrl_throwException(String invalidHash) {
+    void givenInvalidHashedUrl_thenThrowException(String invalidHash) {
         assertThatThrownBy(() -> new UrlHash(invalidHash))
                 .isInstanceOf(IllegalArgumentException.class);
     }

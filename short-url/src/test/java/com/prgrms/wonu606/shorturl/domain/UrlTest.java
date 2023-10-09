@@ -25,7 +25,7 @@ class UrlTest {
             "ftp://user@example.com",
             "ftp://example.com"
     })
-    void givenValidUrl_CreatingUrl(String validUrl) {
+    void givenValidUrl_thenCreatingUrl(String validUrl) {
         // When & Then
         assertThatCode(() -> new Url(validUrl))
                 .doesNotThrowAnyException();
@@ -41,7 +41,7 @@ class UrlTest {
             "https//example.com",
             "httpx://www.naver.com",
     })
-    void givenInvalidUrl_throwException(String invalidUrl) {
+    void givenInvalidUrl_thenThrowException(String invalidUrl) {
         // When & Then
         assertThatThrownBy(() -> new Url(invalidUrl))
                 .isInstanceOf(IllegalArgumentException.class)

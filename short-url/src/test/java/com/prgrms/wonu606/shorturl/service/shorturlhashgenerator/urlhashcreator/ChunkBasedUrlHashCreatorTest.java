@@ -18,7 +18,7 @@ class ChunkBasedUrlHashCreatorTest {
     }
 
     @Test
-    void create_returnNonBlank() {
+    void create_thenReturnNonBlank() {
         // Given
         Url url = new Url("https://x.com");
         ChunkWeight chunkWeight = new ChunkWeight(1);

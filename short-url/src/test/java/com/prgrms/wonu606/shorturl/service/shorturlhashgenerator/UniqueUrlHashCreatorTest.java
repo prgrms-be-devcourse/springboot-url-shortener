@@ -17,16 +17,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 class UniqueUrlHashCreatorTest {
 
     @Autowired
-    UniqueUrlHashCreator uniqueUrlHashCreator;
+    private UniqueUrlHashCreator uniqueUrlHashCreator;
 
     @MockBean
-    UrlHashExistenceChecker urlHashExistenceChecker;
+    private UrlHashExistenceChecker urlHashExistenceChecker;
 
     @Nested
     class CreateMethodTests {
 
         @Test
-        void success_creatingUniqUrlHash() {
+        void whenSuccess_thenCreatingUniqUrlHash() {
             // Given
             given(urlHashExistenceChecker.exists(any())).willReturn(false);
             Url url = new Url("https://example.com");
@@ -39,7 +39,7 @@ class UniqueUrlHashCreatorTest {
         }
 
         @Test
-        void failure_throwException() {
+        void whenFailure_thenThrowException() {
             // Given
             given(urlHashExistenceChecker.exists(any())).willReturn(true);
             Url url = new Url("https://example.com");

@@ -20,7 +20,7 @@ class UrlLinkTest {
 
         @ParameterizedTest
         @MethodSource("provideUrlLinkAndValidIdArguments")
-        void whenCalledFirstTime_success(UrlLink urlLink, Long newId) {
+        void whenCalledFirstTime_thenSuccess(UrlLink urlLink, Long newId) {
             // When
             urlLink.initializeId(newId);
 
@@ -30,7 +30,7 @@ class UrlLinkTest {
 
         @ParameterizedTest
         @MethodSource("provideUrlLinkAndValidIdArguments")
-        void whenCalledTwice_throwException(UrlLink urlLink, Long newId) {
+        void whenCalledTwice_thenThrowException(UrlLink urlLink, Long newId) {
             // When
             urlLink.initializeId(newId);
 

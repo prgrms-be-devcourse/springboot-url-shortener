@@ -12,7 +12,7 @@ class ChunkWeightTest {
     @ValueSource(ints = {
             1, 2, 3, 4, 5
     })
-    void positiveWeight_DoesNotThrowException(int positiveWeight) {
+    void givenPositiveWeight_thenDoesNotThrowException(int positiveWeight) {
         // When & Then
         assertThatCode(() -> new ChunkWeight(positiveWeight))
                 .doesNotThrowAnyException();
@@ -22,7 +22,7 @@ class ChunkWeightTest {
     @ValueSource(ints = {
             0, -1, -2, -3, -4, -5
     })
-    void nonPositiveWeight_throwException(int nonPositiveWeight) {
+    void givenNonPositiveWeight_thenThrowException(int nonPositiveWeight) {
         // When & Then
         assertThatThrownBy(() -> new ChunkWeight(nonPositiveWeight))
                 .isInstanceOf(IllegalArgumentException.class)
