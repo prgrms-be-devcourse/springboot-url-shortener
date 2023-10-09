@@ -51,6 +51,16 @@ public class UrlService {
 		return url.getOriginalUrl();
 	}
 
+	public ShortUrlResponse updateRequestCount(String shortUrl) {
+		Url url = urlRepository.findByShortUrl(shortUrl)
+			.orElseThrow(() -> new RuntimeException());
+
+		url.addRequestCount();
+
+		return ShortUrlResponse.from(url);
+	}
+
+
 	public void deleteByShortUrl(String shortUrl) {
 		Url url = urlRepository.findByShortUrl(shortUrl)
 			.orElseThrow(() -> new RuntimeException());

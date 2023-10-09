@@ -1,6 +1,9 @@
 package com.programmers.urlshortener.domain.url.presentation;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -44,5 +47,14 @@ public class UrlViewController {
 		model.addAttribute("url", shortUrlResponse);
 
 		return "url/detail";
+	}
+
+	@GetMapping("/{shortUrl}")
+	public void accessShortUrl(@PathVariable String shortUrl, HttpServletResponse httpServletResponse) throws IOException {
+		String originalUrl = urlService.findOriginalUrlByShortUrl(shortUrl);
+
+		urlService.updateRequestCount(shortUrl);
+
+		httpServletResponse.sendRedirect(originalUrl);
 	}
 }
