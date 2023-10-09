@@ -24,6 +24,7 @@ public class DefaultUrlShortenerService implements UrlShortenerService {
     @Override
     public ShortenUrlCreateResult findOrCreateShortenUrlHash(ShortenUrlCreateParam param) {
         Url originalUrl = new Url(param.originalUrl());
+
         Optional<UrlLink> urlLinkOptional = urlLinkRepository.findByOriginal(originalUrl);
         if (urlLinkOptional.isPresent()) {
             UrlLink foundUrlLink = urlLinkOptional.get();
@@ -31,6 +32,16 @@ public class DefaultUrlShortenerService implements UrlShortenerService {
         }
 
         return createUrlHash(originalUrl);
+    }
+
+    @Override
+    public String getOriginalUrlByShortUrl(String shortUrl) {
+        UrlHash findUrlHash = new UrlHash(shortUrl);
+
+        return urlLinkRepository.findByUrlHash(findUrlHash)
+                .map(UrlLink::getUrlHash)
+                .map(UrlHash::value)
+                .orElseThrow(() -> new UrlNotFoundException("존재 하지 않는 Short URL입니다. Current Short Url: " + shortUrl));
     }
 
     private ShortenUrlCreateResult createUrlHash(Url originalUrl) {

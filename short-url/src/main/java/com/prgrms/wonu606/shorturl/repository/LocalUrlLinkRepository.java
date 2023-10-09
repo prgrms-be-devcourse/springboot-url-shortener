@@ -51,6 +51,11 @@ public class LocalUrlLinkRepository implements UrlLinkRepository {
                 .findAny();
     }
 
+    @Override
+    public Optional<UrlLink> findByUrlHash(UrlHash findUrlHash) {
+        return Optional.ofNullable(hashedUrlIndex.get(findUrlHash));
+    }
+
     private long generateNewId() {
         return idGenerator.getAndIncrement();
     }
