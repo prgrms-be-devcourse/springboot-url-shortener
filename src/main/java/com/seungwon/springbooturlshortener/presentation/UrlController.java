@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.seungwon.springbooturlshortener.application.UrlService;
+import com.seungwon.springbooturlshortener.application.UrlShortenerService;
 import com.seungwon.springbooturlshortener.application.dto.UrlCreateRequest;
 import com.seungwon.springbooturlshortener.application.dto.UrlCreateResponse;
+import com.seungwon.springbooturlshortener.domain.RequestLimit;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,6 +30,8 @@ public class UrlController {
 
 	@PostMapping
 	public ResponseEntity<UrlCreateResponse> urlSave(@Validated @RequestBody UrlCreateRequest urlCreateRequest) {
+		requestLimit.checkAvailability();
+
 		UrlCreateResponse urlCreateResponse = urlService.saveUrl(urlCreateRequest);
 
 		URI uri = ServletUriComponentsBuilder

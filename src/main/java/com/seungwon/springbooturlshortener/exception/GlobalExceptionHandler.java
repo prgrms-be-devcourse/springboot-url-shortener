@@ -1,5 +1,6 @@
 package com.seungwon.springbooturlshortener.exception;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,6 +32,13 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<Object> invalidUrlException(InvalidUrlException exception) {
 		return ResponseEntity.badRequest()
 			.body("유효하지 않은 url 입니다");
+	}
+
+	@ExceptionHandler(ExcessiveRequestException.class)
+	public ResponseEntity<Object> excessiveRequestException(ExcessiveRequestException exception) {
+		return ResponseEntity
+			.status(HttpStatus.TOO_MANY_REQUESTS)
+			.body("너무 많은 요청을 시도했습니다. 잠시 후에 다시 시도 바랍니다.");
 	}
 
 }
