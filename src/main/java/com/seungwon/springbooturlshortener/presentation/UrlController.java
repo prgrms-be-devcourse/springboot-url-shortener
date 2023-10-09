@@ -23,7 +23,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/urls")
 public class UrlController {
 
-	private final UrlService urlService;
+	private final UrlShortenerService urlService;
+
+	private final RequestLimit requestLimit;
 
 	@PostMapping
 	public ResponseEntity<UrlCreateResponse> urlSave(@Validated @RequestBody UrlCreateRequest urlCreateRequest) {

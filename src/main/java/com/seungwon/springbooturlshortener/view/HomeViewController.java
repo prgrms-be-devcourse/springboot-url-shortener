@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.seungwon.springbooturlshortener.application.UrlService;
+import com.seungwon.springbooturlshortener.application.UrlShortenerService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class HomeViewController {
 
-	private final UrlService urlService;
+	private final UrlShortenerService urlService;
 
 	@GetMapping
 	public String home() {
