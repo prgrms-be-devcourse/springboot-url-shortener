@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.programmers.urlshortener.domain.url.application.UrlService;
+import com.programmers.urlshortener.domain.url.application.dto.response.ShortUrlResponse;
 
 @RequiredArgsConstructor
 @Controller
@@ -33,5 +34,15 @@ public class UrlViewController {
 		model.addAttribute("shortUrl", shortUrl);
 
 		return "url/result";
+	}
+
+	@GetMapping("/details/{shortUrl}")
+	public String details(@PathVariable String shortUrl, Model model) {
+		ShortUrlResponse shortUrlResponse = urlService.findByShortUrl(shortUrl);
+
+		model.addAttribute("shortUrlResult", requestUrl + shortUrl);
+		model.addAttribute("url", shortUrlResponse);
+
+		return "url/detail";
 	}
 }
