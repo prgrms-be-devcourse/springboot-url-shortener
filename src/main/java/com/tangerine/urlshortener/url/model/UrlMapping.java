@@ -4,6 +4,7 @@ import com.tangerine.urlshortener.url.model.vo.Algorithm;
 import com.tangerine.urlshortener.url.model.vo.OriginUrl;
 import com.tangerine.urlshortener.url.model.vo.RequestCount;
 import com.tangerine.urlshortener.url.model.vo.ShortUrl;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -28,6 +29,7 @@ public class UrlMapping {
     private ShortUrl shortUrl;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "base_algorithm", nullable = false)
     private Algorithm algorithm;
 
     @Embedded
