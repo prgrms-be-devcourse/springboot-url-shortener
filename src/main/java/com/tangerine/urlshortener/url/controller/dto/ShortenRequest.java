@@ -6,13 +6,13 @@ import com.tangerine.urlshortener.url.service.dto.ShortenParam;
 
 public record ShortenRequest(
         String originUrl,
-        String algorithm
+        Algorithm algorithm
 ) {
 
-    public static ShortenParam to(ShortenRequest request) {
+    public ShortenParam to() {
         return new ShortenParam(
-                new OriginUrl(request.originUrl()),
-                Algorithm.valueOf(request.algorithm())
+                new OriginUrl(this.originUrl),
+                this.algorithm
         );
     }
 

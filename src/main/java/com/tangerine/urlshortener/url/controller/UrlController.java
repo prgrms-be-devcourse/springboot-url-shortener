@@ -7,20 +7,17 @@ import com.tangerine.urlshortener.url.controller.dto.PageInfo;
 import com.tangerine.urlshortener.url.controller.dto.ShortenRequest;
 import com.tangerine.urlshortener.url.controller.dto.UrlMappingResponse;
 import com.tangerine.urlshortener.url.controller.dto.UrlMappingResponses;
-import com.tangerine.urlshortener.url.model.vo.OriginUrl;
 import com.tangerine.urlshortener.url.model.vo.ShortUrl;
 import com.tangerine.urlshortener.url.service.UrlService;
 import com.tangerine.urlshortener.url.service.dto.UrlMappingResult;
 import com.tangerine.urlshortener.url.service.dto.UrlMappingResults;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -58,7 +55,7 @@ public class UrlController {
             @ModelAttribute ShortenRequest shortenRequest,
             Model model
     ) {
-        UrlMappingResult mappingInfo = urlService.createShortUrl(ShortenRequest.to(shortenRequest));
+        UrlMappingResult mappingInfo = urlService.createShortUrl(shortenRequest.to());
         UrlMappingResponse mapping = UrlMappingResponse.of(mappingInfo);
         model.addAttribute("mapping", mapping);
         return "mapping-info";
