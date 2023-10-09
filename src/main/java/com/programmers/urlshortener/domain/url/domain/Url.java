@@ -2,6 +2,8 @@ package com.programmers.urlshortener.domain.url.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +16,7 @@ import lombok.NoArgsConstructor;
 import java.util.regex.Pattern;
 
 import com.programmers.urlshortener.domain.BaseEntity;
+import com.programmers.urlshortener.domain.encoder.domain.EncoderType;
 
 @Getter
 @Entity
@@ -37,11 +40,16 @@ public class Url extends BaseEntity {
 	@Column(nullable = false)
 	private int requestCount;
 
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private EncoderType encoderType;
+
 	@Builder
-	public Url(String originalUrl) {
+	public Url(String originalUrl, EncoderType encoderType) {
 		validateUrlFormat(originalUrl);
 		this.originalUrl = addProtocolToUrl(originalUrl);
 		this.requestCount = 0;
+		this.encoderType = encoderType;
 	}
 
 	public void addRequestCount() {
