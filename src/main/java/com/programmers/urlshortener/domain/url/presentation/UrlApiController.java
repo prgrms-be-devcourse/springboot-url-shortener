@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +23,13 @@ public class UrlApiController {
 	@PostMapping("/api/short-urls")
 	public ResponseEntity<ShortUrlResponse> createShortUrl(@Validated @RequestBody ShortUrlCreateRequest shortUrlCreateRequest) {
 		ShortUrlResponse shortUrlResponse = urlService.createShortUrl(shortUrlCreateRequest);
+
+		return ResponseEntity.ok(shortUrlResponse);
+	}
+
+	@GetMapping("/api/{shortUrl}")
+	public ResponseEntity<ShortUrlResponse> findByShortUrl(@PathVariable String shortUrl) {
+		ShortUrlResponse shortUrlResponse = urlService.findByShortUrl(shortUrl);
 
 		return ResponseEntity.ok(shortUrlResponse);
 	}
