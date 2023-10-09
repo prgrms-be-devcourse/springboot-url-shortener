@@ -43,6 +43,14 @@ public class UrlService {
 		return ShortUrlResponse.from(url);
 	}
 
+	@Transactional(readOnly = true)
+	public String findOriginalUrlByShortUrl(String shortUrl) {
+		Url url = urlRepository.findByShortUrl(shortUrl)
+			.orElseThrow(() -> new RuntimeException());
+
+		return url.getOriginalUrl();
+	}
+
 	public void deleteByShortUrl(String shortUrl) {
 		Url url = urlRepository.findByShortUrl(shortUrl)
 			.orElseThrow(() -> new RuntimeException());
