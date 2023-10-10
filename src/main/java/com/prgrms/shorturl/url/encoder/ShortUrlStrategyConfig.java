@@ -10,7 +10,7 @@ public class ShortUrlStrategyConfig {
 
     private final Map<String, ShortUrlStrategy> strategies = new HashMap<>();
 
-    public ShortUrlStrategyConfig(Base62Encoder base62Encoder,RandomEncoder randomEncoder ) {
+    public ShortUrlStrategyConfig(Base62Encoder base62Encoder, RandomEncoder randomEncoder) {
         strategies.put("RANDOM", randomEncoder);
         strategies.put("BASE62", base62Encoder);
     }

@@ -2,8 +2,11 @@ package com.prgrms.shorturl.url.repository;
 
 import com.prgrms.shorturl.url.exception.ExistedOriginUrlException;
 import com.prgrms.shorturl.url.model.Urls;
+
 import jakarta.persistence.EntityNotFoundException;
+
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;

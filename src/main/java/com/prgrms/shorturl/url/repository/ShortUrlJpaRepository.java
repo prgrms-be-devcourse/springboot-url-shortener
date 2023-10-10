@@ -1,6 +1,7 @@
 package com.prgrms.shorturl.url.repository;
 
 import com.prgrms.shorturl.url.model.Urls;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

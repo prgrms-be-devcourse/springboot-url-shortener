@@ -12,9 +12,9 @@ class ShortUrlTest {
     @DisplayName("short url이 null이거나 빈 값인 경우 예외를 던진다.")
     void createShortUrl_nullOrBlank_throwException() {
         //when_then
-        assertThrows(IllegalArgumentException.class,()->new ShortUrl(null));
-        assertThrows(IllegalArgumentException.class,()->new ShortUrl(""));
-        assertThrows(IllegalArgumentException.class,()->new ShortUrl(" "));
+        assertThrows(IllegalArgumentException.class, () -> new ShortUrl(null));
+        assertThrows(IllegalArgumentException.class, () -> new ShortUrl(""));
+        assertThrows(IllegalArgumentException.class, () -> new ShortUrl(" "));
     }
 
     @Test
@@ -25,12 +25,12 @@ class ShortUrlTest {
         int maxLength = url.SHORT_URL_MAX_LENGTH;
         StringBuilder sb = new StringBuilder(url.getShortUrl());
 
-        while(sb.length() <= maxLength) {
+        while (sb.length() <= maxLength) {
             sb.append("A");
         }
 
         //when_then
-        assertThrows(IllegalArgumentException.class,()->new ShortUrl(sb.toString()));
+        assertThrows(IllegalArgumentException.class, () -> new ShortUrl(sb.toString()));
     }
 
 }

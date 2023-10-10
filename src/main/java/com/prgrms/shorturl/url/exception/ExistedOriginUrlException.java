@@ -1,6 +1,7 @@
 package com.prgrms.shorturl.url.exception;
 
 import com.prgrms.shorturl.global.error.ErrorCode;
+
 import lombok.Getter;
 
 @Getter

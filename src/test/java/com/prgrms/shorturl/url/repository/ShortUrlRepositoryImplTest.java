@@ -3,6 +3,7 @@ package com.prgrms.shorturl.url.repository;
 import com.prgrms.shorturl.Fixtures;
 import com.prgrms.shorturl.url.model.Urls;
 import com.prgrms.shorturl.url.service.ShortUrlService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,17 +35,17 @@ class ShortUrlRepositoryImplTest {
     @BeforeEach
     void setUp() {
         Urls naverUrlToSave = Fixtures.naverUrlInOriginUrl();
-        shortUrlService.creatShortUrl(naverUrlToSave.getOriginUrl(),"BASE62");
+        shortUrlService.creatShortUrl(naverUrlToSave.getOriginUrl(), "BASE62");
         savedNaverUrl = shortUrlRepository.findByOriginUrl(naverUrlToSave.getOriginUrl()).get();
 
-        for(int i=0;i<20;i++) {
+        for (int i = 0; i < 20; i++) {
             shortUrlService.getOriginUrl(savedNaverUrl.getShortUrl());
         }
 
     }
 
-    private Optional<Urls> getCacheUrl(String shortUrl){
-        return Optional.ofNullable(cacheManager.getCache("urls")).map(c->c.get(shortUrl,Urls.class));
+    private Optional<Urls> getCacheUrl(String shortUrl) {
+        return Optional.ofNullable(cacheManager.getCache("urls")).map(c -> c.get(shortUrl, Urls.class));
     }
 
     @Test

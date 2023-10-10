@@ -11,7 +11,7 @@ class RequestCountTest {
     @DisplayName("요청 횟수가 음수인 경우 예외를 던진다.")
     void isisValidated_negativeRequest_throwException() {
         //when_then
-        assertThrows(IllegalArgumentException.class,()-> new RequestCount(-1));
+        assertThrows(IllegalArgumentException.class, () -> new RequestCount(-1));
     }
 
 }

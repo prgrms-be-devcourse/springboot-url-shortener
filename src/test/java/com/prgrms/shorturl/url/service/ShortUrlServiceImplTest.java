@@ -6,8 +6,10 @@ import com.prgrms.shorturl.url.encoder.ShortUrlStrategyConfig;
 import com.prgrms.shorturl.url.exception.ExistedOriginUrlException;
 import com.prgrms.shorturl.url.model.Urls;
 import com.prgrms.shorturl.url.repository.ShortUrlJpaRepository;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
@@ -23,8 +25,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @Import(ShortUrlStrategyConfig.class)
 class ShortUrlServiceImplTest {
 
-    private final Urls NAVERURL = Fixtures.naverUrlInOriginUrl();;
-    private final String STRATEGY_TYPE =  "BASE62";
+    private final Urls NAVERURL = Fixtures.naverUrlInOriginUrl();
+    ;
+    private final String STRATEGY_TYPE = "BASE62";
 
     @Autowired
     private ShortUrlServiceImpl shortUrlService;
