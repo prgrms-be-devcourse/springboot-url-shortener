@@ -4,7 +4,7 @@ server:
 spring:
 
   datasource:
-    url: jdbc:mysql://localhost:3306/url_shortener
+    url: jdbc:mysql://url-shortener-mysql:3306/url_shortener
     username: root
     password: 12345
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -27,5 +27,5 @@ spring:
 
   data:
     redis:
-      host: 0.0.0.0
+      host: url-shortener-redis
       port: 6379
