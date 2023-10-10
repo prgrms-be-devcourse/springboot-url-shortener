@@ -4,10 +4,10 @@ server:
 spring:
 
   datasource:
-    url: jdbc:h2:file:~/url_shortener
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/url_shortener
+    username: root
+    password: 12345
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   h2:
     console:
@@ -23,6 +23,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
 
   data:
     redis:

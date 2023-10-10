@@ -23,7 +23,7 @@ public class ShortUrl {
 	@Indexed
 	@Column(name = "encoded_url", unique = true)
 	String encodedUrl;
-	@Column(name = "original_url", nullable = false)
+	@Column(name = "original_url", nullable = false, length = 2000)
 	String originalUrl;
 	@Column(name = "clicks", nullable = false)
 	long clicks = 0L;
@@ -39,15 +39,6 @@ public class ShortUrl {
 	public void updateEncodedUrl(String encodedUrl) {
 		log.info("Update shortUrl({}) to Entity(id({}))", encodedUrl, this.id);
 		this.encodedUrl = encodedUrl;
-	}
-
-	public void updateClicksByScheduler(long clicks) {
-		log.info("Update Clicks(count: {}) to Entity(id: {})", clicks, this.id);
-		if (clicks < 0) {
-			log.warn("Fail to update clicks to Entity(id: {})", this.id);
-			throw new BusinessException(ErrorCode.INVALID_REQUEST_NUMBERS);
-		}
-		this.clicks += clicks;
 	}
 
 	public Long getId() {
