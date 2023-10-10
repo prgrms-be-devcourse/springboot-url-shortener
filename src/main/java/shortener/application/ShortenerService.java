@@ -15,7 +15,7 @@ import shortener.domain.ShortUrl;
 import shortener.global.error.ErrorCode;
 import shortener.global.error.exception.EntityNotFoundException;
 import shortener.infrastructure.ShortUrlJpaRepository;
-import shortener.infrastructure.urlencoder.UrlEncoder;
+import shortener.domain.urlencoder.UrlEncoder;
 
 @Slf4j
 @Transactional

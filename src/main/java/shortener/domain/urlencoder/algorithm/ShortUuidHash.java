@@ -1,4 +1,4 @@
-package shortener.infrastructure.urlencoder.algorithm;
+package shortener.domain.urlencoder.algorithm;
 
 import java.util.UUID;
 

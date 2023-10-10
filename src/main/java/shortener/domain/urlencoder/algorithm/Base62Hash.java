@@ -1,4 +1,4 @@
-package shortener.infrastructure.urlencoder.algorithm;
+package shortener.domain.urlencoder.algorithm;
 
 import lombok.extern.slf4j.Slf4j;
 

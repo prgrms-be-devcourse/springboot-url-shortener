@@ -1,12 +1,12 @@
-package shortener.infrastructure.urlencoder;
+package shortener.domain.urlencoder;
 
 import shortener.domain.ShortUrl;
+import shortener.domain.urlencoder.algorithm.AdlerHash;
 import shortener.global.error.ErrorCode;
 import shortener.global.error.exception.BusinessException;
-import shortener.infrastructure.urlencoder.algorithm.AdlerHash;
-import shortener.infrastructure.urlencoder.algorithm.AlgorithmType;
-import shortener.infrastructure.urlencoder.algorithm.Base62Hash;
-import shortener.infrastructure.urlencoder.algorithm.ShortUuidHash;
+import shortener.domain.urlencoder.algorithm.AlgorithmType;
+import shortener.domain.urlencoder.algorithm.Base62Hash;
+import shortener.domain.urlencoder.algorithm.ShortUuidHash;
 
 public class UrlEncoder {
 

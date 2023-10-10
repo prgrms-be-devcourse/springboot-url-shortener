@@ -1,4 +1,4 @@
-package shortener.infrastructure.urlencoder.algorithm;
+package shortener.domain.urlencoder.algorithm;
 
 public enum AlgorithmType {
 	BASE62(1, "Base62"),
