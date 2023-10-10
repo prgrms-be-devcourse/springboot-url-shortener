@@ -40,7 +40,6 @@ public class ShortenerController {
 	@GetMapping("/{encodedUrl}")
 	public ResponseEntity<Void> getOriginalUrl(@PathVariable String encodedUrl) {
 		String originalUrl = shortenerService.findOriginalUrl(encodedUrl);
-
 		HttpHeaders headers = createRedirectionHeader(originalUrl);
 
 		return ResponseEntity
@@ -60,14 +59,33 @@ public class ShortenerController {
 	}
 
 	private HttpHeaders createRedirectionHeader(String originalUrl) {
+		String httpAppendedOriginalUrl = appendHttpToUrlIfAbsent(originalUrl);
+
 		log.info("Create redirection Http headers...");
 		HttpHeaders headers = new HttpHeaders();
 		headers.add(HttpHeaders.HOST, "http://yosongsong.shortener.co.kr");
 		headers.add(HttpHeaders.SERVER, "Tomcat");
-		headers.add(HttpHeaders.LOCATION, originalUrl);
+		headers.add(HttpHeaders.LOCATION, httpAppendedOriginalUrl);
 		headers.add(HttpHeaders.CACHE_CONTROL, "no-cache, no-store, max-age=0");
 		log.info("Success to create headers");
 
 		return headers;
+	}
+
+	private String appendHttpToUrlIfAbsent(String originalUrl) {
+		log.info("Trying to append \"http://\" to url if absent...");
+		boolean hasHttp = originalUrl.startsWith("http://");
+		boolean hasHttps = originalUrl.startsWith("https://");
+
+		if (hasHttp || hasHttps) {
+			log.info("Already exist \"http://\" or \"https://\" => {}", originalUrl);
+
+			return originalUrl;
+		}
+
+		String httpAppended = "http://" + originalUrl;
+		log.info("append \"http://\" => {}", httpAppended);
+
+		return httpAppended;
 	}
 }
