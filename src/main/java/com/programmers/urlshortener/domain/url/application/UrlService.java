@@ -32,6 +32,10 @@ public class UrlService {
 		UrlEncoder urlEncoder = urlEncoders.get(urlEncoderName);
 		String encodedShortUrl = urlEncoder.encode(savedUrl.getId());
 
+		while (isDuplicatedShortUrl(encodedShortUrl)) {
+			encodedShortUrl = urlEncoder.encode(savedUrl.getId());
+		}
+
 		savedUrl.updateShortUrl(encodedShortUrl);
 
 		return ShortUrlResponse.from(savedUrl);
@@ -68,5 +72,10 @@ public class UrlService {
 			.orElseThrow(() -> new EntityNotFoundException(ErrorCode.URL_NOT_FOUND));
 
 		urlRepository.delete(url);
+	}
+
+	private boolean isDuplicatedShortUrl(String shortUrl) {
+
+		return urlRepository.existsByShortUrl(shortUrl);
 	}
 }
