@@ -6,7 +6,7 @@ SprintBoot URL Shortener 구현 미션 Repository 입니다.
 
 각 요구사항을 모두 충족할 수 있도록 노력해봅시다.
 
-- [ ] URL 입력폼 제공 및 결과 출력
+- [x] URL 입력폼 제공 및 결과 출력 <br> >> 리액트로 구현했습니다. [레포지토리 이동](https://github.com/Dev-Yesung/react-url-shortener)
 - [x] URL Shortening Key는 8 Character 이내로 생성 <br> >> base62 방식으로 인코딩 완료
 - [x] 단축된 URL 요청시 원래 URL로 리다이렉트 <br> >> 상태코드 301(MOVE_PERMANENTLY)
 - [x] 단축된 URL에 대한 요청 수 정보저장 (optional)
