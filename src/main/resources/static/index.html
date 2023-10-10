@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short URL Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Short URL Service</h2>
+    <label for="originalUrl">Enter Original URL:</label>
+    <input type="text" id="originalUrl" placeholder="Enter URL..." style="width: 100%; margin-bottom: 10px;">
+
+    <label for="strategyType">Select Strategy Type:</label>
+    <input type="radio" id="base62" name="strategyType" value="BASE62" checked>
+    <label for="base62">BASE62</label>
+
+    <input type="radio" id="random" name="strategyType" value="RANDOM">
+    <label for="random">RANDOM</label>
+
+    <button onclick="generateShortUrl()">Generate Short URL</button>
+    <br><br>
+    <label for="shortUrl">Short URL:</label>
+    <p id="shortUrl"></p>
+
+</div>
+
+<script>
+    function generateShortUrl() {
+        const originalUrl = document.getElementById('originalUrl').value;
+        const strategyType = document.querySelector('input[name="strategyType"]:checked').value;
+
+        fetch('/api/short/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                originUrl: originalUrl,
+                strategyType: strategyType
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('shortUrl').innerText = data.shortUrl;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+</body>
+</html>
