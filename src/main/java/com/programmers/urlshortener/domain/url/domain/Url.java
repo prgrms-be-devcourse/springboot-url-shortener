@@ -38,7 +38,6 @@ public class Url extends BaseEntity {
 	@Column(unique = true)
 	private String shortUrl;
 
-	@Column(nullable = false)
 	private int requestCount;
 
 	@Column(nullable = false)
