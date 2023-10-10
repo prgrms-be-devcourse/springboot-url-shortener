@@ -22,7 +22,6 @@ import com.programmers.urlshortener.global.error.exception.InvalidValueException
 
 @Getter
 @Entity
-@Table
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Url extends BaseEntity {
 
