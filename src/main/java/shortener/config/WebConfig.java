@@ -12,7 +12,8 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
-			.allowedOrigins("url-shortener-react:3000", "http://localhost:3000")
+			.allowedOrigins("http://url-shortener-react:3000", "http://localhost:3000",
+				"http://ec2-3-35-240-254.ap-northeast-2.compute.amazonaws.com:3000")
 			.allowedMethods("GET", "POST", "PUT", "DELETE")
 			.allowedHeaders("*");
 	}
