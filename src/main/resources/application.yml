@@ -15,4 +15,4 @@ logging.level:
 # org.hibernate.type: trace
 
 # url: "http://localhost:8080/"
-url: "http://http://15.164.15.13:8080/"
+url: "http://15.164.15.13:8080/"
