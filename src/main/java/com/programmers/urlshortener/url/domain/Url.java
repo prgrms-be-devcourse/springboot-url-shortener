@@ -5,6 +5,9 @@ import static com.programmers.urlshortener.common.validator.UrlValidator.*;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -18,7 +21,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,6 +28,8 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@DynamicInsert
+@DynamicUpdate
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Url {
@@ -37,7 +41,7 @@ public class Url {
     @Enumerated(EnumType.STRING)
     private Algorithm algorithm;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String originalUrl;
 
     @Column(unique = true)
@@ -51,6 +55,7 @@ public class Url {
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
+    @ColumnDefault("0")
     private Long viewCount;
 
     @Builder
@@ -71,10 +76,5 @@ public class Url {
 
     public void increaseCount() {
         viewCount += 1;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        this.viewCount = 0L;
     }
 }

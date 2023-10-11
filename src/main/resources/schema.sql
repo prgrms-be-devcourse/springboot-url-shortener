@@ -6,6 +6,6 @@ CREATE TABLE url (
     original_url VARCHAR(255) NOT NULL,
     short_url VARCHAR(255) UNIQUE,
     ip VARCHAR(255) NOT NULL,
-    view_count BIGINT DEFAULT 0,
+    view_count BIGINT DEFAULT 0 NOT NULL,
     created_at TIMESTAMP NOT NULL
 );
