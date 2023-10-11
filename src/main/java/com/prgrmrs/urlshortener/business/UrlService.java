@@ -4,7 +4,7 @@ import com.prgrmrs.urlshortener.implementation.UrlReader;
 import com.prgrmrs.urlshortener.implementation.UrlStore;
 import com.prgrmrs.urlshortener.model.UrlMapping;
 import com.prgrmrs.urlshortener.model.vo.OriginalUrl;
-import com.prgrmrs.urlshortener.util.Base62;
+import com.prgrmrs.urlshortener.util.Base62Encoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +22,7 @@ public class UrlService {
     @Transactional
     public UrlMapping shortenUrl(OriginalUrl originalUrl) {
         UrlMapping initialUrlMapping = store.initializeUrlMapping(originalUrl);
-        String createdHash = Base62.encode(initialUrlMapping.getSequence());
+        String createdHash = Base62Encoder.encode(initialUrlMapping.getSequence());
 
         return store.finalizeUrlMapping(initialUrlMapping, createdHash);
     }

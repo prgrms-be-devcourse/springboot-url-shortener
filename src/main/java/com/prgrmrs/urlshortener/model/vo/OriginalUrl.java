@@ -13,15 +13,18 @@ public class OriginalUrl {
     @Column(name = "original_url", nullable = false)
     private String url;
 
-    protected OriginalUrl() {
+    public OriginalUrl(String url) {
+        this.url = url;
+    }
 
+    public OriginalUrl() {
     }
 
     public void setUrl(String url) {
         this.url = url;
     }
 
-    public String getValue() {
+    public String getUrl() {
         return url;
     }
 }

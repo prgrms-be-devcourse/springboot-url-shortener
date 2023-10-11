@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/v1/url")
-public class UrlController {
+public class UrlRestController {
 
     private final UrlService service;
 
-    public UrlController(UrlService service) {
+    public UrlRestController(UrlService service) {
         this.service = service;
     }
 
@@ -51,7 +51,7 @@ public class UrlController {
 
         return ResponseEntity
                 .status(HttpStatus.MOVED_PERMANENTLY)
-                .header(HttpHeaders.LOCATION, originalUrl.getValue())
+                .header(HttpHeaders.LOCATION, originalUrl.getUrl())
                 .build();
     }
 
