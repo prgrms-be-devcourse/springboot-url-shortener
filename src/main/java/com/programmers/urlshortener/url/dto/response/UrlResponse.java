@@ -35,7 +35,7 @@ public class UrlResponse {
             .originalUrl(url.getOriginalUrl())
             .shortUrl(url.getShortUrl())
             .createdAt(url.getCreatedAt())
-            .count(url.getCount())
+            .count(url.getViewCount())
             .build();
     }
 }

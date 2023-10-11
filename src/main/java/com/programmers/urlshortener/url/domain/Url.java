@@ -52,7 +52,7 @@ public class Url {
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private Long count;
+    private Long viewCount;
 
     @Builder
     public Url(String originalUrl, Algorithm algorithm, String ip) {
@@ -73,11 +73,11 @@ public class Url {
     }
 
     public void increaseCount() {
-        count += 1;
+        viewCount += 1;
     }
 
     @PrePersist
     public void prePersist() {
-        this.count = 0L;
+        this.viewCount = 0L;
     }
 }
