@@ -1,7 +1,6 @@
 package com.prgrmrs.urlshortener.presentation;
 
 import static com.prgrmrs.urlshortener.exception.ErrorCode.BLANK_ORIGINAL_URL;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.prgrmrs.urlshortener.business.UrlService;
 import com.prgrmrs.urlshortener.exception.UrlShortenerException;
@@ -31,7 +30,7 @@ public class UrlController {
         this.service = service;
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ShortenUrlResponse> shortenUrl(
             @RequestBody @Valid OriginalUrl originalUrl,
             BindingResult bindingResult) {
@@ -46,7 +45,7 @@ public class UrlController {
                 .body(ShortenUrlResponse.to(retrievedUrlMapping));
     }
 
-    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @GetMapping("/{hash}")
     public ResponseEntity<Void> redirectURL(@PathVariable String hash) {
         OriginalUrl originalUrl = service.redirectUrl(hash);
 

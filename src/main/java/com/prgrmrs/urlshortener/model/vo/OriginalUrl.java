@@ -11,17 +11,17 @@ public class OriginalUrl {
     @NotBlank
     @Pattern(regexp = "^(http://|https://).+")
     @Column(name = "original_url", nullable = false)
-    private String value;
-
-    public OriginalUrl(String value) {
-        this.value = value;
-    }
+    private String url;
 
     protected OriginalUrl() {
 
     }
 
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public String getValue() {
-        return value;
+        return url;
     }
 }
