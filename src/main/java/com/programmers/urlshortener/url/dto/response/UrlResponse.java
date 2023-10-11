@@ -5,13 +5,10 @@ import java.time.LocalDateTime;
 import com.programmers.urlshortener.url.domain.Algorithm;
 import com.programmers.urlshortener.url.domain.Url;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UrlResponse {
 
     private Algorithm algorithm;
