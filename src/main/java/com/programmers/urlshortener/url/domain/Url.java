@@ -38,8 +38,10 @@ public class Url {
     @Enumerated(EnumType.STRING)
     private Algorithm algorithm;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String originalUrl;
+
+    @Column(unique = true)
     private String shortUrl;
 
     @Column(nullable = false)
