@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>URL Shortener</title>
+</head>
+<body>
+
+<div th:if="${not #lists.isEmpty(errors)}" class="errors">
+  <ul>
+    <li th:each="error : ${errors}" th:text="${error.getDefaultMessage()}"></li>
+  </ul>
+</div>
+
+<form action="#" th:action="@{/submit-url}" method="post">
+  <label for="url">Enter URL:</label>
+  <input type="url" id="url" name="url" required>
+  <button type="submit">Submit</button>
+
+</form>
+</body>
+</html>
