@@ -34,7 +34,7 @@ public class LoggerAspect {
 	}
 
 	@AfterThrowing(pointcut = "execution (* com.programmers.springbooturlshortener..*(..))", throwing = "urlApplicationException")
-	public void uniCloudException(JoinPoint joinPoint, UrlApplicationException urlApplicationException) {
+	public void urlApplicationException(JoinPoint joinPoint, UrlApplicationException urlApplicationException) {
 		logger.warn("\n", urlApplicationException);
 	}
 }
