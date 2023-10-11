@@ -23,7 +23,6 @@ public class ShortUrlCreateRequest {
 
     @NotNull(message = "알고리즘의 값은 빈 값일 수 없습니다.")
     private Algorithm algorithm;
-    private String ip;
 
     @Builder
     public ShortUrlCreateRequest(String originalUrl, Algorithm algorithm) {
@@ -31,15 +30,11 @@ public class ShortUrlCreateRequest {
         this.algorithm = algorithm;
     }
 
-    public void updateIp(String ip) {
-        this.ip = ip;
-    }
-
-    public Url toEntity() {
+    public Url toEntity(String clientIp) {
         return Url.builder()
             .originalUrl(originalUrl)
             .algorithm(algorithm)
-            .ip(ip)
+            .ip(clientIp)
             .build();
     }
 }

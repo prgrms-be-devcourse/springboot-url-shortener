@@ -27,8 +27,7 @@ public class UrlController {
     @PostMapping
     public ResponseEntity<UrlResponse> createShortUrl(@Valid @RequestBody ShortUrlCreateRequest shortUrlCreateRequest,
         HttpServletRequest httpServletRequest) {
-        shortUrlCreateRequest.updateIp(httpServletRequest.getRemoteAddr());
-        UrlResponse urlResponse = urlService.createShortUrl(shortUrlCreateRequest);
+        UrlResponse urlResponse = urlService.createShortUrl(shortUrlCreateRequest, httpServletRequest.getRemoteAddr());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(urlResponse);
     }

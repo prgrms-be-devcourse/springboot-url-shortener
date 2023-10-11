@@ -21,8 +21,8 @@ public class UrlService {
     private final UrlRepository urlRepository;
 
     @Transactional
-    public UrlResponse createShortUrl(ShortUrlCreateRequest shortUrlCreateRequest) {
-        Url savedUrl = urlRepository.save(shortUrlCreateRequest.toEntity());
+    public UrlResponse createShortUrl(ShortUrlCreateRequest shortUrlCreateRequest, String clientIp) {
+        Url savedUrl = urlRepository.save(shortUrlCreateRequest.toEntity(clientIp));
         savedUrl.convertToShortUrl();
 
         return UrlResponse.from(savedUrl);
