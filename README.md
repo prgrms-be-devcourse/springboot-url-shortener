@@ -10,6 +10,17 @@ SprintBoot URL Shortener 구현 미션 Repository 입니다.
 - [ ] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional) 
 
 
+## 구현 기능
+1. url -> short url 만들기
+   - [ ] url을 입력받는다. (localhost:8080/{url}) 
+   - [ ] url을 short url로 변환한다.
+     - 알고리즘을 두 개 이상 적용하기 위해 map?
+   - [ ] url과 short url을 db에 저장한다.
+2. short url - > url
+   - [ ] 호출이 일어나면 요청 수(count) 증가 저장
+   - [ ] short url을 토대로 db에서 url을 가져옴.
+   - [ ] url을 리다이렉트 처리
+
 ## Short URL Service
 ### 읽으면 좋은 레퍼런스
 - [Naver 단축 URL API](https://developers.naver.com/docs/utils/shortenurl/)
