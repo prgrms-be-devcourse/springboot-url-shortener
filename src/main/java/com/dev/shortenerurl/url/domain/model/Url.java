@@ -18,14 +18,14 @@ public class Url {
 
 	private String originUrl;
 
-	private String encodedUrl;
+	private EncodedUrl encodedUrl;
 
-	public Url(String originUrl, String encodedUrl) {
+	public Url(String originUrl, Long encodingId, String algorithm) {
 		Assert.notNull(originUrl, "originUrl 은 Null 일 수 없습니다");
-		Assert.notNull(encodedUrl, "encodedUrl 은 Null 일 수 없습니다");
+		Assert.notNull(encodingId, "encodingId 은 Null 일 수 없습니다");
 
 		this.originUrl = originUrl;
-		this.encodedUrl = encodedUrl;
+		this.encodedUrl = new EncodedUrl(encodingId, algorithm);
 	}
 
 	public Long getId() {
@@ -37,6 +37,6 @@ public class Url {
 	}
 
 	public String getEncodedUrl() {
-		return encodedUrl;
+		return encodedUrl.getEncodedUrl();
 	}
 }
