@@ -33,7 +33,7 @@ public class Base62 implements Encoder {
         MessageDigest messageDigest = MessageDigest.getInstance(ALGORITHM);
         messageDigest.update(bytes);
         byte[] hashBytes = messageDigest.digest();
-        return Long.parseLong(bytesToHex(hashBytes).substring(0, 11), 16);
+        return Long.parseLong(bytesToHex(hashBytes).substring(0, 10), 16);
     }
 
     public static String bytesToHex(byte[] bytes) {
