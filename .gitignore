@@ -4,7 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-/Users/choeinjun/Desktop/projects/shorturl/src/main/resources/application.yml
+*.yml
 .DS_Store
 
 ### STS ###
