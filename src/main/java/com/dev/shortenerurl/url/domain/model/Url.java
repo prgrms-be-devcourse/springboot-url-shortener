@@ -20,6 +20,7 @@ public class Url {
 	public Url(String originUrl, Long encodingId, String algorithm) {
 		Assert.notNull(originUrl, "originUrl 은 Null 일 수 없습니다");
 		Assert.notNull(encodingId, "encodingId 은 Null 일 수 없습니다");
+		Assert.notNull(algorithm, "algorithm 은 Null 일 수 없습니다");
 
 		this.id = encodingId;
 		this.originUrl = originUrl;
