@@ -9,10 +9,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum EncodingAlgorithms {
 
+	//인코딩 알고리즘은 추후에 구현하기 위해 임시로 7문자를 리턴하도록 구현
 	BASE_62(new Encoder() {
 		@Override
 		public String encode(Long id) {
-			return null;
+			return "AAAAAAA";
 		}
 	});
 
