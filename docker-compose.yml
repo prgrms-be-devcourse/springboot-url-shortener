@@ -1,0 +1,11 @@
+version: "3"
+services:
+  db-master:
+    image: mysql:8.0
+    restart: on-failure
+    environment:
+      MYSQL_DATABASE: 'shorten_url'
+      MYSQL_ROOT_PASSWORD: '1234'
+    container_name: url-db
+    ports:
+      - '3308:3306'
