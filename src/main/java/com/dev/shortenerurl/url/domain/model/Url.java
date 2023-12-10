@@ -2,6 +2,7 @@ package com.dev.shortenerurl.url.domain.model;
 
 import org.springframework.util.Assert;
 
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class Url {
 
 	private String originUrl;
 
+	@Embedded
 	private EncodedUrl encodedUrl;
 
 	public Url(String originUrl, Long encodingId, String algorithm) {

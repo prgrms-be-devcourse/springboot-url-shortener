@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EncodedUrl {
 
-	@Column(nullable = false)
-	private String encodedUrl;
+	@Column(name = "encoded_url", nullable = false)
+	private String value;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
@@ -19,10 +19,10 @@ public class EncodedUrl {
 
 	public EncodedUrl(Long id, String algorithm) {
 		this.algorithm = EncodingAlgorithms.valueOf(algorithm);
-		encodedUrl = this.algorithm.encode(id);
+		value = this.algorithm.encode(id);
 	}
 
 	public String getEncodedUrl() {
-		return encodedUrl;
+		return value;
 	}
 }
