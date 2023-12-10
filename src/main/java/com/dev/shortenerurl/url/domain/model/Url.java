@@ -5,10 +5,13 @@ import org.springframework.util.Assert;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
+@Table(name = "url", indexes = @Index(name = "idx_encoded_url", columnList = "encoded_url"))
 public class Url {
 
 	@Id
