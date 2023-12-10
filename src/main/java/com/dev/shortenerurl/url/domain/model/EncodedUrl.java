@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EncodedUrl {
 
-	@Column(name = "encoded_url", nullable = false)
+	@Column(name = "encoded_url", nullable = false, unique = true)
 	private String value;
 
 	@Enumerated(EnumType.STRING)
