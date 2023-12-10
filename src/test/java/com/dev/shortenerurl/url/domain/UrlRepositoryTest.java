@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.dev.shortenerurl.url.domain.model.Url;
-import com.dev.shortenerurl.url.domain.model.query.OriginUrlModel;
 
 @DisplayName("[UrlRepository 테스트]")
 @DataJpaTest
@@ -27,13 +26,13 @@ class UrlRepositoryTest {
 		Url url = urlRepository.save(new Url(originUrl, 100L, "BASE_62"));
 
 		//when
-		Optional<OriginUrlModel> result = urlRepository.findOriginUrlByEncodedUrl(url.getEncodedUrl());
+		Optional<Url> result = urlRepository.findByEncodedUrl(url.getEncodedUrl());
 
 		//then
 		assertThat(result).isPresent();
-		OriginUrlModel originUrlModel = result.get();
+		Url actualUrl = result.get();
 
-		assertThat(originUrlModel.originUrl()).isEqualTo(originUrl);
-		assertThat(originUrlModel.requestCount()).isZero();
+		assertThat(actualUrl.getOriginUrl()).isEqualTo(originUrl);
+		assertThat(actualUrl.getRequestCount()).isZero();
 	}
 }
