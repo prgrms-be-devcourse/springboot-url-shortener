@@ -50,4 +50,8 @@ public class Url {
 	public long getRequestCount() {
 		return requestCount;
 	}
+
+	public void plusRequestCount() {
+		this.requestCount++;
+	}
 }
