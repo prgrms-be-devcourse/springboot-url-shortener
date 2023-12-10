@@ -22,6 +22,8 @@ public class Url {
 	@Embedded
 	private EncodedUrl encodedUrl;
 
+	private long requestCount;
+
 	public Url(String originUrl, Long encodingId, String algorithm) {
 		Assert.notNull(originUrl, "originUrl 은 Null 일 수 없습니다");
 		Assert.notNull(encodingId, "encodingId 은 Null 일 수 없습니다");
@@ -30,6 +32,7 @@ public class Url {
 		this.id = encodingId;
 		this.originUrl = originUrl;
 		this.encodedUrl = new EncodedUrl(encodingId, algorithm);
+		this.requestCount = 0;
 	}
 
 	public Long getId() {
@@ -42,5 +45,9 @@ public class Url {
 
 	public String getEncodedUrl() {
 		return encodedUrl.getEncodedUrl();
+	}
+
+	public long getRequestCount() {
+		return requestCount;
 	}
 }
