@@ -1,10 +1,10 @@
-package com.pgms.shorturl;
+package com.example.shorturlcoreinfra;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ShortUrlApplicationTests {
+class ShortUrlCoreInfraApplicationTests {
 
     @Test
     void contextLoads() {
