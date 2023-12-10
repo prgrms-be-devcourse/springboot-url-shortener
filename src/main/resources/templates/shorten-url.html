@@ -14,7 +14,10 @@
 
     <!-- Shortened URL 표시 영역 -->
     <div class="alert alert-success" role="alert">
-        Shortened URL: <span th:text="${shortenUrl}"></span>
+        Shortened URL: <a th:href="${shortenUrl}" th:text="${shortenUrl}"></a>
+    </div>
+    <div class="alert alert-success" role="alert">
+        Request Count: <span th:text="${requestCount}"></span>
     </div>
 </div>
 

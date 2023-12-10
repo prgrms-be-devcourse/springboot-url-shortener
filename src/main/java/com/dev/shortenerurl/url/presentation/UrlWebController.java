@@ -35,8 +35,9 @@ public class UrlWebController {
 		@RequestParam @NotNull String originUrl,
 		RedirectAttributes redirectAttributes
 	) {
-		ShortenUrlInfo shortenUrl = urlService.createShortenUrl(originUrl, BASE_62_ALGORITHM);
-		redirectAttributes.addAttribute("shortenUrl", shortenUrl.shortenUrl());
+		ShortenUrlInfo shortenUrlInfo = urlService.createShortenUrl(originUrl, BASE_62_ALGORITHM);
+		redirectAttributes.addAttribute("shortenUrl", shortenUrlInfo.shortenUrl());
+		redirectAttributes.addAttribute("requestCount", shortenUrlInfo.requestCount());
 
 		return "redirect:/url/shorten_url";
 	}
@@ -44,9 +45,11 @@ public class UrlWebController {
 	@GetMapping("/shorten_url")
 	public String getShortenUrlPage(
 		@RequestParam String shortenUrl,
+		@RequestParam long requestCount,
 		Model model
 	) {
 		model.addAttribute("shortenUrl", shortenUrl);
+		model.addAttribute("requestCount", requestCount);
 
 		return "/shorten-url";
 	}
