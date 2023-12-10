@@ -29,18 +29,18 @@ public class UrlWebController {
 		return "/url-input";
 	}
 
-	@PostMapping("shorten")
+	@PostMapping("/short")
 	public String getShortenUrl(
 		@RequestParam @NotNull String originUrl,
 		RedirectAttributes redirectAttributes
 	) {
 		ShortenUrlInfo shortenUrl = urlService.createShortenUrl(originUrl, BASE_62_ALGORITHM);
-		redirectAttributes.addAttribute("shortenUrl", shortenUrl);
+		redirectAttributes.addAttribute("shortenUrl", shortenUrl.encodedUrl());
 
-		return "redirect:/shorten";
+		return "redirect:/url/shorten_url";
 	}
 
-	@GetMapping("/shorten")
+	@GetMapping("/shorten_url")
 	public String getShortenUrlPage(
 		@RequestParam String shortenUrl,
 		Model model

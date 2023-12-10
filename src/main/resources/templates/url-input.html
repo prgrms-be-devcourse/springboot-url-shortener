@@ -13,9 +13,9 @@
     <h2 class="mb-4">URL Shortener</h2>
 
     <!-- URL 입력 폼 -->
-    <form th:action="@{/short}" method="post">
+    <form th:action="@{/url/short}" method="post">
         <div class="input-group mb-3">
-            <input type="text" class="form-control" name="originalUrl" placeholder="원본 URL을 입력하세요"
+            <input type="text" class="form-control" name="originUrl" placeholder="원본 URL을 입력하세요"
                    aria-label="Original URL" aria-describedby="convertButton">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="submit">Convert</button>
