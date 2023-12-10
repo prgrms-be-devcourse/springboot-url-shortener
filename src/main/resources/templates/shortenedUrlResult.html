@@ -1,0 +1,19 @@
+<!-- src/main/resources/templates/shortenedUrlResult.html -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shortened URL Result</title>
+</head>
+<body>
+
+<h1>Shortened URL Result</h1>
+
+<p>Original URL: <span th:text="${originalUrl}"></span></p>
+<p>Shortened URL: <a th:href="${shortenedUrl}" th:text="${shortenedUrl}" target="_blank"></a></p>
+<p>해당 단축 URL 누적 요청 횟수: <span th:text="${hits}"></span></p>
+
+</body>
+</html>
