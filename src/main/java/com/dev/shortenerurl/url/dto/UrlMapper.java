@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class UrlMapper {
 
-	private static final String URL_PREFIX = "http://localhost:8080/url";
+	private static final String URL_PREFIX = "http://localhost:8080/url/";
 
 	public static ShortenUrlInfo toEncodedUrlInfo(Url url) {
 		return new ShortenUrlInfo(URL_PREFIX + url.getEncodedUrl());

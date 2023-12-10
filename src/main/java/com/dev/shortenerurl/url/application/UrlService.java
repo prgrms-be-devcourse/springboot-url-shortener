@@ -21,7 +21,8 @@ public class UrlService {
 		Url urlEntity = urlRepository.findByOriginUrl(originUrl)
 			.orElseGet(() -> {
 				Url url = new Url(originUrl, idGenerator.get(), algorithm);
-				return urlRepository.save(url);
+				urlRepository.save(url);
+				return url;
 			});
 
 		return UrlMapper.toEncodedUrlInfo(urlEntity);

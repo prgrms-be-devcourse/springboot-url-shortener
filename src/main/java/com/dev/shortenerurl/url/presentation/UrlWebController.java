@@ -35,7 +35,7 @@ public class UrlWebController {
 		RedirectAttributes redirectAttributes
 	) {
 		ShortenUrlInfo shortenUrl = urlService.createShortenUrl(originUrl, BASE_62_ALGORITHM);
-		redirectAttributes.addAttribute("shortenUrl", shortenUrl.encodedUrl());
+		redirectAttributes.addAttribute("shortenUrl", shortenUrl.shortenUrl());
 
 		return "redirect:/url/shorten_url";
 	}
