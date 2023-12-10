@@ -3,6 +3,7 @@ package com.dev.shortenerurl.url.presentation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,5 +49,12 @@ public class UrlWebController {
 		model.addAttribute("shortenUrl", shortenUrl);
 
 		return "/shorten-url";
+	}
+
+	@GetMapping("/{encodedUrl}")
+	public String redirectToOriginUrl(@PathVariable String encodedUrl) {
+		String originUrl = urlService.getOriginUrl(encodedUrl).originUrl();
+
+		return "redirect:" + originUrl;
 	}
 }
