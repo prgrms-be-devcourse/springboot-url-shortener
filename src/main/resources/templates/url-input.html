@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <!-- 부트스트랩 CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <h2 class="mb-4">URL Shortener</h2>
+
+    <!-- URL 입력 폼 -->
+    <form th:action="@{/short}" method="post">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="originalUrl" placeholder="원본 URL을 입력하세요"
+                   aria-label="Original URL" aria-describedby="convertButton">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Convert</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- 부트스트랩 및 jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
