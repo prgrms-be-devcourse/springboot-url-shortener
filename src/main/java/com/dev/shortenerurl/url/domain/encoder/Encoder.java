@@ -1,4 +1,4 @@
-package com.dev.shortenerurl.url.domain;
+package com.dev.shortenerurl.url.domain.encoder;
 
 public abstract class Encoder {
 
