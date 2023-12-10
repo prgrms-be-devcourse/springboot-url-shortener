@@ -11,5 +11,5 @@ public interface UrlRepository {
 
 	Optional<Url> findByOriginUrl(String originUrl);
 
-	Optional<OriginUrlModel> findByEncodedUrl(String encodedUrl);
+	Optional<OriginUrlModel> findOriginUrlByEncodedUrl(String encodedUrl);
 }

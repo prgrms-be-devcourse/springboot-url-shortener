@@ -12,7 +12,7 @@ public interface UrlJpaRepository extends JpaRepository<Url, Long>, UrlRepositor
 
 	Optional<Url> findByOriginUrl(String originUrl);
 
-	default Optional<OriginUrlModel> findByEncodedUrl(String encodedUrl) {
+	default Optional<OriginUrlModel> findOriginUrlByEncodedUrl(String encodedUrl) {
 		return findByEncodedUrlValue(encodedUrl);
 	}
 

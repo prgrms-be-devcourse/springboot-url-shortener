@@ -27,7 +27,7 @@ class UrlRepositoryTest {
 		Url url = urlRepository.save(new Url(originUrl, 100L, "BASE_62"));
 
 		//when
-		Optional<OriginUrlModel> originUrlModel = urlRepository.findByEncodedUrl(url.getEncodedUrl());
+		Optional<OriginUrlModel> originUrlModel = urlRepository.findOriginUrlByEncodedUrl(url.getEncodedUrl());
 
 		//then
 		assertThat(originUrlModel).isPresent();
