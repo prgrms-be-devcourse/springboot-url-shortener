@@ -91,7 +91,7 @@ class UrlServiceTest {
 			String encodedUrl = "encodedUrl";
 			String originUrl = "originUrl";
 			given(urlRepository.findOriginUrlByEncodedUrl(encodedUrl))
-				.willReturn(Optional.of(new OriginUrlModel(originUrl)));
+				.willReturn(Optional.of(new OriginUrlModel(originUrl, 0)));
 
 			//when
 			OriginUrlInfo originUrlInfo = urlService.getOriginUrl(encodedUrl);
