@@ -1,12 +1,12 @@
 package com.dev.shortenerurl.url.application;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.shortenerurl.common.exception.CommonException;
 import com.dev.shortenerurl.url.domain.IdGenerator;
 import com.dev.shortenerurl.url.domain.UrlRepository;
 import com.dev.shortenerurl.url.domain.model.Url;
-import com.dev.shortenerurl.url.domain.model.query.OriginUrlModel;
 import com.dev.shortenerurl.url.dto.UrlMapper;
 import com.dev.shortenerurl.url.dto.response.OriginUrlInfo;
 import com.dev.shortenerurl.url.dto.response.ShortenUrlInfo;
@@ -31,10 +31,13 @@ public class UrlService {
 		return UrlMapper.toEncodedUrlInfo(urlEntity);
 	}
 
+	@Transactional
 	public OriginUrlInfo getOriginUrl(String encodedUrl) {
-		OriginUrlModel originUrlModel = urlRepository.findOriginUrlByEncodedUrl(encodedUrl)
+		Url url = urlRepository.findByEncodedUrl(encodedUrl)
 			.orElseThrow(() -> new CommonException("shortenUrl 에 해당되는 url 이 없습니다"));
 
-		return UrlMapper.toOriginUrlInfo(originUrlModel);
+		url.plusRequestCount();
+
+		return UrlMapper.toOriginUrlInfo(url);
 	}
 }

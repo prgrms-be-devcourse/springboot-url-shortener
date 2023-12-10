@@ -20,7 +20,6 @@ import com.dev.shortenerurl.url.domain.IdGenerator;
 import com.dev.shortenerurl.url.domain.UrlRepository;
 import com.dev.shortenerurl.url.domain.model.EncodingAlgorithms;
 import com.dev.shortenerurl.url.domain.model.Url;
-import com.dev.shortenerurl.url.domain.model.query.OriginUrlModel;
 import com.dev.shortenerurl.url.dto.response.OriginUrlInfo;
 import com.dev.shortenerurl.url.dto.response.ShortenUrlInfo;
 
@@ -43,6 +42,7 @@ class UrlServiceTest {
 
 		assertThat(encodedUrl).isEqualTo(expectedUrl);
 		assertThat(urlPrefix).isEqualTo("http://localhost:8080/url");
+		assertThat(shortenUrlInfo.requestCount()).isZero();
 	}
 
 	@Nested
@@ -89,15 +89,16 @@ class UrlServiceTest {
 		void getOriginUrl_1() {
 			//given
 			String encodedUrl = "encodedUrl";
-			String originUrl = "originUrl";
-			given(urlRepository.findOriginUrlByEncodedUrl(encodedUrl))
-				.willReturn(Optional.of(new OriginUrlModel(originUrl, 0)));
+			Url url = new Url("originUrl", 100L, "BASE_62");
+			given(urlRepository.findByEncodedUrl(encodedUrl))
+				.willReturn(Optional.of(url));
 
 			//when
 			OriginUrlInfo originUrlInfo = urlService.getOriginUrl(encodedUrl);
 
 			//then
-			assertThat(originUrlInfo.originUrl()).isEqualTo(originUrl);
+			assertThat(originUrlInfo.originUrl()).isEqualTo(url.getOriginUrl());
+			assertThat(url.getRequestCount()).isEqualTo(1);
 		}
 
 		@Test
@@ -105,7 +106,7 @@ class UrlServiceTest {
 		void getOriginUrl_2() {
 			//given
 			String encodedUrl = "encodedUrl";
-			given(urlRepository.findOriginUrlByEncodedUrl(encodedUrl))
+			given(urlRepository.findByEncodedUrl(encodedUrl))
 				.willReturn(Optional.empty());
 
 			//when
