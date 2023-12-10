@@ -1,6 +1,7 @@
 package com.dev.shortenerurl.url.application;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.ThrowableAssert.*;
 import static org.mockito.BDDMockito.*;
 
 import java.util.Optional;
@@ -13,11 +14,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.dev.shortenerurl.common.exception.CommonException;
 import com.dev.shortenerurl.supports.fixture.UrlFixture;
 import com.dev.shortenerurl.url.domain.IdGenerator;
 import com.dev.shortenerurl.url.domain.UrlRepository;
 import com.dev.shortenerurl.url.domain.model.EncodingAlgorithms;
 import com.dev.shortenerurl.url.domain.model.Url;
+import com.dev.shortenerurl.url.domain.model.query.OriginUrlModel;
+import com.dev.shortenerurl.url.dto.response.OriginUrlInfo;
 import com.dev.shortenerurl.url.dto.response.ShortenUrlInfo;
 
 @DisplayName("[UrlService 테스트]")
@@ -74,6 +78,43 @@ class UrlServiceTest {
 
 			//then
 			assertShortenUrl(EncodingAlgorithms.BASE_62.encode(100L), shortenUrlInfo);
+		}
+	}
+
+	@Nested
+	@DisplayName("[encodedUrl 에 해당하는 originUrl 정보를 가져온다]")
+	class getOriginUrl {
+		@Test
+		@DisplayName("[성공적으로 originUrl 정보를 가져온다]")
+		void getOriginUrl_1() {
+			//given
+			String encodedUrl = "encodedUrl";
+			String originUrl = "originUrl";
+			given(urlRepository.findOriginUrlByEncodedUrl(encodedUrl))
+				.willReturn(Optional.of(new OriginUrlModel(originUrl)));
+
+			//when
+			OriginUrlInfo originUrlInfo = urlService.getOriginUrl(encodedUrl);
+
+			//then
+			assertThat(originUrlInfo.originUrl()).isEqualTo(originUrl);
+		}
+
+		@Test
+		@DisplayName("[encodedUrl 에 해당하는 originUrl 이 존재하지 않아 실패한다]")
+		void getOriginUrl_2() {
+			//given
+			String encodedUrl = "encodedUrl";
+			given(urlRepository.findOriginUrlByEncodedUrl(encodedUrl))
+				.willReturn(Optional.empty());
+
+			//when
+			ThrowingCallable when = () -> urlService.getOriginUrl(encodedUrl);
+
+			//then
+			assertThatThrownBy(when)
+				.isInstanceOf(CommonException.class)
+				.hasMessageContaining("shortenUrl 에 해당되는 url 이 없습니다");
 		}
 	}
 }
