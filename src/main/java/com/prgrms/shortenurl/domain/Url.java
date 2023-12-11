@@ -10,10 +10,9 @@ public class Url {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "shortenUrl")
-    @SequenceGenerator(name = "shortenUrl", sequenceName = "shortenUrl", allocationSize = 1)
+    @SequenceGenerator(name = "shortenUrl", sequenceName = "shortenUrl", allocationSize = 1, initialValue = 100)
     private Long id;
 
-    @NonNull
     @Column(name = "shorten_key")
     private String shortenKey;
 
@@ -21,14 +20,16 @@ public class Url {
     @Column(name = "orgin_url")
     private String originUrl;
 
-    @NonNull
     @Column(name = "shorten_url")
     private String shortenUrl;
 
     @Builder
-    public Url(@NonNull String shortenKey, @NonNull String originUrl, @NonNull String shortenUrl) {
-        this.shortenKey = shortenKey;
+    public Url(@NonNull String originUrl) {
         this.originUrl = originUrl;
-        this.shortenUrl = shortenUrl;
+    }
+
+    public void updateShortenUrl(String shortenKey) {
+        this.shortenKey = shortenKey;
+        this.shortenUrl = "http://localhost:8090/"+shortenKey;
     }
 }
