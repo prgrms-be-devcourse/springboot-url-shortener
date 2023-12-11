@@ -3,6 +3,7 @@ package com.prgrms.shortenurl.service;
 import com.google.common.hash.Hashing;
 import com.prgrms.shortenurl.domain.Url;
 import com.prgrms.shortenurl.domain.UrlRepository;
+import com.prgrms.shortenurl.exception.UrlNotFoundException;
 import lombok.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ public class UrlService {
     @Transactional(readOnly = true)
     public String getUrlByKey(@NonNull String key) {
         Url url = urlRepository.findByShortenKey(key)
-                .orElseThrow(() -> new IllegalArgumentException("해당 url을 찾을 수 없습니다."));
+                .orElseThrow(UrlNotFoundException::new);
         return url.getOriginUrl();
     }
 }
