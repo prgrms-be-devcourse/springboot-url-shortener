@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.NonNull;
 
 @Getter
 @Entity
@@ -27,7 +26,7 @@ public class Url {
     private Long hit = 0L;
 
     @Builder
-    private Url(@NonNull String longUrl, @NonNull String shortUrl, @NonNull EncodeType encodeType) {
+    private Url(String longUrl, String shortUrl, EncodeType encodeType) {
         this.shortUrl = shortUrl;
         this.longUrl = longUrl;
         this.encodeType = encodeType;

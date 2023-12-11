@@ -1,18 +1,20 @@
 package com.programmers.springbooturlshortener.domain.entity;
 
 
+import com.programmers.springbooturlshortener.domain.infrastructure.utils.Base58;
 import com.programmers.springbooturlshortener.domain.infrastructure.utils.Base62;
-import com.programmers.springbooturlshortener.domain.infrastructure.utils.Encoder;
+
+import java.util.function.UnaryOperator;
 
 public enum EncodeType {
-    BASE62(new Base62());
-    private final Encoder encoder;
+    BASE62(Base62::encode), BASE58(Base58::encode);
+    private final UnaryOperator<String> function;
 
-    EncodeType(Encoder encoder) {
-        this.encoder = encoder;
+    EncodeType(UnaryOperator<String> function) {
+        this.function = function;
     }
 
     public String encode(String url) {
-        return encoder.encode(url);
+        return function.apply(url);
     }
 }

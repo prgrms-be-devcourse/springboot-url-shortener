@@ -1,9 +1,12 @@
 package com.programmers.springbooturlshortener.domain.infrastructure.utils;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-public class Base62 implements Encoder {
+import static com.programmers.springbooturlshortener.domain.infrastructure.utils.EncodeHelper.encoding;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public class Base62 {
     private static final char[] TOKENS = {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
@@ -12,39 +15,10 @@ public class Base62 implements Encoder {
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
     };
     private static final int TOKEN_LENGTH = TOKENS.length;
-    private static final String ALGORITHM = "SHA-256";
+    private static final int HEX_LENGTH = 10;
 
-    @Override
-    public String encode(String url) {
-        StringBuilder result = new StringBuilder();
-        try {
-            long src = hashingURL(url.getBytes());
-            do {
-                result.insert(0, TOKENS[(int) (src % TOKEN_LENGTH)]);
-                src /= TOKEN_LENGTH;
-            } while (src > 0);
-
-        } catch (NoSuchAlgorithmException ignored) {
-        }
-        return result.toString();
+    public static String encode(String url) {
+        return encoding(url, HEX_LENGTH, TOKENS, TOKEN_LENGTH);
     }
 
-    private long hashingURL(byte[] bytes) throws NoSuchAlgorithmException {
-        MessageDigest messageDigest = MessageDigest.getInstance(ALGORITHM);
-        messageDigest.update(bytes);
-        byte[] hashBytes = messageDigest.digest();
-        return Long.parseLong(bytesToHex(hashBytes).substring(0, 10), 16);
-    }
-
-    public static String bytesToHex(byte[] bytes) {
-        final char[] hexDigits = {
-                '0', '1', '2', '3', '4', '5', '6', '7',
-                '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
-        };
-        StringBuilder sb = new StringBuilder(2 * bytes.length);
-        for (byte b : bytes) {
-            sb.append(hexDigits[(b >> 4) & 0xf]).append(hexDigits[b & 0xf]);
-        }
-        return sb.toString();
-    }
 }
