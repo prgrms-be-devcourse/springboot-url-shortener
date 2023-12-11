@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'url_db'
+      MYSQL_ROOT_HOST : '%'
+      MYSQL_ROOT_PASSWORD: 'prodpassword'
+    ports:
+      - '3307:3306'
+  redis:
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+    labels:
+      - "name=redis"
+      - "mode=standalone"
+    restart: always
