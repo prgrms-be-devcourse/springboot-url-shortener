@@ -1,0 +1,6 @@
+CREATE TABLE URL(
+    id BIGINT AUTO_INCREMENT,
+    longUrl VARCHAR(255) NOT NULL UNIQUE,
+    shortUrl CHAR(8) UNIQUE,
+    CONSTRAINT pk_url_id PRIMARY KEY (id)
+);
