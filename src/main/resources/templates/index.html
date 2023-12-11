@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shorten URL Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 class="mt-3">Shorten URL Generator</h2>
+
+    <!-- URL 입력 폼 -->
+    <form th:action="@{/shorten}" method="post" class="mt-3">
+        <div class="form-group">
+            <label for="originUrl">Original URL:</label>
+            <input type="text" class="form-control" id="originUrl" name="originUrl" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Shorten URL</button>
+    </form>
+
+    <!-- 결과 표시 -->
+    <div th:if="${shortenUrl}" class="mt-3">
+        <p class="font-weight-bold">Shortened URL:</p>
+        <div class="input-group">
+            <input type="text" th:id="shortenUrlInput" th:value="${shortenUrl}" readonly class="form-control">
+            <div class="input-group-append">
+                <button class="btn btn-success" type="button" onclick="copyToClipboard()">Copy to Clipboard</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<!-- 클립보드 복사 기능 -->
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("shortenUrlInput");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        alert("Copied the text: " + copyText.value);
+    }
+</script>
+</body>
+</html>
