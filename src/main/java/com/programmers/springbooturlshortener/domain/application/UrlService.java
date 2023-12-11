@@ -16,11 +16,11 @@ public class UrlService {
     private final UrlRepository urlRepository;
 
     public UrlServiceResponseDto createShortUrl(UrlServiceRequestDto requestDto) {
-        String shortUrl = requestDto.getEncodeType().encode(requestDto.getLongUrl().getValue());
-        Url url = urlRepository.findById(shortUrl)
+        String longUrl = requestDto.getLongUrl().getValue();
+        Url url = urlRepository.findByLongUrl(longUrl)
                 .orElseGet(() -> urlRepository.save(Url.builder()
                         .longUrl(requestDto.getLongUrl().getValue())
-                        .shortUrl(shortUrl)
+                        .shortUrl(requestDto.getEncodeType().encode(longUrl))
                         .encodeType(requestDto.getEncodeType())
                         .build())
                 );
