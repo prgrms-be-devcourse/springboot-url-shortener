@@ -1,4 +1,4 @@
-package com.prgrms.shortenurl;
+package com.prgrms.shortenurl.service;
 
 import com.google.common.hash.Hashing;
 import com.prgrms.shortenurl.domain.Url;

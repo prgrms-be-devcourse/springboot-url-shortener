@@ -1,5 +1,6 @@
-package com.prgrms.shortenurl;
+package com.prgrms.shortenurl.controller;
 
+import com.prgrms.shortenurl.service.UrlService;
 import com.prgrms.shortenurl.domain.Url;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
