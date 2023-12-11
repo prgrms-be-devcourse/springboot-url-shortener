@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/shortenUrl")
+@RequestMapping("/api/v1/shortenUrl")
 public class UrlRestController {
     private final UrlService urlService;
 
