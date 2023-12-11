@@ -1,4 +1,4 @@
-package com.example.shorturlcoredomain.url;
+package com.pgms.shorturlcoredomain.url;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package util;
+package com.pgms.shorturlcoredomain.util;
 
 import org.springframework.stereotype.Component;
 

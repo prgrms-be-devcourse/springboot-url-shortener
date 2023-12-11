@@ -1,4 +1,4 @@
-package com.example.shorturlcoredomain.url;
+package com.pgms.shorturlcoredomain.url;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,11 +1,11 @@
-package com.example.shorturlcoredomain.url;
+package com.pgms.shorturlapi.url;
 
+import com.pgms.shorturlcoredomain.url.Url;
+import com.pgms.shorturlcoredomain.url.UrlRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import util.Base62Converter;
-
-import java.util.Optional;
+import com.pgms.shorturlcoredomain.util.Base62Converter;
 
 @Service
 @Transactional

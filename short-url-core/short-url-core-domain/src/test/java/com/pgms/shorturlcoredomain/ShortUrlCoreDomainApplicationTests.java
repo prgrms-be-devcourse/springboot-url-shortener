@@ -1,4 +1,4 @@
-package com.example.shorturlcoredomain;
+package com.pgms.shorturlcoredomain;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
