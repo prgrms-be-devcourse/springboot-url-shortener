@@ -1,13 +1,14 @@
 package com.devcourse.shorturl.url.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import java.util.Objects;
 import lombok.AccessLevel;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CollectionId;
-
-import java.util.Objects;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,6 +36,10 @@ public class Url {
 
     public void addHits(){
         this.hits += 1;
+    }
+
+    public void insertShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 
     @Override
