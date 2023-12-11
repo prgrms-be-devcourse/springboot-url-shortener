@@ -15,8 +15,8 @@ public class UrlService {
     private final UrlRepository urlRepository;
 
     public String getShortUrl(String url){
-        Url findUrl = urlRepository.findUrlByOriginal(url).orElseGet(() -> {
-                    Url createdUrl = urlRepository.save(Url.builder().original(url).build());
+        Url findUrl = urlRepository.findUrlByOriginalUrl(url).orElseGet(() -> {
+                    Url createdUrl = urlRepository.save(Url.builder().originalUrl(url).build());
                     String shortUrl = Base62Converter.encode(createdUrl.getId());
                     createdUrl.updateUrlShortUrl(shortUrl);
                     return createdUrl;
@@ -28,6 +28,6 @@ public class UrlService {
 
     @Cacheable(value = "originalUrl", key = "#shortUrl", cacheManager = "contentCacheManager")
     public String getOriginalUrl(String shortUrl){
-        return urlRepository.findUrlByShortUrl(shortUrl).orElseThrow(RuntimeException::new).getOriginal();
+        return urlRepository.findUrlByShortUrl(shortUrl).orElseThrow(RuntimeException::new).getOriginalUrl();
     }
 }

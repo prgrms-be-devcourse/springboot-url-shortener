@@ -10,6 +10,8 @@ services:
       MYSQL_ROOT_PASSWORD: 'prodpassword'
     ports:
       - '3307:3306'
+    volumes:
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
   redis:
     image: redis:alpine
     ports:
