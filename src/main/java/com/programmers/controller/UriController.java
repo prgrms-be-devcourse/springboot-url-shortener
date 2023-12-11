@@ -4,15 +4,11 @@ import com.programmers.model.CreateRequest;
 import com.programmers.model.CreateResponse;
 import com.programmers.service.UriService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -20,23 +16,30 @@ import java.net.URISyntaxException;
 
 @RequiredArgsConstructor
 @Controller
+@RequestMapping
 public class UriController {
     private final UriService uriService;
 
+    @GetMapping("/")
+    public String home(Model model) {
+        model.addAttribute("createRequest", new CreateRequest());
+        return "home";
+    }
+
     // shortUri -> uri redirect
     @GetMapping("/{shortUri}")
-    public ResponseEntity<String> redirectShortUri(@PathVariable String shortUri) throws URISyntaxException {
+    public String redirectShortUri(@PathVariable @NotBlank String shortUri) throws URISyntaxException {
         String originalUri = uriService.getOriginalUri(shortUri);
         URI redirectUri = new URI(originalUri);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(redirectUri);
-        return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
+        return "redirect:" + redirectUri;
     }
 
     // uri -> shortUri create
-    @PostMapping("/api")
-    public ResponseEntity<CreateResponse> createShortUri(@RequestBody @Valid CreateRequest request) {
+    @PostMapping("api")
+    public String createShortUri(@ModelAttribute @Valid CreateRequest request, Model model) {
         CreateResponse createResponse = uriService.createShortUri(request.getUri());
-        return ResponseEntity.ok(createResponse);
+        model.addAttribute("shortUri", createResponse.getShortUri());
+        model.addAttribute("count", createResponse.getCount());
+        return "result";
     }
 }
