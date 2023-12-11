@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    url: jdbc:tc:mysql:latest:///test-database
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
