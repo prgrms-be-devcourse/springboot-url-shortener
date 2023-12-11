@@ -17,7 +17,7 @@ public class UrlService {
 
     public UrlServiceResponseDto createShortUrl(UrlServiceRequestDto requestDto) {
         String longUrl = requestDto.getLongUrl().getValue();
-        Url url = urlRepository.findByLongUrl(longUrl)
+        Url url = urlRepository.findByLongUrlAndEncodeType(longUrl, requestDto.getEncodeType())
                 .orElseGet(() -> urlRepository.save(Url.builder()
                         .longUrl(requestDto.getLongUrl().getValue())
                         .shortUrl(requestDto.getEncodeType().encode(longUrl))
