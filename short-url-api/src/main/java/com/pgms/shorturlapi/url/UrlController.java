@@ -4,10 +4,16 @@ import com.pgms.shorturlcoredomain.common.response.CommonResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.util.URLEncoder;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,7 +22,10 @@ public class UrlController {
     private final UrlService urlService;
 
     @PostMapping("/short-url")
-    public CommonResponse<String> getShortUrl(@RequestParam String url, @RequestParam(value = "algorithm", required = false, defaultValue = "base62Converter") String algorithm, HttpServletRequest request){
+    public CommonResponse<String> getShortUrl(@RequestParam(value = "algorithm", required = false, defaultValue = "base62Converter") String algorithm,
+                                              HttpServletRequest request){
+
+        String url = request.getParameter("url");
         String shortUrl = urlService.getShortUrl(url, algorithm);
 
         StringBuffer sb = new StringBuffer(request.getRequestURL().toString().replace(request.getRequestURI(), ""));
@@ -26,8 +35,12 @@ public class UrlController {
     }
 
     @GetMapping("/{shortUrl}")
-    public void redirectUrl(@PathVariable String shortUrl, HttpServletResponse response) throws IOException {
+    public void redirectUrl(@PathVariable String shortUrl, HttpServletResponse response) throws URISyntaxException, IOException {
         String originalUrl = urlService.getOriginalUrl(shortUrl);
-        response.sendRedirect(originalUrl);
+
+        URI uri = new URI(originalUrl);
+        String encodedUrl = uri.toASCIIString();
+
+        response.sendRedirect(encodedUrl);
     }
 }
