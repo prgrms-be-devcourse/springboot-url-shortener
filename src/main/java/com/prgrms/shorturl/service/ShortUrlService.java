@@ -1,5 +1,6 @@
 package com.prgrms.shorturl.service;
 
+import com.prgrms.shorturl.domain.EncodingFactory;
 import com.prgrms.shorturl.domain.ShortUrl;
 import com.prgrms.shorturl.dto.ShortUrlRequest;
 import com.prgrms.shorturl.dto.ShortUrlResponse;
