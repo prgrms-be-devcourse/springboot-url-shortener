@@ -16,18 +16,18 @@ import java.net.URISyntaxException;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping
+@RequestMapping("/")
 public class UriController {
     private final UriService uriService;
 
-    @GetMapping("/")
+    @GetMapping
     public String home(Model model) {
         model.addAttribute("createRequest", new CreateRequest());
         return "home";
     }
 
     // shortUri -> uri redirect
-    @GetMapping("/{shortUri}")
+    @GetMapping("{shortUri}")
     public String redirectShortUri(@PathVariable @NotBlank String shortUri) throws URISyntaxException {
         String originalUri = uriService.getOriginalUri(shortUri);
         URI redirectUri = new URI(originalUri);
