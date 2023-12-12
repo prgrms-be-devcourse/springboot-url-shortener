@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface UriRepository extends JpaRepository<UriEntity, Long> {
     Optional<UriEntity> findByShortUriEquals(String shortUri);
+    Optional<UriEntity> findByOriginalUriEquals(String originalUri);
 }

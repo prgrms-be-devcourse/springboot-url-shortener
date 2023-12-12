@@ -10,6 +10,8 @@ import com.programmers.repository.UriRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class UriService {
@@ -24,6 +26,11 @@ public class UriService {
     }
 
     public CreateResponse createShortUri(String inputUri) {
+        Optional<UriEntity> optionalUriEntity = uriRepository.findByOriginalUriEquals(inputUri);
+        if(optionalUriEntity.isPresent()) {
+            UriEntity existUriEntity = optionalUriEntity.get();
+            return uriConverter.convertCreateResponseFrom(existUriEntity);
+        }
         UriEntity uriEntity = new UriEntity(inputUri);
         UriEntity saveUriEntity = uriRepository.save(uriEntity);
 
