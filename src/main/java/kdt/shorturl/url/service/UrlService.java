@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -18,14 +18,16 @@ public class UrlService {
 
     @Transactional
     public CreateShortenUrlResponse findOrGenerateShortenUrl(CreateShortUrlRequest request) {
-        // 이미 변환된 적 있는 url인 경우
-        Optional<Url> searchUrl = urlRepository.findByOriginUrlAndAlgorithm(request.originUrl(), request.algorithm());
-        if (searchUrl.isPresent()) {
-            Url foundUrl = searchUrl.get();
-            return CreateShortenUrlResponse.from(foundUrl, false);
-        }
+        return urlRepository.findByOriginUrlAndAlgorithm(request.originUrl(), request.algorithm())
+                .map(foundUrl -> CreateShortenUrlResponse.from(foundUrl, false))
+                .orElseGet(() -> generateShortenUrl(request));
+    }
 
-        return generateShortenUrl(request);
+    @Transactional(readOnly = true)
+    public String findOriginUrlByShortUrl(String shortUrl) {
+        Url url = urlRepository.findByShortUrl(shortUrl)
+                .orElseThrow(() -> new NoSuchElementException("해당 단축 URL을 찾을 수 없습니다."));
+        return url.getOriginUrl();
     }
 
     private CreateShortenUrlResponse generateShortenUrl(CreateShortUrlRequest request) {
