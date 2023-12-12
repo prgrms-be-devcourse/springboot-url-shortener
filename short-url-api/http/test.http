@@ -19,7 +19,7 @@ POST http://localhost:8080/short-url?url=https://www.google.com/search?q=%EC%95%
 POST http://localhost:8080/short-url?algorithm=md5HashConverter&url=https://www.naver.com
 
 ### short-url -> 원본 리다이렉트
-GET http://localhost:8080/U
+GET http://localhost:8080/12341
 
 <> 2023-12-11T224745.200.html
 <> 2023-12-11T224742.200.html

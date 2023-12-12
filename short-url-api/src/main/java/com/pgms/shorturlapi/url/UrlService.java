@@ -1,5 +1,6 @@
 package com.pgms.shorturlapi.url;
 
+import com.pgms.shorturlcoredomain.exception.NoUrlException;
 import com.pgms.shorturlcoredomain.url.Url;
 import com.pgms.shorturlcoredomain.url.UrlRepository;
 import com.pgms.shorturlcoredomain.util.AlgorithmConverter;
@@ -35,6 +36,6 @@ public class UrlService {
 
     @Cacheable(value = "originalUrl", key = "#shortUrl", cacheManager = "contentCacheManager")
     public String getOriginalUrl(String shortUrl){
-        return urlRepository.findUrlByShortUrl(shortUrl).orElseThrow(RuntimeException::new).getOriginalUrl();
+        return urlRepository.findUrlByShortUrl(shortUrl).orElseThrow(NoUrlException::new).getOriginalUrl();
     }
 }
