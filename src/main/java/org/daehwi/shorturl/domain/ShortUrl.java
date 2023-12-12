@@ -5,7 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-public class Url {
+public class ShortUrl {
+
     @Id
     private Long id;
 
