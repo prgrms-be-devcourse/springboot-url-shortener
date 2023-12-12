@@ -10,10 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
-
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/")
@@ -28,10 +24,9 @@ public class UriController {
 
     // shortUri -> uri redirect
     @GetMapping("{shortUri}")
-    public String redirectShortUri(@PathVariable @NotBlank String shortUri) throws URISyntaxException {
+    public String redirectShortUri(@PathVariable @NotBlank String shortUri) {
         String originalUri = uriService.getOriginalUri(shortUri);
-        URI redirectUri = new URI(originalUri);
-        return "redirect:" + redirectUri;
+        return "redirect:" + originalUri;
     }
 
     // uri -> shortUri create
