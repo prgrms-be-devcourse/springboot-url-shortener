@@ -16,8 +16,8 @@ public class UrlController {
     private final UrlService urlService;
 
     @PostMapping("/short-url")
-    public CommonResponse<String> getShortUrl(@RequestParam String url, HttpServletRequest request){
-        String shortUrl = urlService.getShortUrl(url);
+    public CommonResponse<String> getShortUrl(@RequestParam String url, @RequestParam(value = "algorithm", required = false, defaultValue = "base62Converter") String algorithm, HttpServletRequest request){
+        String shortUrl = urlService.getShortUrl(url, algorithm);
 
         StringBuffer sb = new StringBuffer(request.getRequestURL().toString().replace(request.getRequestURI(), ""));
         sb.append("/").append(shortUrl);
