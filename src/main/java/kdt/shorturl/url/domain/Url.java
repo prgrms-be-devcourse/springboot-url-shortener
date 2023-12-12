@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.util.NoSuchElementException;
 
@@ -15,6 +14,8 @@ import java.util.NoSuchElementException;
 @Table(schema = "url")
 public class Url {
 
+    public static final long DEFAULT_VIEW = 0l;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,16 +23,15 @@ public class Url {
     @Column(name = "origin_url", nullable = false)
     private String originUrl;
 
-    @Column(name = "short_url", nullable = false)
+    @Column(name = "short_url")
     private String shortUrl;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "algorithm")
     private Algorithm algorithm;
 
-    @Column(name = "view_count", nullable = false)
-    @ColumnDefault("0")
-    private Long viewCount;
+    @Column(name = "view_count")
+    private long viewCount = DEFAULT_VIEW;
 
     @Builder
     public Url(Long id, String originUrl, Algorithm algorithm) {
@@ -42,7 +42,7 @@ public class Url {
 
     public void convertToShortUrl() {
         if (id == null) {
-            throw new NoSuchElementException("존재하지 않는 url입니다.");
+            throw new NoSuchElementException("url이 존재하지 않습니다.");
         }
         this.shortUrl = algorithm.getShortUrl(id.intValue());
     }
