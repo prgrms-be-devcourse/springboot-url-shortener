@@ -1,6 +1,7 @@
 package kdt.shorturl.url.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import kdt.shorturl.grobal.validator.UrlValid;
 import kdt.shorturl.url.domain.Algorithm;
 import kdt.shorturl.url.domain.Url;
@@ -10,7 +11,7 @@ public record CreateShortUrlRequest(
         @UrlValid
         String originUrl,
 
-        @NotBlank
+        @NotNull(message = "Short URL 생성 알고리즘을 선택해주세요.")
         Algorithm algorithm
 ) {
     private static final String HTTPS_PROTOCOL = "https://";
@@ -23,7 +24,7 @@ public record CreateShortUrlRequest(
                 .build();
     }
 
-    private String removeProtocol(String url) {
+    public String removeProtocol(String url) {
         if (url.startsWith(HTTPS_PROTOCOL)) {
             return url.substring(HTTPS_PROTOCOL.length());
         } else if (url.startsWith(HTTP_PROTOCOL)) {

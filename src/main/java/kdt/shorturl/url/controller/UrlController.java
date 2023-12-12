@@ -1,5 +1,6 @@
 package kdt.shorturl.url.controller;
 
+import jakarta.validation.Valid;
 import kdt.shorturl.url.dto.CreateShortUrlRequest;
 import kdt.shorturl.url.dto.CreateShortenUrlResponse;
 import kdt.shorturl.url.service.UrlService;
@@ -13,13 +14,12 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/urls")
 public class UrlController {
 
     private final UrlService urlService;
 
-    @PostMapping
-    public ResponseEntity<CreateShortenUrlResponse> getOrGenerateShortenUrl(@RequestBody CreateShortUrlRequest request) {
+    @PostMapping("/urls")
+    public ResponseEntity<CreateShortenUrlResponse> getOrGenerateShortenUrl(@Valid @RequestBody CreateShortUrlRequest request) {
         CreateShortenUrlResponse url = urlService.findOrGenerateShortenUrl(request);
 
         HttpStatus httpStatus = url.isNew() ? HttpStatus.CREATED : HttpStatus.OK;
@@ -32,7 +32,6 @@ public class UrlController {
                     .toUri();
             responseBuilder.location(location);
         }
-
         return responseBuilder.body(url);
     }
 
