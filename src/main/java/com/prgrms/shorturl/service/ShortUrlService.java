@@ -4,9 +4,13 @@ import com.prgrms.shorturl.domain.EncodingFactory;
 import com.prgrms.shorturl.domain.ShortUrl;
 import com.prgrms.shorturl.dto.ShortUrlRequest;
 import com.prgrms.shorturl.dto.ShortUrlResponse;
+import com.prgrms.shorturl.exception.NoSuchOriginalUrlException;
 import com.prgrms.shorturl.repository.ShortUrlRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,10 +18,26 @@ public class ShortUrlService {
 
     private final ShortUrlRepository shortUrlRepository;
 
-    public ShortUrlResponse save(ShortUrlRequest req) {
-        String base62Url = EncodingFactory.toBase62(req.originalUrl());
-        ShortUrl saved = shortUrlRepository.save(new ShortUrl(req.originalUrl(), base62Url));
-        return toShortUrlResponse(saved);
+    public ShortUrl save(String originalUrl) {
+        originalUrl = originalUrl.replaceAll("^(http://|https://)", "");
+        String base62Url = EncodingFactory.toBase62(originalUrl);
+        return shortUrlRepository.save(new ShortUrl(originalUrl, base62Url));
+    }
+
+    @Transactional
+    public ShortUrlResponse getByOriginalUrl(ShortUrlRequest req) {
+        Optional<ShortUrl> find = shortUrlRepository.findByOriginalUrl(req.originalUrl());
+        if(find.isEmpty()) {
+            return toShortUrlResponse(save(req.originalUrl()));
+        }
+        return toShortUrlResponse(find.get());
+    }
+
+    @Transactional(readOnly = true)
+    public String getByShortUrl(String shortUrl) {
+        ShortUrl find = shortUrlRepository.findByBase62Url(shortUrl)
+                .orElseThrow(() -> new NoSuchOriginalUrlException("매칭되는 주소가 없습니다."));
+        return find.getBase62Url();
     }
 
     private ShortUrlResponse toShortUrlResponse(ShortUrl shortUrl) {
