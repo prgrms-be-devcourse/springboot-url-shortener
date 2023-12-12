@@ -22,7 +22,7 @@ public class UrlService {
         Optional<Url> searchUrl = urlRepository.findByOriginUrlAndAlgorithm(request.originUrl(), request.algorithm());
         if (searchUrl.isPresent()) {
             Url foundUrl = searchUrl.get();
-            return CreateShortenUrlResponse.from(foundUrl, true);
+            return CreateShortenUrlResponse.from(foundUrl, false);
         }
 
         return generateShortenUrl(request);
@@ -31,6 +31,6 @@ public class UrlService {
     private CreateShortenUrlResponse generateShortenUrl(CreateShortUrlRequest request) {
         Url savedUrl = urlRepository.save(request.toEntity());
         savedUrl.convertToShortUrl();
-        return CreateShortenUrlResponse.from(savedUrl, false);
+        return CreateShortenUrlResponse.from(savedUrl, true);
     }
 }
