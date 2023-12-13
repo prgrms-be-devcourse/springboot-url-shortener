@@ -20,7 +20,7 @@ public class ShortUrlService {
 
     private final ShortUrlRepository shortUrlRepository;
 
-    public ShortUrl save(String originalUrl) {
+    private ShortUrl save(String originalUrl) {
         originalUrl = originalUrl.replaceAll("^(http://|https://)", "");
 
         HashIdFactory hashIdFactory = new HashIdFactory(HashAlgorithm.SHA_256);
