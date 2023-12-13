@@ -1,7 +1,6 @@
 package marco.urlshortener.util;
 
 public final class Base62 {
-
     private static final String BASE62_CHAR = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final int BASE = 62;
 
