@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface ShortUrlRepository extends JpaRepository<Url, String> {
     Optional<Url> findByOriginalUrl(String originalUrl);
-    Optional<Url> findByBase62Url(String shortUrl);
+    Optional<Url> findByShortUrl(String shortUrl);
 }

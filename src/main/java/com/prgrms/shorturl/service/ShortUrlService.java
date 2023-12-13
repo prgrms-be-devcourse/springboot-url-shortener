@@ -66,8 +66,8 @@ public class ShortUrlService {
 
     @Transactional(readOnly = true)
     public String getByShortUrl(@NotEmpty String shortUrl) {
-        Url find = shortUrlRepository.findByBase62Url(shortUrl)
+        Url find = shortUrlRepository.findByShortUrl(shortUrl)
                 .orElseThrow(() -> new NoSuchOriginalUrlException("매칭되는 주소가 없습니다."));
-        return find.getShortUrl();
+        return find.getOriginalUrl();
     }
 }
