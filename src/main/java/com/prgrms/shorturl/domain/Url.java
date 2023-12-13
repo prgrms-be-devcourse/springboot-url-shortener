@@ -1,8 +1,10 @@
 package com.prgrms.shorturl.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.prgrms.shorturl.utils.Base62EncodingFactory;
+import com.prgrms.shorturl.utils.EncodingFactory;
+import com.prgrms.shorturl.utils.HashAlgorithm;
+import com.prgrms.shorturl.utils.HashFactory;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,26 +13,42 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Url {
 
-    @Id
+    @Id @GeneratedValue
     @Column(name = "short_url_id")
-    private String id;
+    private Long id;
+
+    private String hash;
 
     @Column(nullable = false)
     private String originalUrl;
 
-    @Column(nullable = false)
     private String shortUrl;
 
     private int count;
 
-    public Url(String id, String originalUrl, String shortUrl) {
-        this.id = id;
+    @Transient
+    private HashAlgorithm hashAlgorithm;
+
+    public Url(String originalUrl, HashAlgorithm hashAlgorithm) {
         this.originalUrl = originalUrl;
-        this.shortUrl = shortUrl;
+        this.hashAlgorithm = hashAlgorithm;
         this.count = 1;
+    }
+
+    public void encode() {
+        EncodingFactory encodingFactory = new Base62EncodingFactory(hash);
+        this.shortUrl = encodingFactory.encode();
     }
 
     public void countRequire() {
         count++;
+    }
+
+    public void hashing() {
+        this.hash = hashAlgorithm.hashing(this);
+    }
+
+    public void changeHash(String hash) {
+        this.hash = hash;
     }
 }

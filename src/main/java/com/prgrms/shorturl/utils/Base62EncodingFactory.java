@@ -9,10 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 public class Base62EncodingFactory implements EncodingFactory {
 
     private final String hashString;
-    private final String originalUrl;
 
     @Override
-    public Url encode() {
+    public String encode() {
         log.info("hashString: " + hashString);
             long hashId = Long.parseLong(hashString, 16);
 
@@ -27,6 +26,6 @@ public class Base62EncodingFactory implements EncodingFactory {
                 sb.append(base62Num[(int)mod]);
                 hashId /= 62;
             }
-            return new Url(hashString, originalUrl, sb.toString());
+            return sb.toString();
     }
 }

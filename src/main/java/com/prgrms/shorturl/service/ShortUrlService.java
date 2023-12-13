@@ -28,23 +28,33 @@ public class ShortUrlService {
 
     private final ShortUrlRepository shortUrlRepository;
 
-    private Url save(String originalUrl) {
-        HashIdFactory hashIdFactory = new HashIdFactory(HashAlgorithm.SHA_256);
-        String hashId = hashIdFactory.generate(originalUrl);
-        log.info("hashId: " + hashId);
+    private Url save(String originalUrl, HashAlgorithm hashAlgorithm) {
+        Url url = new Url(originalUrl, hashAlgorithm);
+        Url save = shortUrlRepository.save(url);
+        log.info("url id: " + save.getId());
 
-        hashId = checkDuplication(hashId);
-        log.info("completed hashId: " + hashId);
+        url.hashing();
+        log.info("hashId: " + url.getHash());
 
-        EncodingFactory encodingFactory = new Base62EncodingFactory(hashId, originalUrl);
-        return shortUrlRepository.save(encodingFactory.encode());
+        url.changeHash(checkDuplication(url.getHash(), hashAlgorithm));
+        log.info("completed hashId: " + url.getHash());
+
+        url.encode();
+        return shortUrlRepository.save(url);
     }
 
-    private String checkDuplication(String originalHash) {
+    private String checkDuplication(String originalHash, HashAlgorithm hashAlgorithm) {
+        if(hashAlgorithm == HashAlgorithm.SEQUENCE) {
+            while(shortUrlRepository.findByHash(originalHash).isPresent()) {
+                originalHash += "0";
+            }
+            return originalHash;
+        }
+
         StringBuilder sb = new StringBuilder(originalHash.substring(0, 10));
 
         int index = 10;
-        while(shortUrlRepository.findById(sb.toString()).isPresent()) {
+        while(shortUrlRepository.findByHash(sb.toString()).isPresent()) {
             sb.append(originalHash.charAt(index++));
         }
         return sb.toString();
@@ -56,7 +66,7 @@ public class ShortUrlService {
         String manufacturedUrl = deleteProtocol(req.originalUrl());
         Optional<Url> find = shortUrlRepository.findByOriginalUrl(manufacturedUrl);
         if(find.isEmpty()) {
-            return toShortUrlResponse(save(manufacturedUrl), extractedProtocol);
+            return toShortUrlResponse(save(manufacturedUrl, req.hashAlgorithm()), extractedProtocol);
         }
 
         Url url = find.get();
