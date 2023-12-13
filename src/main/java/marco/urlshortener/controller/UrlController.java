@@ -2,6 +2,7 @@ package marco.urlshortener.controller;
 
 import lombok.RequiredArgsConstructor;
 import marco.urlshortener.dto.UrlRequest;
+import marco.urlshortener.dto.UrlResponse;
 import marco.urlshortener.service.UrlService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,8 @@ public class UrlController {
     private final UrlService urlService;
 
     @PostMapping("/url")
-    public ResponseEntity<String> makeUrl(@RequestBody UrlRequest request) {
-        return ResponseEntity.ok(urlService.getShortUrl(request.longUrl()));
+    public ResponseEntity<UrlResponse> makeUrl(@RequestBody UrlRequest request) {
+        return ResponseEntity.ok(urlService.getShortUrl(request));
     }
 
     @GetMapping("/url/{shortUrl}")
