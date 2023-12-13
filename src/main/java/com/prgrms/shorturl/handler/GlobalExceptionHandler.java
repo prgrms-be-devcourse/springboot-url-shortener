@@ -4,6 +4,7 @@ import com.prgrms.shorturl.exception.HashingException;
 import com.prgrms.shorturl.exception.InappropriateFormException;
 import com.prgrms.shorturl.exception.NoSuchOriginalUrlException;
 import com.prgrms.shorturl.exception.RedirectionException;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,5 +39,13 @@ public class GlobalExceptionHandler {
         log.info(e.getMessage());
         return ResponseEntity.status(500)
                 .body(e.getMessage());
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected ResponseEntity<String> requestException(Exception e) {
+        log.info("입력하신 url의 형식이 올바르지 않습니다.");
+        return ResponseEntity.status(400)
+                .body("입력하신 url의 형식이 올바르지 않습니다.");
     }
 }

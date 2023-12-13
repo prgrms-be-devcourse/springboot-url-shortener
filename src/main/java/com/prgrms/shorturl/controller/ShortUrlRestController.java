@@ -5,6 +5,8 @@ import com.prgrms.shorturl.dto.ShortUrlResponse;
 import com.prgrms.shorturl.exception.RedirectionException;
 import com.prgrms.shorturl.service.ShortUrlService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class ShortUrlRestController {
     }
 
     @GetMapping("/{shortUrl}")
-    public void findByShortUrl(@PathVariable String shortUrl, HttpServletResponse response) {
+    public void findByShortUrl(@PathVariable @NotBlank String shortUrl, HttpServletResponse response) {
         try {
             String originalUrl = shortUrlService.getByShortUrl(shortUrl);
             response.sendRedirect("http://" + originalUrl);

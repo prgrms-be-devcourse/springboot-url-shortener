@@ -16,7 +16,7 @@ public class HashIdFactory {
         try {
             MessageDigest md = MessageDigest.getInstance(algorithm.getName());
             md.update(originalUrl.getBytes("UTF-8"));
-            return new BigInteger(md.digest()).toString(16);
+            return new BigInteger(1, md.digest()).toString(16);
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             throw new HashingException("hashing 도중 오류가 발생했습니다.");
         }
