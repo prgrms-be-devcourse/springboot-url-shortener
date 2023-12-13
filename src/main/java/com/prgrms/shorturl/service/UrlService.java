@@ -2,10 +2,10 @@ package com.prgrms.shorturl.service;
 
 import com.prgrms.shorturl.utils.*;
 import com.prgrms.shorturl.domain.Url;
-import com.prgrms.shorturl.dto.ShortUrlRequest;
-import com.prgrms.shorturl.dto.ShortUrlResponse;
+import com.prgrms.shorturl.dto.UrlRequest;
+import com.prgrms.shorturl.dto.UrlResponse;
 import com.prgrms.shorturl.exception.NoSuchOriginalUrlException;
-import com.prgrms.shorturl.repository.ShortUrlRepository;
+import com.prgrms.shorturl.repository.UrlRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 
-import static com.prgrms.shorturl.dto.ShortUrlResponse.*;
+import static com.prgrms.shorturl.dto.UrlResponse.*;
 import static com.prgrms.shorturl.utils.UrlFactory.deleteProtocol;
 import static com.prgrms.shorturl.utils.UrlFactory.extractProtocol;
 
@@ -24,13 +24,13 @@ import static com.prgrms.shorturl.utils.UrlFactory.extractProtocol;
 @Slf4j
 @RequiredArgsConstructor
 @Validated
-public class ShortUrlService {
+public class UrlService {
 
-    private final ShortUrlRepository shortUrlRepository;
+    private final UrlRepository urlRepository;
 
     private Url save(String originalUrl, HashAlgorithm hashAlgorithm) {
         Url url = new Url(originalUrl, hashAlgorithm);
-        Url save = shortUrlRepository.save(url);
+        Url save = urlRepository.save(url);
         log.info("url id: " + save.getId());
 
         url.hashing();
@@ -40,12 +40,12 @@ public class ShortUrlService {
         log.info("completed hashId: " + url.getHash());
 
         url.encode();
-        return shortUrlRepository.save(url);
+        return urlRepository.save(url);
     }
 
     private String checkDuplication(String originalHash, HashAlgorithm hashAlgorithm) {
         if(hashAlgorithm == HashAlgorithm.SEQUENCE) {
-            while(shortUrlRepository.findByHash(originalHash).isPresent()) {
+            while(urlRepository.findByHash(originalHash).isPresent()) {
                 originalHash += "0";
             }
             return originalHash;
@@ -54,17 +54,23 @@ public class ShortUrlService {
         StringBuilder sb = new StringBuilder(originalHash.substring(0, 10));
 
         int index = 10;
-        while(shortUrlRepository.findByHash(sb.toString()).isPresent()) {
+        while(urlRepository.findByHash(sb.toString()).isPresent()) {
             sb.append(originalHash.charAt(index++));
         }
         return sb.toString();
     }
 
+    @Transactional(readOnly = true)
+    public boolean isPresent(@Valid UrlRequest req) {
+        String manufacturedUrl = deleteProtocol(req.originalUrl());
+        return urlRepository.findByOriginalUrl(manufacturedUrl).isPresent();
+    }
+
     @Transactional
-    public ShortUrlResponse getByOriginalUrl(@Valid ShortUrlRequest req) {
+    public UrlResponse getShortUrl(@Valid UrlRequest req) {
         String extractedProtocol = extractProtocol(req.originalUrl());
         String manufacturedUrl = deleteProtocol(req.originalUrl());
-        Optional<Url> find = shortUrlRepository.findByOriginalUrl(manufacturedUrl);
+        Optional<Url> find = urlRepository.findByOriginalUrl(manufacturedUrl);
         if(find.isEmpty()) {
             return toShortUrlResponse(save(manufacturedUrl, req.hashAlgorithm()), extractedProtocol);
         }
@@ -75,8 +81,8 @@ public class ShortUrlService {
     }
 
     @Transactional(readOnly = true)
-    public String getByShortUrl(@NotEmpty String shortUrl) {
-        Url find = shortUrlRepository.findByShortUrl(shortUrl)
+    public String getOriginalUrl(@NotEmpty String shortUrl) {
+        Url find = urlRepository.findByShortUrl(shortUrl)
                 .orElseThrow(() -> new NoSuchOriginalUrlException("매칭되는 주소가 없습니다."));
         return find.getOriginalUrl();
     }

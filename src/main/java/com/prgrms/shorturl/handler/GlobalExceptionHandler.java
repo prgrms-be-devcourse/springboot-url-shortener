@@ -42,7 +42,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ResponseEntity<String> requestException(Exception e) {
-        log.info("입력하신 url의 형식이 올바르지 않습니다.");
         return ResponseEntity.status(400)
                 .body("입력하신 url의 형식이 올바르지 않습니다.");
     }
