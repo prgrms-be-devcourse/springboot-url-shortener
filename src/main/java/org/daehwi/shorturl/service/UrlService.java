@@ -37,7 +37,7 @@ public class UrlService {
     public String getOriginUrl(String shortUrl) {
         return urlRepository.findByShortUrl(shortUrl)
                 .orElseThrow(() -> new NoSuchElementException("Invalid short url"))
-                .getShortUrl();
+                .getOriginUrl();
     }
 
     private BigInteger getUniqueId(String originUrl) {

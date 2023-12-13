@@ -25,7 +25,7 @@ public class UrlController {
     public ResponseEntity<ApiResponse<Void>> getOriginUrl(@PathVariable String shortUrl) {
         String originUrl = urlService.getOriginUrl(shortUrl);
         return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT)
-                .header("Location", originUrl)
+                .header("Location", "http://" + originUrl)
                 .body(ApiResponse.of(ResponseStatus.TEMPORARY_REDIRECT));
     }
 }
