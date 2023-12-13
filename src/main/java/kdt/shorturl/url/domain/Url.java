@@ -6,15 +6,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.NoSuchElementException;
-
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(schema = "url")
 public class Url {
 
-    public static final long DEFAULT_VIEW = 0l;
+    public static final long DEFAULT_VIEW = 0L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +21,7 @@ public class Url {
     @Column(name = "origin_url", nullable = false)
     private String originUrl;
 
-    @Column(name = "short_url")
+    @Column(name = "short_url", unique = true)
     private String shortUrl;
 
     @Enumerated(EnumType.STRING)
@@ -40,11 +38,11 @@ public class Url {
         this.algorithm = algorithm;
     }
 
-    public void convertToShortUrl() {
+    public void addShortUrl(String shortUrl) {
         if (id == null) {
-            throw new NoSuchElementException("url이 존재하지 않습니다.");
+            throw new NullPointerException("ID가 존재하지 않습니다.");
         }
-        this.shortUrl = algorithm.getShortUrl(id.intValue());
+        this.shortUrl = shortUrl;
     }
 
     public void increaseCount() {

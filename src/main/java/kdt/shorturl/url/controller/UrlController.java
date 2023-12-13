@@ -38,7 +38,7 @@ public class UrlController {
     @GetMapping("/{shortUrl}")
     public ResponseEntity<?> redirectToOriginUrl(@PathVariable String shortUrl) {
         String originUrl = urlService.findOriginUrlByShortUrl(shortUrl);
-        originUrl = "http://" + originUrl;
+        originUrl = "https://" + originUrl;
 
         return ResponseEntity
                 .status(HttpStatus.PERMANENT_REDIRECT)
