@@ -4,7 +4,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import marco.urlshortener.domain.Url;
 import marco.urlshortener.repositoy.UrlRepository;
-import marco.urlshortener.util.Base62Encoder;
+import marco.urlshortener.util.Base62;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +20,7 @@ public class UrlService {
         if (url.isEmpty()) {
             Url savedUrl = urlRepository.save(new Url(longUrl));
             Long id = savedUrl.getId();
-            String encodedUrl = Base62Encoder.toBase62(id);
+            String encodedUrl = Base62.encode(id);
 
             savedUrl.setShortUrl(encodedUrl);
 
@@ -29,5 +29,13 @@ public class UrlService {
 
         return url.get()
                 .getShortUrl();
+    }
+
+    public String getLongUrl(String shortUrl) {
+        long id = Base62.decode(shortUrl);
+
+        return urlRepository.findById(id)
+                .orElseThrow()
+                .getLongUrl();
     }
 }
