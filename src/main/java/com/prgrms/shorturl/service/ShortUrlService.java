@@ -17,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 
+import static com.prgrms.shorturl.dto.ShortUrlResponse.*;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -62,13 +64,5 @@ public class ShortUrlService {
         ShortUrl find = shortUrlRepository.findByBase62Url(shortUrl)
                 .orElseThrow(() -> new NoSuchOriginalUrlException("매칭되는 주소가 없습니다."));
         return find.getBase62Url();
-    }
-
-    private ShortUrlResponse toShortUrlResponse(ShortUrl shortUrl) {
-        return ShortUrlResponse.builder()
-                .id(shortUrl.getId())
-                .originalUrl(shortUrl.getOriginalUrl())
-                .base62Url(shortUrl.getBase62Url())
-                .build();
     }
 }

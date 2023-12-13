@@ -1,5 +1,6 @@
 package com.prgrms.shorturl.dto;
 
+import com.prgrms.shorturl.domain.ShortUrl;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
