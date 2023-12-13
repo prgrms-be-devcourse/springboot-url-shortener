@@ -26,21 +26,19 @@ public class UriService {
     }
 
     public CreateResponse createShortUri(String inputUri) {
-        Optional<UriEntity> optionalUriEntity = uriRepository.findByOriginalUriEquals(inputUri);
-        if(optionalUriEntity.isPresent()) {
-            UriEntity existUriEntity = optionalUriEntity.get();
-            return uriConverter.convertCreateResponseFrom(existUriEntity);
-        }
-        UriEntity uriEntity = new UriEntity(inputUri);
-        UriEntity saveUriEntity = uriRepository.save(uriEntity);
+        Optional<UriEntity> existingUriEntity = getExistingUriEntity(inputUri);
 
-        ShortUriGenerateRequestDto requestDto = ShortUriGenerateRequestDto.builder()
-                .originalUri(inputUri)
-                .index(saveUriEntity.getId())
-                .build();
+        if (existingUriEntity.isPresent()) {
+            return uriConverter.convertCreateResponseFrom(existingUriEntity.get());
+        }
+
+        UriEntity newUriEntity = createAndSaveUriEntity(inputUri);
+
+        ShortUriGenerateRequestDto requestDto = buildShortUriRequestDto(newUriEntity);
         String shortUri = uriGenerator.generate(requestDto);
-        saveUriEntity.initShortUri(shortUri);
-        return uriConverter.convertCreateResponseFrom(saveUriEntity);
+
+        newUriEntity.initShortUri(shortUri);
+        return uriConverter.convertCreateResponseFrom(newUriEntity);
     }
 
     public String getOriginalUri(String shortUri) {
@@ -48,4 +46,21 @@ public class UriService {
         findUriEntity.increaseCount();
         return findUriEntity.getOriginalUri();
     }
+
+    private Optional<UriEntity> getExistingUriEntity(String inputUri) {
+        return uriRepository.findByOriginalUriEquals(inputUri);
+    }
+
+    private UriEntity createAndSaveUriEntity(String inputUri) {
+        return uriRepository.save(new UriEntity(inputUri));
+    }
+
+    private ShortUriGenerateRequestDto buildShortUriRequestDto(UriEntity uriEntity) {
+        return ShortUriGenerateRequestDto.builder()
+                .originalUri(uriEntity.getOriginalUri())
+                .index(uriEntity.getId())
+                .build();
+    }
+
+
 }
