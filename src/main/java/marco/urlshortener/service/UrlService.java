@@ -1,12 +1,13 @@
 package marco.urlshortener.service;
 
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import marco.urlshortener.domain.Url;
 import marco.urlshortener.repositoy.UrlRepository;
 import marco.urlshortener.util.Base62;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -15,20 +16,10 @@ public class UrlService {
 
     @Transactional
     public String getShortUrl(String longUrl) {
-        Optional<Url> url = urlRepository.findByLongUrl(longUrl);
+        Url url = urlRepository.findByLongUrl(longUrl)
+                .orElseGet(getUrlSupplier(longUrl));
 
-        if (url.isEmpty()) {
-            Url savedUrl = urlRepository.save(new Url(longUrl));
-            Long id = savedUrl.getId();
-            String encodedUrl = Base62.encode(id);
-
-            savedUrl.setShortUrl(encodedUrl);
-
-            return savedUrl.getShortUrl();
-        }
-
-        return url.get()
-                .getShortUrl();
+        return Base62.encode(url.getId());
     }
 
     public String getLongUrl(String shortUrl) {
@@ -37,5 +28,9 @@ public class UrlService {
         return urlRepository.findById(id)
                 .orElseThrow()
                 .getLongUrl();
+    }
+
+    private Supplier<Url> getUrlSupplier(String longUrl) {
+        return () -> urlRepository.save(new Url(longUrl));
     }
 }
