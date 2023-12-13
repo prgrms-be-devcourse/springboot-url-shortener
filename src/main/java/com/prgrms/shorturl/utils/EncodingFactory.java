@@ -1,7 +1,7 @@
 package com.prgrms.shorturl.utils;
 
-import com.prgrms.shorturl.domain.ShortUrl;
+import com.prgrms.shorturl.domain.Url;
 
 public interface EncodingFactory {
-    ShortUrl encode();
+    Url encode();
 }

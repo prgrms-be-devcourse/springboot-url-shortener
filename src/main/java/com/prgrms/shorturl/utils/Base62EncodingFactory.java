@@ -1,7 +1,6 @@
 package com.prgrms.shorturl.utils;
 
-import com.prgrms.shorturl.domain.ShortUrl;
-import lombok.AllArgsConstructor;
+import com.prgrms.shorturl.domain.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,7 +12,7 @@ public class Base62EncodingFactory implements EncodingFactory {
     private final String originalUrl;
 
     @Override
-    public ShortUrl encode() {
+    public Url encode() {
         log.info("hashString: " + hashString);
             long hashId = Long.parseLong(hashString, 16);
 
@@ -28,6 +27,6 @@ public class Base62EncodingFactory implements EncodingFactory {
                 sb.append(base62Num[(int)mod]);
                 hashId /= 62;
             }
-            return new ShortUrl(hashString, originalUrl, sb.toString());
+            return new Url(hashString, originalUrl, sb.toString());
     }
 }

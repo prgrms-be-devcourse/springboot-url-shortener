@@ -1,7 +1,7 @@
 package com.prgrms.shorturl.service;
 
 import com.prgrms.shorturl.utils.*;
-import com.prgrms.shorturl.domain.ShortUrl;
+import com.prgrms.shorturl.domain.Url;
 import com.prgrms.shorturl.dto.ShortUrlRequest;
 import com.prgrms.shorturl.dto.ShortUrlResponse;
 import com.prgrms.shorturl.exception.NoSuchOriginalUrlException;
@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
@@ -29,7 +28,7 @@ public class ShortUrlService {
 
     private final ShortUrlRepository shortUrlRepository;
 
-    private ShortUrl save(String originalUrl) {
+    private Url save(String originalUrl) {
         HashIdFactory hashIdFactory = new HashIdFactory(HashAlgorithm.SHA_256);
         String hashId = hashIdFactory.generate(originalUrl);
         log.info("hashId: " + hashId);
@@ -55,17 +54,20 @@ public class ShortUrlService {
     public ShortUrlResponse getByOriginalUrl(@Valid ShortUrlRequest req) {
         String extractedProtocol = extractProtocol(req.originalUrl());
         String manufacturedUrl = deleteProtocol(req.originalUrl());
-        Optional<ShortUrl> find = shortUrlRepository.findByOriginalUrl(manufacturedUrl);
+        Optional<Url> find = shortUrlRepository.findByOriginalUrl(manufacturedUrl);
         if(find.isEmpty()) {
             return toShortUrlResponse(save(manufacturedUrl), extractedProtocol);
         }
-        return toShortUrlResponse(find.get(), extractedProtocol);
+
+        Url url = find.get();
+        url.countRequire();
+        return toShortUrlResponse(url, extractedProtocol);
     }
 
     @Transactional(readOnly = true)
     public String getByShortUrl(@NotEmpty String shortUrl) {
-        ShortUrl find = shortUrlRepository.findByBase62Url(shortUrl)
+        Url find = shortUrlRepository.findByBase62Url(shortUrl)
                 .orElseThrow(() -> new NoSuchOriginalUrlException("매칭되는 주소가 없습니다."));
-        return find.getBase62Url();
+        return find.getShortUrl();
     }
 }

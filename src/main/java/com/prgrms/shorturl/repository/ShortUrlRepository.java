@@ -1,11 +1,11 @@
 package com.prgrms.shorturl.repository;
 
-import com.prgrms.shorturl.domain.ShortUrl;
+import com.prgrms.shorturl.domain.Url;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface ShortUrlRepository extends JpaRepository<ShortUrl, String> {
-    Optional<ShortUrl> findByOriginalUrl(String originalUrl);
-    Optional<ShortUrl> findByBase62Url(String shortUrl);
+public interface ShortUrlRepository extends JpaRepository<Url, String> {
+    Optional<Url> findByOriginalUrl(String originalUrl);
+    Optional<Url> findByBase62Url(String shortUrl);
 }
