@@ -1,4 +1,4 @@
-package kdt.shorturl.grobal.util;
+package kdt.shorturl.url.converter;
 
 public class Base62Converter implements ShortUrlConverter{
     private final String TOKENS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

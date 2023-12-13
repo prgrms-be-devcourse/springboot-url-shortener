@@ -1,4 +1,4 @@
-package kdt.shorturl.grobal.util;
+package kdt.shorturl.url.converter;
 
 import kdt.shorturl.url.repository.UrlRepository;
 import lombok.RequiredArgsConstructor;
