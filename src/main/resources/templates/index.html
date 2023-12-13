@@ -5,6 +5,16 @@
     <title>Short URL Generator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        .btn-group button {
+            margin-right: 5px; /* Add a little space between buttons */
+        }
+
+        .btn-group button.active {
+            background-color: #007bff; /* Set the background color for the active button */
+            color: #fff; /* Set text color for the active button */
+        }
+    </style>
 </head>
 <body>
 
@@ -24,7 +34,8 @@
 
                     <!-- 알고리즘 선택 버튼 -->
                     <div class="btn-group mb-3">
-                        <button type="button" class="btn btn-secondary" onclick="setAlgorithm('BASE62')">BASE62</button>
+                        <button type="button" class="btn btn-secondary active" onclick="setAlgorithm('BASE62')">BASE62</button>
+                        <button type="button" class="btn btn-secondary" onclick="setAlgorithm('SHA256')">SHA256</button>
                     </div>
 
                     <button class="btn btn-primary btn-block" onclick="generateShortUrl()">단축하기</button>
@@ -45,6 +56,8 @@
 
     function setAlgorithm(algorithm) {
         selectedAlgorithm = algorithm;
+        $('.btn-group button').removeClass('active');
+        $('button:contains(' + algorithm + ')').addClass('active');
     }
 
     function generateShortUrl() {
@@ -69,7 +82,7 @@
                 // 성공 시 로딩 중 메시지 숨기고 결과 표시
                 $('#loadingMessage').hide();
 
-                const baseUrl = "http://localhost:8080/";
+                const baseUrl = "http://localhost:8080/urls/";
                 var shortUrl = baseUrl + data.shortenUrl;
 
                 var isNew = data.isNew;

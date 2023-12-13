@@ -13,12 +13,13 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RequiredArgsConstructor
+@RequestMapping("/urls")
 @RestController
 public class UrlController {
 
     private final UrlService urlService;
 
-    @PostMapping("/urls")
+    @PostMapping
     public ResponseEntity<CreateShortenUrlResponse> getOrGenerateShortenUrl(@Valid @RequestBody CreateShortUrlRequest request) {
         CreateShortenUrlResponse url = urlService.findOrGenerateShortenUrl(request);
 
