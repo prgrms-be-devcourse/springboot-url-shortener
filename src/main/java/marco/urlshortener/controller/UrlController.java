@@ -19,7 +19,7 @@ public class UrlController {
         return ResponseEntity.ok(urlService.getShortUrl(request));
     }
 
-    @GetMapping("/url/{shortUrl}")
+    @GetMapping("/{shortUrl}")
     public ResponseEntity<String> redirectUrl(@PathVariable String shortUrl) {
         String longUrl = urlService.getLongUrl(shortUrl);
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
