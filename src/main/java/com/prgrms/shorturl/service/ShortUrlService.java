@@ -1,17 +1,16 @@
 package com.prgrms.shorturl.service;
 
-import com.prgrms.shorturl.utils.Base62EncodingFactory;
+import com.prgrms.shorturl.utils.*;
 import com.prgrms.shorturl.domain.ShortUrl;
 import com.prgrms.shorturl.dto.ShortUrlRequest;
 import com.prgrms.shorturl.dto.ShortUrlResponse;
 import com.prgrms.shorturl.exception.NoSuchOriginalUrlException;
 import com.prgrms.shorturl.repository.ShortUrlRepository;
-import com.prgrms.shorturl.utils.EncodingFactory;
-import com.prgrms.shorturl.utils.HashAlgorithm;
-import com.prgrms.shorturl.utils.HashIdFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 
@@ -42,7 +41,7 @@ public class ShortUrlService {
     }
 
     @Transactional
-    public ShortUrlResponse getByOriginalUrl(ShortUrlRequest req) {
+    public ShortUrlResponse getByOriginalUrl(@Validated ShortUrlRequest req) {
         Optional<ShortUrl> find = shortUrlRepository.findByOriginalUrl(req.originalUrl());
         if(find.isEmpty()) {
             return toShortUrlResponse(save(req.originalUrl()));
