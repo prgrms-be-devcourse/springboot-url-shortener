@@ -18,6 +18,8 @@ import org.springframework.validation.annotation.Validated;
 import java.util.Optional;
 
 import static com.prgrms.shorturl.dto.ShortUrlResponse.*;
+import static com.prgrms.shorturl.utils.UrlFactory.deleteProtocol;
+import static com.prgrms.shorturl.utils.UrlFactory.extractProtocol;
 
 @Service
 @Slf4j
@@ -51,12 +53,13 @@ public class ShortUrlService {
 
     @Transactional
     public ShortUrlResponse getByOriginalUrl(@Valid ShortUrlRequest req) {
-        String originalUrl = req.originalUrl().replaceAll("^(http://|https://)", "");
-        Optional<ShortUrl> find = shortUrlRepository.findByOriginalUrl(originalUrl);
+        String extractedProtocol = extractProtocol(req.originalUrl());
+        String manufacturedUrl = deleteProtocol(req.originalUrl());
+        Optional<ShortUrl> find = shortUrlRepository.findByOriginalUrl(manufacturedUrl);
         if(find.isEmpty()) {
-            return toShortUrlResponse(save(originalUrl));
+            return toShortUrlResponse(save(manufacturedUrl), extractedProtocol);
         }
-        return toShortUrlResponse(find.get());
+        return toShortUrlResponse(find.get(), extractedProtocol);
     }
 
     @Transactional(readOnly = true)

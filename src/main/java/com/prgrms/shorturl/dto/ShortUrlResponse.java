@@ -8,10 +8,10 @@ public record ShortUrlResponse(String id, String originalUrl, String base62Url) 
     public ShortUrlResponse {
     }
 
-    public static ShortUrlResponse toShortUrlResponse(ShortUrl shortUrl) {
+    public static ShortUrlResponse toShortUrlResponse(ShortUrl shortUrl, String protocol) {
         return ShortUrlResponse.builder()
                 .id(shortUrl.getId())
-                .originalUrl(shortUrl.getOriginalUrl())
+                .originalUrl(protocol + shortUrl.getOriginalUrl())
                 .base62Url(shortUrl.getBase62Url())
                 .build();
     }
