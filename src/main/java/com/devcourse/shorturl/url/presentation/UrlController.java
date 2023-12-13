@@ -8,11 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/url")
 public class UrlController {
     private final UrlService urlService;
 
@@ -28,7 +30,7 @@ public class UrlController {
         redirectAttributes.addAttribute("shortenedUrl", response.shortUrl());
         redirectAttributes.addAttribute("hits", response.hits());
 
-        return "redirect:/shortened";
+        return "redirect:/url/shortened";
     }
     @GetMapping("/shortened")
     public String shortenedUrlPage(@RequestParam("originalUrl") String originalUrl,
