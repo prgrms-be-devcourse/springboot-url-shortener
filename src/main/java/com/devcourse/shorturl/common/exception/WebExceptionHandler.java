@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 @Slf4j
 public class WebExceptionHandler {
+
     @ExceptionHandler(CommonException.class)
-    public String handleWebException(CommonException e, Model model){
+    public String handleWebException(CommonException e, Model model) {
         log.error(e.getMessage());
         model.addAttribute("errorMessage", e.getMessage());
         return "errorPage";

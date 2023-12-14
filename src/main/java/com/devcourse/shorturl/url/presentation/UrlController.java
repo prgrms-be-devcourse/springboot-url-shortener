@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 @RequestMapping("/url")
 public class UrlController {
+
     private final UrlService urlService;
 
     @GetMapping
@@ -24,7 +25,8 @@ public class UrlController {
     }
 
     @PostMapping("/shorten")
-    public String shortenUrl(@RequestParam("originalUrl") String originalUrl, RedirectAttributes redirectAttributes) {
+    public String shortenUrl(@RequestParam("originalUrl") String originalUrl,
+        RedirectAttributes redirectAttributes) {
         CreateUrlResponse response = urlService.createShortUrl(originalUrl);
         redirectAttributes.addAttribute("originalUrl", originalUrl);
         redirectAttributes.addAttribute("shortenedUrl", response.shortUrl());
@@ -32,11 +34,12 @@ public class UrlController {
 
         return "redirect:/url/shortened";
     }
+
     @GetMapping("/shortened")
     public String shortenedUrlPage(@RequestParam("originalUrl") String originalUrl,
-                             @RequestParam("shortenedUrl") String shortenedUrl,
-                             @RequestParam("hits") String hits,
-                             Model model){
+        @RequestParam("shortenedUrl") String shortenedUrl,
+        @RequestParam("hits") String hits,
+        Model model) {
         model.addAttribute("originalUrl", originalUrl);
         model.addAttribute("shortenedUrl", shortenedUrl);
         model.addAttribute("hits", hits);

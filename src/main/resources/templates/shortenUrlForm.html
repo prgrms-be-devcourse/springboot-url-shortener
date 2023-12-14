@@ -3,18 +3,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>URL Shortener</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
 </head>
 <body>
 
 <h1>URL Shortener</h1>
 
 <form th:action="@{/url/shorten}" method="post">
-    <label for="originalUrl">Original URL:</label>
-    <input type="url" id="originalUrl" name="originalUrl" required>
-    <button type="submit">Shorten</button>
+  <label for="originalUrl">Original URL:</label>
+  <input type="url" id="originalUrl" name="originalUrl" required>
+  <button type="submit">Shorten</button>
 </form>
 </body>
 </html>

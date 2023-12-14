@@ -16,13 +16,16 @@ import static com.devcourse.shorturl.common.exception.ErrorCode.NOT_EXIST_SHORT_
 @Service
 @RequiredArgsConstructor
 public class UrlService {
+
     private final UrlRepository urlRepository;
     private final ShortUrlEncoder urlEncoder;
+
     @Transactional
-    public CreateUrlResponse createShortUrl(String longUrl){
+    public CreateUrlResponse createShortUrl(String longUrl) {
         Optional<Url> findUrl = urlRepository.findByLongUrl(longUrl);
-        if(findUrl.isPresent()){
-            return new CreateUrlResponse(findUrl.get().getShortUrl(), findUrl.get().getHits()); // 단축 URL, 누적 요청횟수 리턴
+        if (findUrl.isPresent()) {
+            return new CreateUrlResponse(findUrl.get().getShortUrl(),
+                findUrl.get().getHits()); // 단축 URL, 누적 요청횟수 리턴
         }
 
         Url url = new Url(longUrl, "", 0);
@@ -34,8 +37,9 @@ public class UrlService {
     }
 
     @Transactional
-    public String redirectLongUrl(String shortUrl){
-        Url url = urlRepository.findByShortUrl(shortUrl).orElseThrow(() -> new CustomException(NOT_EXIST_SHORT_URL));
+    public String redirectLongUrl(String shortUrl) {
+        Url url = urlRepository.findByShortUrl(shortUrl)
+            .orElseThrow(() -> new CustomException(NOT_EXIST_SHORT_URL));
         url.addHits();
         return url.getLongUrl();
     }

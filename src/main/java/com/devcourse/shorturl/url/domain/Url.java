@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Url {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "url_id")
@@ -34,7 +35,7 @@ public class Url {
         this.hits = hits;
     }
 
-    public void addHits(){
+    public void addHits() {
         this.hits += 1;
     }
 
@@ -44,10 +45,15 @@ public class Url {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Url url = (Url) o;
-        return hits == url.hits && Objects.equals(id, url.id) && Objects.equals(longUrl, url.longUrl) && Objects.equals(shortUrl, url.shortUrl);
+        return hits == url.hits && Objects.equals(id, url.id) && Objects.equals(longUrl,
+            url.longUrl) && Objects.equals(shortUrl, url.shortUrl);
     }
 
     @Override
