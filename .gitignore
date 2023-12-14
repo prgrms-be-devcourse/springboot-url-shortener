@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,git,intellij+all,java,gradle
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,git,intellij+all,java,gradle
+# Created by https://www.toptal.com/developers/gitignore/api/macos,windows,git,intellij+all,java,gradle,react,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,git,intellij+all,java,gradle,react,visualstudiocode
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
@@ -163,6 +163,40 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
+### react ###
+**/.DS_*
+**/logs
+**/*.backup.*
+**/*.back.*
+
+**/node_modules
+**/bower_components
+
+**/*.sublime*
+
+**/psd
+**/thumb
+**/sketch
+
+### VisualStudioCode ###
+**/.vscode/*
+**/!.vscode/settings.json
+**/!.vscode/tasks.json
+**/!.vscode/launch.json
+**/!.vscode/extensions.json
+**/!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+**/.history/
+
+# Built Visual Studio Code Extensions
+**/*.vsix
+
+### VisualStudioCode Patch ###
+**/# Ignore all local history of files
+**/.history
+**/.ionide
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -216,4 +250,4 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,windows,git,intellij+all,java,gradle
+# End of https://www.toptal.com/developers/gitignore/api/macos,windows,git,intellij+all,java,gradle,react,visualstudiocode
