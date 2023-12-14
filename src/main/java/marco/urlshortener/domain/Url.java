@@ -17,7 +17,7 @@ public class Url {
     private static final String OVER_255_URL_MESSAGE = "url은 255자 이내여야 합니다.";
     private static final String INVALID_URL_FORMAT_MESSAGE = "유효하지 않은 url 형식입니다.";
     private static final Pattern PATTERN = Pattern.compile(
-            "^((http|https)://)?(www.)?([a-zA-Z0-9]+)\\.[a-z]+([a-zA-Z0-9.?#]+)?");
+            "^(https?)://([^:/\\s]+)(:([^/]*))?((/[^\\s/]+)*)?/?([^#\\s?]*)(\\?([^#\\s]*))?(#(\\w*))?$");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
