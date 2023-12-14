@@ -84,12 +84,14 @@
 
                 const baseUrl = "http://localhost:8080/urls/";
                 var shortUrl = baseUrl + data.shortenUrl;
+                var viewCount = data.viewCount;
 
                 var isNew = data.isNew;
 
                 var message = '<div class="alert ' + (isNew ? 'alert-success' : 'alert-info') + '" role="alert">';
                 message += '<p class="mb-0">생성된 단축 URL:</p>';
                 message += '<a href="' + shortUrl + '" target="_blank">' + shortUrl + '</a>';
+                message += '<p class="mb-0">해당 단축 URL 접근 횟수 : ' + viewCount + '</p>';
                 message += '</div>';
 
                 $('#shortUrlResult').html(message);
