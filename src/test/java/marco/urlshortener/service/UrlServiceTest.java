@@ -66,13 +66,19 @@ class UrlServiceTest {
     void testGetLongUrl() {
         // given
         String longUrl = "https://www.naver.com";
-        UrlRequest urlRequest = new UrlRequest(longUrl);
-        String shortUrl = urlService.getShortUrl(urlRequest).url();
+        String path = getShortKey(longUrl);
 
         // when
-        String actualLongUrl = urlService.getLongUrl(shortUrl);
+        String actualLongUrl = urlService.getLongUrl(path);
 
         // then
         assertThat(actualLongUrl).isEqualTo(longUrl);
+    }
+
+    private String getShortKey(String longUrl) {
+        UrlRequest request = new UrlRequest(longUrl);
+        String[] split = urlService.getShortUrl(request).url().split("/");
+
+        return split[split.length - 1];
     }
 }
