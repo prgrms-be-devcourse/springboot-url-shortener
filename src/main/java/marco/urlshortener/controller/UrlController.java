@@ -1,5 +1,6 @@
 package marco.urlshortener.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import marco.urlshortener.dto.UrlRequest;
 import marco.urlshortener.dto.UrlResponse;
@@ -15,7 +16,7 @@ public class UrlController {
     private final UrlService urlService;
 
     @PostMapping("/url")
-    public ResponseEntity<UrlResponse> makeUrl(@RequestBody UrlRequest request) {
+    public ResponseEntity<UrlResponse> makeUrl(@RequestBody @Valid UrlRequest request) {
         return ResponseEntity.ok(urlService.getShortUrl(request));
     }
 
