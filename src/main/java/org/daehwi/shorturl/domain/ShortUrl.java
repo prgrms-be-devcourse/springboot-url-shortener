@@ -3,7 +3,6 @@ package org.daehwi.shorturl.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +10,6 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 public class ShortUrl {
 
@@ -23,4 +21,18 @@ public class ShortUrl {
 
     @Column(name = "short_url", nullable = false)
     private String shortUrl;
+
+    @Column(name = "request_count", nullable = false)
+    private Long requestCount;
+
+    public ShortUrl(Long id, String originUrl, String shortUrl) {
+        this.id = id;
+        this.originUrl = originUrl;
+        this.shortUrl = shortUrl;
+        this.requestCount = 0L;
+    }
+
+    public void increaseRequestCount() {
+        ++this.requestCount;
+    }
 }

@@ -35,9 +35,10 @@ public class UrlService {
     }
 
     public String getOriginUrl(String shortUrl) {
-        return urlRepository.findByShortUrl(shortUrl)
-                .orElseThrow(() -> new CustomException(ResponseStatus.SHORT_URL_NOT_FOUND))
-                .getOriginUrl();
+        final ShortUrl urlEntity = urlRepository.findByShortUrl(shortUrl)
+                .orElseThrow(() -> new CustomException(ResponseStatus.SHORT_URL_NOT_FOUND));
+        urlEntity.increaseRequestCount();
+        return urlEntity.getOriginUrl();
     }
 
     private BigInteger getUniqueId(String originUrl) {
