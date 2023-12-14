@@ -44,7 +44,7 @@ class UrlServiceTest {
         assertThat(actualUrl.url()).endsWith(shortUrlKey);
     }
 
-    @DisplayName("새로운 단축된 url을 생성한 후 반횐한다.")
+    @DisplayName("새로운 단축된 url을 생성한 후 반환한다.")
     @Test
     void testGetNewShortUrl() {
         // given
@@ -59,5 +59,20 @@ class UrlServiceTest {
         String shortUrlKey = Base62.encode(expectedUrl.get().getId());
         assertThat(actualUrl).isNotNull();
         assertThat(actualUrl.url()).endsWith(shortUrlKey);
+    }
+
+    @DisplayName("단축된 url을 원래 url로 반환한다.")
+    @Test
+    void testGetLongUrl() {
+        // given
+        String longUrl = "https://www.naver.com";
+        UrlRequest urlRequest = new UrlRequest(longUrl);
+        String shortUrl = urlService.getShortUrl(urlRequest).url();
+
+        // when
+        String actualLongUrl = urlService.getLongUrl(shortUrl);
+
+        // then
+        assertThat(actualLongUrl).isEqualTo(longUrl);
     }
 }
