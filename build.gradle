@@ -39,8 +39,10 @@ dependencies {
 
     // h2
     runtimeOnly 'com.h2database:h2'
-}
 
+    // thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+}
 tasks.named('test') {
     useJUnitPlatform()
 }
