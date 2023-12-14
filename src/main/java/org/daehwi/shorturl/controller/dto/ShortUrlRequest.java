@@ -1,4 +1,9 @@
 package org.daehwi.shorturl.controller.dto;
 
-public record ShortUrlRequest(String url) {
+import jakarta.validation.constraints.NotBlank;
+
+public record ShortUrlRequest(
+        @NotBlank(message = "url must not be blank")
+        String url
+) {
 }
