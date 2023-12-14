@@ -9,7 +9,7 @@ import java.net.URL;
 
 public class UrlValidator implements ConstraintValidator<UrlValid, String> {
     private static final String HTTPS_PROTOCOL = "https://";
-    private static final String HTTP_PROTOCOL = "http:///";
+    private static final String HTTP_PROTOCOL = "http://";
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
