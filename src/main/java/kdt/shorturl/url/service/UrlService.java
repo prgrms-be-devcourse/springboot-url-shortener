@@ -1,5 +1,6 @@
 package kdt.shorturl.url.service;
 
+import kdt.shorturl.grobal.exception.ShortUrlException;
 import kdt.shorturl.url.converter.Base62Converter;
 import kdt.shorturl.url.converter.Sha256Converter;
 import kdt.shorturl.url.converter.ShortUrlConverter;
@@ -11,8 +12,6 @@ import kdt.shorturl.url.repository.UrlRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @Service
@@ -30,10 +29,11 @@ public class UrlService {
                 .orElseGet(() -> generateShortenUrl(request));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public String findOriginUrlByShortUrl(String shortUrl) {
         Url url = urlRepository.findByShortUrl(shortUrl)
-                .orElseThrow(() -> new NoSuchElementException("해당 단축 URL을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ShortUrlException("해당 URL에 대한 단축 URL을 찾을 수 없습니다."));
+        url.increaseCount();
         return url.getOriginUrl();
     }
 

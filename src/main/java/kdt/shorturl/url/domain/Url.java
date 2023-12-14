@@ -1,6 +1,7 @@
 package kdt.shorturl.url.domain;
 
 import jakarta.persistence.*;
+import kdt.shorturl.grobal.exception.ShortUrlException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,7 +41,7 @@ public class Url {
 
     public void addShortUrl(String shortUrl) {
         if (id == null) {
-            throw new NullPointerException("ID가 존재하지 않습니다.");
+            throw new ShortUrlException("ID가 존재하지 않습니다.");
         }
         this.shortUrl = shortUrl;
     }

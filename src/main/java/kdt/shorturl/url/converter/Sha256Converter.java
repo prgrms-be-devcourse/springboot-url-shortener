@@ -1,5 +1,6 @@
 package kdt.shorturl.url.converter;
 
+import kdt.shorturl.grobal.exception.ShortUrlException;
 import kdt.shorturl.url.repository.UrlRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -28,11 +29,11 @@ public class Sha256Converter implements ShortUrlConverter {
                     return shortUrl;
                 }
             } catch (NoSuchAlgorithmException e) {
-                throw new RuntimeException("SHA-256로 인코딩 중 오류 발생", e);
+                throw new ShortUrlException("SHA-256로 인코딩 중 오류가 발생했습니다.");
             }
             attempt++;
         }
-        throw new RuntimeException("여러 번 시도해도 고유한 짧은 URL을 생성하지 못했습니다");
+        throw new ShortUrlException("여러 번 시도해도 고유한 짧은 URL을 생성하지 못했습니다");
     }
 
     private boolean isShortUrlInUse(String shortUrl) {
@@ -44,6 +45,6 @@ public class Sha256Converter implements ShortUrlConverter {
         for (int i = 0; i < Math.min(bytes.length, length / 2); i++) {
             builder.append(String.format("%02x", bytes[i]));
         }
-        return builder.toString().substring(0, length);
+        return builder.substring(0, length);
     }
 }
