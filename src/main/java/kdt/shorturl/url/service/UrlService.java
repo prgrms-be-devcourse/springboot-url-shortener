@@ -23,7 +23,6 @@ public class UrlService {
     @Transactional
     public CreateShortenUrlResponse findOrGenerateShortenUrl(CreateShortUrlRequest request) {
         String urlWithoutProtocol = request.removeProtocol(request.originUrl());
-        System.out.println(request.algorithm());
         return urlRepository.findByOriginUrlAndAlgorithm(urlWithoutProtocol, request.algorithm())
                 .map(foundUrl -> CreateShortenUrlResponse.from(foundUrl, false))
                 .orElseGet(() -> generateShortenUrl(request));
