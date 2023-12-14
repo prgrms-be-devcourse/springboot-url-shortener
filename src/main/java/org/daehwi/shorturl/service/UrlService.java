@@ -2,8 +2,10 @@ package org.daehwi.shorturl.service;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.daehwi.shorturl.controller.dto.ResponseStatus;
 import org.daehwi.shorturl.controller.dto.ShortUrlRequest;
 import org.daehwi.shorturl.domain.ShortUrl;
+import org.daehwi.shorturl.exception.CustomException;
 import org.daehwi.shorturl.repository.UrlRepository;
 import org.daehwi.shorturl.util.UrlValidator;
 import org.daehwi.shorturl.util.encoder.Base62Encoder;
@@ -11,7 +13,6 @@ import org.daehwi.shorturl.util.encoder.Encoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -30,13 +31,12 @@ public class UrlService {
         final BigInteger id = getUniqueId(cleanUrl);
         String shortUrl = encoder.encode(id);
         urlRepository.save(new ShortUrl(id.longValue(), cleanUrl, shortUrl));
-        System.out.println("shortUrl = " + shortUrl);
         return shortUrl;
     }
 
     public String getOriginUrl(String shortUrl) {
         return urlRepository.findByShortUrl(shortUrl)
-                .orElseThrow(() -> new NoSuchElementException("Invalid short url"))
+                .orElseThrow(() -> new CustomException(ResponseStatus.SHORT_URL_NOT_FOUND))
                 .getOriginUrl();
     }
 
