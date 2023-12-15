@@ -1,4 +1,4 @@
-package org.prgms.springbooturlshortener.domain.shorturl.service;
+package org.prgms.springbooturlshortener.domain.shorturl.service.transformer;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

@@ -4,6 +4,7 @@ import org.prgms.springbooturlshortener.domain.shorturl.ShortUrl;
 import org.prgms.springbooturlshortener.domain.shorturl.exception.UrlErrorCode;
 import org.prgms.springbooturlshortener.domain.shorturl.exception.UrlException;
 import org.prgms.springbooturlshortener.domain.shorturl.repository.ShortUrlRepository;
+import org.prgms.springbooturlshortener.domain.shorturl.service.transformer.UrlTransformer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
