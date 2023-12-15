@@ -7,6 +7,7 @@ import org.prgms.springbooturlshortener.domain.shorturl.repository.ShortUrlRepos
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -20,20 +21,17 @@ public class ShortUrlService {
     }
 
     public String saveOriginalUrl(String originalUrl) {
-        Random random = new Random();
-        int randomInt = random.nextInt(0, Integer.MAX_VALUE);
-        String generatedUrl = urlTransformer.generateUrl(randomInt);
+        Optional<ShortUrl> foundShortUrl = urlRepository.findByOriginalUrl(originalUrl);
 
-        while (urlRepository.findById(generatedUrl).isPresent()) {
-            randomInt = random.nextInt(0, Integer.MAX_VALUE);
-            generatedUrl = urlTransformer.generateUrl(randomInt);
+        if (foundShortUrl.isPresent()) {
+            return foundShortUrl.get().getTransformedUrl();
         }
 
-        ShortUrl shortUrl = ShortUrl.builder()
-                .transformedUrl(generatedUrl)
-                .originalUrl(originalUrl)
-                .build();
-        ShortUrl savedShortUrl = urlRepository.save(shortUrl);
+        String generatedUrl;
+
+        generatedUrl = getRandomUrl();
+
+        ShortUrl savedShortUrl = getSavedShortUrl(originalUrl, generatedUrl);
 
         return savedShortUrl.getTransformedUrl();
     }
@@ -45,6 +43,27 @@ public class ShortUrlService {
         increaseVisit(shortUrl);
 
         return shortUrl.getOriginalUrl();
+    }
+
+    private ShortUrl getSavedShortUrl(String originalUrl, String generatedUrl) {
+        ShortUrl shortUrl = ShortUrl.builder()
+                .transformedUrl(generatedUrl)
+                .originalUrl(originalUrl)
+                .build();
+        return urlRepository.save(shortUrl);
+    }
+
+    private String getRandomUrl() {
+        Random random = new Random();
+        String generatedUrl;
+        int randomInt;
+
+        do  {
+            randomInt = random.nextInt(0, Integer.MAX_VALUE);
+            generatedUrl = urlTransformer.generateUrl(randomInt);
+        } while (urlRepository.findById(generatedUrl).isPresent());
+
+        return generatedUrl;
     }
 
     private void increaseVisit(ShortUrl shortUrl) {
