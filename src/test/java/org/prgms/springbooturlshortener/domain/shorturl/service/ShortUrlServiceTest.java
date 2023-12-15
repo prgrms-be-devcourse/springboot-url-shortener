@@ -33,7 +33,7 @@ class ShortUrlServiceTest {
     }
 
     @Test
-    void saveOriginalUrl() {
+    void saveNewOriginalUrl() {
         String originalUrl = "https://naver.com";
         String transformedUrl = shortUrlService.saveOriginalUrl(originalUrl);
 
@@ -41,6 +41,13 @@ class ShortUrlServiceTest {
                 .orElseThrow(() -> new UrlException(UrlErrorCode.ORIGINAL_URL_NOT_FOUND));
 
         assertThat(savedShortUrl.getTransformedUrl()).isEqualTo(transformedUrl);
+    }
+
+    @Test
+    void getAlreadyExistingOriginalUrl() {
+        String transformedUrl = shortUrlService.saveOriginalUrl(preSavedOriginalUrl);
+
+        assertThat(transformedUrl).isEqualTo(preSavedTransformedUrl);
     }
 
     @Test
