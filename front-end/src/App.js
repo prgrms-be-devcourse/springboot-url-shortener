@@ -27,7 +27,9 @@ const App = () => {
     const onClear = () => setShortUrls([]);
 
     return (
-        <>
+        <div className="app-container">
+            <h1>URL Shortener</h1>
+            <div className="form-container">
             <Form
                 form={form}
                 layout="vertical"
@@ -65,7 +67,8 @@ const App = () => {
             </Form>
             <Card
                 style={{
-                    width: 300,
+                    width: "100%",
+                    margin: "0 auto",
                 }}
             >
                 {
@@ -76,7 +79,8 @@ const App = () => {
                     ))
                 }
             </Card>
-        </>
+            </div>
+        </div>
     );
 };
 
