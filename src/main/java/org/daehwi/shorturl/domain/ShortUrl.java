@@ -1,8 +1,6 @@
 package org.daehwi.shorturl.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +8,7 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
+@Table(name = "short_url", indexes = @Index(name = "idx_short_url", columnList = "shortUrl"))
 @NoArgsConstructor(access = PROTECTED)
 public class ShortUrl {
 
