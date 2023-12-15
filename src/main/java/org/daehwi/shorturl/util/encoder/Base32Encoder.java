@@ -1,10 +1,11 @@
 package org.daehwi.shorturl.util.encoder;
 
+
 import java.math.BigInteger;
 
-public class Base62Encoder implements Encoder {
+public class Base32Encoder implements Encoder {
 
-    private static final String ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
     private static final int BASE_LENGTH = ALPHABET.length();
 
     @Override
@@ -16,5 +17,4 @@ public class Base62Encoder implements Encoder {
         }
         return sb.toString();
     }
-
 }

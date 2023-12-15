@@ -1,5 +1,8 @@
 package org.daehwi.shorturl.util.encoder;
 
+import org.daehwi.shorturl.controller.dto.ResponseStatus;
+import org.daehwi.shorturl.exception.CustomException;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
@@ -9,7 +12,7 @@ public interface Encoder {
 
     String encode(BigInteger bigInteger);
 
-    default BigInteger sha256Hash(String url, int hashSize) {
+    static BigInteger sha256Hash(String url, int hashSize) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(url.getBytes(UTF_8));
@@ -19,7 +22,8 @@ public interface Encoder {
             String shortHash = hashString.substring(0, hashSize);
             return new BigInteger(shortHash, 16);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            throw new CustomException(ResponseStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
