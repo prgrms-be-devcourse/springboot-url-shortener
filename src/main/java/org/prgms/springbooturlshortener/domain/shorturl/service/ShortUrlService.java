@@ -21,11 +21,11 @@ public class ShortUrlService {
 
     public String saveOriginalUrl(String originalUrl) {
         Random random = new Random();
-        int randomInt = random.nextInt();
+        int randomInt = random.nextInt(0, Integer.MAX_VALUE);
         String generatedUrl = urlTransformer.generateUrl(randomInt);
 
         while (urlRepository.findById(generatedUrl).isPresent()) {
-            randomInt = random.nextInt();
+            randomInt = random.nextInt(0, Integer.MAX_VALUE);
             generatedUrl = urlTransformer.generateUrl(randomInt);
         }
 
@@ -44,11 +44,11 @@ public class ShortUrlService {
 
         increaseVisit(shortUrl);
 
-        return shortUrl.getTransformedUrl();
+        return shortUrl.getOriginalUrl();
     }
 
     private void increaseVisit(ShortUrl shortUrl) {
         shortUrl.increaseVisit();
-        urlRepository.updateVisitCount(shortUrl.getTransformedUrl());
+        urlRepository.save(shortUrl);
     }
 }
