@@ -4,11 +4,21 @@ SprintBoot URL Shortener 구현 미션 Repository 입니다.
 ## 요구사항
 각 요구사항을 모두 충족할 수 있도록 노력해봅시다.
 - [ ] URL 입력폼 제공 및 결과 출력
-- [ ] URL Shortening Key는 8 Character 이내로 생성
-- [ ] 단축된 URL 요청시 원래 URL로 리다이렉트
-- [ ] 단축된 URL에 대한 요청 수 정보저장 (optional)
-- [ ] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional) 
+- [X] URL Shortening Key는 8 Character 이내로 생성
+- [X] 단축된 URL 요청시 원래 URL로 리다이렉트
+- [X] 단축된 URL에 대한 요청 수 정보저장 (optional)
+- [X] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional) 
 
+
+## 구현 기능
+1. url -> short url 만들기
+   - [X] url을 입력받는다. (localhost:8080/{url}) 
+   - [X] url을 short url로 변환한다.
+   - [X] url과 short url을 db에 저장한다.
+2. short url - > url
+   - [X] 호출이 일어나면 요청 수(count) 증가 저장
+   - [X] short url을 토대로 db에서 url을 가져옴.
+   - [X] url을 리다이렉트 처리
 
 ## Short URL Service
 ### 읽으면 좋은 레퍼런스
