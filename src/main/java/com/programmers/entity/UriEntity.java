@@ -19,8 +19,17 @@ public class UriEntity {
     public UriEntity() {
     }
     public UriEntity(String uri) {
-        this.originalUri= uri;
-        this.shortUri = null;
+        this(null, uri, null);
+    }
+
+    public UriEntity(Long id, String uri) {
+        this(id, uri, null);
+    }
+
+    public UriEntity(Long id, String originalUri, String shortUri) {
+        this.id = id;
+        this.originalUri = originalUri;
+        this.shortUri = shortUri;
     }
 
     public void initShortUri(String shortUri) {
