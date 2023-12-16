@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 @Table(name = "urls")
 @NoArgsConstructor
 @Getter
+@Slf4j
 public class Url {
 
     private static final String ORIGIN_URL_PATTERN = "^(https?://).*";
@@ -26,9 +27,22 @@ public class Url {
     private long requestCnt = 0;
 
     public Url(String originUrl) {
+        if (checkOriginUrl(originUrl)) {
             this.originUrl = originUrl;
+        } else {
+            throw new UrlException(UrlExceptionCode.INVALID_ORIGIN_URL);
+        }
+    }
+
     public void increaseRequestCntOne() {
         this.requestCnt++;
     }
+
+    private boolean checkOriginUrl(String originUrl) {
+        return Pattern.matches(ORIGIN_URL_PATTERN, originUrl);
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
