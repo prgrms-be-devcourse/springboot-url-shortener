@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dev.urlshortner.dto.UrlResponse;
 import com.dev.urlshortner.dto.UrlStatsResponse;
-import com.dev.urlshortner.entity.Url;
-import com.dev.urlshortner.global.EncodingType;
-import com.dev.urlshortner.entity.UrlProperties;
+import com.dev.urlshortner.domain.Url;
+import com.dev.urlshortner.domain.EncodingType;
+import com.dev.urlshortner.config.UrlProperties;
 import com.dev.urlshortner.repository.UrlRepository;
 import com.dev.urlshortner.util.ShortKeyGenerator;
 

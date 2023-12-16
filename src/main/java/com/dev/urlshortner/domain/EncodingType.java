@@ -1,4 +1,4 @@
-package com.dev.urlshortner.global;
+package com.dev.urlshortner.domain;
 
 import java.util.function.Supplier;
 

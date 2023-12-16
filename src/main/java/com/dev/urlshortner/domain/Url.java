@@ -1,4 +1,4 @@
-package com.dev.urlshortner.entity;
+package com.dev.urlshortner.domain;
 
 import java.time.LocalDateTime;
 

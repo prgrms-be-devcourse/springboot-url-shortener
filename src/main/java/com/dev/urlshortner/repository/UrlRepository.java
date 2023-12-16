@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.dev.urlshortner.entity.Url;
+import com.dev.urlshortner.domain.Url;
 
 public interface UrlRepository extends JpaRepository<Url, Long> {
 	Optional<Url> findByShortKey(String shortKey);

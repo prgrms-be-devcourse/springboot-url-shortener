@@ -1,4 +1,4 @@
-package com.dev.urlshortner.entity;
+package com.dev.urlshortner.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
