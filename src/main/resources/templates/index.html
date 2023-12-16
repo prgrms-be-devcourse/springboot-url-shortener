@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>URL Shortener</title>
+</head>
+<header>
+    <div id="logo"><a th:href="@{'/'}" class="logo">URL Shortener</a></div>
+</header>
+<body>
+    <h2>아래에 변환할 URL을 붙여 넣으세요!</h2>
+    <form th:action="@{/shorten}" accept-charset="UTF-8" method="post">
+        <label>
+            <input type="text" name="originalUrl">
+        </label>
+        <button type="submit">변환!</button>
+    </form>
+</body>
+</html>
