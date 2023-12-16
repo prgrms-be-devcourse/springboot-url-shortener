@@ -1,6 +1,5 @@
 package com.prgrms.shorturl.utils;
 
-import com.prgrms.shorturl.domain.Url;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,11 +1,11 @@
 package com.prgrms.shorturl.service;
 
-import com.prgrms.shorturl.utils.*;
 import com.prgrms.shorturl.domain.Url;
 import com.prgrms.shorturl.dto.UrlRequest;
 import com.prgrms.shorturl.dto.UrlResponse;
 import com.prgrms.shorturl.exception.NoSuchOriginalUrlException;
 import com.prgrms.shorturl.repository.UrlRepository;
+import com.prgrms.shorturl.utils.HashAlgorithm;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 
-import static com.prgrms.shorturl.dto.UrlResponse.*;
+import static com.prgrms.shorturl.dto.UrlResponse.toShortUrlResponse;
 import static com.prgrms.shorturl.utils.UrlFactory.deleteProtocol;
 import static com.prgrms.shorturl.utils.UrlFactory.extractProtocol;
 

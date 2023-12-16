@@ -3,7 +3,6 @@ package com.prgrms.shorturl.domain;
 import com.prgrms.shorturl.utils.Base62EncodingFactory;
 import com.prgrms.shorturl.utils.EncodingFactory;
 import com.prgrms.shorturl.utils.HashAlgorithm;
-import com.prgrms.shorturl.utils.HashFactory;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

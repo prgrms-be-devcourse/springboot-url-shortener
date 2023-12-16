@@ -1,20 +1,18 @@
 package com.prgrms.shorturl.service;
 
-import com.prgrms.shorturl.domain.Url;
 import com.prgrms.shorturl.dto.UrlRequest;
 import com.prgrms.shorturl.dto.UrlResponse;
 import com.prgrms.shorturl.exception.NoSuchOriginalUrlException;
 import com.prgrms.shorturl.repository.UrlRepository;
 import com.prgrms.shorturl.utils.HashAlgorithm;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
 class UrlServiceTest {
