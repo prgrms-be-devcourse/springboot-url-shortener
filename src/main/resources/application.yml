@@ -13,3 +13,4 @@ spring:
     username: root
     password: "#e020221"
 
+  start-url: http://localhost:8080/jeurl.com
