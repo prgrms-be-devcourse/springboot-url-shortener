@@ -22,7 +22,13 @@ public class Url {
     private Long id;
     @Column(name = "originUrl")
     private String originUrl;
+    @Column(name = "requestCnt")
+    private long requestCnt = 0;
+
     public Url(String originUrl) {
             this.originUrl = originUrl;
+    public void increaseRequestCntOne() {
+        this.requestCnt++;
+    }
     }
 }
