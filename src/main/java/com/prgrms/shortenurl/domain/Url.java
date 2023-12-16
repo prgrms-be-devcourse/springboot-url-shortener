@@ -20,8 +20,11 @@ public class Url {
     @Column(name = "orgin_url")
     private String originUrl;
 
-    @Column(name = "shorten_url")
+    @Column(name = "shorten_url", unique = true)
     private String shortenUrl;
+
+    @Column(name = "count")
+    private int count;
 
     @Builder
     public Url(@NonNull String originUrl) {
@@ -31,5 +34,9 @@ public class Url {
     public void updateShortenUrl(String shortenKey) {
         this.shortenKey = shortenKey;
         this.shortenUrl = "http://localhost:8090/"+shortenKey;
+    }
+
+    public void updateCount() {
+        this.count += 1;
     }
 }

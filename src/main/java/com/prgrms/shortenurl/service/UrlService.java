@@ -52,10 +52,11 @@ public class UrlService {
         return url;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public String getUrlByKey(@NonNull String key) {
         Url url = urlRepository.findByShortenKey(key)
                 .orElseThrow(UrlNotFoundException::new);
+        url.updateCount();
         return url.getOriginUrl();
     }
 }
