@@ -5,12 +5,12 @@ import java.util.function.Supplier;
 import com.dev.urlshortner.util.Base62RandomKeyGenerator;
 import com.dev.urlshortner.util.ShortKeyGenerator;
 
-public enum EncodingType {
+public enum KeyEncodingType {
 	BASE62(Base62RandomKeyGenerator::new);
 
 	private final Supplier<ShortKeyGenerator> encoderSupplier;
 
-	EncodingType(Supplier<ShortKeyGenerator> encoderSupplier) {
+	KeyEncodingType(Supplier<ShortKeyGenerator> encoderSupplier) {
 		this.encoderSupplier = encoderSupplier;
 	}
 
