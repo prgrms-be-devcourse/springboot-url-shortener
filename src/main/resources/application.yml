@@ -32,4 +32,4 @@ logging:
 
 url:
   shortening:
-    algorithm: sha256
+    algorithm: base62

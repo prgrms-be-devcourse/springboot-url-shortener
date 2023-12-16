@@ -7,5 +7,5 @@ Content-Type: application/json
 }
 
 ### redirect from shortUrl to originUrl
-GET http://localhost:8080/1mTa3i
+GET http://localhost:8080/2uBf8M
 
