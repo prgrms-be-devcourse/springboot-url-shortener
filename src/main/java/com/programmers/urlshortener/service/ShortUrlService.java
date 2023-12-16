@@ -19,10 +19,9 @@ public class ShortUrlService {
     private final ShortUrlRepository shortUrlRepository;
 
     public ShortUrlResponse createShortUrl(CreateShortUrlRequest request) {
-        //TODO: URL 검증
-
         Optional<ShortUrl> foundShortUrl = shortUrlRepository.findByOriginUrl(request.url());
-        ShortUrl shortUrl = foundShortUrl.orElseGet(() -> shortUrlRepository.save(new ShortUrl(encoder, request.url())));
+        ShortUrl shortUrl = foundShortUrl
+                .orElseGet(() -> shortUrlRepository.save(new ShortUrl(encoder, request.url())));
 
         return ShortUrlResponse.from(shortUrl);
     }
