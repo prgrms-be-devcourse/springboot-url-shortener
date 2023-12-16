@@ -29,7 +29,3 @@ logging:
       hibernate:
         type: info
         sql: info
-
-url:
-  shortening:
-    algorithm: base62

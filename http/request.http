@@ -3,7 +3,8 @@ POST http://localhost:8080/api/v1/short-urls
 Content-Type: application/json
 
 {
-  "url": "https://www.google.com"
+  "url": "https://www.google.com",
+  "algorithm": "base62"
 }
 
 ### redirect from shortUrl to originUrl

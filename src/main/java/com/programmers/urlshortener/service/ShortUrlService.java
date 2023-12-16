@@ -4,7 +4,7 @@ import com.programmers.urlshortener.domain.ShortUrl;
 import com.programmers.urlshortener.dto.request.CreateShortUrlRequest;
 import com.programmers.urlshortener.dto.response.ShortUrlResponse;
 import com.programmers.urlshortener.repository.ShortUrlRepository;
-import com.programmers.urlshortener.util.encoder.UrlEncoder;
+import com.programmers.urlshortener.util.encoder.Algorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,13 +15,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class ShortUrlService {
-    private final UrlEncoder encoder;
     private final ShortUrlRepository shortUrlRepository;
 
     public ShortUrlResponse createShortUrl(CreateShortUrlRequest request) {
-        Optional<ShortUrl> foundShortUrl = shortUrlRepository.findByOriginUrl(request.url());
+        String originUrl = request.url();
+        Algorithm algorithm = Algorithm.from(request.algorithm());
+
+        Optional<ShortUrl> foundShortUrl = shortUrlRepository.findByOriginUrlAndAlgorithm(originUrl, algorithm);
         ShortUrl shortUrl = foundShortUrl
-                .orElseGet(() -> shortUrlRepository.save(new ShortUrl(encoder, request.url())));
+                .orElseGet(() -> shortUrlRepository.save(new ShortUrl(Algorithm.getUrlEncoder(algorithm), originUrl)));
 
         return ShortUrlResponse.from(shortUrl);
     }

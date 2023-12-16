@@ -39,10 +39,10 @@ public class ShortUrl {
     @Column(name = "created_at", nullable = false)
     LocalDateTime createdAt;
 
-    public ShortUrl(UrlEncoder encoder, String originUrl) {
+    public ShortUrl(UrlEncoder urlEncoder, String originUrl) {
         this.originUrl = originUrl;
-        this.urlKey = encoder.encode(originUrl);
-        this.algorithm = encoder.getAlgorithm();
+        this.urlKey = urlEncoder.encode(originUrl);
+        this.algorithm = urlEncoder.getAlgorithm();
         this.requestCount = 0L;
         this.createdAt = LocalDateTime.now();
     }
