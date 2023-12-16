@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>URL Shortener</title>
+    <!-- Bootstrap CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Bootstrap 및 jQuery JS 추가 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">URL 단축기</h1>
+
+    <!-- URL 단축 양식 -->
+    <form id="urlForm" class="mb-4">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="url" placeholder="Enter URL to shorten" aria-label="URL" required>
+            <div class="input-group-append">
+                <button class="btn btn-outline-primary" type="submit">단축</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- 단축된 URL 결과 및 통계 버튼 표시 -->
+    <div id="result" class="alert alert-success" role="alert" style="display:none;">
+        <h4 class="alert-heading">단축된 URL:</h4>
+        <p><a id="shortUrl" href="#" class="alert-link"></a></p>
+        <button id="statsButton" type="button" class="btn btn-info btn-sm">통계</button>
+    </div>
+
+    <!-- 통계 정보 표시 -->
+    <div id="stats" class="card mt-3" style="display:none;">
+        <div class="card-body">
+            <h5 class="card-title">통계 정보</h5>
+            <p class="card-text">방문자 수: <span id="visitCount"></span></p>
+            <p class="card-text">생성 시각: <span id="createdAt"></span></p>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        $('#urlForm').on('submit', function(e) {
+            e.preventDefault();
+            var originalUrl = $('#url').val();
+            $.ajax({
+                url: '/shorten',
+                type: 'POST',
+                data: { url: originalUrl },
+                success: function(response) {
+                    $('#shortUrl').attr('href', response.result.shortUrl).text(response.result.shortUrl);
+                    $('#result').show();
+                },
+                error: function(xhr) {
+                    // 서버로부터 반환된 예외 메시지를 alert로 표시
+                    var errorMsg = xhr.responseText || 'URL 단축에 실패했습니다.';
+                    alert('Error: ' + errorMsg);
+                }
+            });
+        });
+
+        // '통계' 버튼 이벤트 핸들러
+        $('#statsButton').on('click', function() {
+            // 예시: /stats/{shortKey} 엔드포인트 호출
+            var shortKey = $('#shortUrl').text().split('/').pop(); // 단축된 URL에서 shortKey 추출
+            $.ajax({
+                url: '/stats/' + shortKey,
+                type: 'GET',
+                success: function(data) {
+                    $('#visitCount').text(data.result.visitCount);
+                    $('#createdAt').text(data.result.createdAt);
+                    $('#stats').show();
+                },
+                error: function() {
+                    alert('통계 정보를 가져오는 데 실패했습니다.');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
