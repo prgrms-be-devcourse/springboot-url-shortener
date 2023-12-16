@@ -3,7 +3,7 @@ package com.prgrms.shortenurl.service;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Base62 {
+public class Base62Encoding {
 
     private static final int BASE62 = 62;
     private static final String BASE62_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
