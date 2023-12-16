@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/shorten_url
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: "#e020221"
+
+  start-url: http://localhost:8080/jeurl.com
