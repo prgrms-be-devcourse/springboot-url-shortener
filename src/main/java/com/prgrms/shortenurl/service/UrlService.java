@@ -36,10 +36,10 @@ public class UrlService {
         int intKey = Math.toIntExact(url.getId());
 
         // 이진수 변환
-        String binary = Converter.convertToBinary(intKey);
+        String binary = RadixConverter.convertToBinary(intKey);
 
         // 16진수 변환
-        String hex = Converter.convertToHex(Integer.parseInt(binary));
+        String hex = RadixConverter.convertToHex(Integer.parseInt(binary));
 
         return Base62Encoding.encode(HexFormat.fromHexDigitsToLong(hex));
     }

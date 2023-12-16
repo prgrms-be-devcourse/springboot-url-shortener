@@ -1,9 +1,6 @@
 package com.prgrms.shortenurl.service;
 
-import org.springframework.stereotype.Component;
-
-@Component
-public class Converter {
+public class RadixConverter {
     public static String convertToBinary(int number) {
         int quotient = number;
         StringBuilder binaryString = new StringBuilder();
@@ -31,5 +28,4 @@ public class Converter {
 
         return hexString.reverse().toString();
     }
-
 }
