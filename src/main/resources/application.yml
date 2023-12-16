@@ -29,3 +29,7 @@ logging:
       hibernate:
         type: info
         sql: info
+
+url:
+  shortening:
+    algorithm: sha256

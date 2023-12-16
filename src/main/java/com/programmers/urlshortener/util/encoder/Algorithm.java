@@ -1,4 +1,4 @@
-package com.programmers.urlshortener.domain;
+package com.programmers.urlshortener.util.encoder;
 
 public enum Algorithm {
     BASE62,

@@ -1,33 +1,53 @@
 package com.programmers.urlshortener.domain;
 
+import com.programmers.urlshortener.util.encoder.Algorithm;
+import com.programmers.urlshortener.util.encoder.UrlEncoder;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "short_urls")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ShortUrl {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, columnDefinition = "BIGINT(20) UNSIGNED")
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "value", nullable = false, unique = true)
-    String value;
-
     @Column(name = "origin_url", nullable = false)
-    String originUrl;
+    private String originUrl;
+
+    @Column(name = "url_key", nullable = false, unique = true)
+    private String urlKey;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "algorithm", nullable = false)
-    Algorithm algorithm;
+    private Algorithm algorithm;
 
     @Column(name = "request_count", nullable = false)
-    Long requestCount;
+    private Long requestCount;
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", nullable = false)
     LocalDateTime createdAt;
+
+    public ShortUrl(UrlEncoder encoder, String originUrl) {
+        this.originUrl = originUrl;
+        this.urlKey = encoder.encode(originUrl);
+        this.algorithm = encoder.getAlgorithm();
+        this.requestCount = 0L;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    public void increaseRequestCount() {
+        this.requestCount++;
+    }
 }

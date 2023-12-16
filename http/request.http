@@ -1,0 +1,11 @@
+### create shortUrl
+POST http://localhost:8080/api/v1/short-urls
+Content-Type: application/json
+
+{
+  "url": "https://www.google.com"
+}
+
+### redirect from shortUrl to originUrl
+GET http://localhost:8080/1mTa3i
+
