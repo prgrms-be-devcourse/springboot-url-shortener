@@ -28,7 +28,7 @@ public class UrlService {
 
     private final UrlRepository urlRepository;
 
-    private Url save(String originalUrl, HashAlgorithm hashAlgorithm) {
+    public Url save(String originalUrl, HashAlgorithm hashAlgorithm) {
         Url url = new Url(originalUrl, hashAlgorithm);
         Url save = urlRepository.save(url);
         log.info("url id: " + save.getId());
