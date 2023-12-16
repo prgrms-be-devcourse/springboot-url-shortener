@@ -23,10 +23,11 @@ public class UrlWebController {
     }
 
     @PostMapping("/shorten")
-    public String shortenUrl(@RequestParam("originUrl") String originUrl, Model model) {
-        Url url = urlService.addLink(originUrl);
-
-        model.addAttribute("shortenUrl", url.getShortenUrl());
+    public String shorten(@RequestParam("originUrl") String originUrl,
+                          @RequestParam("encodingType") String encodingType,
+                          Model model) {
+        Url shortenUrl = urlService.addLink(originUrl, encodingType);
+        model.addAttribute("shortenUrl", shortenUrl.getShortenUrl());
         return "index";
     }
 
