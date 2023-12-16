@@ -21,6 +21,20 @@
             <label for="originUrl">Original URL:</label>
             <input type="text" class="form-control" id="originUrl" name="originUrl" required>
         </div>
+
+        <!-- 라디오 버튼 추가 -->
+        <div class="form-group">
+            <label>Encoding Type:</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="encodingType" id="base62" value="Base62" checked>
+                <label class="form-check-label" for="base62">Base62</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="encodingType" id="url" value="MurMur">
+                <label class="form-check-label" for="url">MurMur</label>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-primary">Shorten URL</button>
     </form>
 
