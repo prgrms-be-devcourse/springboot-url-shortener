@@ -7,7 +7,8 @@ public class Base62UrlEncoder implements UrlEncoder {
 
     @Override
     public String encode(String url) {
-        long hash = url.hashCode() & UNSIGNED_INT_MASK;
+        String uniqueUrl = url + System.currentTimeMillis();
+        long hash = uniqueUrl.hashCode() & UNSIGNED_INT_MASK;
         StringBuilder shortUrl = new StringBuilder();
 
         while (hash > 0) {

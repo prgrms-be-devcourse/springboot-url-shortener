@@ -9,8 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -21,9 +19,7 @@ public class ShortUrlService {
         String originUrl = request.url();
         Algorithm algorithm = Algorithm.from(request.algorithm());
 
-        Optional<ShortUrl> foundShortUrl = shortUrlRepository.findByOriginUrlAndAlgorithm(originUrl, algorithm);
-        ShortUrl shortUrl = foundShortUrl
-                .orElseGet(() -> shortUrlRepository.save(new ShortUrl(Algorithm.getUrlEncoder(algorithm), originUrl)));
+        ShortUrl shortUrl = shortUrlRepository.save(new ShortUrl(Algorithm.getUrlEncoder(algorithm), originUrl));
 
         return ShortUrlResponse.from(shortUrl);
     }
