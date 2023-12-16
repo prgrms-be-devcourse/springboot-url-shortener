@@ -1,12 +1,10 @@
 package com.dev.urlshortner.controller;
 
-import java.net.URI;
-
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
 public class UrlRestController {
 
 	private final UrlService urlService;
@@ -30,12 +29,6 @@ public class UrlRestController {
 		@RequestParam(defaultValue = "BASE62") KeyEncodingType keyEncodingType) {
 		UrlResponse response = urlService.shortenUrl(originalUrl, keyEncodingType);
 		return ResponseEntity.ok(ApiResponse.ok(response));
-	}
-
-	@GetMapping("/{shortKey}")
-	public ResponseEntity<Void> redirect(@PathVariable String shortKey) {
-		String originalUrl = urlService.getOriginalUrl(shortKey);
-		return ResponseEntity.status(HttpStatus.FOUND).location(URI.create(originalUrl)).build();
 	}
 
 	@GetMapping("/stats/{shortKey}")

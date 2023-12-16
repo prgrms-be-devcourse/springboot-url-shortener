@@ -9,6 +9,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="icon" href="data:,">
 </head>
 <body>
 <div class="container mt-5">
@@ -48,7 +49,7 @@
             e.preventDefault();
             var originalUrl = $('#url').val();
             $.ajax({
-                url: '/shorten',
+                url: '/api/v1/shorten',
                 type: 'POST',
                 data: { url: originalUrl },
                 success: function(response) {
@@ -68,7 +69,7 @@
             // 예시: /stats/{shortKey} 엔드포인트 호출
             var shortKey = $('#shortUrl').text().split('/').pop(); // 단축된 URL에서 shortKey 추출
             $.ajax({
-                url: '/stats/' + shortKey,
+                url: '/api/v1/stats/' + shortKey,
                 type: 'GET',
                 success: function(data) {
                     $('#visitCount').text(data.result.visitCount);

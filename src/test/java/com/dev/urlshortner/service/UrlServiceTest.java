@@ -20,7 +20,6 @@ class UrlServiceTest {
 
 	@Autowired
 	private UrlService urlService;
-
 	@Autowired
 	private UrlRepository urlRepository;
 	@Autowired
