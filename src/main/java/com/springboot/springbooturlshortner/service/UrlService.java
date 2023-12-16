@@ -25,4 +25,11 @@ public class UrlService {
         return shortenUrl;
     }
 
+    @Transactional
+    public String getOriginUrl(String shortenUrl) {
+        Url url = urlRepository.findById(base62Util.decoding(shortenUrl)).get();
+        url.increaseRequestCntOne();
+
+        return url.getOriginUrl();
+    }
 }
