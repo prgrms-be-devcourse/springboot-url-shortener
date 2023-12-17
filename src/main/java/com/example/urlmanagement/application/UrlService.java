@@ -4,7 +4,8 @@ import com.example.urlmanagement.domain.EncodeType;
 import com.example.urlmanagement.domain.Url;
 import com.example.urlmanagement.dto.request.CreateShortUrlRequest;
 import com.example.urlmanagement.encoder.ShortUrlEncoder;
-import com.example.urlmanagement.exception.UrlNotFoundException;
+import com.example.urlmanagement.exception.UrlErrorCode;
+import com.example.urlmanagement.exception.UrlException;
 import com.example.urlmanagement.mapper.ShortUrlEncoderMapper;
 import com.example.urlmanagement.repository.UrlRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class UrlService {
 
         if (urlRepository.existsByOriginalUrl(createShortUrlRequest.getOriginalUrl())) {
             Url url = urlRepository.findByOriginalUrl(createShortUrlRequest.getOriginalUrl())
-                    .orElseThrow(() -> new UrlNotFoundException(createShortUrlRequest.getOriginalUrl()));
+                    .orElseThrow(() -> new UrlException(UrlErrorCode.URL_NOT_FOUND, createShortUrlRequest.getOriginalUrl()));
 
             return BASE_URL + url.getShortUrl();
         }
@@ -46,7 +47,7 @@ public class UrlService {
     public String getOriginalUrl(String shortUrl) {
 
         Url url = urlRepository.findByShortUrl(shortUrl)
-                .orElseThrow(() -> new UrlNotFoundException(shortUrl));
+                .orElseThrow(() -> new UrlException(UrlErrorCode.URL_NOT_FOUND, shortUrl));
         url.increaseRequestCount();
 
         return url.getOriginalUrl();

@@ -1,6 +1,7 @@
 package com.example.urlmanagement.domain;
 
-import com.example.urlmanagement.exception.InvalidUrlException;
+import com.example.urlmanagement.exception.UrlErrorCode;
+import com.example.urlmanagement.exception.UrlException;
 import com.example.urlmanagement.global.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,7 +49,8 @@ public class Url extends BaseEntity {
         try {
             new URL(originalUrl);
         } catch (MalformedURLException e) {
-            throw new InvalidUrlException(originalUrl);
+//            throw new InvalidUrlException(originalUrl);
+            throw new UrlException(UrlErrorCode.INVALID_URL, originalUrl);
         }
     }
 }

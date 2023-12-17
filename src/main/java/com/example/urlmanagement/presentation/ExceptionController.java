@@ -1,8 +1,6 @@
 package com.example.urlmanagement.presentation;
 
-import com.example.urlmanagement.exception.EncodeTypeNotFoundException;
-import com.example.urlmanagement.exception.InvalidUrlException;
-import com.example.urlmanagement.exception.UrlNotFoundException;
+import com.example.urlmanagement.exception.UrlException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,22 +11,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionController {
 
-    @ExceptionHandler(EncodeTypeNotFoundException.class)
-    public ResponseEntity<String> catchEncodeTypeNotFoundException(EncodeTypeNotFoundException e) {
-        log.error(e.getMessage(), e);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
-
-    @ExceptionHandler(UrlNotFoundException.class)
-    public ResponseEntity<String> catchUrlNotFoundException(UrlNotFoundException e) {
-        log.error(e.getMessage(), e);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-    }
-
-    @ExceptionHandler(InvalidUrlException.class)
-    public ResponseEntity<String> catchInvalidUrlException(InvalidUrlException e) {
-        log.error(e.getMessage(), e);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    @ExceptionHandler(UrlException.class)
+    public ResponseEntity<String> catchCustomUrlException(UrlException e) {
+        log.error(e.getErrorCode().getErrorMessage(), e);
+        return ResponseEntity.status(e.getErrorCode().getErrorHttpStatus()).body(e.getErrorCode().getErrorMessage());
     }
 
     @ExceptionHandler(Exception.class)
