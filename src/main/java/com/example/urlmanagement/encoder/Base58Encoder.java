@@ -3,8 +3,8 @@ package com.example.urlmanagement.encoder;
 public class Base58Encoder implements ShortUrlEncoder {
 
     private static final int MAX_URL_LENGTH = 8;
-    private static final int TOKENS_SIZE = 58;
     private static final char[] BASE58_TOKENS = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789".toCharArray();
+    private static final int TOKENS_SIZE = BASE58_TOKENS.length;
 
     @Override
     public String createShortUrl(Long resource) {
