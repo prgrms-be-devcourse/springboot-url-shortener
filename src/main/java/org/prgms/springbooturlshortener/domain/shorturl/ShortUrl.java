@@ -46,6 +46,6 @@ public class ShortUrl {
     }
 
     public TransformedShortUrlDto toTransformedShortUrlDto() {
-        return new TransformedShortUrlDto(this.transformedUrl, this.visitCount, this.lastVisitTime);
+        return new TransformedShortUrlDto(this.transformedUrl, this.originalUrl, this.visitCount, this.lastVisitTime);
     }
 }
