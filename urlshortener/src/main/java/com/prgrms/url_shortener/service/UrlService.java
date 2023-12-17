@@ -22,8 +22,7 @@ public class UrlService {
 
     @Transactional
     public ShortenUrlResponse getShortUrl(ShortenUrlRequest request) {
-        Url savedUrl = urlRepository.findByOriginUrl(request.originUrl())
-            .orElseGet(() -> urlRepository.save(new Url(request.originUrl())));
+        Url savedUrl = getSavedUrl(request.originUrl());
 
         savedUrl.increaseRequestCount();
         String shortenUrl = BASE_URL + "/" + Base62Algorithm.encode(savedUrl.getId());
@@ -39,5 +38,15 @@ public class UrlService {
         });
 
         return url.getOriginUrl();
+    }
+
+    private Url getSavedUrl(String originUrl) {
+        Url savedUrl;
+        if (urlRepository.existsByOriginUrl(originUrl)){
+            savedUrl = urlRepository.findByOriginUrl(originUrl).orElseThrow();
+        } else {
+            savedUrl = urlRepository.save(new Url(originUrl));
+        }
+        return savedUrl;
     }
 }
