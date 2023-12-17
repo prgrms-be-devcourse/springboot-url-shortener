@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>url info</title>
+</head>
+<body>
+    <h1>변환된 URL 정보</h1>
+    <div th:object="${transformedShortUrlDto}">
+        <h2 th:text="'변환된 URL: http://' + ${domain} + '/' + *{shortUrl()}"></h2>
+        <h3 th:text="'방문 횟수: ' + *{visitCount()}"></h3>
+        <h3 th:if="*{lastVisitTime() != null && visitCount() != 0}" th:text="'마지막 방문 날짜: ' + *{#temporals.format(lastVisitTime().plusHours(9), 'yyyy년 MM월 dd일 HH시 mm분 ss초')}"></h3>
+    </div>
+    <a href="/">
+        <button>홈으로</button>
+    </a>
+</body>
+</html>
