@@ -15,7 +15,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleMethodArgumentNotValidException(MethodArgumentNotValidException exception, Model model) {
+    public String handleMethodArgumentNotValidException(MethodArgumentNotValidException exception,
+        Model model) {
         log.error("handleMethodArgumentNotValidException", exception);
 
         StringBuilder sb = new StringBuilder();

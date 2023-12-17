@@ -18,8 +18,8 @@ public class UrlController {
 
     private final UrlService urlService;
 
-    @GetMapping("/")
-    public String home(){
+    @GetMapping
+    public String home() {
         return "index";
     }
 
@@ -33,7 +33,7 @@ public class UrlController {
     }
 
     @GetMapping("/url/{shortenUrl}")
-    public String redirectOriginUrl(@PathVariable String shortenUrl){
+    public String redirectOriginUrl(@PathVariable String shortenUrl) {
         String originUrl = urlService.getOriginUrl(shortenUrl);
         return "redirect:" + originUrl;
     }

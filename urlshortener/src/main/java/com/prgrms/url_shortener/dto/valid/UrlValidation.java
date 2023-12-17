@@ -6,6 +6,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class UrlValidation implements ConstraintValidator<UrlValid, String> {
+
     private static final String HTTPS_PROTOCOL = "https://";
     private static final String HTTP_PROTOCOL = "http://";
 

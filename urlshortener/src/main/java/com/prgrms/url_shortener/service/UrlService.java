@@ -42,7 +42,7 @@ public class UrlService {
 
     private Url getSavedUrl(String originUrl) {
         Url savedUrl;
-        if (urlRepository.existsByOriginUrl(originUrl)){
+        if (urlRepository.existsByOriginUrl(originUrl)) {
             savedUrl = urlRepository.findByOriginUrl(originUrl).orElseThrow();
         } else {
             savedUrl = urlRepository.save(new Url(originUrl));

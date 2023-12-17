@@ -14,12 +14,13 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 public class Url {
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "url_id")
     private Long id;
 
-    @Column(name = "origin_url", unique = true,  nullable = false)
+    @Column(name = "origin_url", unique = true, nullable = false)
     private String originUrl;
 
     @Column(name = "request_count")
@@ -30,7 +31,7 @@ public class Url {
         this.requestCount = 1;
     }
 
-    public void increaseRequestCount(){
+    public void increaseRequestCount() {
         requestCount++;
     }
 }

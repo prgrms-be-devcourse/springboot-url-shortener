@@ -14,7 +14,8 @@ public class Base62Algorithm {
     public static String encode(Long value) {
         final StringBuilder sb = new StringBuilder();
         while (value > 0) {
-            sb.append(BASE62_CHARS[(int) (value % BASE62_LENGTH)]);
+            char encodedChar = BASE62_CHARS[(int) (value % BASE62_LENGTH)];
+            sb.append(encodedChar);
             value /= BASE62_LENGTH;
         }
         return sb.toString();
@@ -22,10 +23,8 @@ public class Base62Algorithm {
 
     public static Long decode(String value) {
         long result = 0;
-        long power = 1;
         for (int i = 0; i < value.length(); i++) {
-            result += new String(BASE62_CHARS).indexOf(value.charAt(i)) * power;
-            power *= BASE62_LENGTH;
+            result += new String(BASE62_CHARS).indexOf(value.charAt(i));
         }
         return result;
     }

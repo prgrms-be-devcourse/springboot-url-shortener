@@ -7,4 +7,6 @@ public record ShortenUrlRequest(
     @UrlValid
     @Size(max = 255, message = "URL은 255자 이내입니다.")
     String originUrl
-){}
+) {
+
+}
