@@ -3,6 +3,10 @@ package com.prgrms.shortenurl.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -28,7 +32,20 @@ public class Url {
 
     @Builder
     public Url(@NonNull String originUrl) {
-        this.originUrl = originUrl;
+        if (isValidUrl(originUrl)) {
+            this.originUrl = originUrl;
+        } else {
+            throw new IllegalArgumentException("Invalid URL: " + originUrl);
+        }
+    }
+
+    private boolean isValidUrl(String url) {
+        try {
+            new URL(url).toURI();
+            return true;
+        } catch (MalformedURLException | URISyntaxException e) {
+            return false;
+        }
     }
 
     public void updateShortenUrl(String shortenKey) {
