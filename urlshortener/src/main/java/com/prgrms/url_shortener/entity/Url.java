@@ -16,21 +16,21 @@ import lombok.NoArgsConstructor;
 public class Url {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "url_name")
+    @Column(name = "url_id")
     private Long id;
 
     @Column(name = "origin_url", unique = true,  nullable = false)
     private String originUrl;
 
-    @Column(name = "short_url")
-    private String shortUrl;
-
     @Column(name = "request_count")
     private int requestCount;
 
-    public Url(String originUrl, String shortUrl) {
+    public Url(String originUrl) {
         this.originUrl = originUrl;
-        this.shortUrl = shortUrl;
-        this.requestCount = 0;
+        this.requestCount = 1;
+    }
+
+    public void increaseRequestCount(){
+        requestCount++;
     }
 }
