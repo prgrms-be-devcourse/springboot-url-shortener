@@ -1,16 +1,13 @@
 package com.prgrms.shortenurl.service;
 
-import org.springframework.stereotype.Component;
-
-@Component
 public class Base62Encoding {
 
     private static final int BASE62 = 62;
     private static final String BASE62_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    public static String encode(long param) {
+    public static String encode(long param, int length) {
         StringBuffer sb = new StringBuffer();
-        while(param > 0) {
+        while (param > 0 || sb.length() < length) {
             sb.append(BASE62_CHAR.charAt((int) (param % BASE62)));
             param /= BASE62;
         }

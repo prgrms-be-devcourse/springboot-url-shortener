@@ -41,7 +41,7 @@ public class UrlService {
         // 16진수 변환
         String hex = RadixConverter.convertToHex(Integer.parseInt(binary));
 
-        return Base62Encoding.encode(HexFormat.fromHexDigitsToLong(hex));
+        return Base62Encoding.encode(HexFormat.fromHexDigits(hex), 6);
     }
 
     @Transactional
