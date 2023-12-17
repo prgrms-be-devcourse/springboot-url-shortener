@@ -2,7 +2,7 @@ package com.example.urlmanagement.exception;
 
 public class UrlNotFoundException extends RuntimeException {
 
-    public UrlNotFoundException(String wrongShortUrl) {
-        super(wrongShortUrl + "에 해당하는 original url이 존재하지 않습니다.");
+    public UrlNotFoundException(String wrongUrl) {
+        super(wrongUrl + "에 해당하는 url 정보가 존재하지 않습니다.");
     }
 }
