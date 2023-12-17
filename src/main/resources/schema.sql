@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS short_url (
-    transformed_url char(6) PRIMARY KEY,
-    original_url varchar(2047) not null,
-    visit_count bigint default 0 not null,
-    last_visit_time timestamp(6) not null default current_timestamp(6)
+    transformed_url CHAR(6) PRIMARY KEY,
+    original_url VARCHAR(2047) NOT NULL,
+    visit_count BIGINT DEFAULT 0 NOT NULL,
+    last_visit_time TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+    INDEX idx_original_url (original_url(255))
 );
