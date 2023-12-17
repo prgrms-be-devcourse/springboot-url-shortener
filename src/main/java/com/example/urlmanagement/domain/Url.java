@@ -49,7 +49,6 @@ public class Url extends BaseEntity {
         try {
             new URL(originalUrl);
         } catch (MalformedURLException e) {
-//            throw new InvalidUrlException(originalUrl);
             throw new UrlException(UrlErrorCode.INVALID_URL, originalUrl);
         }
     }
