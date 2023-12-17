@@ -30,6 +30,13 @@ dependencies {
 
     //MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
+
+    //validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
 }
 
 tasks.named('test') {
