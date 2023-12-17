@@ -29,10 +29,10 @@ public class Url {
     @Column(name = "request_hits")
     private int hits;
 
-    public Url(String longUrl, String shortUrl, int hits) {
+    public Url(String longUrl) {
         this.longUrl = longUrl;
-        this.shortUrl = shortUrl;
-        this.hits = hits;
+        this.shortUrl = "";
+        this.hits = 0;
     }
 
     public void addHits() {

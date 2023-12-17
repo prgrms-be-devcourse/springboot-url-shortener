@@ -28,7 +28,7 @@ public class UrlService {
                 findUrl.get().getHits()); // 단축 URL, 누적 요청횟수 리턴
         }
 
-        Url url = new Url(longUrl, "", 0);
+        Url url = new Url(longUrl);
         Url savedUrl = urlRepository.save(url);
         String shortUrl = urlEncoder.encode(savedUrl.getId());
         savedUrl.insertShortUrl(shortUrl);
