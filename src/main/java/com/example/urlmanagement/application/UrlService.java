@@ -24,6 +24,13 @@ public class UrlService {
     @Transactional
     public String createShortUrl(CreateShortUrlRequest createShortUrlRequest) {
 
+        if (urlRepository.existsByOriginalUrl(createShortUrlRequest.getOriginalUrl())) {
+            Url url = urlRepository.findByOriginalUrl(createShortUrlRequest.getOriginalUrl())
+                    .orElseThrow(() -> new UrlNotFoundException(createShortUrlRequest.getOriginalUrl()));
+
+            return BASE_URL + url.getShortUrl();
+        }
+
         Url url = urlRepository.save(createShortUrlRequest.toUrl());
 
         EncodeType encodeType = EncodeType.getEncodeTypeByName(createShortUrlRequest.getEncodeType());
