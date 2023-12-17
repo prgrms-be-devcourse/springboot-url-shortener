@@ -13,3 +13,5 @@ spring:
       hibernate:
         format_sql: true
     open-in-view: false
+
+  base-url : http://localhost:8080/url

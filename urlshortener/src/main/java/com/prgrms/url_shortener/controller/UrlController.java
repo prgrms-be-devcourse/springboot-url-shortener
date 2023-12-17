@@ -23,7 +23,7 @@ public class UrlController {
         return "index";
     }
 
-    @PostMapping("/url-shortener")
+    @PostMapping("/url")
     public String getShortenUrl(@Valid @ModelAttribute ShortenUrlRequest request, Model model) {
         ShortenUrlResponse response = urlService.getShortUrl(request);
         model.addAttribute("shortenUrl", response.shortenUrl());
@@ -32,7 +32,7 @@ public class UrlController {
         return "index";
     }
 
-    @GetMapping("/url-shortener/{shortenUrl}")
+    @GetMapping("/url/{shortenUrl}")
     public String redirectOriginUrl(@PathVariable String shortenUrl){
         String originUrl = urlService.getOriginUrl(shortenUrl);
         return "redirect:" + originUrl;

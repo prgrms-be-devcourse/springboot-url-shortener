@@ -10,7 +10,7 @@
 
 <div class="container mt-5">
   <h5 class="card-title">URL Shortener</h5>
-  <form method="post" th:action="@{/url-shortener}" th:object="${request}">
+  <form method="post" th:action="@{/url}" th:object="${request}">
     <div class="mb-3">
       <label for="urlInputText" class="form-label">Origin Url</label>
       <input type="text" class="form-control" id="urlInputText" name="originUrl" placeholder="단축할 url을 입력하세요.">
@@ -21,7 +21,7 @@
 
   <div th:if="${shortenUrl}" class="alert alert-success">
     <strong>Your Shortened URL:</strong>
-    <a th:href="@{'/url-shortener/' + ${shortenUrl}}" th:text="${shortenUrl}">Shortened Link</a>
+    <a th:href="@{${shortenUrl}}" th:text="${shortenUrl}">Shortened Link</a>
   </div>
   <div th:if="${requestCount}" class="alert alert-info">
     <strong>Request Count:</strong> <span th:text="${requestCount}"></span>
