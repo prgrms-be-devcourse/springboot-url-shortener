@@ -5,7 +5,7 @@ import devcourse.springbooturlshortener.dto.ShortUrlFindResponse;
 import devcourse.springbooturlshortener.entity.Url;
 import devcourse.springbooturlshortener.entity.vo.OriginalUrl;
 import devcourse.springbooturlshortener.repository.UrlRepository;
-import devcourse.springbooturlshortener.urlalgorithm.Base62EncodeUrlAlgorithm;
+import devcourse.springbooturlshortener.urlalgorithm.UrlAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UrlService {
 
     private final UrlRepository urlRepository;
-    private final Base62EncodeUrlAlgorithm base62EncodeUrlAlgorithm;
+    private final UrlAlgorithm base62EncodeUrlAlgorithm;
 
     @Transactional
     public String getOriginalUrlAndIncreaseHit(String shortUrl) {
