@@ -1,5 +1,6 @@
 package com.prgrms.shortenurl.controller;
 
+import com.prgrms.shortenurl.controller.dto.UrlRequestDto;
 import com.prgrms.shortenurl.service.UrlService;
 import com.prgrms.shortenurl.domain.Url;
 import org.springframework.http.HttpHeaders;
@@ -7,10 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -23,10 +21,9 @@ public class UrlWebController {
     }
 
     @PostMapping("/shorten")
-    public String shorten(@RequestParam("originUrl") String originUrl,
-                          @RequestParam("encodingType") String encodingType,
+    public String shorten(@ModelAttribute UrlRequestDto urlRequestDto,
                           Model model) {
-        Url shortenUrl = urlService.addLink(originUrl, encodingType);
+        Url shortenUrl = urlService.addLink(urlRequestDto.originUrl(), urlRequestDto.encodingType());
         model.addAttribute("shortenUrl", shortenUrl.getShortenUrl());
         return "index";
     }

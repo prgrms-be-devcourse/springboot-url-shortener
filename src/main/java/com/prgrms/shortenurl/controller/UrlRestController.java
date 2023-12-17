@@ -1,6 +1,6 @@
 package com.prgrms.shortenurl.controller;
 
-import com.prgrms.shortenurl.service.EncodingType;
+import com.prgrms.shortenurl.controller.dto.UrlRequestDto;
 import com.prgrms.shortenurl.service.UrlService;
 import com.prgrms.shortenurl.domain.Url;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,10 @@ public class UrlRestController {
         this.urlService = urlService;
     }
 
-    @PostMapping(value = "/{url}")
+    @PostMapping
     @ResponseBody
-    public ResponseEntity<String> shortenUrl(@PathVariable String url,
-                                             @RequestParam String encodingType) {
-        Url shortenUrl = urlService.addLink(url, encodingType);
+    public ResponseEntity<String> shortenUrl(@ModelAttribute UrlRequestDto urlRequestDto) {
+        Url shortenUrl = urlService.addLink(urlRequestDto.originUrl(), urlRequestDto.encodingType());
         return ResponseEntity.ok(shortenUrl.getOriginUrl());
     }
 
