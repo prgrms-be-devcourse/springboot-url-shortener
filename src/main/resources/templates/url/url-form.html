@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <title>Url Management Application</title>
+</head>
+<body class="container-fluid">
+<h1>Create Short Url</h1>
+<form th:action="@{/shorten/new}" method="post">
+    <div class="mb-3">
+        <label for="originalUrl" class="form-label">Original Url</label>
+        <input type="text" class="form-control" id="originalUrl" name="originalUrl">
+    </div>
+    <div class="mb-3">
+        <label for="encodeType" class="form-label">Encode Type</label>
+        <select id="encodeType" name="encodeType" class="form-select">
+            <option selected>Open this select menu</option>
+            <option value="BASE58">BASE58</option>
+            <option value="BASE62">BASE62</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</body>
+</html>
