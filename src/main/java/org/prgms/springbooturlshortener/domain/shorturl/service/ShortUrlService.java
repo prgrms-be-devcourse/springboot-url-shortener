@@ -4,6 +4,7 @@ import org.prgms.springbooturlshortener.domain.shorturl.ShortUrl;
 import org.prgms.springbooturlshortener.domain.shorturl.exception.UrlErrorCode;
 import org.prgms.springbooturlshortener.domain.shorturl.exception.UrlException;
 import org.prgms.springbooturlshortener.domain.shorturl.repository.ShortUrlRepository;
+import org.prgms.springbooturlshortener.domain.shorturl.service.dto.TransformedShortUrlDto;
 import org.prgms.springbooturlshortener.domain.shorturl.service.transformer.UrlTransformer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -21,11 +22,12 @@ public class ShortUrlService {
         this.urlRepository = urlRepository;
     }
 
-    public String saveOriginalUrl(String originalUrl) {
+    public TransformedShortUrlDto saveOriginalUrl(String originalUrl) {
         Optional<ShortUrl> foundShortUrl = urlRepository.findByOriginalUrl(originalUrl);
 
         if (foundShortUrl.isPresent()) {
-            return foundShortUrl.get().getTransformedUrl();
+            ShortUrl shortUrl = foundShortUrl.get();
+            return shortUrl.toTransformedShortUrlDto();
         }
 
         String generatedUrl;
@@ -34,11 +36,11 @@ public class ShortUrlService {
 
         ShortUrl savedShortUrl = getSavedShortUrl(originalUrl, generatedUrl);
 
-        return savedShortUrl.getTransformedUrl();
+        return savedShortUrl.toTransformedShortUrlDto();
     }
 
-    public String getOriginalUrl(String encodedUrl) {
-        ShortUrl shortUrl = urlRepository.findById(encodedUrl)
+    public String getOriginalUrl(String transformedUrl) {
+        ShortUrl shortUrl = urlRepository.findById(transformedUrl)
                 .orElseThrow(() -> new UrlException(UrlErrorCode.ORIGINAL_URL_NOT_FOUND));
 
         increaseVisit(shortUrl);

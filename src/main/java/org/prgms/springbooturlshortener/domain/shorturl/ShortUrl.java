@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.prgms.springbooturlshortener.domain.shorturl.service.dto.TransformedShortUrlDto;
 
 import java.time.LocalDateTime;
 
@@ -36,9 +37,14 @@ public class ShortUrl {
         this.transformedUrl = transformedUrl;
         this.originalUrl = originalUrl;
         this.visitCount = 0L;
+        this.lastVisitTime = null;
     }
 
     public void increaseVisit() {
         this.visitCount++;
+    }
+
+    public TransformedShortUrlDto toTransformedShortUrlDto() {
+        return new TransformedShortUrlDto(this.transformedUrl, this.visitCount, this.lastVisitTime);
     }
 }
