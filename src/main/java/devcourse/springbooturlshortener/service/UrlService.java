@@ -1,6 +1,7 @@
 package devcourse.springbooturlshortener.service;
 
 import devcourse.springbooturlshortener.dto.ShortUrlCreateRequest;
+import devcourse.springbooturlshortener.dto.ShortUrlFindResponse;
 import devcourse.springbooturlshortener.entity.Url;
 import devcourse.springbooturlshortener.entity.vo.OriginalUrl;
 import devcourse.springbooturlshortener.repository.UrlRepository;
@@ -26,11 +27,13 @@ public class UrlService {
     }
 
     @Transactional
-    public String createShortUrl(ShortUrlCreateRequest request) {
+    public ShortUrlFindResponse createShortUrl(ShortUrlCreateRequest request) {
         Url url = getOrCreateUrlByOriginalUrl(new OriginalUrl(request.originalUrl()));
-        increaseHitCount(url);
 
-        return url.getShortUrl();
+        return new ShortUrlFindResponse(
+                url.getShortUrl(),
+                url.getHit()
+        );
     }
 
     private Url getOrCreateUrlByOriginalUrl(OriginalUrl originalUrl) {

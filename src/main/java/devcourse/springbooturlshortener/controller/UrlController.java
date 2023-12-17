@@ -1,6 +1,7 @@
 package devcourse.springbooturlshortener.controller;
 
 import devcourse.springbooturlshortener.dto.ShortUrlCreateRequest;
+import devcourse.springbooturlshortener.dto.ShortUrlFindResponse;
 import devcourse.springbooturlshortener.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class UrlController {
     }
 
     @PostMapping("/api/v1/urls")
-    public String createShortUrl(@RequestBody ShortUrlCreateRequest request) {
+    public ShortUrlFindResponse createShortUrl(@RequestBody ShortUrlCreateRequest request) {
         return this.urlService.createShortUrl(request);
     }
 }
