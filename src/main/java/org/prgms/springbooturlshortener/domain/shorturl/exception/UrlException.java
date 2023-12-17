@@ -6,4 +6,8 @@ public class UrlException extends RuntimeException {
     public UrlException(UrlErrorCode urlErrorCode) {
         this.urlErrorCode = urlErrorCode;
     }
+
+    public int getUrlErrorCode() {
+        return urlErrorCode.getErrorCode();
+    }
 }

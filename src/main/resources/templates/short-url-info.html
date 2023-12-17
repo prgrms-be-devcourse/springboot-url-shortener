@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>url info</title>
 </head>
+<header>
+    <div id="logo"><a th:href="@{'/'}" class="logo">URL Shortener</a></div>
+</header>
 <body>
     <h1>변환된 URL 정보</h1>
     <div th:object="${transformedShortUrlDto}">
