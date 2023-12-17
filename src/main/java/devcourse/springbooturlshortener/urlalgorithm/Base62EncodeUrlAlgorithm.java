@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public final class Base62EncodeUrlAlgorithm implements UrlAlgorithm {
 
+    static final Long MAX_VALUE = 62L * 62L * 62L * 62L * 62L * 62L * 62L * 62L - 1; // 218_340_105_584_895L
     private static final String BASE62_CHAR = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final int BASE62_LENGTH = BASE62_CHAR.length();
-    private static final Long MAX_VALUE = 62L * 62L * 62L * 62L * 62L * 62L * 62L * 62L - 1; // 218_340_105_584_895L
 
     @Override
     public String urlEncoder(Long id) {
@@ -19,6 +19,9 @@ public final class Base62EncodeUrlAlgorithm implements UrlAlgorithm {
 
     @Override
     public Long urlDecoder(String encodeStr) {
+        if (encodeStr.length() > 8) {
+            throw new IllegalArgumentException("최대 길이를 초과했습니다.");
+        }
         return decoding(encodeStr);
     }
 
