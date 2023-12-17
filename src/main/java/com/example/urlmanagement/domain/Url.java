@@ -1,5 +1,6 @@
 package com.example.urlmanagement.domain;
 
+import com.example.urlmanagement.exception.InvalidUrlException;
 import com.example.urlmanagement.global.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +10,9 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -27,6 +31,7 @@ public class Url extends BaseEntity {
 
     @Builder
     public Url(String originalUrl) {
+        validateOriginalUrl(originalUrl);
         this.originalUrl = originalUrl;
         this.requestCount = 0;
     }
@@ -37,5 +42,13 @@ public class Url extends BaseEntity {
 
     public void increaseRequestCount() {
         this.requestCount += 1;
+    }
+
+    private void validateOriginalUrl(String originalUrl) {
+        try {
+            new URL(originalUrl);
+        } catch (MalformedURLException e) {
+            throw new InvalidUrlException(originalUrl);
+        }
     }
 }
