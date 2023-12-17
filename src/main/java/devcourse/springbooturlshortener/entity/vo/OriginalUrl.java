@@ -21,8 +21,7 @@ public class OriginalUrl {
         this.value = originalUrl;
 
         this.trimUrl()
-                .deleteHttpPrefix()
-                .lowercaseUrl();
+                .deleteHttpPrefix();
     }
 
     private OriginalUrl trimUrl() {
@@ -38,12 +37,6 @@ public class OriginalUrl {
         if (this.value.startsWith(HTTPS_PREFIX)) {
             this.value = this.value.substring(HTTPS_PREFIX.length());
         }
-
-        return this;
-    }
-
-    private OriginalUrl lowercaseUrl() {
-        this.value = this.value.toLowerCase();
 
         return this;
     }
