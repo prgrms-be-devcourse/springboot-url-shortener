@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
 @SequenceGenerator(
         name = "url_sequence",
         sequenceName = "url_sequence",
-        initialValue = 10000,
-        allocationSize = 100
+        initialValue = 10000
 )
 public class Url {
 
