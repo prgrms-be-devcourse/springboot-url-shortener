@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringbootUrlShortenerApplication {
+public class App {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringbootUrlShortenerApplication.class, args);
+        SpringApplication.run(App.class, args);
     }
 
 }
