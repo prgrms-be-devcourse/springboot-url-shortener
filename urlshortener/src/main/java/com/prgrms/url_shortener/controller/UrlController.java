@@ -32,9 +32,9 @@ public class UrlController {
         return "index";
     }
 
-    @GetMapping("/url/{shortenUrl}")
-    public String redirectOriginUrl(@PathVariable String shortenUrl) {
-        String originUrl = urlService.getOriginUrl(shortenUrl);
+    @GetMapping("/url/{shortUri}")
+    public String redirectOriginUrl(@PathVariable String shortUri) {
+        String originUrl = urlService.getOriginUrl(shortUri);
         return "redirect:" + originUrl;
     }
 }

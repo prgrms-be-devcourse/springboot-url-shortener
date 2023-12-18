@@ -31,8 +31,8 @@ public class UrlService {
     }
 
     @Transactional(readOnly = true)
-    public String getOriginUrl(String shortenUrl) {
-        Long urlId = Base62Algorithm.decode(shortenUrl);
+    public String getOriginUrl(String shortUri) {
+        Long urlId = Base62Algorithm.decode(shortUri);
         Url url = urlRepository.findById(urlId).orElseThrow(() -> {
             throw new CustomException("존재하지 않는 URL입니다.");
         });
