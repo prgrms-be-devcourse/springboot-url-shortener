@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+</head>
+
+<body>
+<h1>URL Shortener</h1>
+
+<form action="/shorten" method="post">
+  <label for="urlInput">Enter URL:</label>
+  <input type="text" id="urlInput" name="request" required>
+  <button type="submit">Shorten</button>
+</form>
+
+<div th:if="${response}">
+  <p>Original URL: <span th:text="${response.originalUrl}"></span></p>
+  <p>Short URL: <a th:href="${response.shortUrl}" th:text="${response.shortUrl}"></a></p>
+</div>
+</body>
+
+</html>
