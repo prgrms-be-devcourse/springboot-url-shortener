@@ -23,9 +23,3 @@ spring:
         format_sql: true
 server:
   port: 8090
-  servlet:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
-
