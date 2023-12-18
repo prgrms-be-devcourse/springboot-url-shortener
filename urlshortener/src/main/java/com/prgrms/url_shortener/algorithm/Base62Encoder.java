@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Base62Algorithm {
+public class Base62Encoder {
 
     private static final char[] BASE62_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
     private static final int BASE62_LENGTH = 62;

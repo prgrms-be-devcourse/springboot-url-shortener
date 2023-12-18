@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.prgrms.url_shortener.algorithm.Base62Algorithm;
+import com.prgrms.url_shortener.algorithm.Base62Encoder;
 import com.prgrms.url_shortener.dto.ShortenUrlRequest;
 import com.prgrms.url_shortener.dto.ShortenUrlResponse;
 import com.prgrms.url_shortener.entity.Url;
@@ -39,7 +39,7 @@ class UrlServiceTest {
 
         when(repository.existsByOriginUrl(originUrl)).thenReturn(false);
         when(repository.save(any(Url.class))).thenReturn(url);
-        String shortUri = Base62Algorithm.encode(1L);
+        String shortUri = Base62Encoder.encode(1L);
 
         //when
         ShortenUrlResponse response = service.getShortUrl(request);
@@ -57,7 +57,7 @@ class UrlServiceTest {
         Url url = new Url(expectedOriginUrl);
         ReflectionTestUtils.setField(url, "id", 1L);
 
-        String shortUri = Base62Algorithm.encode(1L);
+        String shortUri = Base62Encoder.encode(1L);
 
         when(repository.findById(any(Long.class))).thenReturn(Optional.of(url));
 

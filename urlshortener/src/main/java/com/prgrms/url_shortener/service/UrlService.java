@@ -1,6 +1,6 @@
 package com.prgrms.url_shortener.service;
 
-import com.prgrms.url_shortener.algorithm.Base62Algorithm;
+import com.prgrms.url_shortener.algorithm.Base62Encoder;
 import com.prgrms.url_shortener.dto.ShortenUrlRequest;
 import com.prgrms.url_shortener.dto.ShortenUrlResponse;
 import com.prgrms.url_shortener.entity.Url;
@@ -25,14 +25,14 @@ public class UrlService {
         Url savedUrl = getSavedUrl(request.originUrl());
 
         savedUrl.increaseRequestCount();
-        String shortenUrl = BASE_URL + "/" + Base62Algorithm.encode(savedUrl.getId());
+        String shortenUrl = BASE_URL + "/" + Base62Encoder.encode(savedUrl.getId());
 
         return new ShortenUrlResponse(shortenUrl, savedUrl.getRequestCount());
     }
 
     @Transactional(readOnly = true)
     public String getOriginUrl(String shortUri) {
-        Long urlId = Base62Algorithm.decode(shortUri);
+        Long urlId = Base62Encoder.decode(shortUri);
         Url url = urlRepository.findById(urlId).orElseThrow(() -> {
             throw new CustomException("존재하지 않는 URL입니다.");
         });
