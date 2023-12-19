@@ -1,6 +1,6 @@
 package com.dev.shortenerurl.url.domain.model;
 
-import org.springframework.util.Assert;
+import static org.springframework.util.Assert.*;
 
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -25,9 +25,9 @@ public class Url {
 	private long requestCount;
 
 	public Url(String originUrl, Long encodingId, String algorithm) {
-		Assert.notNull(originUrl, "originUrl 은 Null 일 수 없습니다");
-		Assert.notNull(encodingId, "encodingId 은 Null 일 수 없습니다");
-		Assert.notNull(algorithm, "algorithm 은 Null 일 수 없습니다");
+		notNull(originUrl, "originUrl 은 Null 일 수 없습니다");
+		notNull(encodingId, "encodingId 은 Null 일 수 없습니다");
+		notNull(algorithm, "algorithm 은 Null 일 수 없습니다");
 
 		this.id = encodingId;
 		this.originUrl = originUrl;

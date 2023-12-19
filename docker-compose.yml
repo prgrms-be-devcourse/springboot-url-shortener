@@ -1,11 +1,37 @@
 version: "3"
 services:
-  db-master:
-    image: mysql:8.0
-    restart: on-failure
-    environment:
-      MYSQL_DATABASE: 'shorten_url'
-      MYSQL_ROOT_PASSWORD: '1234'
-    container_name: url-db
+  server:
+    image: openjdk:17-alpine
+    container_name: spring_server
+    restart: always
+    depends_on:
+      - db-master
+      - redis
+    volumes:
+      - ./build/libs:/home
+    command: [ "java", "-jar", "/home/shortener-url-0.0.1-SNAPSHOT.jar" ]
     ports:
-      - '3308:3306'
+      - '8080:8080'
+    platform: linux/amd64
+
+  db-master:
+    image: postgres:13-alpine
+    container_name: master_db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234!
+      POSTGRES_DB: master_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - '6379:6379'
+    platform: linux/amd64록
+
+volumes:
+  postgresql_data:
