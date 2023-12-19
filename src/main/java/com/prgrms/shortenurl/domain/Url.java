@@ -2,13 +2,18 @@ package com.prgrms.shortenurl.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Url {
 
@@ -29,6 +34,14 @@ public class Url {
 
     @Column(name = "count")
     private int count;
+
+    @Column(name = "created_at")
+    @CreatedDate
+    private LocalDateTime created_at;
+
+    @Column(name = "updated_at")
+    @LastModifiedDate
+    private LocalDateTime updated_at;
 
     @Builder
     public Url(@NonNull String originUrl) {
