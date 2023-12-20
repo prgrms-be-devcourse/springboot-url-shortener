@@ -20,7 +20,7 @@ public class Url {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "short_url", length = 8)
+    @Column(name = "short_url", length = 8, unique = true)
     private String shortUrl;
 
     @Embedded
