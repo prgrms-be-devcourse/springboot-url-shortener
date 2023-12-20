@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+</head>
+<body>
+
+<div>
+    <h2>URL Shortener</h2>
+
+    <form th:action="@{/url/short_url}" method="post">
+        <div>
+            <input type="text" name="originUrl" placeholder="Type Original URL" aria-label="Original URL"
+                   aria-describedby="convertButton">
+            <div>
+                <button type="submit">Convert</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

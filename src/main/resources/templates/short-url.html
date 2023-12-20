@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+</head>
+<body>
+
+<div>
+    <h2>URL Shortener - Shortened URL</h2>
+    <div role="alert">
+        Short URL: <a th:href="${shortUrl}" th:text="${shortUrl}"></a>
+    </div>
+    <div role="alert">
+        Hit: <span th:text="${hit}"></span>
+    </div>
+</div>
+
+</body>
+</html>
