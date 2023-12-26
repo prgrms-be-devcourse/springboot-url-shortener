@@ -24,7 +24,7 @@ public class ShortUrl {
     private String transformedUrl;
 
     @Getter
-    @Column(name = "original_url", nullable = false)
+    @Column(name = "original_url", unique = true, nullable = false)
     private String originalUrl;
 
     @Column(name = "visit_count", nullable = false)
