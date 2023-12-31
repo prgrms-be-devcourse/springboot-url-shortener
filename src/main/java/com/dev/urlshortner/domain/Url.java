@@ -18,12 +18,16 @@ public class Url {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@Column(name = "short_key", unique = true)
 	private String shortKey;
+
 	@Column(name = "original_url")
 	private String originalUrl;
+
 	@Column(name = "created_at")
 	private LocalDateTime createdAt = LocalDateTime.now();
+
 	@Column(name = "visitCount")
 	private Long visitCount = 0L;
 
