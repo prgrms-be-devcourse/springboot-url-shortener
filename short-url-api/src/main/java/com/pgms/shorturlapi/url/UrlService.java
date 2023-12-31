@@ -19,7 +19,7 @@ public class UrlService {
     private final Map<String, AlgorithmConverter> algorithmConverterMap;
 
     public String getShortUrl(String url, String algorithm){
-        AlgorithmConverter algorithmConverter = algorithmConverterMap.get(algorithm);
+        AlgorithmConverter algorithmConverter = algorithmConverterMap.getOrDefault(algorithm, algorithmConverterMap.get("base62Converter"));
 
         Url findUrl = urlRepository.findUrlByOriginalUrl(url)
                 .orElseGet(() -> {
@@ -33,6 +33,7 @@ public class UrlService {
         return findUrl.getShortUrl();
     }
 
+    @Transactional(readOnly = true)
     @Cacheable(value = "originalUrl", key = "#shortUrl", cacheManager = "contentCacheManager")
     public String getOriginalUrl(String shortUrl){
         return urlRepository.findUrlByShortUrl(shortUrl).orElseThrow(NoUrlException::new).getOriginalUrl();

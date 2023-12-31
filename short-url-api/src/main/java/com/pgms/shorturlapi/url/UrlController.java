@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
 public class UrlController {
 
     private final UrlService urlService;
