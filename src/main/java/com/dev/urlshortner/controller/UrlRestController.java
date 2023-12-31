@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dev.urlshortner.domain.KeyEncodingType;
+import com.dev.urlshortner.domain.KeyEncodingGenerator;
 import com.dev.urlshortner.dto.ApiResponse;
 import com.dev.urlshortner.dto.UrlResponse;
 import com.dev.urlshortner.dto.UrlStatsResponse;
@@ -26,8 +26,8 @@ public class UrlRestController {
 	@PostMapping("/shorten")
 	public ResponseEntity<ApiResponse<UrlResponse>> shortenUrl(
 		@RequestParam("url") String originalUrl,
-		@RequestParam(defaultValue = "BASE62") KeyEncodingType keyEncodingType) {
-		UrlResponse response = urlService.shortenUrl(originalUrl, keyEncodingType);
+		@RequestParam(defaultValue = "BASE62") KeyEncodingGenerator keyEncodingGenerator) {
+		UrlResponse response = urlService.shortenUrl(originalUrl, keyEncodingGenerator);
 		return ResponseEntity.ok(ApiResponse.ok(response));
 	}
 
