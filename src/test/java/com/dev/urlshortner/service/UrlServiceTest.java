@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
 import com.dev.urlshortner.config.UrlProperties;
-import com.dev.urlshortner.domain.KeyEncodingType;
+import com.dev.urlshortner.domain.KeyEncodingGenerator;
 import com.dev.urlshortner.dto.UrlResponse;
 import com.dev.urlshortner.dto.UrlStatsResponse;
 import com.dev.urlshortner.repository.UrlRepository;
@@ -25,18 +25,13 @@ class UrlServiceTest {
 	@Autowired
 	private UrlProperties urlProperties;
 
-	@AfterEach
-	void tearDown() {
-		urlRepository.deleteAll();
-	}
-
 	@Test
 	void 단축URL_생성_성공() {
 		// given
 		String originalUrl = "http://example.com";
 
 		// when
-		UrlResponse response = urlService.shortenUrl(originalUrl, KeyEncodingType.BASE62);
+		UrlResponse response = urlService.shortenUrl(originalUrl, KeyEncodingGenerator.BASE62);
 
 		// then
 		String shortKey = extractKey(response.shortUrl());
@@ -49,14 +44,14 @@ class UrlServiceTest {
 		String invalidUrl = "invalidurl";
 
 		// when & then
-		assertThrows(IllegalArgumentException.class, () -> urlService.shortenUrl(invalidUrl, KeyEncodingType.BASE62));
+		assertThrows(IllegalArgumentException.class, () -> urlService.shortenUrl(invalidUrl, KeyEncodingGenerator.BASE62));
 	}
 
 	@Test
 	void 단축URL의_원본URL_조회() {
 		// given
 		String originalUrl = "http://example.com";
-		UrlResponse response = urlService.shortenUrl(originalUrl, KeyEncodingType.BASE62);
+		UrlResponse response = urlService.shortenUrl(originalUrl, KeyEncodingGenerator.BASE62);
 		String shortKey = extractKey(response.shortUrl());
 
 		// when
@@ -70,7 +65,7 @@ class UrlServiceTest {
 	void 단축URL_방문자수_조회() {
 		// given
 		String originalUrl = "http://example.com";
-		UrlResponse response = urlService.shortenUrl(originalUrl, KeyEncodingType.BASE62);
+		UrlResponse response = urlService.shortenUrl(originalUrl, KeyEncodingGenerator.BASE62);
 		String shortKey = extractKey(response.shortUrl());
 
 		// when
