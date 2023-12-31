@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dev.urlshortner.dto.UrlResponse;
 import com.dev.urlshortner.dto.UrlStatsResponse;
 import com.dev.urlshortner.domain.Url;
-import com.dev.urlshortner.domain.KeyEncodingType;
+import com.dev.urlshortner.domain.KeyEncodingGenerator;
 import com.dev.urlshortner.config.UrlProperties;
 import com.dev.urlshortner.repository.UrlRepository;
 import com.dev.urlshortner.util.ShortKeyGenerator;
@@ -29,13 +29,13 @@ public class UrlService {
 	private final UrlProperties urlProperties;
 
 	@Transactional
-	public UrlResponse shortenUrl(String originalUrl, KeyEncodingType keyEncodingType) {
+	public UrlResponse shortenUrl(String originalUrl, KeyEncodingGenerator keyEncodingGenerator) {
 		validateUrl(originalUrl);
 		if (isShortenedUrl(originalUrl)) {
 			throw new IllegalArgumentException("URL is already shortened");
 		}
 
-		ShortKeyGenerator shortKeyGenerator = keyEncodingType.getEncoder();
+		ShortKeyGenerator shortKeyGenerator = keyEncodingGenerator.getEncoder();
 		String shortKey = generateUniqueKey(shortKeyGenerator);
 
 		Url url = new Url(shortKey, originalUrl);
@@ -84,7 +84,7 @@ public class UrlService {
 	@Transactional(readOnly = true)
 	public UrlStatsResponse getUrlStats(String shortKey) {
 		return urlRepository.findByShortKey(shortKey)
-			.map(UrlStatsResponse::of)
+			.map(UrlStatsResponse::from)
 			.orElseThrow(() -> new NoSuchElementException("No URL found for shortKey: " + shortKey));
 	}
 
