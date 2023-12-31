@@ -78,7 +78,6 @@ public class UrlService {
 		Url url = urlRepository.findByShortKey(shortKey)
 			.orElseThrow(() -> new NoSuchElementException("No URL found for shortKey: " + shortKey));
 		url.incrementVisitCount();
-		urlRepository.save(url);
 		return url.getOriginalUrl();
 	}
 
