@@ -18,7 +18,14 @@ public class Url {
 
     private String shortUrl;
 
+    @Builder.Default
+    private Integer watchNumber = 0;
+
     public void updateUrlShortUrl(String shortUrl){
         this.shortUrl = shortUrl;
+    }
+
+    public void updateUrlWatchNumber() {
+        this.watchNumber++;
     }
 }

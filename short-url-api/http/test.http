@@ -1,5 +1,5 @@
 ### 원본 -> short-url 매핑, 기본 알고리즘 (Base62)
-POST http://localhost:8080/short-url?url=https://www.google.com/search?q=%EC%95%84&rlz=1C5CHFA_enKR1055KR1055&oq=%EC%95%84+&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQABgDMgYIAhAAGAMyBwgDEC4YgAQyBggEEAAYAzIGCAUQRRg9MgYIBhBFGD0yBggHEEUYPNIBCDMyNTBqMGo5qAIAsAIA&sourceid=chrome&ie=UTF-8
+POST http://localhost:8080/api/v1/short-url?url=https://www.google.com/search?q=%EC%95%84&rlz=1C5CHFA_enKR1055KR1055&oq=%EC%95%84+&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIGCAEQABgDMgYIAhAAGAMyBwgDEC4YgAQyBggEEAAYAzIGCAUQRRg9MgYIBhBFGD0yBggHEEUYPNIBCDMyNTBqMGo5qAIAsAIA&sourceid=chrome&ie=UTF-8
 
 <> 2023-12-11T224703.200.json
 <> 2023-12-11T181700.200.json
@@ -16,10 +16,10 @@ POST http://localhost:8080/short-url?url=https://www.google.com/search?q=%EC%95%
 <> 2023-12-11T181910.400.html
 
 ### 원본 -> short-url 매핑, 알고리즘 변경 (MD5)
-POST http://localhost:8080/short-url?algorithm=md5HashConverter&url=https://www.naver.com
+POST http://localhost:8080/api/v1/short-url?algorithm=md5HashConverter&url=https://www.naver.com
 
 ### short-url -> 원본 리다이렉트
-GET http://localhost:8080/B
+GET http://localhost:8080/api/v1/C
 
 <> 2023-12-11T224745.200.html
 <> 2023-12-11T224742.200.html
