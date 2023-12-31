@@ -1,5 +1,6 @@
 package com.example.shorturl.service;
 
+import static com.example.shorturl.domain.Algorithm.*;
 import static com.example.shorturl.exception.ErrorCode.*;
 
 import com.example.shorturl.domain.Algorithm;
@@ -23,7 +24,8 @@ public class UrlService {
     private final Encoder encoder;
 
     public ShortUrlResponse createOrGetShortUrl(ShortUrlCreateRequest request) {
-        Url url = urlRepository.findUrlByOriginUrlAndAlgorithm(request.originUrl(), request.algorithm())
+        isValidAlgorithm(request.algorithm());
+        Url url = urlRepository.findUrlByOriginUrlAndAlgorithm(request.originUrl(), Algorithm.valueOf(request.algorithm()))
             .orElseGet(() -> saveNewShortUrl(request));
         return ShortUrlResponse.toDto(url);
     }
@@ -36,7 +38,7 @@ public class UrlService {
     }
 
     private Url saveNewShortUrl(ShortUrlCreateRequest request) {
-        Url url = urlRepository.save(new Url(request.originUrl(), request.algorithm()));
+        Url url = urlRepository.save(new Url(request.originUrl(), Algorithm.valueOf(request.algorithm())));
         url.updateShortUrl(encodingUrl(url.getId(), url.getAlgorithm()));
         return url;
     }

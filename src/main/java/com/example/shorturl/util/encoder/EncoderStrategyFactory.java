@@ -14,13 +14,14 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EncoderStrategyFactory {
 
-    private final UrlRepository urlRepository;
+    private final Base62 base62;
+    private final Sha256 sha256;
 
     public EncoderStrategy createEncoderStrategy(Algorithm algorithm) {
-        if (Objects.requireNonNull(algorithm) == Algorithm.BASE_62) {
-            return new Base62();
-        } else if (Objects.requireNonNull(algorithm) == Algorithm.SHA_256) {
-            return new Sha256(urlRepository);
+        if (algorithm == Algorithm.BASE_62) {
+            return base62;
+        } else if (algorithm == Algorithm.SHA_256) {
+            return sha256;
         }
         throw new CustomException(ErrorCode.ALGORITHM_NOT_SUPPORTED);
     }
