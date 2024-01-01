@@ -30,9 +30,7 @@ public class ShortUrlService {
             return shortUrl.toTransformedShortUrlDto();
         }
 
-        String generatedUrl;
-
-        generatedUrl = getRandomUrl();
+        String generatedUrl = getRandomUrl();
 
         ShortUrl savedShortUrl = getSavedShortUrl(originalUrl, generatedUrl);
 
@@ -57,13 +55,10 @@ public class ShortUrlService {
     }
 
     private String getRandomUrl() {
-        Random random = new Random();
         String generatedUrl;
-        int randomInt;
 
         do  {
-            randomInt = random.nextInt(0, Integer.MAX_VALUE);
-            generatedUrl = urlTransformer.generateUrl(randomInt);
+            generatedUrl = urlTransformer.transform();
         } while (urlRepository.findById(generatedUrl).isPresent());
 
         return generatedUrl;
