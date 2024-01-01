@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Slf4j
 public class ShortUrlController {
 
+    private final String REDIRECT_URL = "localhost:8080";
     private final ShortUrlService shortUrlService;
 
     public ShortUrlController(ShortUrlService shortUrlService) {
@@ -46,13 +47,13 @@ public class ShortUrlController {
     }
 
     @GetMapping("/shorten")
-    public String showTransformedUrl(TransformedShortUrlDto transformedShortUrlDto, Model model, HttpServletRequest request) {
+    public String showTransformedUrl(TransformedShortUrlDto transformedShortUrlDto, Model model) {
         if (transformedShortUrlDto.shortUrl() == null) {
             throw new UrlException(UrlErrorCode.ORIGINAL_URL_NOT_FOUND);
         }
 
         model.addAttribute("transformedShortUrlDto", transformedShortUrlDto);
-        model.addAttribute("domain", request.getServerName() + ":" + request.getServerPort());
+        model.addAttribute("domain", REDIRECT_URL);
 
         return "short-url-info";
     }
