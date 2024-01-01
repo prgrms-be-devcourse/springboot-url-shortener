@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum UrlErrorCode {
-    ORIGINAL_URL_NOT_FOUND(404);
+    ORIGINAL_URL_NOT_FOUND(1100);
 
     private final int errorCode;
 
