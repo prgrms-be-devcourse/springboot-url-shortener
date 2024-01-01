@@ -9,7 +9,6 @@ import org.prgms.springbooturlshortener.domain.shorturl.service.dto.TransformReq
 import org.prgms.springbooturlshortener.domain.shorturl.service.dto.TransformedShortUrlDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +17,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @Slf4j
 public class ShortUrlController {
-    private static final int HTTP_500_ERROR_BOUND = 400;
 
     private final ShortUrlService shortUrlService;
 
@@ -57,25 +55,5 @@ public class ShortUrlController {
         model.addAttribute("domain", request.getServerName() + ":" + request.getServerPort());
 
         return "short-url-info";
-    }
-
-    @ExceptionHandler(UrlException.class)
-    public String showUrlErrorPage(UrlException ex) {
-        if (ex.getUrlErrorCode() > HTTP_500_ERROR_BOUND) {
-            log.warn("서버에서의 에러: {}", ex.getMessage());
-
-            return "error/500";
-        }
-
-        log.info("클라이언트에서 잘못된 입력. {}", ex.getMessage());
-
-        return "error/400";
-    }
-
-    @ExceptionHandler(Exception.class)
-    public String showDefaultError(Exception ex) {
-        log.error("예상하지 못한 에러 발생: {}", ex.getMessage());
-
-        return "error/400";
     }
 }
