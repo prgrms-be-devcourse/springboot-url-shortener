@@ -1,5 +1,6 @@
 package org.prgms.springbooturlshortener.domain.shorturl.service;
 
+import java.util.Optional;
 import org.prgms.springbooturlshortener.domain.shorturl.ShortUrl;
 import org.prgms.springbooturlshortener.domain.shorturl.exception.UrlErrorCode;
 import org.prgms.springbooturlshortener.domain.shorturl.exception.UrlException;
@@ -8,9 +9,6 @@ import org.prgms.springbooturlshortener.domain.shorturl.service.dto.TransformedS
 import org.prgms.springbooturlshortener.domain.shorturl.service.transformer.UrlTransformer;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class ShortUrlService {
