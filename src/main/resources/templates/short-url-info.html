@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>url info</title>
+</head>
+<header>
+    <div id="logo"><a th:href="@{'/'}" class="logo">URL Shortener</a></div>
+</header>
+<body>
+    <h1>변환된 URL 정보</h1>
+    <div th:object="${transformedShortUrlDto}">
+        <div>
+            <span>변환된 URL: </span><h2 id="transformedUrl" th:text="'http://' + ${domain} + '/' + *{shortUrl()}"></h2><button name="copyButton" onclick="copy()">복사</button>
+            <br />
+            <br />
+            <span>원본 URL: </span><h2 id="originalUrl" th:text="'https://' + *{originalUrl()}"></h2>
+        </div>
+        <br />
+        <br />
+        <h3 th:text="'방문 횟수: ' + *{visitCount()}"></h3>
+        <h3 th:if="*{lastVisitTime() != null && visitCount() != 0}" th:text="'마지막 방문 날짜: ' + *{#temporals.format(lastVisitTime().plusHours(9), 'yyyy년 MM월 dd일 HH시 mm분 ss초')}"></h3>
+    </div>
+    <a href="/">
+        <button>홈으로</button>
+    </a>
+</body>
+<script>
+    const copy = () => {
+        const transformedUrl = document.querySelector("#transformedUrl").innerText;
+
+        navigator.clipboard.writeText(transformedUrl)
+            .then(() => {
+                const copyButton = document.querySelector("[name='copyButton']");
+                copyButton.innerText = "복사됨!";
+                alert('URL 복사됨!');
+            })
+            .catch(err => {
+                console.error('복사 중 에러가 발생', err);
+            });
+
+    }
+</script>
+</html>
