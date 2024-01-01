@@ -10,7 +10,7 @@ public class Base62UrlTransformer implements UrlTransformer{
     private static final short NUM_OF_URL = 6;
     private static final int DIVIDE_NUM = 62;
 
-    public String generateUrl(int number) {
+    public String transform(int number) {
         StringBuilder sb = new StringBuilder();
 
         for (short i = 0; i < NUM_OF_URL; i++) {
