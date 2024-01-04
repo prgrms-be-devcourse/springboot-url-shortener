@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL 링크 단축 서비스</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/url.css">
+</head>
+<body>
+<div class="url-page">
+    <h2 class="text-center" style="margin-bottom: 20px;">URL 링크 단축 서비스</h2>
+
+    <div class="custom-card">
+        <form class="row justify-content-center" id="url-form">
+            <div class="form-group col-md-9 d-flex flex-row align-items-center">
+                <label for="original-url" class="form-label">원본 링크</label>
+                <input type="text" class="form-control" id="original-url" name="original-url" style="flex: 1;">
+                <select id="encoder-type" style="max-width: 150px; border: 1px solid #ccc; border-radius: 10px; padding: 12px; font-size: 15px; transition: border-color 0.3s, box-shadow 0.3s;">
+                    <option value="" disabled selected>단축 방식</option>
+                    <option value="BASE62">Base62</option>
+                    <option value="RANDOM">Random</option>
+                </select>
+                <button type="button" id="url-button" class="btn btn-custom" style="background-color: #3f2d3b;">단축</button>
+            </div>
+        </form>
+
+        <div class="horizontal-line"></div>
+
+        <div style="text-align: center;">
+            <button type="button" id="information" class="btn btn-custom" style="background-color: #636464;">단축 정보 조회</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- Bootstrap JavaScript 및 jQuery 추가 -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("information").addEventListener("click", function () {
+            window.location.href = '/shorts/forms';
+        });
+    });
+
+    $("#original-url").keydown(function(event) {
+        if (event.keyCode === 13) { // Enter 키 코드는 13
+            event.preventDefault(); // 기본 Enter 동작을 방지
+            $("#url-button").click(); // url-button 클릭 이벤트 실행
+        }
+    });
+
+    $(document).ready(function() {
+        $("#url-button").click(function () {
+            var originalUrl = $("#original-url").val();
+            var encoderType = $("#encoder-type").val();
+
+            if (originalUrl === "") {
+                window.alert("원본 링크를 입력하세요.");
+                return;
+            }
+
+            if (encoderType === null || encoderType === "") {
+                window.alert("단축 방식을 선택하세요.");
+                return;
+            }
+
+            var regex = /(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+            var isValid = regex.test(originalUrl);
+
+            if (!isValid) {
+                window.alert("유효하지 않은 URL 형식입니다.");
+                return;
+            }
+
+            var data = {
+                "originalUrl": originalUrl,
+                "encoderType": encoderType
+            };
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/api/short-urls",
+                data: JSON.stringify(data),
+                success: function(response) {
+                    window.alert("단축 URL 링크가 성공적으로 생성되었습니다.")
+                    window.location.href = '/shorts/' + response.shortUrl;
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

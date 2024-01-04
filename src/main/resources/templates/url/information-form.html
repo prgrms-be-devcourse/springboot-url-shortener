@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL 링크 단축 서비스</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/url.css">
+</head>
+<body>
+<div class="url-page">
+    <h2 class="text-center" style="margin-bottom: 20px;">URL 링크 단축 서비스 - 단축 URL 정보 조회</h2>
+
+    <div class="custom-card">
+        <form class="row justify-content-center" id="url-form">
+            <div class="form-group col-md-9 d-flex flex-row">
+                <label for="short-url" class="form-label">단축된 링크</label>
+                <input type="text" class="form-control" id="short-url" name="short-url" required>
+                <button type="button" id="url-button" class="btn btn-custom" style="background-color: #183641;">조회</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JavaScript 및 jQuery 추가 -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    $("#short-url").keydown(function(event) {
+        if (event.keyCode === 13) { // Enter 키 코드는 13
+            event.preventDefault(); // 기본 Enter 동작을 방지
+            $("#url-button").click(); // url-button 클릭 이벤트 실행
+        }
+    });
+
+    $(document).ready(function() {
+        $("#url-button").click(function () {
+            var shortUrl = $("#short-url").val();
+
+            if (shortUrl === "") {
+                window.alert("단축 링크를 입력하세요.");
+                return;
+            }
+
+            var regex = /(https?:\/\/)?(www\.)?[^/:]+(:\d+)?\/[^/]+$/;
+            var isValid = regex.test(shortUrl);
+
+            if (!isValid) {
+                window.alert("유효하지 않은 URL 형식입니다.");
+                return;
+            }
+
+            var parts = shortUrl.split('/');
+            var shortUrlValue = parts[parts.length - 1];
+
+            $.ajax({
+                type: "GET",
+                url: "/api/" + shortUrlValue,
+                success: function(response) {
+                    window.location.href = '/details/' + response.shortUrl;
+                },
+                error: function(error) {
+                    window.alert("단축 정보가 존재하지 않습니다.");
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

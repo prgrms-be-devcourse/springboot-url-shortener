@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+#        show_sql: true
+        format_sql: true
+
+  profiles:
+    active: db
+
+logging.level:
+  org.hibernate.SQL: debug
+# org.hibernate.type: trace
+
+# url: "http://localhost:8080/"
+url: "http://15.164.15.13:8080/"

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL 링크 단축 서비스</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/url.css">
+</head>
+<body>
+<div class="url-page">
+    <h2 class="text-center" style="margin-bottom: 20px;">URL 링크 단축 서비스</h2>
+
+    <div class="custom-card">
+        <form class="row justify-content-center" id="url-form">
+            <div class="form-group col-md-9 d-flex flex-row">
+                <label for="original-url" class="form-label">원본 링크</label>
+                <input type="text" class="form-control" id="original-url" th:value="${url.originalUrl()}"
+                       name="original-url" required readonly>
+                <button type="submit" class="btn btn-custom" style="background-color: #574301;" disabled>단축</button>
+            </div>
+        </form>
+
+        <div class="horizontal-line"></div>
+
+        <div class="row justify-content-center">
+            <div class="form-group col-md-9 d-flex flex-row">
+                <label for="short-url" class="form-label">단축된 링크</label>
+                <input type="text" class="form-control" id="short-url" name="short-url" th:value="${shortUrlResult}"
+                       required readonly>
+                <input type="hidden" id="short" name="short" th:value="${url.shortUrl()}">
+                <button type="button" id="copy" class="btn btn-custom" style="background-color: #B97836;">복사</button>
+            </div>
+
+            <div class="form-group col-md-9 d-flex flex-row" style="margin-top: 20px;">
+                <button type="button" id="proceed-url" class="btn btn-custom" style="background-color: #E6B370;">바로가기
+                </button>
+                <button type="button" id="information" class="btn btn-custom" style="background-color: #D0947A;"
+                        disabled>단축 정보
+                </button>
+                <button type="button" id="home" class="btn btn-custom" style="background-color: #B98D77;">다른 링크 단축
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="custom-card" style="margin-top: 20px;">
+        <table class="table-custom">
+            <tr>
+                <th class="table-custom-column">생성일</th>
+                <td th:text="${#temporals.format(url.createdAt(),'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            <tr>
+                <th class="table-custom-column">방문 요청 수</th>
+                <td th:text="${url.requestCount()}"></td>
+            </tr>
+            <tr>
+                <th class="table-custom-column">단축 방식</th>
+                <td th:text="${url.encoderType()}"></td>
+            </tr>
+            <tr>
+                <th class="table-custom-column">원본 주소</th>
+                <td th:text="${url.originalUrl()}"></td>
+            </tr>
+            <tr>
+                <th class="table-custom-column">단축된 주소</th>
+                <td th:text="${shortUrlResult}"></td>
+            </tr>
+        </table>
+
+        <div class="text-center mt-3">
+            <button type="button" id="delete" class="btn btn-custom"
+                    style="background-color: #D0947A; margin-top: 10px;">URL 삭제하기
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JavaScript 및 jQuery 추가 -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("proceed-url").addEventListener("click", function () {
+            var shortUrl = document.getElementById("short-url").value;
+            window.open(shortUrl, "_blank");
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("home").addEventListener("click", function () {
+            window.location.href = '/';
+        });
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("copy").addEventListener("click", function () {
+            var shortUrlInput = document.getElementById("short-url");
+            var shortUrlValue = shortUrlInput.value;
+
+            var textArea = document.createElement("textarea");
+            textArea.value = shortUrlValue;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+
+            var copiedMessage = document.createElement("span");
+            copiedMessage.textContent = "copied!";
+            copiedMessage.className = "copied-message";
+            copiedMessage.style.color = "red";
+            copiedMessage.style.marginLeft = "10px";
+
+            var copyButton = document.getElementById("copy");
+            copyButton.disabled = true;
+
+            copyButton.parentNode.insertBefore(copiedMessage, copyButton.nextSibling);
+
+            // 일정 시간이 지난 후 "copied" 메시지 숨기기
+            setTimeout(function () {
+                copiedMessage.style.display = "none";
+                copyButton.disabled = false;
+            }, 2000); // 2초 후 숨김
+        });
+    });
+
+    $(document).ready(function () {
+        $("#delete").click(function () {
+            var shortUrl = $("#short").val();
+
+            $.ajax({
+                type: "DELETE",
+                url: "/api/" + shortUrl,
+                success: function (response) {
+                    window.alert("URL이 성공적으로 삭제되었습니다.")
+                    window.location.href = '/';
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
