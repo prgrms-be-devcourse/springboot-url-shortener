@@ -1,10 +1,14 @@
 package org.daehwi.shorturl.domain;
 
-import jakarta.persistence.*;
+import static lombok.AccessLevel.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import static lombok.AccessLevel.PROTECTED;
 
 @Entity
 @Getter
@@ -12,26 +16,25 @@ import static lombok.AccessLevel.PROTECTED;
 @NoArgsConstructor(access = PROTECTED)
 public class ShortUrl {
 
-    @Id
-    private Long id;
+	@Id
+	private Long id;
 
-    @Column(name = "origin_url", nullable = false)
-    private String originUrl;
+	@Column(name = "origin_url", nullable = false)
+	private String originUrl;
 
-    @Column(name = "short_url", nullable = false)
-    private String shortUrl;
+	@Column(name = "short_url", nullable = false)
+	private String shortUrl;
 
-    @Column(name = "request_count", nullable = false)
-    private Long requestCount;
+	@Column(name = "request_count", nullable = false)
+	private long requestCount;
 
-    public ShortUrl(Long id, String originUrl, String shortUrl) {
-        this.id = id;
-        this.originUrl = originUrl;
-        this.shortUrl = shortUrl;
-        this.requestCount = 0L;
-    }
+	public ShortUrl(Long id, String originUrl, String shortUrl) {
+		this.id = id;
+		this.originUrl = originUrl;
+		this.shortUrl = shortUrl;
+	}
 
-    public void increaseRequestCount() {
-        ++this.requestCount;
-    }
+	public void increaseRequestCount() {
+		++this.requestCount;
+	}
 }
