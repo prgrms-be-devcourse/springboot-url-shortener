@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 public class UrlController {
-	private final static String DEFAULT_SCHEME = "http://";
 
 	private final UrlService urlService;
 
@@ -41,7 +40,7 @@ public class UrlController {
 		String originUrl = urlService.getOriginUrl(shortUrl);
 		return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT)
 			.cacheControl(CacheControl.noCache())
-			.header("Location", DEFAULT_SCHEME + originUrl)
+			.header("Location", "http://" + originUrl)
 			.body(ApiResponse.of(ResponseStatus.TEMPORARY_REDIRECT));
 	}
 }

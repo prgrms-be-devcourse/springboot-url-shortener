@@ -3,7 +3,7 @@ POST http://localhost:8080/api/v1/short-url
 Content-Type: application/json
 
 {
-  "url": "github.com",
+  "url": "https://github.com",
   "encodeType": "BASE62"
 }
 
