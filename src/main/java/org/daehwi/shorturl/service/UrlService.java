@@ -54,8 +54,7 @@ public class UrlService {
 	private BigInteger getUniqueId(String originUrl, String encodeType) {
 		int offset = 0;
 		while (true) {
-			final BigInteger id = Encoder.sha256Hash(originUrl + encodeType, DEFAULT_HASH_SIZE + offset);
-			System.out.println(id);
+			final BigInteger id = Encoder.generateSha256(originUrl + encodeType, DEFAULT_HASH_SIZE + offset);
 			final Optional<ShortUrl> shortUrl = urlRepository.findById(id.longValue());
 			if (shortUrl.isEmpty() || shortUrl.get().getOriginUrl().equals(originUrl)) {
 				return id;
