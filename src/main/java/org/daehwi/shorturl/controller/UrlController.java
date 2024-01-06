@@ -1,7 +1,6 @@
 package org.daehwi.shorturl.controller;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.daehwi.shorturl.controller.dto.ApiResponse;
 import org.daehwi.shorturl.controller.dto.ResponseStatus;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +23,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UrlController {
 	private final static String DEFAULT_SCHEME = "http://";
-	private final static String HOST = "localhost:8080/";
 
 	private final UrlService urlService;
 
 	@PostMapping("/api/v1/short-url")
-	public ResponseEntity<ApiResponse<String>> createShortUrl(@RequestBody @Valid ShortUrlRequest requestDto) throws
-		URISyntaxException {
-		URI shortUrl = new URI(DEFAULT_SCHEME + HOST + urlService.createShortUrl(requestDto));
+	public ResponseEntity<ApiResponse<String>> createShortUrl(@RequestBody @Valid ShortUrlRequest requestDto) {
+		String shortUrlKey = urlService.createShortUrl(requestDto);
+		URI shortUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+			.path("/" + shortUrlKey)
+			.build()
+			.toUri();
 		return ResponseEntity.created(shortUrl).body(ApiResponse.of(ResponseStatus.OK, shortUrl.toString()));
 	}
 
