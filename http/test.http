@@ -8,4 +8,5 @@ Content-Type: application/json
 }
 
 ### 단축 URL로 요청
+# @no-redirect
 GET http://localhost:8080/14TyG8
