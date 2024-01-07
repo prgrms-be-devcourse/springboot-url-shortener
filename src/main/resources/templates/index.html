@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Short URL Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+        .btn-group button {
+            margin-right: 5px; /* Add a little space between buttons */
+        }
+
+        .btn-group button.active {
+            background-color: #007bff; /* Set the background color for the active button */
+            color: #fff; /* Set text color for the active button */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title text-center">단축 URL 생성기</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="originalUrl">URL 입력:</label>
+                        <input type="text" class="form-control" id="originalUrl" name="originalUrl"
+                               placeholder="URL을 입력하세요">
+                    </div>
+
+                    <!-- 알고리즘 선택 버튼 -->
+                    <div class="btn-group mb-3">
+                        <button type="button" class="btn btn-secondary active" onclick="setAlgorithm('BASE62')">BASE62</button>
+                        <button type="button" class="btn btn-secondary" onclick="setAlgorithm('SHA256')">SHA256</button>
+                    </div>
+
+                    <button class="btn btn-primary btn-block" onclick="generateShortUrl()">단축하기</button>
+                    <div id="shortUrlResult" class="mt-3"></div>
+
+                    <!-- 로딩 중 메시지 -->
+                    <div id="loadingMessage" class="alert alert-info" role="alert" style="display: none;">
+                        로딩 중입니다...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    var selectedAlgorithm = "BASE62"; // 기본 알고리즘
+
+    function setAlgorithm(algorithm) {
+        selectedAlgorithm = algorithm;
+        $('.btn-group button').removeClass('active');
+        $('button:contains(' + algorithm + ')').addClass('active');
+    }
+
+    function generateShortUrl() {
+        // 이전 결과 숨기기
+        $('#shortUrlResult').empty();
+
+        // 로딩 중 메시지 표시
+        $('#loadingMessage').show();
+
+        var originalUrl = $('#originalUrl').val();
+        var requestData = {
+            originUrl: originalUrl,
+            algorithm: selectedAlgorithm
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/urls',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success: function (data) {
+                // 성공 시 로딩 중 메시지 숨기고 결과 표시
+                $('#loadingMessage').hide();
+
+                const baseUrl = "http://localhost:8080/urls/";
+                var shortUrl = baseUrl + data.shortenUrl;
+                var viewCount = data.viewCount;
+
+                var isNew = data.isNew;
+
+                var message = '<div class="alert ' + (isNew ? 'alert-success' : 'alert-info') + '" role="alert">';
+                message += '<p class="mb-0">생성된 단축 URL:</p>';
+                message += '<a href="' + shortUrl + '" target="_blank">' + shortUrl + '</a>';
+                message += '<p class="mb-0">해당 단축 URL 접근 횟수 : ' + viewCount + '</p>';
+                message += '</div>';
+
+                $('#shortUrlResult').html(message);
+            },
+            error: function (error) {
+                // 에러 시 로딩 중 메시지 숨기고 에러 메시지 표시
+                $('#loadingMessage').hide();
+                $('#shortUrlResult').html('<div class="alert alert-danger" role="alert">단축 URL 생성 중 오류가 발생했습니다</div>');
+                console.log(error);
+            }
+        });
+    }
+</script>
+</body>
+</html>
