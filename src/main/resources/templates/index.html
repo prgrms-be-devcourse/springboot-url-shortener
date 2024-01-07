@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>URL Shortener</title>
+</head>
+<body class="bg-light p-5">
+<div class="container">
+  <div class="text-center mb-5">
+    <h1 class="text-xl font-weight-bold text-dark mb-4">URL Shortener</h1>
+  </div>
+  <div class="card mx-auto mt-4" style="max-width: 25rem;">
+    <div class="card-body">
+      <form id="shortenUrlForm">
+        <div class="form-group">
+          <input class="form-control py-3" id="originUrl" type="text" aria-label="URL input" placeholder="https://www.example.com">
+        </div>
+        <div class="form-group">
+          <select class="form-select" id="algorithm" required autofocus>
+            <option selected value="">알고리즘 방식을 선택해주세요.</option>
+            <option value="BASE_62">BASE_62</option>
+            <option value="SHA_256">SHA_256</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-block mt-3" type="button" th:onclick="shortenUrl()">Shorten URL</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="shortenedUrl" class="w-full max-w-md mt-8" style="display: none;">
+    <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Shortened URL</h2>
+    <div class="card mb-3">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div>
+          <p class="text-sm text-dark mb-1" id="shortUrl"></p>
+          <span class="text-xs text-muted">Clicked></span>
+          <span id="requestCount">0</span>
+          <span> times</span>
+        </div>
+        <button class="btn btn-info" id= "copyButton" th:onclick="copyToClipboard()">Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script th:inline="javascript">
+  function shortenUrl() {
+    const originUrl = $("#originUrl").val();
+    const algorithm = $("#algorithm").val();
+
+    $.ajax({
+      type: "POST",
+      url: "/url",
+      data: JSON.stringify({originUrl: originUrl, algorithm: algorithm}),
+      contentType: "application/json",
+      success: function (data) {
+        $("#shortUrl").text(data.shortUrl);
+        $("#requestCount").text(data.requestCount);
+        $("#shortenedUrl").show();
+      },
+      error: function (error) {
+        console.error("Error:", error);
+      }
+    });
+  }
+
+  function copyToClipboard() {
+    const copyText = document.getElementById("shortUrl").innerText;
+    navigator.clipboard.writeText(copyText).then(function() {
+      console.log('shortURL이 클립보드에 복사되었습니다.');
+      const copyButton = document.getElementById("copyButton");
+      copyButton.innerText = "Copied!";
+    }).catch(function(err) {
+      console.error('클립보드에 shortURL을 복사할 수 없습니다.', err);
+    });
+  }
+</script>
+</body>
+</html>
