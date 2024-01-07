@@ -1,0 +1,5 @@
+rootProject.name = 'short-url'
+
+include 'short-url-api'
+include 'short-url-core:short-url-core-domain'
+include 'short-url-core:short-url-core-infra'
