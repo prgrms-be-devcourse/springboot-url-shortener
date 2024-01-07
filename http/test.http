@@ -1,0 +1,12 @@
+### 단축 URL 생성 (BASE62 / BASE32)
+POST http://localhost:8080/api/v1/short-url
+Content-Type: application/json
+
+{
+  "url": "https://github.com",
+  "encodeType": "BASE62"
+}
+
+### 단축 URL로 요청
+# @no-redirect
+GET http://localhost:8080/14TyG8
