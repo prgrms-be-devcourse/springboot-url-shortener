@@ -1,21 +1,75 @@
 # springboot-url-shortener
-SprintBoot URL Shortener 구현 미션 Repository 입니다.
+**Marco**팀 SprintBoot URL Shortener 구현 미션 Repository 입니다.  
 
-## 요구사항
-각 요구사항을 모두 충족할 수 있도록 노력해봅시다.
-- [ ] URL 입력폼 제공 및 결과 출력
-- [ ] URL Shortening Key는 8 Character 이내로 생성
-- [ ] 단축된 URL 요청시 원래 URL로 리다이렉트
-- [ ] 단축된 URL에 대한 요청 수 정보저장 (optional)
-- [ ] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional) 
+<br/>
+
+## 과제 설명
+- [x] URL 입력폼 제공 및 결과 출력
+    - 생성된 단축 url은 페이지에서 리스트로 확인 가능
+    - 기존에 생성되었던 리스트는 중복 생성 x
+    - 생성된 url은 복사 버튼으로 복사 가능
+    - clear 버튼으로 생성된 shortUrl 모두 삭제 가능
+- [x] URL Shortening Key는 8 Character 이내로 생성
+    - Auto Increment로 생성된 id에 Base62를 적용해 UniqueKey 생성
+- [x] 단축된 URL 요청시 원래 URL로 리다이렉트
 
 
-## Short URL Service
-### 읽으면 좋은 레퍼런스
-- [Naver 단축 URL API](https://developers.naver.com/docs/utils/shortenurl/)
-- [짧게 줄인 URL의 실제 URL 확인 원리 및 방법](https://metalkin.tistory.com/50)
-- [짧게 줄인 URL 알고리즘 고찰](https://metalkin.tistory.com/53)
-- [단축 URL 원리 및 개발](https://blog.siyeol.com/26)
+<br/>
+
+
+## 사진 
+<img src="https://github.com/spring-comes-to-us/springboot-url-shortener/assets/85065626/58732961-84a8-4311-9d72-b692de85fe40" width=45%>
+<img src="https://github.com/spring-comes-to-us/springboot-url-shortener/assets/85065626/692a8699-9ac4-45aa-8f7a-af4e4d793311" width=45%>
+
+<br/>
+
+## 시연 영상
+https://github.com/spring-comes-to-us/springboot-url-shortener/assets/85275893/0105fbc2-f539-4b05-925e-46c49d8c1ae0
+
+<br/>
+
+## 팀원 소개
+<table>
+    <tr align="center">
+        <td><B>Backend</B></td>
+        <td><B>Backend</B></td>
+        <td><B>Backend</B></td>
+        <td><B>Backend</B></td>
+        <td><B>Backend</B></td>
+        <td><B>Backend</B></td>
+    </tr>
+    <tr align="center">
+        <td><a href="https://github.com/ASak1104">김현우(Harry)</a></td>
+        <td><a href="https://github.com/IjjS">송인재</a></td>
+        <td><a href="https://github.com/yenzip">엄예림</a></td>
+        <td><a href="https://github.com/Sehee-Lee-01">이세희</a></td>
+        <td><a href="https://github.com/shoeone96">이중원</a></td>
+        <td><a href="https://github.com/uijin-j">정의진</a></td>
+    </tr>
+    <tr align="center">
+        <td>
+            <img src="https://github.com/ASak1104.png?size=100">
+        </td>
+        <td>
+            <img src="https://github.com/IjjS.png?size=100" width=100px>
+        </td>
+        <td>
+            <img src="https://github.com/yenzip.png?size=100">
+        </td>
+        <td>
+            <img src="https://github.com/Sehee-Lee-01.png?size=100">
+        </td>
+        <td>
+            <img src="https://github.com/shoeone96.png?size=100">
+        </td>
+        <td>
+            <img src="https://github.com/uijin-j.png?size=100" width=100px>
+        </td>
+    </tr>
+</table>
+
+<br/>
+
 
 ### Short URL의 동작 과정
 예시로 bitly를 봅시다
