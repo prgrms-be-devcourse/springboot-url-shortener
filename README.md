@@ -1,6 +1,5 @@
 ## 📌 설명
->과제 시연 동영상입니다.
-https://vimeo.com/manage/videos/873085666
+>시연 동영상입니다. https://vimeo.com/manage/videos/873085666
 
 - URL Shortner 서비스를 구현했습니다.
 - 프론트엔드와 백엔드 모두 구현했습니다.
@@ -9,7 +8,7 @@ https://vimeo.com/manage/videos/873085666
 - 개인 미션으로 Redis를 활용한 캐싱을 구현했습니다.
 - 개인 미션으로 Docker를 이용한 배포를 진행했습니다.(도커 네트워크 활용)
 
-[Url Shortener 서비스 링크](http://ec2-3-35-240-254.ap-northeast-2.compute.amazonaws.com:3000)
+~~[Url Shortener 서비스 링크](http://ec2-3-35-240-254.ap-northeast-2.compute.amazonaws.com:3000)~~
 
 ## 👩‍💻 요구 사항과 구현 내용 <!-- 기능을 Commit 별로 잘개 쪼개고, Commit 별로 설명해주세요 -->
 
