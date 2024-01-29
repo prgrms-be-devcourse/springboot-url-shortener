@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.UrlRequestDTO;
+import com.example.demo.dto.UrlRequest;
 import com.example.demo.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,10 +21,10 @@ public class ShortUrlController {
 
     @PostMapping
     public String saveUrl(
-            UrlRequestDTO urlRequestDTO,
-            Model model
+        UrlRequest urlRequest,
+        Model model
     ) {
-        model.addAttribute("urlResponseDTO", urlService.saveUrl(urlRequestDTO));
+        model.addAttribute("urlResponse", urlService.saveUrl(urlRequest));
 
         return "short/urlInfo";
     }
