@@ -14,3 +14,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+domain:
+  prefix: https://dev.choi/
