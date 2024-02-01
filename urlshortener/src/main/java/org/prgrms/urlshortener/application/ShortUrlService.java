@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class ShortUrlService {
 
-	private static final String BASE_URL = "bent.ly";
+	private static final String BASE_URL = "https://www.bent.ly";
 
 	private final Encoder encoder;
 
