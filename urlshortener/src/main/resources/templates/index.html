@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SHORT URL</title>
+</head>
+
+<body>
+<form id = "urlform" method="post" th:action="@{/new-url}" th:object="${request}">
+    <div class="form-group">
+        <label for="originUrl">Origin Url</label>
+        <input type="url" class="form-control" id="originUrl" name="originUrl"
+               placeholder="Shroten your link(ex:http://www.example.com)"/>
+    </div>
+
+    <select class="custom-select custom-select-lg mb-3" id="algorithm" name="algorithm">
+        <option selected>Select Your Encode Algorithm</option>
+        <option value="BASE_62">BASE_62</option>
+    </select>
+
+    <button type="submit" class="btn btn-primary">Shorten</button>
+    <output th:text="${encodedUrl}" name="encodedUrl">encodedUrl</output>
+</form>
+</body>
+</html>
+
