@@ -44,9 +44,9 @@ class Base62DecodeTest {
 
     static Stream<Arguments> encodedUrls() {
         return Stream.of(
-            Arguments.arguments("https://www.bent.ly.1", new Url("https://www.naver.com", Algorithm.BASE_62)),
-            Arguments.arguments("https://www.bent.ly.2", new Url("https://www.google.com", Algorithm.BASE_62)),
-            Arguments.arguments("https://www.bent.ly.3", new Url("https://www.acmicpc.net/", Algorithm.BASE_62))
+            Arguments.arguments("https://www.bent.ly/0", new Url("https://www.naver.com", Algorithm.BASE_62)),
+            Arguments.arguments("https://www.bent.ly/1", new Url("https://www.google.com", Algorithm.BASE_62)),
+            Arguments.arguments("https://www.bent.ly/2", new Url("https://www.acmicpc.net/", Algorithm.BASE_62))
         );
     }
 
