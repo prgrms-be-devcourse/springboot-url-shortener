@@ -29,7 +29,7 @@ public class Base62Encode implements EncodePolicy {
 		StringBuilder stringBuilder = new StringBuilder();
 
 		while(id > 0) {
-			int index = id % BASE;
+			int index = id % BASE - 1;
 			stringBuilder.append(baseCharacterList[index]);
 			id /= BASE;
 		}
