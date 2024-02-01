@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Url {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(name = "origin_url", updatable = false, nullable = false)
