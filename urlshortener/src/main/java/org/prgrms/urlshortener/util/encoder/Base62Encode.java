@@ -2,10 +2,12 @@ package org.prgrms.urlshortener.util.encoder;
 
 import org.prgrms.urlshortener.domain.Url;
 import org.prgrms.urlshortener.respository.UrlRepository;
+import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Component
 public class Base62Encode implements EncodePolicy {
 
 	private static final String baseCharacters = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
