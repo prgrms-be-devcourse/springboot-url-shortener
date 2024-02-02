@@ -65,11 +65,11 @@ class ShortUrlServiceTest {
         static Stream<Arguments> createRequestAndEncodedUrls() {
             return Stream.of(
                 Arguments.arguments(EncodedUrlCreateRequestBuilder.createOne("https://www.naver.com"),
-                    "0", "https://www.bent.ly/0"),
+                    "0", "bent.ly/0"),
                 Arguments.arguments(EncodedUrlCreateRequestBuilder.createOne("https://www.google.com"),
-                    "1", "https://www.bent.ly/1"),
+                    "1", "bent.ly/1"),
                 Arguments.arguments(EncodedUrlCreateRequestBuilder.createOne("https://www.acmicpc.net/"),
-                    "2", "https://www.bent.ly/2")
+                    "2", "bent.ly/2")
             );
         }
 

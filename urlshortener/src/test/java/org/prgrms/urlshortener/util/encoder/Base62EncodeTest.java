@@ -29,8 +29,6 @@ class Base62EncodeTest {
     @Mock
     Url url;
 
-    static String BASE_URL = "https://www.bent.ly/";
-
     @DisplayName("기존 URL을 암호화시킬수 있다.")
     @MethodSource("originUrls")
     @ParameterizedTest
