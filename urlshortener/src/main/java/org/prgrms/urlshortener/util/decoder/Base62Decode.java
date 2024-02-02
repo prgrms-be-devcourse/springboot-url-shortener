@@ -3,10 +3,12 @@ package org.prgrms.urlshortener.util.decoder;
 import org.prgrms.urlshortener.domain.Algorithm;
 import org.prgrms.urlshortener.domain.Url;
 import org.prgrms.urlshortener.respository.UrlRepository;
+import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Component
 public class Base62Decode implements DecodePolicy{
 
 	private final UrlRepository urlRepository;
