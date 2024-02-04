@@ -46,9 +46,13 @@ public class UrlService {
 
     @Transactional
     public Url addLink(@NonNull String originUrl, @NonNull String encodingType) {
-        Url url = save(originUrl);
+        Url url = urlRepository.findByOriginUrl(originUrl)
+                .orElse(
+                        save(originUrl)
+                );
         String key = EnumConverter.convert(encodingType).encode(url);
         url.updateShortenUrl(key);
+
         return url;
     }
 
