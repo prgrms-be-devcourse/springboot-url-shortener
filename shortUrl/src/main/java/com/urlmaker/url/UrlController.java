@@ -1,13 +1,10 @@
 package com.urlmaker.url;
 
-import com.urlmaker.url.UrlService;
 import com.urlmaker.dto.UrlCreateRequestDTO;
 import com.urlmaker.dto.UrlCreateResponseDTO;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,7 +16,7 @@ public class UrlController {
     private final UrlService urlService;
 
     @GetMapping("/")
-    public String mainPage(@ModelAttribute @Valid UrlCreateRequestDTO urlCreateRequestDTO) {
+    public String mainPage(@ModelAttribute UrlCreateRequestDTO urlCreateRequestDTO) {
 
         return "url/index";
     }
@@ -27,15 +24,8 @@ public class UrlController {
     @PostMapping("/shortenUrl")
     public String shortenUrl(
             @ModelAttribute UrlCreateRequestDTO urlCreateRequestDTO,
-            RedirectAttributes redirectAttributes,
-            BindingResult bindingResult
+            RedirectAttributes redirectAttributes
     ) {
-        if (bindingResult.hasErrors()) {
-            log.error("error");
-
-            return "url/index";
-        }
-
         UrlCreateResponseDTO urlCreateResponseDTO = urlService.createShortenUrl(urlCreateRequestDTO);
         redirectAttributes.addFlashAttribute("url", urlCreateResponseDTO);
 
@@ -44,7 +34,7 @@ public class UrlController {
 
     @GetMapping("/shortenUrl")
     public String getShortenResult(
-            @ModelAttribute("url") UrlCreateResponseDTO urlCreateResponseDTO
+            @ModelAttribute UrlCreateResponseDTO urlCreateResponseDTO
     ) {
 
         return "url/result";

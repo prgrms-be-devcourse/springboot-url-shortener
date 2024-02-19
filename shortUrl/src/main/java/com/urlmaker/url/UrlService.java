@@ -29,19 +29,13 @@ public class UrlService {
             Url savedUrl = retrievedURL.get();
             savedUrl.increaseRequestCount();
 
-            return UrlCreateResponseDTO.builder()
-                    .shortenUrl(algorithm.encode(savedUrl.getUrlId()))
-                    .requestCount(savedUrl.getRequestCount())
-                    .build();
+            return new UrlCreateResponseDTO(algorithm.encode(savedUrl.getUrlId()),savedUrl.getRequestCount());
         }
 
         Url savedUrl = urlRepository.save(url);
         String encodedShortenUrl = algorithm.encode(savedUrl.getUrlId());
 
-        return UrlCreateResponseDTO.builder()
-                .shortenUrl(encodedShortenUrl)
-                .requestCount(url.getRequestCount())
-                .build();
+        return new UrlCreateResponseDTO(encodedShortenUrl,url.getRequestCount());
     }
 
     @Transactional(readOnly = true)
