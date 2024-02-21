@@ -26,37 +26,37 @@ public class UrlService {
 	private final Algorithm<Long, String> algorithm;
 
 	@Transactional
-	public UrlShortenResponse shortenUrl(UrlShortenRequest request) {
-		Url url = new Url(request.originalUrl());
-		Url savedUrl = urlRepository.save(url);
-		String encodedKey = algorithm.encode(savedUrl.getId());
+	public UrlShortenResponse shortenUrl(final UrlShortenRequest request) {
+		final Url url = new Url(request.originalUrl());
+		final Url savedUrl = urlRepository.save(url);
+		final String encodedKey = algorithm.encode(savedUrl.getId());
 		url.addShorteningKey(encodedKey);
 
 		return UrlShortenResponse.of(savedUrl.getOriginalUrl(), getShortenedUrl(encodedKey), encodedKey);
 	}
 
-	private String getShortenedUrl(String encodedKey) {
+	private String getShortenedUrl(final String encodedKey) {
 		return BASE_URL + encodedKey;
 	}
 
 	@Transactional
-	public String getOriginalUrl(String shorteningKey) {
-		Url url = getUrl(shorteningKey);
+	public String getOriginalUrl(final String shorteningKey) {
+		final Url url = getUrl(shorteningKey);
 		url.increaseTotalClicks();
 
 		return url.getOriginalUrl();
 	}
 
-	public UrlTotalClicksResponse countTotalClicks(String shorteningKey) {
-		Url url = getUrl(shorteningKey);
-		int totalClicks = url.getTotalClicks();
-		String shortenedUrl = getShortenedUrl(url.getShorteningKey());
+	public UrlTotalClicksResponse countTotalClicks(final String shorteningKey) {
+		final Url url = getUrl(shorteningKey);
+		final int totalClicks = url.getTotalClicks();
+		final String shortenedUrl = getShortenedUrl(url.getShorteningKey());
 
 		return new UrlTotalClicksResponse(shortenedUrl, totalClicks);
 	}
 
-	private Url getUrl(String shorteningKey) {
-		Long decodedId = algorithm.decode(shorteningKey);
+	private Url getUrl(final String shorteningKey) {
+		final Long decodedId = algorithm.decode(shorteningKey);
 
 		return urlRepository.findById(decodedId)
 			.orElseThrow(() -> new BaseException(ErrorCode.URL_NOT_FOUND));

@@ -16,7 +16,7 @@ public class ErrorResponse {
 
 	private final String message;
 
-	public static ErrorResponse from(ErrorCode errorCode) {
+	public static ErrorResponse from(final ErrorCode errorCode) {
 		return new ErrorResponse(
 			errorCode.name(),
 			errorCode.getCode(),

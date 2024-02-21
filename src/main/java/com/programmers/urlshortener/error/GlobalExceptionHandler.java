@@ -14,17 +14,23 @@ import lombok.extern.slf4j.Slf4j;
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
-	protected String handleException(Exception e, Model model) {
+	protected String handleException(
+		final Exception e,
+		final Model model
+	) {
 		log.error("UnExpected Exception", e);
-		ErrorResponse response = ErrorResponse.from(ErrorCode.INTERNAL_SERVER_ERROR);
+		final ErrorResponse response = ErrorResponse.from(ErrorCode.INTERNAL_SERVER_ERROR);
 		model.addAttribute("response", response);
 		return "error";
 	}
 
 	@ExceptionHandler(BaseException.class)
-	protected String handleBusinessException(BaseException e, Model model) {
-		log.error("BaseException", e);
-		ErrorResponse response = ErrorResponse.from(e.getErrorCode());
+	protected String handleBusinessException(
+		final BaseException e,
+		final Model model) {
+		log.error("BaseException", e
+		);
+		final ErrorResponse response = ErrorResponse.from(e.getErrorCode());
 		model.addAttribute("response", response);
 		return "error";
 	}

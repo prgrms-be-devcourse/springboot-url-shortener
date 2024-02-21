@@ -31,26 +31,32 @@ public class UrlController {
 	}
 
 	@PostMapping
-	public String shortenUrl(@ModelAttribute UrlShortenRequest request, Model model) {
+	public String shortenUrl(
+		@ModelAttribute final UrlShortenRequest request,
+		final Model model
+	) {
 		log.info("{}", request);
-		UrlShortenResponse response = urlService.shortenUrl(request);
+		final UrlShortenResponse response = urlService.shortenUrl(request);
 		model.addAttribute("response", response);
 
 		return "shortenedUrl";
 	}
 
 	@GetMapping("/{shorteningKey}")
-	public RedirectView goToShortenedUrl(@PathVariable String shorteningKey) {
+	public RedirectView goToShortenedUrl(@PathVariable final String shorteningKey) {
 		log.info("shorteningKey={}", shorteningKey);
-		String originalUrl = urlService.getOriginalUrl(shorteningKey);
+		final String originalUrl = urlService.getOriginalUrl(shorteningKey);
 
 		return new RedirectView(originalUrl);
 	}
 
 	@GetMapping("/total-url-clicks/{shorteningKey}")
-	public String countTotalClicks(@PathVariable String shorteningKey, Model model) {
+	public String countTotalClicks(
+		@PathVariable final String shorteningKey,
+		final Model model
+	) {
 		log.info("shorteningKey={}", shorteningKey);
-		UrlTotalClicksResponse response = urlService.countTotalClicks(shorteningKey);
+		final UrlTotalClicksResponse response = urlService.countTotalClicks(shorteningKey);
 		model.addAttribute("response", response);
 
 		return "totalUrlClicks";
@@ -62,7 +68,10 @@ public class UrlController {
 	}
 
 	@PostMapping("/total-url-clicks")
-	public String redirectTotalClicks(@RequestParam String shorteningKey, RedirectAttributes redirectAttributes) {
+	public String redirectTotalClicks(
+		@RequestParam final String shorteningKey,
+		final RedirectAttributes redirectAttributes
+	) {
 		log.info("shorteningKey={}", shorteningKey);
 		redirectAttributes.addAttribute("shorteningKey", shorteningKey);
 

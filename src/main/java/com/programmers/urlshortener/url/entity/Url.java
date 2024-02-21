@@ -30,11 +30,11 @@ public class Url {
 	@Column(name = "total_clicks")
 	private int totalClicks;
 
-	public Url(String originalUrl) {
+	public Url(final String originalUrl) {
 		this.originalUrl = originalUrl;
 	}
 
-	public void addShorteningKey(String shorteningKey) {
+	public void addShorteningKey(final String shorteningKey) {
 		this.shorteningKey = shorteningKey;
 	}
 
