@@ -53,4 +53,28 @@ class ShortCutServiceTest {
 		verify(base62).encodeNumber(savedShortCut.getId());
 		verify(shortCutGenerator).generateShortCutURL(encodedId);
 	}
+
+	@Test
+	public void testGetOriginalURL() {
+		// 준비
+		String encodedId = "encodedString";
+		Long decodedId = 1L;
+		String originalURL = "http://original-url.com";
+		ShortCut shortCut = new ShortCut(originalURL);
+		shortCut.setId(decodedId);
+
+		when(base62.decodeKey(encodedId)).thenReturn(decodedId);
+		when(shortCutRepository.getReferenceById(decodedId)).thenReturn(shortCut);
+
+		// 실행
+		String resultURL = shortCutService.getOriginalURL(encodedId);
+
+		// 검증
+		assertNotNull(resultURL);
+		assertEquals(originalURL, resultURL);
+
+		// 확인
+		verify(base62).decodeKey(encodedId);
+		verify(shortCutRepository).getReferenceById(decodedId);
+	}
 }
