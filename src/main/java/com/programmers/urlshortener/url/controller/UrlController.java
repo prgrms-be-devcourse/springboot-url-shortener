@@ -3,7 +3,6 @@ package com.programmers.urlshortener.url.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,9 +13,7 @@ import com.programmers.urlshortener.url.dto.UrlTotalClicksResponse;
 import com.programmers.urlshortener.url.service.UrlService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class UrlController {
@@ -28,7 +25,6 @@ public class UrlController {
 		@RequestParam final String originalUrl,
 		final Model model
 	) {
-		log.info("{}", originalUrl);
 		final UrlShortenResponse response = urlService.shortenUrl(originalUrl);
 		model.addAttribute("response", response);
 
@@ -37,7 +33,6 @@ public class UrlController {
 
 	@GetMapping("/shortened-url/{shorteningKey}")
 	public RedirectView goToShortenedUrl(@PathVariable final String shorteningKey) {
-		log.info("shorteningKey={}", shorteningKey);
 		final String originalUrl = urlService.getOriginalUrl(shorteningKey);
 
 		return new RedirectView(originalUrl);
@@ -48,7 +43,6 @@ public class UrlController {
 		@PathVariable final String shorteningKey,
 		final Model model
 	) {
-		log.info("shorteningKey={}", shorteningKey);
 		final UrlTotalClicksResponse response = urlService.countTotalClicks(shorteningKey);
 		model.addAttribute("response", response);
 
