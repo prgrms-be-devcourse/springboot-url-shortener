@@ -14,7 +14,7 @@
     </div>
     <h4 class="mb-3">Enter the URL to track how many clicks it received.
     </h4>
-    <form th:action method="post">
+    <form id="myForm" method="post">
         <div class="mb-3">
             http://localhost:8080/
             <input type="text" id="shorteningKey" name="shorteningKey" class="form-control">
@@ -29,6 +29,15 @@
             </div>
         </div>
     </form>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var shorteningKey = document.getElementById('shorteningKey').value;
+            location.href = '/total-url-clicks/' + shorteningKey;
+        });
+    </script>
+
 </div>
 </body>
 </html>

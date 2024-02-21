@@ -13,7 +13,7 @@
         <h2>URL Shortener</h2>
     </div>
     <h4 class="mb-3">Paste the URL to be shortened</h4>
-    <form th:action method="post">
+    <form th:action="@{/shorten-url}" method="post">
         <div class="mb-3">
             <input type="url" id="originalUrl" name="originalUrl" class="form-control"
                    placeholder="Enter the link here">

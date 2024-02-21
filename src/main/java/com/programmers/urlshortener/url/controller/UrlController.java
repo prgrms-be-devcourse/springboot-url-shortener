@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.programmers.urlshortener.url.dto.UrlShortenRequest;
@@ -25,12 +23,7 @@ public class UrlController {
 
 	private final UrlService urlService;
 
-	@GetMapping
-	public String home() {
-		return "home";
-	}
-
-	@PostMapping
+	@PostMapping("/shorten-url")
 	public String shortenUrl(
 		@ModelAttribute final UrlShortenRequest request,
 		final Model model
@@ -42,7 +35,7 @@ public class UrlController {
 		return "shortenedUrl";
 	}
 
-	@GetMapping("/{shorteningKey}")
+	@GetMapping("/shortened-url/{shorteningKey}")
 	public RedirectView goToShortenedUrl(@PathVariable final String shorteningKey) {
 		log.info("shorteningKey={}", shorteningKey);
 		final String originalUrl = urlService.getOriginalUrl(shorteningKey);
@@ -60,21 +53,5 @@ public class UrlController {
 		model.addAttribute("response", response);
 
 		return "totalUrlClicks";
-	}
-
-	@GetMapping("/total-url-clicks")
-	public String UrlClickCounter() {
-		return "UrlClickCounter";
-	}
-
-	@PostMapping("/total-url-clicks")
-	public String redirectTotalClicks(
-		@RequestParam final String shorteningKey,
-		final RedirectAttributes redirectAttributes
-	) {
-		log.info("shorteningKey={}", shorteningKey);
-		redirectAttributes.addAttribute("shorteningKey", shorteningKey);
-
-		return "redirect:/total-url-clicks/{shorteningKey}";
 	}
 }

@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col">
                 <div class="mb-3">
-                    <button class="w-100 btn btn-primary btn-lg" type="button" th:onclick="|location.href='@{/{shorteningKey}(shorteningKey=${response.shorteningKey})}'|">
+                    <button class="w-100 btn btn-primary btn-lg" type="button" th:onclick="|location.href='@{/shortened-url/{shorteningKey}(shorteningKey=${response.shorteningKey})}'|">
                         Go to shortened URL
                     </button>
                 </div>
@@ -39,6 +39,14 @@
                         Total of clicks
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="mb-3">
+                <button class="w-100 btn btn-primary btn-lg" type="button" th:onclick="|location.href='@{/}'|">
+                    Go Home
+                </button>
             </div>
         </div>
     </form>
