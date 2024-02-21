@@ -21,10 +21,7 @@ public class UrlController {
 	private final UrlService urlService;
 
 	@PostMapping("/shorten-url")
-	public String shortenUrl(
-		@RequestParam final String originalUrl,
-		final Model model
-	) {
+	public String shortenUrl(@RequestParam final String originalUrl, final Model model) {
 		final UrlShortenResponse response = urlService.shortenUrl(originalUrl);
 		model.addAttribute("response", response);
 
@@ -39,11 +36,8 @@ public class UrlController {
 	}
 
 	@GetMapping("/total-url-clicks/{shorteningKey}")
-	public String countTotalClicks(
-		@PathVariable final String shorteningKey,
-		final Model model
-	) {
-		final UrlTotalClicksResponse response = urlService.countTotalClicks(shorteningKey);
+	public String getTotalClicks(@PathVariable final String shorteningKey, final Model model) {
+		final UrlTotalClicksResponse response = urlService.getTotalClicks(shorteningKey);
 		model.addAttribute("response", response);
 
 		return "totalUrlClicks";

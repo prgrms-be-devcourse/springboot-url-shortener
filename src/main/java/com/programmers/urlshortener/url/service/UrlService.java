@@ -35,11 +35,7 @@ public class UrlService {
 		final String encodedKey = algorithm.encode(savedUrl.getId());
 		url.addShorteningKey(encodedKey);
 
-		return UrlShortenResponse.of(savedUrl.getOriginalUrl(), getShortenedUrl(encodedKey), encodedKey);
-	}
-
-	private String getShortenedUrl(final String encodedKey) {
-		return BASE_URL + encodedKey;
+		return UrlShortenResponse.of(originalUrl, getShortenedUrl(encodedKey), encodedKey);
 	}
 
 	@Transactional
@@ -50,7 +46,7 @@ public class UrlService {
 		return url.getOriginalUrl();
 	}
 
-	public UrlTotalClicksResponse countTotalClicks(final String shorteningKey) {
+	public UrlTotalClicksResponse getTotalClicks(final String shorteningKey) {
 		final Url url = getUrl(shorteningKey);
 		final int totalClicks = url.getTotalClicks();
 		final String shortenedUrl = getShortenedUrl(url.getShorteningKey());
@@ -63,5 +59,9 @@ public class UrlService {
 
 		return urlRepository.findById(decodedId)
 			.orElseThrow(() -> new BaseException(ErrorCode.URL_NOT_FOUND));
+	}
+
+	private String getShortenedUrl(final String encodedKey) {
+		return BASE_URL + encodedKey;
 	}
 }
