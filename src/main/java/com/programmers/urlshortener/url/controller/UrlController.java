@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.programmers.urlshortener.url.dto.UrlShortenRequest;
 import com.programmers.urlshortener.url.dto.UrlShortenResponse;
 import com.programmers.urlshortener.url.dto.UrlTotalClicksResponse;
 import com.programmers.urlshortener.url.service.UrlService;
@@ -25,11 +25,11 @@ public class UrlController {
 
 	@PostMapping("/shorten-url")
 	public String shortenUrl(
-		@ModelAttribute final UrlShortenRequest request,
+		@RequestParam final String originalUrl,
 		final Model model
 	) {
-		log.info("{}", request);
-		final UrlShortenResponse response = urlService.shortenUrl(request);
+		log.info("{}", originalUrl);
+		final UrlShortenResponse response = urlService.shortenUrl(originalUrl);
 		model.addAttribute("response", response);
 
 		return "shortenedUrl";

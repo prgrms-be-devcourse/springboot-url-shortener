@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.programmers.urlshortener.algorithm.Algorithm;
 import com.programmers.urlshortener.error.exception.BaseException;
 import com.programmers.urlshortener.error.exception.ErrorCode;
-import com.programmers.urlshortener.url.dto.UrlShortenRequest;
 import com.programmers.urlshortener.url.dto.UrlShortenResponse;
 import com.programmers.urlshortener.url.dto.UrlTotalClicksResponse;
 import com.programmers.urlshortener.url.entity.Url;
@@ -26,8 +25,12 @@ public class UrlService {
 	private final Algorithm<Long, String> algorithm;
 
 	@Transactional
-	public UrlShortenResponse shortenUrl(final UrlShortenRequest request) {
-		final Url url = new Url(request.originalUrl());
+	public UrlShortenResponse shortenUrl(final String originalUrl) {
+		if (originalUrl.isBlank()) {
+			throw new BaseException(ErrorCode.URL_NOT_VALID);
+		}
+
+		final Url url = new Url(originalUrl);
 		final Url savedUrl = urlRepository.save(url);
 		final String encodedKey = algorithm.encode(savedUrl.getId());
 		url.addShorteningKey(encodedKey);

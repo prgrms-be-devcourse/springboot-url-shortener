@@ -12,6 +12,7 @@ public enum ErrorCode {
 
 	// Url
 	URL_NOT_FOUND("U_001", "URL을 찾을 수 없습니다."),
+	URL_NOT_VALID("U_002", "유효하지 않은 URL입니다."),
 	;
 
 	private final String code;
