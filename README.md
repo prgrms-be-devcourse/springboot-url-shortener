@@ -1,41 +1,79 @@
-# springboot-url-shortener
-SprintBoot URL Shortener 구현 미션 Repository 입니다.
+## 📌 설명
+>시연 동영상입니다. https://vimeo.com/manage/videos/873085666
 
-## 요구사항
-각 요구사항을 모두 충족할 수 있도록 노력해봅시다.
-- [ ] URL 입력폼 제공 및 결과 출력
-- [ ] URL Shortening Key는 8 Character 이내로 생성
-- [ ] 단축된 URL 요청시 원래 URL로 리다이렉트
-- [ ] 단축된 URL에 대한 요청 수 정보저장 (optional)
-- [ ] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능 (optional) 
+- URL Shortner 서비스를 구현했습니다.
+- 프론트엔드와 백엔드 모두 구현했습니다.
+- Shortening key 알고리즘은 Base62, Short UUID, Adler Hashing을 사용했습니다.
+- 추가적인 팀 미션으로 배포를 진행했습니다.
+- 개인 미션으로 Redis를 활용한 캐싱을 구현했습니다.
+- 개인 미션으로 Docker를 이용한 배포를 진행했습니다.(도커 네트워크 활용)
 
+~~[Url Shortener 서비스 링크](http://ec2-3-35-240-254.ap-northeast-2.compute.amazonaws.com:3000)~~
 
-## Short URL Service
-### 읽으면 좋은 레퍼런스
-- [Naver 단축 URL API](https://developers.naver.com/docs/utils/shortenurl/)
-- [짧게 줄인 URL의 실제 URL 확인 원리 및 방법](https://metalkin.tistory.com/50)
-- [짧게 줄인 URL 알고리즘 고찰](https://metalkin.tistory.com/53)
-- [단축 URL 원리 및 개발](https://blog.siyeol.com/26)
+## 👩‍💻 요구 사항과 구현 내용 <!-- 기능을 Commit 별로 잘개 쪼개고, Commit 별로 설명해주세요 -->
 
-### Short URL의 동작 과정
-예시로 bitly를 봅시다
-![image1](./image1.png)
-![image2](./image2.png)
-1. 원본 URL을 입력하고 Shorten 버튼을 클릭합니다.
-2. Unique Key를 7문자 생성합니다.
-3. Unique Key와 원본 URL을 DB에 저장합니다.
-4. bitly.com/{Unique Key} 로 접근하면, DB를 조회하여 원본 URL로 redirect합니다.
+- [x] URL 입력폼 제공 및 결과 출력 
+   > 리액트로 구현했습니다. [(링크)](https://github.com/Dev-Yesung/react-url-shortener)
+- [x] URL Shortening Key는 8 Character 이내로 생성
+   > base62 방식으로 인코딩 완료
+- [x] 단축된 URL 요청시 원래 URL로 리다이렉트 
+   > 상태코드 301(MOVE_PERMANENTLY)
+- [x] 단축된 URL에 대한 요청 수 정보저장
+   > MySQL 이외에 Redis를 활용하여 캐싱했습니다.
+- [x] Shortening Key를 생성하는 알고리즘 2개 이상 제공하며 애플리케이션 실행중 동적으로 변경 가능
+   > 추가적으로 8글자 이내의 UUID, Adler 알고리즘을 사용하였습니다.
 
-### Short URL의 특징
-단축 URL서비스는 간편하지만, 단점(위험성)이 있습니다. 
-링크를 클릭하는 사용자는 단축된 URL만 보고 클릭하기 때문에 어떤 곳으로 이동할지 알 수 없습니다.
+## 📝 Redis를 활용한 캐싱과 MySQL과의 데이터 일치전략
 
-- Short URL 서비스는 주로 요청을 Redirect 시킵니다. (Redirect와 Forward의 차이점에 대해 검색해보세요.)
-- 긴 URL을 짧은 URL로 압축할 수 있다.
-- short url만으로는 어디에 연결되어있는 지 알 수 없다. 때문에 피싱 사이트 등의 보안에 취약하다.
-- 광고를 본 뒤에 원본url로 넘겨주기도 한다. 이 과정에서 악성 광고가 나올 수 있다.
-- 당연하지만 이미 존재하는 키를 입력하여 들어오는 사람이 존재할 수 있다.
-- 기존의 원본 URL 변경되었더라도 단축 URL을 유지하여, 혼란을 방지할 수 있다.
+Redis는 서버가 다운될 것에 대비해 어느 정도 데이터를 백업해두는 기능을 갖고 있습니다.<br>
+하지만 완벽한 백업이 아니기 때문에 Redis에서 사용하는 캐싱 데이터는<br>
+다음의 조건을 만족하는 데이터에 사용하면 좋다고 생각합니다.<br>
+<br>
+1) 캐싱 했을 때의 성능(속도) 향상
+2) 손실되어도 괜찮은 데이터
 
-### 예시 사이트
-[https://url.kr/](https://url.kr/)
+URL Shortener서버는 Redis를 두 가지 용도로 사용 중 입니다.
+1) 리다이렉션으로 보낼 원본 url을 빠르게 찾기 위해
+2) 인코딩된 url의 총 click 수를 빠르게 저장하고 조회하기 위해
+
+-----
+1️⃣<br>
+인코딩된 shortening key에 매핑되는 원본 URL은 자주 변경되지 않습니다.<br>
+그래서 RDB 저장소까지 가서 읽기를 수행할 필요가 없고 캐시 저장소를 통해<br>
+빠르게 요청을 처리하면 좋을 거 같다고 생각했습니다.<br>
+
+-----
+2️⃣<br>
+클릭 수(API요청 횟수)에 관한 업데이트는 1차적으로 Redis에만 진행되도록 했습니다.<br>
+그 이유는 클릭 수는 손실되어도 타격이 큰 데이터가 아니라는 생각을 했습니다.<br>
+물론 선착순 당첨 이벤트와 같이 특수한 상황에서 클릭수의 경우 정확도가 중요하겠고<br>
+마케팅 데이터로 활용할 클릭수는 어느 정도 의미가 있겠지만, <br>
+현재는 그런 특수한 상황이 아니라 배제했습니다.<br>
+
+-----
+3️⃣<br>
+속도나 동시성을 어느 정도 고려해주는게 좋다는 생각을 해서 Redis를 활용했습니다.<br>
+Redis는 싱글 스레드 방식으로 작동하기 때문에 동시에 여러 스레드가 접근할 경우<br>
+순차적으로 요청을 처리하게 되어 데이터 정합성을 보장하고 <br>
+인메모리 데이터베이스라 속도 또한 보장하기 때문입니다.<br>
+
+-----
+4️⃣<br>
+1차적으로 Redis에서 업데이트된 클릭수는 <br>
+매일 새벽 3시(트래픽이 가장 적게 몰릴것 같읕 시간)에<br>
+MySQL로 데이터를 업데이트 합니다. 이때 처리하는 방법은<br>
+@Scheduled(스프링 스케줄러)를 사용하였습니다. <br>
+
+-----
+5️⃣<br>
+클릭수에 관한 데이터를 다루는 방법으로, <br>
+Redis 서버가 다운 될 것을 고려해 MySQL에도 클릭수를 저장할까 생각했지만, <br>
+클릭수가 크게 중요한 데이터가 아니고 서비스의 본질은 <br>
+긴 URL을 줄이는 것과 빠르게 원본 URL을 찾아주는 거라 생각해 배제했습니다.<br>
+
+-----
+6️⃣<br>
+Redis에 계속해서 캐시 데이터를 두게 되면 메모리 낭비가 심할거라 생각해<br>
+최근에 클릭한 데이터들에는 만료시간을 연장하는 알고리즘을 적용할까 생각했지만,<br>
+구현할 시간이 없어 패스했습니다!<br>
+
