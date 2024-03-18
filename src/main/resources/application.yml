@@ -1,0 +1,11 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      format_sql: true
+  datasource:
+    url: jdbc:mysql://localhost/shortener
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root1234!
