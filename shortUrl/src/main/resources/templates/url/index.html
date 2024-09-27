@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>URL Input</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ff6f61;
+    }
+
+    .form-group label {
+      font-weight: bold;
+    }
+
+    .btn-primary {
+      background-color: #ff6f61;
+      border-color: #ff6f61;
+    }
+
+    .btn-primary:hover {
+      background-color: #ff402c;
+      border-color: #ff402c;
+    }
+  </style>
+</head>
+<body>
+<div class="container mt-5">
+  <h1 class="text-center">Cute URL Input</h1>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form th:action="@{/shortenUrl}" method="post">
+        <div class="form-group">
+          <label for="urlInput">URL을 입력하세요:</label>
+          <input type="text" class="form-control" id="urlInput" name="originUrl" placeholder="URL을 입력하세요" required>
+          <input type="text" class="form-control" id="algorithmInput" name="algorithm" placeholder="알고리즘을 입력하세요" required>
+        </div>
+        <button type="submit" class="btn btn-primary">제출</button>
+      </form>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-3">
+    <div class="col-md-6">
+      <div th:if="${originUrl}">
+        <h3 class="mt-3">입력한 URL:</h3>
+        <p th:text="${originUrl}" class="alert alert-success"></p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

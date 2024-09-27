@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>URL Shortened Result</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-top: 5%;
+        }
+
+        h1 {
+            color: #ff6f61;
+            text-align: center;
+        }
+
+        .row {
+            margin-top: 3%;
+        }
+
+        .btn-primary {
+            background-color: #ff6f61;
+            border-color: #ff6f61;
+        }
+
+        .btn-primary:hover {
+            background-color: #ff402c;
+            border-color: #ff402c;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>URL Shorten Result</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h3>Shortened URL:</h3>
+            <p th:text="${url.shortenUrl}" class="alert alert-success"></p>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-md-6">
+            <h3>Request Count:</h3>
+            <p th:text="${url.requestCount}" class="alert alert-info"></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
