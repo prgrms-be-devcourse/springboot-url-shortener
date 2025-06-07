@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--사용법-->
+<!--1 : <head th:insert="fragments/head::headFragment"></head>-->
+
+<!--2 : <head>-->
+<!--        <head th:replace="fragments/head::headFragment"></head>-->
+<!--        <style th:replace="fragments/head::error-color"></style>-->
+<!--    </head>-->
+
+<th:block th:fragment="headFragment">
+  <meta charset="UTF-8"/>
+  <meta
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+      name="viewport"/>
+  <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+  <link crossorigin="anonymous"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+        rel="stylesheet">
+  <title>URL SHORTENER</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap"
+        rel="stylesheet">
+  <link
+      href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Serif+KR:wght@600&display=swap"
+      rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Gowun Dodum', sans-serif;
+    }
+  </style>
+</th:block>
+
+<!--사용법 -->
+<!--<style th:replace="fragments/head::error-color"></style>-->
+<th:block th:fragment="error-color">
+  <style>
+    * {
+      color: orangered;
+    }
+  </style>
+</th:block>
+
+</html>
